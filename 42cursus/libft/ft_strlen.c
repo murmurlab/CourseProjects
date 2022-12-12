@@ -21,3 +21,13 @@ size_t	ft_strlen(const char *s)
 		c++;
 	return (c);
 }
+/* 
+int	main(void)
+{
+	size_t s;
+	char *arr = "faruk";
+
+	s = ft_strlen(arr);
+	printf("%zu\n", s);
+}
+ */

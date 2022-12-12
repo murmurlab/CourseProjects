@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/12 08:42:57 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/12 08:43:29 by codespace        ###   ########.fr       */
+/*   Created: 2022/12/11 01:27:38 by codespace         #+#    #+#             */
+/*   Updated: 2022/12/11 02:48:16 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *str, const char *to_find, size_t len)
+char	*ft_strchr(const char *s, int c)
 {
-	size_t		position;
-
-	if (*to_find == '\0')
-		return ((char *)str);
-	position = ft_strlen((char *)to_find);
-	while (*str != '\0' && len-- >= position)
+	while (*s)
 	{
-		if (*str == *to_find && ft_memcmp(str, to_find, position) == 0)
-			return ((char *)str);
-		str++;
+		if (*s++ == (char)c)
+			return ((char *)s - 1);
 	}
+	if ((char)c == '\0')
+		return ((char *)s);
 	return (NULL);
 }
+/* 
+int	main(void)
+{
+	char	f = 'g';
+	char	*s = "stringme!";
+	if ((ft_strchr(s, f)))
+		printf("char: %c\n", *(ft_strchr(s, f)));
+}
+ */

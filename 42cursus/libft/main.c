@@ -8,8 +8,6 @@ char	*fuck(char *str);
 
 int	main(void)
 {
-
-
 	char *de = "deneme";
 	printf("------->>:  %s\n", fuck(de));
 	char	*num;

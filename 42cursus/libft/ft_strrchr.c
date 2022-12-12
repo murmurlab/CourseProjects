@@ -1,29 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/12 08:42:57 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/12 08:43:29 by codespace        ###   ########.fr       */
+/*   Created: 2022/12/11 02:21:21 by codespace         #+#    #+#             */
+/*   Updated: 2022/12/11 02:48:03 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "libft.h"
 
-char	*ft_strnstr(const char *str, const char *to_find, size_t len)
+char	*ft_strrchr(const char *s, int c)
 {
-	size_t		position;
+	size_t	len;
 
-	if (*to_find == '\0')
-		return ((char *)str);
-	position = ft_strlen((char *)to_find);
-	while (*str != '\0' && len-- >= position)
+	len = ft_strlen(s);
+	while (len--)
 	{
-		if (*str == *to_find && ft_memcmp(str, to_find, position) == 0)
-			return ((char *)str);
-		str++;
+		if (s[len] == (char)c)
+			return ((char *)(s + len));
 	}
+	if ((char)c == '\0')
+		return ((char *)(s + ft_strlen(s)));
 	return (NULL);
 }
+/* 
+int	main(void)
+{
+	char	f = 'n';
+	char	*s = "nopestringmenoob!";
+	if ((ft_strrchr(s, f)))
+	{
+		printf("char: %p\n", (ft_strchr(s, f)));
+		printf("char: %p\n", (ft_strrchr(s, f)));
+	}
+}
+ */
