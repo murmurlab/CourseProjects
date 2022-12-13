@@ -6,11 +6,10 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 20:30:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2022/12/10 15:46:36 by ahbasara         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:32:54 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* #include <stdio.h> */
 #include "libft.h"
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)

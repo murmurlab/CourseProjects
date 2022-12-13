@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 12:41:55 by ahbasara          #+#    #+#             */
-/*   Updated: 2022/12/09 16:13:29 by ahbasara         ###   ########.fr       */
+/*   Updated: 2022/12/12 16:40:55 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void
 	ft_bzero(void *s, size_t n)
 {
-	while (n--)
+	while (n-- > 0)
 	{
-		*(int *)(s + n) = 0;
+		*(char *)(s + n) = 0;
 	}
 	return ;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 02:52:32 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/11 17:12:25 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/12 17:51:58 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (*(unsigned char *)s1 - *(unsigned char *)s2);
 }
 
-int	main(void)
+/* int	main(void)
 {
 	char	*kedy = "whEreareyoucatx";
 	char	*kedi = "whereareyoucat";
 
 	printf("diff: %d\n", ft_strncmp(kedy, kedi, 2));
-}
+} */
