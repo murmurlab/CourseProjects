@@ -6,14 +6,13 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 22:21:37 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/13 22:28:35 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/13 22:37:44 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int
-	ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
 	int	i;
 	int	is_neg;
