@@ -6,7 +6,7 @@
 /*   By: nan0bit <nan0bit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 00:44:37 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/14 20:08:51 by nan0bit          ###   ########.fr       */
+/*   Updated: 2022/12/14 20:13:26 by nan0bit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	recurse(char	**pp, size_t i, const char *s, char c, size_t l)
 	{
 		if (s[--i] == c)
 		{
-			recurse(pp + 1 ,i, s, c, l);
+			recurse(pp - 1, i, s, c, l);
 			break ;
 		}
 		l++;
@@ -44,7 +44,7 @@ char	**ft_split(char const *s, char c)
 	while (s[i])
 		n += (s[i++] == c);
 	pp = malloc(sizeof(char) * (n + 1));
-	recurse(pp, i, s, c, 0);
+	recurse(pp + 7, i, s, c, 0);
 	return (pp);
 }
 
