@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 00:10:20 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/14 00:30:41 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/14 00:37:24 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 
 int	main(void)
 {
-	char	*str = "   xxxxtestttxxx. ";
+	char	*str = "   xxx/xtestttxxx ";
 	char	*set = "x ";
 
 	printf("%s", ft_strtrim(str, set));
