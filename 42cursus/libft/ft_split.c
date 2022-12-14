@@ -6,7 +6,7 @@
 /*   By: nan0bit <nan0bit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 00:44:37 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/14 13:15:31 by nan0bit          ###   ########.fr       */
+/*   Updated: 2022/12/14 13:50:57 by nan0bit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	recurse(char	**pp, size_t i, const char *s, char c, size_t l)
 	{
 		if (s[--i] == c)
 		{
-			recurse(pp++ ,i, s, c, l);
+			recurse(pp + 1 ,i, s, c, l);
 			break ;
 		}
 		l++;
 	}
 	elm = malloc(sizeof(char) * (l + 1));
 	*pp = elm;
-	while (l-- && s[i] != c)
+	while (l-- && s[++i] != c)
 		*elm++ = s[i++];
 	*elm = 0;
 }
@@ -40,8 +40,9 @@ char	**ft_split(char const *s, char c)
 	char	**pp;
 
 	i = 0;
+	n = 0;
 	while (s[i])
-		n =+ (s[i++] == c);
+		n += (s[i++] == c);
 	pp = malloc(sizeof(char) * (n + 1));
 	recurse(pp, i, s, c, 0);
 	return (pp);
@@ -50,8 +51,8 @@ char	**ft_split(char const *s, char c)
 int	main(void)
 {
 	char	*str = " split me  split   meeeee ";
-	char	*char = ' ';
-	char	*ptr;
-	prt = ft_split(str, char);
-	printf("splitted: %s", prt[0]);
+	char	chr = ' ';
+	char	**ptr;
+	ptr = ft_split(str, chr);
+	printf("splitted: %s", ptr[0]);
 }

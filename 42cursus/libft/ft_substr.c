@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: nan0bit <nan0bit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 23:26:49 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/13 23:38:57 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/14 13:31:38 by nan0bit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	str[j] = 0;
 	return (str);
+}
+
+int	main(void)
+{
+	printf("val: %p", ft_substr("ahmetf", -1, 3));
 }
