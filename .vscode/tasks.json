@@ -12,6 +12,8 @@
                 "-g",
                 "${file}",
                 "ft_strlen.c",
+                "ft_strchr.c",
+                "ft_substr.c",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
             ],
