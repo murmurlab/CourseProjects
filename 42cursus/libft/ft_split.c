@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nan0bit <nan0bit@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 00:44:37 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/14 20:08:51 by nan0bit          ###   ########.fr       */
+/*   Updated: 2022/12/14 22:03:01 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	recurse(char	**pp, size_t i, const char *s, char c, size_t l)
 	{
 		if (s[--i] == c)
 		{
-			recurse(pp + 1 ,i, s, c, l);
+			recurse(pp + 1, i, s, c, l);
 			break ;
 		}
 		l++;
