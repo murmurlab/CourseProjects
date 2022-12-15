@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nan0bit <nan0bit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 00:44:37 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/15 16:52:49 by ahbasara         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:38:14 by nan0bit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,30 @@ char	**ft_split(char const *s, char c)
 
 
 
+size_t	strlcpy(char * __restrict dst, const char * __restrict src, size_t siz)
+{
+	char *d = dst;
+	const char *s = src;
+	size_t n = siz;
 
+	/* Copy as many bytes as will fit */
+	if (n != 0) {
+		while (--n != 0) {
+			if ((*d++ = *s++) == '\0')
+				break;
+		}
+	}
+
+	/* Not enough room in dst, add NUL and traverse rest of src */
+	if (n == 0) {
+		if (siz != 0)
+			*d = '\0';		/* NUL-terminate dst */
+		while (*s++)
+			;
+	}
+
+	return(s - src - 1);	/* count does not include NUL */
+}
 
 
 
@@ -95,7 +118,7 @@ void	push_arr(const char *s, char **pp, size_t x, char c)
 {
 	const char	*tmp;
 	char		*buff;
-	char		*stock;
+	const char	*stock;
 
 	stock = s;
 	tmp = 0;
