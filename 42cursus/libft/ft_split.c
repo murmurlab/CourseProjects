@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 00:44:37 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/15 18:11:54 by ahbasara         ###   ########.fr       */
+/*   Updated: 2022/12/15 23:41:36 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	**ft_split(char const *s, char c)
 
 
 
-void	push_arr(const char *s, char **pp, size_t x, char c)
+void	push_arr(const char *s, char **pp, char c)
 {
 	const char	*tmp;
 	char		*buff;
@@ -99,7 +99,7 @@ void	push_arr(const char *s, char **pp, size_t x, char c)
 
 	stock = s;
 	tmp = 0;
-	while (stock + x >= s)
+	while (*s)
 	{
 		if ((*s == c || *s == 0) && tmp)
 		{
@@ -139,7 +139,7 @@ char	**ft_split(const char *s, char c)
 	}
 	pp = malloc(sizeof(char *) * (elem_n + 1));
 	pp[elem_n] = 0;
-	push_arr(s, pp, counter, c);
+	push_arr(s, pp, c);
 	printf("elem_n: %zu\n", elem_n);
 	return (pp);
 }
@@ -147,11 +147,11 @@ char	**ft_split(const char *s, char c)
 
 
 
-/* int	main(void)
+int	main(void)
 {
-	char	*str = "  tripouille  42  ";
+	char	*str = "  tripouille  42 ";
 	char	chr = ' ';
 	char	**ptr;
 	ptr = ft_split(str, chr);
 	printf("ptr[0]: %s\nptr[1]: %s\nptr[2]: %s\nptr[3]: %s\nptr[4]: %s\nptr[5]: %s\nptr[6]: %s\nptr[7]: %s\nptr[8]: %s\n", ptr[0], ptr[1], ptr[2], ptr[3], ptr[4], ptr[5], ptr[6], ptr[7], ptr[8]);
-} */
+}
