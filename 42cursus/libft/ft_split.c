@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 00:44:37 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/15 13:59:01 by ahbasara         ###   ########.fr       */
+/*   Updated: 2022/12/15 14:52:38 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,25 +91,29 @@ char	**ft_split(char const *s, char c)
 
 
 
-void	push_arr(const char *s, char **pp, size_t counter, char c)
+void	push_arr(const char *s, char **pp, size_t x, char c)
 {
 	size_t	len;
 	char	*dest;
 
-	len = 1;
-	while (--counter)
+	len = 0;
+	while (--x)
 	{
-		if ((s[counter] != c) && (s[counter - 1] == c))
+		if (((s[x] != c) && (s[x - 1] == c)) || (!x && (s[x] != c)))
 		{
-			push_arr(s, pp - 1, counter, c);
+			push_arr(s, pp - 1, x, c);
+			len++;
 			break ;
 		}
-		if (s[counter] != c)
+		if (s[x] != c)
 			len++;
 	}
-	dest = malloc(sizeof(char) * len);
-	strlcpy(dest, &s[counter], len);
-	pp = &dest;
+	if (len)
+	{		
+		dest = malloc(sizeof(char) * (len + 1));
+		strlcpy(dest, &s[x], (len + 1));
+		pp = &dest;
+	}
 }
 
 char	**ft_split(const char *s, char c)
@@ -142,7 +146,7 @@ char	**ft_split(const char *s, char c)
 
 int	main(void)
 {
-	char	*str = " mojave mint rosetta fosquare murrrrr";
+	char	*str = "mojave mint rosetta fosquare murrrrr";
 	char	chr = ' ';
 	char	**ptr;
 	ptr = ft_split(str, chr);
