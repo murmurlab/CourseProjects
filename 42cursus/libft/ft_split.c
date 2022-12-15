@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 00:44:37 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/15 14:52:38 by ahbasara         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:52:49 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,26 +93,28 @@ char	**ft_split(char const *s, char c)
 
 void	push_arr(const char *s, char **pp, size_t x, char c)
 {
-	size_t	len;
-	char	*dest;
+	const char	*tmp;
+	char		*buff;
+	char		*stock;
 
-	len = 0;
-	while (--x)
+	stock = s;
+	tmp = 0;
+	while (stock + x >= s)
 	{
-		if (((s[x] != c) && (s[x - 1] == c)) || (!x && (s[x] != c)))
+		if (*s == c && tmp)
 		{
-			push_arr(s, pp - 1, x, c);
-			len++;
-			break ;
+			buff = malloc(sizeof(char) * ((s - tmp) + 1));
+			strlcpy(buff, tmp, ((s - tmp) + 1));
+			printf("add: %p\n", buff);
+			*pp++ = buff;
+			tmp = 0;
 		}
-		if (s[x] != c)
-			len++;
-	}
-	if (len)
-	{		
-		dest = malloc(sizeof(char) * (len + 1));
-		strlcpy(dest, &s[x], (len + 1));
-		pp = &dest;
+		if (*s != c)
+		{
+			if (!tmp)
+				tmp = s;
+		}
+		s++;
 	}
 }
 
