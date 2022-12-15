@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 00:44:37 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/15 17:58:48 by ahbasara         ###   ########.fr       */
+/*   Updated: 2022/12/15 18:11:54 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	push_arr(const char *s, char **pp, size_t x, char c)
 {
 	const char	*tmp;
 	char		*buff;
-	char		*stock;
+	const char	*stock;
 
 	stock = s;
 	tmp = 0;
@@ -137,7 +137,8 @@ char	**ft_split(const char *s, char c)
 		else
 			flag = 0;
 	}
-	pp = malloc(sizeof(char *) * elem_n);
+	pp = malloc(sizeof(char *) * (elem_n + 1));
+	pp[elem_n] = 0;
 	push_arr(s, pp, counter, c);
 	printf("elem_n: %zu\n", elem_n);
 	return (pp);
@@ -146,11 +147,11 @@ char	**ft_split(const char *s, char c)
 
 
 
-int	main(void)
+/* int	main(void)
 {
-	char	*str = "mojave mint rosetta fosquare murrrrr";
+	char	*str = "  tripouille  42  ";
 	char	chr = ' ';
 	char	**ptr;
 	ptr = ft_split(str, chr);
 	printf("ptr[0]: %s\nptr[1]: %s\nptr[2]: %s\nptr[3]: %s\nptr[4]: %s\nptr[5]: %s\nptr[6]: %s\nptr[7]: %s\nptr[8]: %s\n", ptr[0], ptr[1], ptr[2], ptr[3], ptr[4], ptr[5], ptr[6], ptr[7], ptr[8]);
-}
+} */
