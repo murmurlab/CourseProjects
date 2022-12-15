@@ -6,7 +6,7 @@
 /*   By: nan0bit <nan0bit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 23:26:49 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/14 13:31:38 by nan0bit          ###   ########.fr       */
+/*   Updated: 2022/12/15 01:25:55 by nan0bit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (str);
 }
 
-int	main(void)
+/* int	main(void)
 {
 	printf("val: %p", ft_substr("ahmetf", -1, 3));
-}
+} */
