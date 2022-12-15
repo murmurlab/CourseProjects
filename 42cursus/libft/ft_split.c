@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 00:44:37 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/15 04:29:18 by ahbasara         ###   ########.fr       */
+/*   Updated: 2022/12/15 13:59:01 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,29 +91,48 @@ char	**ft_split(char const *s, char c)
 
 
 
+void	push_arr(const char *s, char **pp, size_t counter, char c)
+{
+	size_t	len;
+	char	*dest;
 
-
-
-
-
+	len = 1;
+	while (--counter)
+	{
+		if ((s[counter] != c) && (s[counter - 1] == c))
+		{
+			push_arr(s, pp - 1, counter, c);
+			break ;
+		}
+		if (s[counter] != c)
+			len++;
+	}
+	dest = malloc(sizeof(char) * len);
+	strlcpy(dest, &s[counter], len);
+	pp = &dest;
+}
 
 char	**ft_split(const char *s, char c)
 {
 	size_t	counter;
 	size_t	elem_n;
-	size_t	flag;
+	char	flag;
+	char	**pp;
 
-	counter = 0;
+	counter = -1;
 	elem_n = 0;
-	while (s[counter])
+	flag = 0;
+	while (s[++counter])
 	{
+		elem_n += ((s[counter] != 0) && (s[counter] != c)
+				&& (flag ^ (s[counter] != c)));
 		if (s[counter] != c)
 			flag = 1;
 		else
 			flag = 0;
-		elem_n += ((s[++counter] != 0) && (s[counter] != c)
-				&& (flag ^ (s[counter] != c)));
 	}
+	pp = malloc(sizeof(char *) * elem_n);
+	push_arr(s, pp, counter, c);
 	printf("elem_n: %zu\n", elem_n);
 	return (0);
 }
@@ -123,7 +142,7 @@ char	**ft_split(const char *s, char c)
 
 int	main(void)
 {
-	char	*str = "aaaa";
+	char	*str = " mojave mint rosetta fosquare murrrrr";
 	char	chr = ' ';
 	char	**ptr;
 	ptr = ft_split(str, chr);
