@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 00:44:37 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/15 16:52:49 by ahbasara         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:58:48 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	push_arr(const char *s, char **pp, size_t x, char c)
 	tmp = 0;
 	while (stock + x >= s)
 	{
-		if (*s == c && tmp)
+		if ((*s == c || *s == 0) && tmp)
 		{
 			buff = malloc(sizeof(char) * ((s - tmp) + 1));
 			strlcpy(buff, tmp, ((s - tmp) + 1));
@@ -140,7 +140,7 @@ char	**ft_split(const char *s, char c)
 	pp = malloc(sizeof(char *) * elem_n);
 	push_arr(s, pp, counter, c);
 	printf("elem_n: %zu\n", elem_n);
-	return (0);
+	return (pp);
 }
 
 
