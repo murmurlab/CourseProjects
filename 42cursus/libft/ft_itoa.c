@@ -6,23 +6,22 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:29:57 by ahbasara          #+#    #+#             */
-/*   Updated: 2022/12/16 02:35:58 by ahbasara         ###   ########.fr       */
+/*   Updated: 2022/12/16 03:00:33 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	ft_digloc(int nb, char *src)
+char	ft_diglen(int nb)
 {
 	char	digit;
 
 	digit = 2;
-	while (10 >= (nb / 10))
+	while (10 <= nb)
 	{
 		nb /= 10;
 		digit++;
 	}
-	src = (char *)malloc(sizeof(char) * digit);
 	return (digit);
 }
 
@@ -31,8 +30,9 @@ char	*ft_itoa(int n)
 	char	*str;
 	char	l;
 
-	l = ft_digloc(n, str);
-	while (--l)
+	l = ft_diglen(n);
+	str = malloc(sizeof(char) * l);
+	while (--l - 1)
 		str++;
 	*str-- = 0;
 	while (n >= 10)
@@ -40,12 +40,11 @@ char	*ft_itoa(int n)
 		*str-- = (n % 10) + 48;
 		n /= 10;
 	}
-	*str-- = (n + 48);
+	*str = (n + 48);
 	return (str);
 }
 
-int	main(int argv, char argc[][])
+/* int	main(void)
 {
-	(void)argv;
-	printf("res: %d\n", ft_itoa(1234));
-}
+	printf("res: %s\n", ft_itoa(1234));
+} */
