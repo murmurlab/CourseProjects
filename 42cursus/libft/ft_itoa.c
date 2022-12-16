@@ -6,50 +6,58 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:29:57 by ahbasara          #+#    #+#             */
-/*   Updated: 2022/12/16 03:20:20 by ahbasara         ###   ########.fr       */
+/*   Updated: 2022/12/16 19:26:28 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	ft_diglen(int nb)
+void	ft_recursive(int nb,char *str)
 {
-	char	digit;
-
-	digit = 2;
-	if (nb < 0)
+	if (nb >= 10)
 	{
-		nb *= -1;
-		digit++;
+		ft_recursive(nb / 10, str - 1);
+		*str = ((nb % 10) + 48);
 	}
-	while (10 <= nb)
-	{
-		nb /= 10;
-		digit++;
-	}
-	return (digit);
+	if (nb < 10)
+		*str = (nb + 48);
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(int nb)
 {
 	char	*str;
-	char	l;
+	char	digit;
+	char	*ostr;
+	int		n;
+	int		stat;
 
-	l = ft_diglen(n);
-	str = malloc(sizeof(char) * l);
-	while (--l - 1)
-		str++;
-	*str-- = 0;
-	while (n >= 10)
+	stat = (nb < 0);
+	n = nb;
+	digit = 2;
+	if (stat)
 	{
-		*str-- = (n % 10) + 48;
-		n /= 10;
+		n *= -1;
+		digit++;
 	}
-	*str = (n + 48);
-	return (str);
+	while (10 <= n)
+	{
+		n /= 10;
+		digit++;
+	}
+	str = malloc(sizeof(char) * digit);
+	ostr = str;
+	if (nb == -2147483648)
+		return (strcpy(str, "-2147483648"));
+	if (stat)
+	{
+		*str++ = '-';
+		nb *= -1;
+	}
+	ft_recursive(nb, (str + ((sizeof(char) * digit) - 2 - stat)));
+	return (ostr);
 }
 
 /* int	main(void)
 {
-	printf("res: %s\n", ft_itoa(1234));
+	printf("res: %s\n", ft_itoa(0));
 } */
