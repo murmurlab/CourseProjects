@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 04:44:34 by ahbasara          #+#    #+#             */
-/*   Updated: 2022/12/17 04:50:26 by ahbasara         ###   ########.fr       */
+/*   Updated: 2022/12/17 22:17:29 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,33 @@ string ’s’, and passing its index as first argument
 to create a new string (with malloc(3)) resulting
 from successive applications of ’f’. */
 
+#include "libft.h"
+
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char	*new;
-	
+	char			*new;
+	unsigned int	i;
+
 	new = malloc(sizeof(char) * (ft_strlen(s) + 1));
-	while (*s)
-	{
-		f()
-	}
-	
+	i = -1;
+	while (s[++i])
+		new[i] = f(i, s[i]);
+	new[i] = 0;
+	return (new);
+}
+
+char	upper(unsigned int i, char c)
+{
+	if (c > 96 && c < 123 && i != 0)
+		return (c - 32);
+	return (c);
+}
+
+int	main(void)
+{
+	char	*ret;
+
+	ret = malloc(sizeof(char) * 99);
+	ret = ft_strmapi("test", upper);
+	printf("val: %s", ret);
 }
