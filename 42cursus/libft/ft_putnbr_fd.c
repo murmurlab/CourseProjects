@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 22:13:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2022/12/19 22:19:43 by ahbasara         ###   ########.fr       */
+/*   Updated: 2022/12/19 22:44:42 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_putnbr_fd(int n, int fd)
 {
-    write(fd, ft_itoa(n), ft_strlen(ft_itoa(n)));
+	write(fd, ft_itoa(n), ft_strlen(ft_itoa(n)));
 }
 /* 
 int	main(void)

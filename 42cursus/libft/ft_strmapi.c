@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 04:44:34 by ahbasara          #+#    #+#             */
-/*   Updated: 2022/12/18 01:06:43 by ahbasara         ###   ########.fr       */
+/*   Updated: 2022/12/19 23:09:20 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	char			*new;
 	unsigned int	i;
 
-	if (!s || !f || !((new = malloc(sizeof(char) * (ft_strlen(s) + 1)))))
+	new = malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!s || !f || !new)
 		return (NULL);
 	i = 0;
 	while (s[i])
@@ -51,6 +52,7 @@ char	upper(unsigned int i, char c)
 	return (c);
 }
 
+/* 
 int	main(void)
 {
 	char	*ret;
@@ -59,3 +61,4 @@ int	main(void)
 	ret = ft_strmapi("test", upper);
 	printf("val: %s", ret);
 }
+ */

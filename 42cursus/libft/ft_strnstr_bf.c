@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   ft_strnstr_bf.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 18:33:22 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/12 01:53:24 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/19 23:11:27 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#if defined(LIBC_SCCS) && !defined(lint)
-static char sccsid[] = "@(#)strstr.c	8.1 (Berkeley) 6/4/93";
+#if defined(LIBC_SCCS) && !defined(lint)static char sccsid[] = "@(#)strstr.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
 
