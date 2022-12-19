@@ -1,37 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/18 07:45:26 by ahbasara          #+#    #+#             */
-/*   Updated: 2022/12/19 22:10:42 by ahbasara         ###   ########.fr       */
+/*   Created: 2022/12/19 22:09:08 by ahbasara          #+#    #+#             */
+/*   Updated: 2022/12/19 22:20:55 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-/* #include <fcntl.h>  */
 
-void	ft_putstr_fd(char	c, int fd)
+void	ft_putstr_fd(char *s, int fd)
 {
-	write(fd, &c, 1);
+	if (!s)
+		return ;
+	write(fd, s, ft_strlen(s));
 }
-
-/* int	main()
+/* 
+int	main(void)
 {
-	int		fd;
-	char	*buf;
-	size_t	rs;
-
-	buf = (char *)malloc(sizeof(char) * 2);
-	fd = open ("./WWWWWWW", O_RDWR | O_CREAT , 777);
-	printf("isopendf: %d\n", fd);
-	ft_putstr_fd("asd",fd);
-	rs = read(fd, buf, 2);
-	printf("rs: %zu\n",rs);
-	write(1, buf, 1);
-	printf("buf: %s", buf);
-	close(fd);
+	ft_putstr_fd("aaaaa", 0);
 }
  */
