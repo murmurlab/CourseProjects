@@ -1,24 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/21 04:33:08 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/21 10:34:19 by codespace        ###   ########.fr       */
+/*   Created: 2022/12/21 11:26:32 by codespace         #+#    #+#             */
+/*   Updated: 2022/12/21 11:27:01 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstdelone(t_list *lst, void (del *)(void *))
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	if (!del)
-		return ;
-	if (lst)
+	t_list	*new;
+	t_list	*tmp;
+
+	if (!lst || !f)
+		return (NULL);
+	new = ft_lstnew((*f)(lst->content));
+	if (!new)
+		return (NULL);
+	tmp = new;
+	lst = lst->next;
+	while (lst)
 	{
-		(*del)(lst->content);
-		free(lst);
+		new->next = ft_lstnew((*f)(lst->content));
+		if (!new->next)
+		{
+			ft_lstclear(&tmp, del);
+			return (NULL);
+		}
+		new = new->next;
+		lst = lst->next;
 	}
+	return (tmp);
 }

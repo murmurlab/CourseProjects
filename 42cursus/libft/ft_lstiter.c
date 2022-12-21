@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/21 04:33:08 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/21 10:34:19 by codespace        ###   ########.fr       */
+/*   Created: 2022/12/21 11:23:38 by codespace         #+#    #+#             */
+/*   Updated: 2022/12/21 11:24:35 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstdelone(t_list *lst, void (del *)(void *))
+void ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	if (!del)
+	if (!f)
 		return ;
-	if (lst)
+	while (lst)
 	{
-		(*del)(lst->content);
-		free(lst);
+		(*f)(lst->content);
+		lst = lst->next;
 	}
 }

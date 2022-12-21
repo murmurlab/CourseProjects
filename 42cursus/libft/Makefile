@@ -6,7 +6,7 @@ srcs            =	ft_isalnum.c ft_isprint.c ft_memcmp.c  ft_putchar_fd.c ft_spli
 					ft_toupper.c ft_calloc.c  ft_isdigit.c ft_memchr.c  ft_memset.c  \
 					ft_putstr_fd.c  ft_strjoin.c ft_strmapi.c ft_striteri.c ft_lstnew.c \
 					ft_lstsize.c ft_lstadd_front.c ft_lstlast.c ft_lstadd_back.c \
-					ft_lstdelone.c
+					ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
 OBJS            = $(srcs:.c=.o)
 CC              = cc
 RM              = rm -f
