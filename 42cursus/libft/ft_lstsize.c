@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:49:54 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/21 03:51:49 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/21 11:34:16 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	ft_lstsize(t_list *lst)
 	int		i;
 
 	i = 1;
-	while (tlist->next != NULL)
+	while (lst->next != NULL)
 	{
-		tlist = tlist->next;
+		lst = lst->next;
 		i++;
 	}
 	return (i);
