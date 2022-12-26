@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/12 08:42:57 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/19 23:11:08 by ahbasara         ###   ########.fr       */
+/*   Created: 2022/12/21 03:49:54 by codespace         #+#    #+#             */
+/*   Updated: 2022/12/24 09:10:24 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *str, const char *to_find, size_t len)
+int	ft_lstsize(t_list *lst)
 {
-	size_t		position;
+	size_t	i;
 
-	if (*to_find == '\0')
-		return ((char *)str);
-	position = ft_strlen((char *)to_find);
-	while (*str != '\0' && len-- >= position)
+	i = 0;
+	while (lst)
 	{
-		if (*str == *to_find && ft_memcmp(str, to_find, position) == 0)
-			return ((char *)str);
-		str++;
+		lst = lst->next;
+		i++;
 	}
-	return (NULL);
+	return (i);
 }
+
+/* {
+	size_t		i;
+
+	i = 1;
+	while (lst->next != NULL)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
+} */

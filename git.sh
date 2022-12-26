@@ -1,1 +1,1 @@
-git add . && git commit -m "auto git" && git push
+git add . && git commit -m 'a' && git push origin main

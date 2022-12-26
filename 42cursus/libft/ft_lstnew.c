@@ -1,29 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/12 08:42:57 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/19 23:11:08 by ahbasara         ###   ########.fr       */
+/*   Created: 2022/12/20 23:58:45 by codespace         #+#    #+#             */
+/*   Updated: 2022/12/21 15:22:25 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *str, const char *to_find, size_t len)
+t_list	*ft_lstnew(void *content)
 {
-	size_t		position;
+	t_list	*elt;
 
-	if (*to_find == '\0')
-		return ((char *)str);
-	position = ft_strlen((char *)to_find);
-	while (*str != '\0' && len-- >= position)
-	{
-		if (*str == *to_find && ft_memcmp(str, to_find, position) == 0)
-			return ((char *)str);
-		str++;
-	}
-	return (NULL);
+	elt = (t_list *)malloc(sizeof(*elt));
+	if (elt == NULL)
+		return (NULL);
+	elt->content = content;
+	elt->next = NULL;
+	return (elt);
 }
+
+/*
+int	main(void)
+{
+	struct s_list	*list;
+	char	*str = "Hello";
+
+	list = ft_lstnew("aaaa");
+	list->content = str;
+	printf("'list' value: %s\n", (char *)list->content);
+}
+*/

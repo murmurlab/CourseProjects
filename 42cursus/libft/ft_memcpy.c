@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:23:11 by ahbasara          #+#    #+#             */
-/*   Updated: 2022/12/10 16:59:21 by ahbasara         ###   ########.fr       */
+/*   Updated: 2022/12/19 23:43:49 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	v =ft_memcpy(str, arr, 4);
 	printf("stock: %p\n", str);
 	printf("return: %p\n", v);
-	printf("str[0]: %d\nstr[1]: %d\nstr[2]: %d\nstr[3]: %d\nstr[4]: %d\nstr[5]: %d\n", str[0], str[1], str[2], str[3], str[4], str[5]);
+	printf("str[0]: %d\nstr[1]: %d\nstr[2]: %d\nstr[3]: %d\nstr[4]:
+	%d\nstr[5]: %d\n", str[0], str[1], str[2], str[3], str[4], str[5]);
 } */

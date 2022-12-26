@@ -1,29 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/12 08:42:57 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/19 23:11:08 by ahbasara         ###   ########.fr       */
+/*   Created: 2022/12/18 07:45:26 by ahbasara          #+#    #+#             */
+/*   Updated: 2022/12/19 22:29:15 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+/* #include <fcntl.h>  */
 
-char	*ft_strnstr(const char *str, const char *to_find, size_t len)
+void	ft_putchar_fd(char c, int fd)
 {
-	size_t		position;
-
-	if (*to_find == '\0')
-		return ((char *)str);
-	position = ft_strlen((char *)to_find);
-	while (*str != '\0' && len-- >= position)
-	{
-		if (*str == *to_find && ft_memcmp(str, to_find, position) == 0)
-			return ((char *)str);
-		str++;
-	}
-	return (NULL);
+	write(fd, &c, 1);
 }
+
+/* int	main()
+{
+	int		fd;
+	char	*buf;
+	size_t	rs;
+
+	buf = (char *)malloc(sizeof(char) * 2);
+	fd = open ("./WWWWWWW", O_RDWR | O_CREAT , 777);
+	printf("isopendf: %d\n", fd);
+	ft_putstr_fd("asd",fd);
+	rs = read(fd, buf, 2);
+	printf("rs: %zu\n",rs);
+	write(1, buf, 1);
+	printf("buf: %s", buf);
+	close(fd);
+}
+ */
