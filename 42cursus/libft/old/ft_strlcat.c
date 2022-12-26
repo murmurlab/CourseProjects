@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/21 03:52:26 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/24 09:13:40 by ahbasara         ###   ########.fr       */
+/*   Created: 2022/12/13 22:16:22 by codespace         #+#    #+#             */
+/*   Updated: 2022/12/13 22:16:56 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstlast(t_list *lst)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	while (lst)
-	{
-		if (!lst->next)
-			return (lst);
-		lst = lst->next;
-	}
-	return (lst);
-}
+	size_t	i;
+	size_t	j;
 
-/* {
-	while (lst->next != NULL)
-		lst = lst->next;
-	return (lst);
-} */
+	i = 0;
+	j = 0;
+	while (dst[i] && i < size)
+		i++;
+	while (src[j] && (i + j + 1) < size)
+	{
+		dst[i + j] = src[j];
+		j++;
+	}
+	if (i < size)
+		dst[i + j] = '\0';
+	return (i + ft_strlen(src));
+}

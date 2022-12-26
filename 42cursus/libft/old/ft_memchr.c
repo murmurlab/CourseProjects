@@ -1,37 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/21 03:42:09 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/21 15:22:08 by ahbasara         ###   ########.fr       */
+/*   Created: 2022/12/11 13:29:13 by codespace         #+#    #+#             */
+/*   Updated: 2022/12/12 17:38:16 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_front(t_list **alst, t_list *new)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	if (alst)
-	{
-		if (*alst)
-			new->next = *alst;
-		*alst = new;
-	}
+	while (n-- && *(unsigned char *)s != (unsigned char)c)
+		s++;
+	if (*(unsigned char *)s == (unsigned char)c && ++n)
+		return ((void *)s);
+	return (NULL);
 }
 
-/*
-int	main(void)
+/* int	main(void)
 {
-	t_list	*list;
-	char	*str = "Hello";
-
-	list = ft_lstnew(str);
-	printf("1st: %s\n", (char *)list->content);
-	ft_lstadd_front(&list, ft_lstnew("aaaa"));
-	printf("1st: %s\n", (char *)list->next->content);
-
-}
-*/
+	int find = 2;
+	unsigned const char arr[] = {0, 1, 2 ,3 ,4 ,5};
+	void *vp;
+	vp = ft_memchr(arr, find, 3);
+	printf("locate first-> %p\n", arr);
+	printf("locate find -> %p\n", vp);
+} */

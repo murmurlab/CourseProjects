@@ -1,37 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/21 03:42:09 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/21 15:22:08 by ahbasara         ###   ########.fr       */
+/*   Created: 2022/12/11 02:52:32 by codespace         #+#    #+#             */
+/*   Updated: 2022/12/19 23:10:09 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_front(t_list **alst, t_list *new)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	if (alst)
+	while (*s1 == *s2 && n-- && *s1 && *s2)
 	{
-		if (*alst)
-			new->next = *alst;
-		*alst = new;
+		s1++;
+		s2++;
 	}
+	if (!n)
+		return (0);
+	return (*(unsigned char *)s1 - *(unsigned char *)s2);
 }
 
-/*
-int	main(void)
+/* int	main(void)
 {
-	t_list	*list;
-	char	*str = "Hello";
+	char	*kedy = "whEreareyoucatx";
+	char	*kedi = "whereareyoucat";
 
-	list = ft_lstnew(str);
-	printf("1st: %s\n", (char *)list->content);
-	ft_lstadd_front(&list, ft_lstnew("aaaa"));
-	printf("1st: %s\n", (char *)list->next->content);
-
-}
-*/
+	printf("diff: %d\n", ft_strncmp(kedy, kedi, 2));
+} */

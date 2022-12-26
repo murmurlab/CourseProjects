@@ -1,37 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/21 03:42:09 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/21 15:22:08 by ahbasara         ###   ########.fr       */
+/*   Created: 2022/12/13 22:43:02 by codespace         #+#    #+#             */
+/*   Updated: 2022/12/19 23:05:03 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_front(t_list **alst, t_list *new)
+char	*ft_strdup(const char *s1)
 {
-	if (alst)
+	char	*str;
+	size_t	i;
+
+	if (!s1)
+		return (NULL);
+	str = (char *)malloc(sizeof(*s1) * (ft_strlen(s1) + 1));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (s1[i])
 	{
-		if (*alst)
-			new->next = *alst;
-		*alst = new;
+		str[i] = s1[i];
+		i++;
 	}
+	str[i] = 0;
+	return (str);
 }
-
-/*
-int	main(void)
-{
-	t_list	*list;
-	char	*str = "Hello";
-
-	list = ft_lstnew(str);
-	printf("1st: %s\n", (char *)list->content);
-	ft_lstadd_front(&list, ft_lstnew("aaaa"));
-	printf("1st: %s\n", (char *)list->next->content);
-
-}
-*/

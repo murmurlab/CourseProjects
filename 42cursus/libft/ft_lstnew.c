@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 23:58:45 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/21 01:00:09 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/21 15:22:25 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_list	*ft_lstnew(void *content)
 	elt->next = NULL;
 	return (elt);
 }
+
 /*
 int	main(void)
 {

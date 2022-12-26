@@ -13,15 +13,6 @@
 # define LIBFT_H
 
 # include "libft.h"
-# ifndef STDDEF_H
-#  include <stddef.h>
-# endif
-# ifndef STDIO_H
-#  include <stdio.h>
-# endif
-# ifndef STRING_H
-#  include <string.h>
-# endif
 # ifndef STDLIB_H
 #  include <stdlib.h>
 # endif

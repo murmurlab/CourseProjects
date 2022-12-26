@@ -1,37 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/21 03:42:09 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/21 15:22:08 by ahbasara         ###   ########.fr       */
+/*   Created: 2022/12/18 07:45:26 by ahbasara          #+#    #+#             */
+/*   Updated: 2022/12/19 22:29:15 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+/* #include <fcntl.h>  */
 
-void	ft_lstadd_front(t_list **alst, t_list *new)
+void	ft_putchar_fd(char c, int fd)
 {
-	if (alst)
-	{
-		if (*alst)
-			new->next = *alst;
-		*alst = new;
-	}
+	write(fd, &c, 1);
 }
 
-/*
-int	main(void)
+/* int	main()
 {
-	t_list	*list;
-	char	*str = "Hello";
+	int		fd;
+	char	*buf;
+	size_t	rs;
 
-	list = ft_lstnew(str);
-	printf("1st: %s\n", (char *)list->content);
-	ft_lstadd_front(&list, ft_lstnew("aaaa"));
-	printf("1st: %s\n", (char *)list->next->content);
-
+	buf = (char *)malloc(sizeof(char) * 2);
+	fd = open ("./WWWWWWW", O_RDWR | O_CREAT , 777);
+	printf("isopendf: %d\n", fd);
+	ft_putstr_fd("asd",fd);
+	rs = read(fd, buf, 2);
+	printf("rs: %zu\n",rs);
+	write(1, buf, 1);
+	printf("buf: %s", buf);
+	close(fd);
 }
-*/
+ */

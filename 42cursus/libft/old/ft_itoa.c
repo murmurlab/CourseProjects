@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:29:57 by ahbasara          #+#    #+#             */
-/*   Updated: 2022/12/21 15:21:12 by ahbasara         ###   ########.fr       */
+/*   Updated: 2022/12/17 04:36:06 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,6 @@ void	ft_recursive(int nb, char *str)
 	}
 	if (nb < 10)
 		*str = (nb + 48);
-}
-
-char	*ft_strcpy(char *dest, char *src)
-{
-	int	i;
-
-	i = 0;
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
 }
 
 char	*ft_itoa(int nb)
@@ -55,7 +41,7 @@ char	*ft_itoa(int nb)
 	str = malloc(sizeof(char) * digit);
 	ostr = str;
 	if (nb == -2147483648)
-		return (ft_strcpy(str, "-2147483648"));
+		return (strcpy(str, "-2147483648"));
 	if (stat)
 	{
 		*str++ = '-';

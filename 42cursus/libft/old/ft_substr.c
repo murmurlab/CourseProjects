@@ -1,37 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/21 03:42:09 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/21 15:22:08 by ahbasara         ###   ########.fr       */
+/*   Created: 2022/12/13 23:26:49 by codespace         #+#    #+#             */
+/*   Updated: 2022/12/19 23:10:46 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_front(t_list **alst, t_list *new)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	if (alst)
+	size_t	i;
+	size_t	j;
+	char	*str;
+
+	str = (char *)malloc(sizeof(*s) * (len + 1));
+	if (!str)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s[i])
 	{
-		if (*alst)
-			new->next = *alst;
-		*alst = new;
+		if (i >= start && j < len)
+		{
+			str[j] = s[i];
+			j++;
+		}
+		i++;
 	}
+	str[j] = 0;
+	return (str);
 }
 
-/*
-int	main(void)
+/* int	main(void)
 {
-	t_list	*list;
-	char	*str = "Hello";
-
-	list = ft_lstnew(str);
-	printf("1st: %s\n", (char *)list->content);
-	ft_lstadd_front(&list, ft_lstnew("aaaa"));
-	printf("1st: %s\n", (char *)list->next->content);
-
-}
-*/
+	printf("val: %p", ft_substr("ahmetf", -1, 3));
+} */

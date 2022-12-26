@@ -1,37 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/21 03:42:09 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/21 15:22:08 by ahbasara         ###   ########.fr       */
+/*   Created: 2022/12/20 23:58:45 by codespace         #+#    #+#             */
+/*   Updated: 2022/12/21 01:00:09 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_front(t_list **alst, t_list *new)
+t_list	*ft_lstnew(void *content)
 {
-	if (alst)
-	{
-		if (*alst)
-			new->next = *alst;
-		*alst = new;
-	}
-}
+	t_list	*elt;
 
+	elt = (t_list *)malloc(sizeof(*elt));
+	if (elt == NULL)
+		return (NULL);
+	elt->content = content;
+	elt->next = NULL;
+	return (elt);
+}
 /*
 int	main(void)
 {
-	t_list	*list;
+	struct s_list	*list;
 	char	*str = "Hello";
 
-	list = ft_lstnew(str);
-	printf("1st: %s\n", (char *)list->content);
-	ft_lstadd_front(&list, ft_lstnew("aaaa"));
-	printf("1st: %s\n", (char *)list->next->content);
-
+	list = ft_lstnew("aaaa");
+	list->content = str;
+	printf("'list' value: %s\n", (char *)list->content);
 }
 */

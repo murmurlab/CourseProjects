@@ -1,30 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/21 03:52:26 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/24 09:13:40 by ahbasara         ###   ########.fr       */
+/*   Created: 2022/12/11 01:14:58 by codespace         #+#    #+#             */
+/*   Updated: 2022/12/11 01:16:16 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-t_list	*ft_lstlast(t_list *lst)
+int	ft_tolower(int c)
 {
-	while (lst)
-	{
-		if (!lst->next)
-			return (lst);
-		lst = lst->next;
-	}
-	return (lst);
+	if ((unsigned char)c > 64 && (unsigned char)c < 91)
+		return (c + 32);
+	return (c);
 }
-
-/* {
-	while (lst->next != NULL)
-		lst = lst->next;
-	return (lst);
-} */
