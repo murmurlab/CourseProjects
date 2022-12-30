@@ -1,7 +1,6 @@
 # ecole42kocaeli
 
 ## 42cursus
-
 ---
 #### libft
 
