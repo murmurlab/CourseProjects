@@ -1,7 +1,5 @@
 # ecole42kocaeli
 
----
-
 ## piscine42
 - ### shell00
 	*Loading...*
