@@ -1,5 +1,14 @@
 # ecole42kocaeli
 
+---
+
+## piscine42
+- ### shell00
+	*Loading...*
+- ### shell01
+	*Loading...*
+- ### c00
+	*Loading...*
 ## 42cursus
 
 ---
