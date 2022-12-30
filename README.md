@@ -1,15 +1,19 @@
 # ecole42kocaeli
 
-## piscine42
+ecole42 is ...
+
+---
+
+## piscine42 projects
 - ### shell00
 	*Loading...*
 - ### shell01
 	*Loading...*
 - ### c00
 	*Loading...*
-## 42cursus
-
----
+- ### ...
+	...
+## 42cursus projects
 
 - ### libft
 
