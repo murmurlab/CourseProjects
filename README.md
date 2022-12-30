@@ -15,7 +15,7 @@ ecole42 is ...
 	...
 ## 42cursus projects
 
-- ### <a href="https://github.com/murmurlab/ecole42kocaeli/tree/main/42cursus/libft"> libft </a>
+- ### <a href="/ecole42kocaeli/tree/main/42cursus/libft"> libft </a>
 
 	*125%*
 
