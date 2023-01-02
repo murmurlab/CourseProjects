@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nan0bit <nan0bit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 16:04:43 by ahbasara          #+#    #+#             */
-/*   Updated: 2022/12/30 16:45:33 by ahbasara         ###   ########.fr       */
+/*   Updated: 2022/12/31 21:00:11 by nan0bit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,15 @@ int	ft_printf(const char *s, ...)
 	va_start(argl, s);
 	while (*s)
 	{
-		if (*s == '%' && *(s + 1))
+		if (*s == '%' && *++s)
 		{
-			if (*++s == 'c')
+			if (*s == 'c')
 				write(1, va_arg(argl, char), 1);
+			else if (*s == 's')
+			{
+				/* code */
+			}
+			
 		}
 		else
 			write(1, s++, 1);
