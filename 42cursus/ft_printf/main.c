@@ -6,15 +6,14 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 21:09:04 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/01/05 08:38:59 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/01/05 10:04:59 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-int	ft_printf(const char *s, ...);
-
 int	main(void)
 {
-	ft_printf("Hello, %s!", "World");
+	//ft_printf("Hello, %s!", "World");
+	write(1, "asdasd", 0);
 }
