@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 21:09:04 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/01/05 10:04:59 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/01/05 13:31:21 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,10 @@
 int	main(void)
 {
 	//ft_printf("Hello, %s!", "World");
-	write(1, "asdasd", 0);
+	char *s[3];
+	s[0] = "Hel0lo";
+	s[1] = "Hel1lo";
+	s[2] = "Hel2lo";
+	//s[3] = "Hel3lo";
+	write(1, s[0], 5);
 }

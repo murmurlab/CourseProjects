@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 16:04:43 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/01/05 11:38:42 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/01/06 02:23:41 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,16 @@ size_t	ft_putstr(char *s, char p)
 void	ft_itoa_base(int n, char *set)
 {
 	char	base;
-	
+
 	base = ft_putstr(set, 0);
-	if(n < 0)
+	if (n < 0)
 	{
 		write(1, "-", 1);
 		n = -n;
 	}
-	while (/* condition */)
-	{
-		/* code */
-	}
-	
-	if(n > )
+	if (n > base)
+		ft_itoa_base(n / base, set);
+	write(1, &set[n % base], 1);
 }
 
 size_t	ft_printf(const char *s, ...)
