@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 08:36:33 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/01/05 08:37:10 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/01/05 08:47:04 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define UTILS_H
 # include <stdarg.h>
 # include <unistd.h>
-# include <stdlib.h>
+# include <stddef.h>
 # include <stdio.h>
 #endif
+
+size_t	ft_printf(const char *s, ...);
+size_t	ft_putstr(char *s);

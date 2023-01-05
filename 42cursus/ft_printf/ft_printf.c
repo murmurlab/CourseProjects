@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 16:04:43 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/01/05 08:37:37 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/01/05 08:44:10 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,7 @@ size_t	ft_putstr(char *s)
 	return (i);
 }
 
-size_t	ft_strlen(char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-int	ft_printf(const char *s, ...)
+size_t	ft_printf(const char *s, ...)
 {
 	va_list	argl;
 	char	*stock;
@@ -44,13 +34,13 @@ int	ft_printf(const char *s, ...)
 		if (*s == '%' && *++s)
 		{
 			if (*s == 'c')
-				//ft_putstr(va_arg(argl, char*));
 				write(1, va_arg(argl, char*), 1);
 			else if (*s == 's')
 				//write(1, va_arg(argl, char*), ft_strlen(va_arg(argl, char*)));
 				ft_putstr(va_arg(argl, char*));
 			else if (*s == 'd')
 			{
+				
 				//ft_putnbr(va_arg(argl, int));
 			}
 		}
