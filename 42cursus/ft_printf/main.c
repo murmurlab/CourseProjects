@@ -12,8 +12,19 @@
 
 #include "utils.h"
 
-int	main(void)
-{
-	ft_printf("my, %x\n", -2341952);
-	printf("orig, %x\n", -2341952);
-}
+
+
+/* if (*s != '%')
+			write(1, s, 1);		
+		else if (*++s == 'c')
+			write(1, va_arg(argl, char*), 1);
+		else if (*s == 's')
+			//write(1, va_arg(argl, char*), ft_strlen(va_arg(argl, char*)));
+			ft_putstr(va_arg(argl, char*), 1);
+		else if (*s == 'p')
+			ft_itoa_base(va_arg(argl, unsigned long), "0123456789abcdef", (ft_putstr("0x", 2) && 0));
+		else if (*s == 'd')
+			ft_itoa_base(va_arg(argl, int), "0123456789", 1);
+		else if (*s == 'x')
+			ft_itoa_base(va_arg(argl, unsigned long), "0123456789abcdef", 0);
+		s++; */
