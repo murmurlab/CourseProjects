@@ -10,23 +10,23 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "ft_printf.h"
 
-size_t	ft_putstr(char *s, char p)
+size_t	ft_putstr(char *s, char p, char kar)
 {
 	size_t	i;
 
 	i = 0;
-	while (s[i])
+	while (s && s[i] && !kar)
 		write(1, &s[i++], p);
-	return (i);
+	return (write(1, &kar, 1) + i);
 }
 
 size_t	ft_itoa_base(unsigned long n, char *set, char sign)
 {
 	char	base;
 
-	base = ft_putstr(set, 0);
+	base = ft_putstr(set, 0, 0);
 	if ((int)n < 0 && sign)
 	{
 		write(1, "-", 1);
@@ -45,14 +45,16 @@ size_t	ft_printf(const char *s, ...)
 
 	stock = (char *)s;
 	va_start(argl, s);
+
+	//ft_putstr(NULL, 1, va_arg(argl, int));
 	while (*s)
 	{
 
 		s += (
 			-1*~(0 + !(((*s != '%') && (write(1, s, 1) || 1)) ||
-			!(((*(s + 1) == 'c') && (write(1, va_arg(argl, char*), 1) || 1)) || 
-			((*(s + 1) == 's') && (ft_putstr(va_arg(argl, char*), 1) || 1)) ||
-			((*(s + 1) == 'p') && (ft_itoa_base(va_arg(argl, unsigned long), "0123456789abcdef", (ft_putstr("0x", 2) && 0)) || 1)) ||
+			!(((*(s + 1) == 'c') && (ft_putstr(NULL, 1, va_arg(argl, int)) || 1)) || 
+			((*(s + 1) == 's') && (ft_putstr(va_arg(argl, char*), 1, 0) || 1)) ||
+			((*(s + 1) == 'p') && (ft_itoa_base(va_arg(argl, unsigned long), "0123456789abcdef", (ft_putstr("0x", 2, 0) && 0)) || 1)) ||
 			((*(s + 1) == 'd') && (ft_itoa_base(va_arg(argl, int), "0123456789", 1) || 1)) ||
 			((*(s + 1) == 'x') && (ft_itoa_base(va_arg(argl, unsigned int), "0123456789abcdef", 0) || 1)) ||
 			((*(s + 1) == 'X') && (ft_itoa_base(va_arg(argl, unsigned int), "0123456789ABCDEF", 0) || 1)) ||
@@ -69,6 +71,9 @@ size_t	ft_printf(const char *s, ...)
 {
 	//int a;
 	//void	*p = &a;
-	ft_printf("my,   |%o| asdds\n", -1234);
-	printf("orig, %d asdds\n", (~4));
+	char b;
+
+	b = 'w';
+	ft_printf("my,   |%c| asdds\n", b);
+	printf("or,   |%c| asdds\n", b);
 } */

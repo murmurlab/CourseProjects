@@ -18,6 +18,6 @@
 # include <stdio.h>
 
 size_t	ft_printf(const char *s, ...);
-size_t	ft_putstr(char *s, char p);
+size_t	ft_putstr(char *s, char p, char kar);
 
 #endif
