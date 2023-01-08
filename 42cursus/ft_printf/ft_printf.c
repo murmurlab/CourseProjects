@@ -12,59 +12,65 @@
 
 #include "ft_printf.h"
 
-size_t	ft_putstr(char *s, char p, char kar)
+unsigned long long int	mr_putstr(char *s, char p, char kar)
 {
-	size_t	i;
+	unsigned long long int	i;
 
 	i = 0;
-	while (s && s[i] && !kar)
+	while (s && s[i])
 		write(1, &s[i++], p);
-	return (write(1, &kar, 1) + i);
+	return (( && write(1, &kar, (!s || 0))) + i);
 }
 
-size_t	ft_itoa_base(unsigned long n, char *set, char sign)
+unsigned long long int	itoa_base_v2(unsigned long long int i, char *s, char m)
 {
-	char	base;
+	unsigned long long int	digit;
+	unsigned long long int	lne;
+	char					base;
 
-	base = ft_putstr(set, 0, 0);
-	if ((int)n < 0 && sign)
+	base = mr_putstr(s, 0, 0);
+	lne = 1;
+	digit = 1;
+
+	if (m && (long long int)i < 0)
 	{
-		write(1, "-", 1);
-		n *= -1;
+		write(1, "-", (lne++ || 1));
+		i *= -1;
 	}
-	if (n >= (unsigned long)base)
-		ft_itoa_base(n / base, set, sign);
-	write(1, &set[n % base], 1);
-	return (1);
+	while (i / (digit * base))
+		digit *= base * (lne++ || 1);
+	while (digit && (i / digit || !i))
+	{
+		mr_putstr(NULL, 1, s[(i / digit) % base]);
+		digit /= base;
+	}
+	return (lne);
 }
 
-size_t	ft_printf(const char *s, ...)
+int	ft_printf(const char *s2, ...)
 {
-	va_list	argl;
-	char	*stock;
+	unsigned long long int	lne;
+	va_list					argl;
+	char					*s;
 
-	stock = (char *)s;
-	va_start(argl, s);
-
-	//ft_putstr(NULL, 1, va_arg(argl, int));
+	s = (char*)s2;
+	lne = 0;
+	va_start(argl, s2);
 	while (*s)
 	{
-
-		s += (
-			-1*~(0 + !(((*s != '%') && (write(1, s, 1) || 1)) ||
-			!(((*(s + 1) == 'c') && (ft_putstr(NULL, 1, va_arg(argl, int)) || 1)) || 
-			((*(s + 1) == 's') && (ft_putstr(va_arg(argl, char*), 1, 0) || 1)) ||
-			((*(s + 1) == 'p') && (ft_itoa_base(va_arg(argl, unsigned long), "0123456789abcdef", (ft_putstr("0x", 2, 0) && 0)) || 1)) ||
-			((*(s + 1) == 'd') && (ft_itoa_base(va_arg(argl, int), "0123456789", 1) || 1)) ||
-			((*(s + 1) == 'x') && (ft_itoa_base(va_arg(argl, unsigned int), "0123456789abcdef", 0) || 1)) ||
-			((*(s + 1) == 'X') && (ft_itoa_base(va_arg(argl, unsigned int), "0123456789ABCDEF", 0) || 1)) ||
-			((*(s + 1) == 'u') && (ft_itoa_base(va_arg(argl, unsigned int), "0123456789", 1) || 1)) ||
-			1
-			)))
+		(
+			((*s != '%') && ((lne += mr_putstr(NULL, 1, *s++)) || 1))
+			|| (((*(++s)) == 'c' && s++) && ((lne += mr_putstr(NULL, 1, va_arg(argl, int))) || 1))
+			|| ((*s == 's' && s++) && ((lne += mr_putstr(va_arg(argl, char*), 1, 0)) || 1))
+			|| ((*s == 'u' && s++) && ((lne += itoa_base_v2(va_arg(argl, unsigned int), "0123456789", 0)) || 1))
+			|| (((*s == 'd' || *s == 'i' || *s == 'u') && s++) && ((lne += itoa_base_v2(va_arg(argl, int), "0123456789", 1)) || 1))
+			|| ((*s == 'p' && s++) && ((lne += itoa_base_v2(va_arg(argl, unsigned long), "0123456789abcdef", 0)) || 1))
+			|| ((*s == 'x' && s++) && ((lne += itoa_base_v2(va_arg(argl, unsigned int), "0123456789abcdef", 0)) || 1))
+			|| ((*s == 'X' && s++) && ((lne += itoa_base_v2(va_arg(argl, unsigned int), "0123456789ABCDEF", 0)) || 1))
+			|| ((*s == '%' && s++) && ((lne += mr_putstr(NULL, 1, '%')) || 1))
 		);
-		
-	}	
-	return (s - stock);
+	}
+		return ((int)lne);
 }
 
 /* int	main(void)
@@ -74,6 +80,6 @@ size_t	ft_printf(const char *s, ...)
 	char b;
 
 	b = 'w';
-	ft_printf("my,   |%c| asdds\n", b);
-	printf("or,   |%c| asdds\n", b);
+	printf("%d\n", ft_printf("|my,   |%c%c%c| asdds|", 'a', 'b', 'c'));
+	printf("%d", printf("|or,   |%c%c%c| asdds|", 'a', 'b', 'c'));
 } */
