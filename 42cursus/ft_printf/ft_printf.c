@@ -12,36 +12,37 @@
 
 #include "ft_printf.h"
 
-unsigned long long int	mr_putstr(char *s, char p, char kar)
+unsigned long long int	_(char *s, char p, char kar)
 {
 	unsigned long long int	i;
 
 	i = 0;
+	if (p && !s)
+		return (write(1, "(null)", 6));
 	while (s && s[i])
 		write(1, &s[i++], p);
-	return (( && write(1, &kar, (!s || 0))) + i);
+	return ((!s && write(1, &kar, (!s || 0))) + i);
 }
 
-unsigned long long int	itoa_base_v2(unsigned long long int i, char *s, char m)
+unsigned long long int	x(unsigned long long int i, char *s, char m)
 {
 	unsigned long long int	digit;
 	unsigned long long int	lne;
 	char					base;
 
-	base = mr_putstr(s, 0, 0);
+	base = _(s, 0, 0);
 	lne = 1;
 	digit = 1;
-
 	if (m && (long long int)i < 0)
 	{
 		write(1, "-", (lne++ || 1));
 		i *= -1;
 	}
-	while (i / (digit * base))
-		digit *= base * (lne++ || 1);
+	while ((digit * base) && i / (digit * base))
+		digit *= (base * (lne++ || 1));
 	while (digit && (i / digit || !i))
 	{
-		mr_putstr(NULL, 1, s[(i / digit) % base]);
+		_(NULL, 0, s[(i / digit) % base]);
 		digit /= base;
 	}
 	return (lne);
@@ -53,33 +54,24 @@ int	ft_printf(const char *s2, ...)
 	va_list					argl;
 	char					*s;
 
-	s = (char*)s2;
+	s = (char *)s2;
 	lne = 0;
 	va_start(argl, s2);
 	while (*s)
 	{
-		(
-			((*s != '%') && ((lne += mr_putstr(NULL, 1, *s++)) || 1))
-			|| (((*(++s)) == 'c' && s++) && ((lne += mr_putstr(NULL, 1, va_arg(argl, int))) || 1))
-			|| ((*s == 's' && s++) && ((lne += mr_putstr(va_arg(argl, char*), 1, 0)) || 1))
-			|| ((*s == 'u' && s++) && ((lne += itoa_base_v2(va_arg(argl, unsigned int), "0123456789", 0)) || 1))
-			|| (((*s == 'd' || *s == 'i' || *s == 'u') && s++) && ((lne += itoa_base_v2(va_arg(argl, int), "0123456789", 1)) || 1))
-			|| ((*s == 'p' && s++) && ((lne += itoa_base_v2(va_arg(argl, unsigned long), "0123456789abcdef", 0)) || 1))
-			|| ((*s == 'x' && s++) && ((lne += itoa_base_v2(va_arg(argl, unsigned int), "0123456789abcdef", 0)) || 1))
-			|| ((*s == 'X' && s++) && ((lne += itoa_base_v2(va_arg(argl, unsigned int), "0123456789ABCDEF", 0)) || 1))
-			|| ((*s == '%' && s++) && ((lne += mr_putstr(NULL, 1, '%')) || 1))
+		(((*s != '%') && ((lne += _(NULL, 0, *s++)) || 1)) || (((*(++s)) == \
+		'c' && s++) && ((lne += _(NULL, 0, va_arg(argl, int))) || 1)) || ((*\
+		s == 's' && s++) && ((lne += _(va_arg(argl, char*), 1, 0)) || 1)) || \
+		((*s == 'u' && s++) && ((lne += x(va_arg(argl, unsigned int), \
+		"0123456789", 0)) || 1)) || (((*s == 'd' || *s == 'i' || *s == 'u') && \
+		s++) && ((lne += x(va_arg(argl, int), "0123456789", 1)) || 1)) || ((*s \
+		== 'p' && s++) && ((lne += (_("0x", 1, 0) + x(va_arg(argl, unsigned \
+		long), "0123456789abcdef", 0))) || 1)) || ((*s == 'x' && s++) && ((lne \
+		+= x(va_arg(argl, unsigned int), "0123456789abcdef", 0)) || 1)) || ((*s \
+		== 'X' && s++) && ((lne += x(va_arg(argl, unsigned int), \
+		"0123456789ABCDEF", 0)) || 1)) || ((*s == '%' && s++) && ((lne += _(\
+		NULL, 0, '%')) || 1))
 		);
 	}
-		return ((int)lne);
+	return ((int)lne);
 }
-
-/* int	main(void)
-{
-	//int a;
-	//void	*p = &a;
-	char b;
-
-	b = 'w';
-	printf("%d\n", ft_printf("|my,   |%c%c%c| asdds|", 'a', 'b', 'c'));
-	printf("%d", printf("|or,   |%c%c%c| asdds|", 'a', 'b', 'c'));
-} */
