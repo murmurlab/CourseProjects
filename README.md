@@ -36,7 +36,9 @@
 
 - ### [ft_printf](42cursus/ft_printf)
 
-    *Loading...*
+    *100%*
+
+    > test_spdxiucpercent: 8/8 correct functions | bonus_one: KO (Does not compile) | bonus_two: KO (Does not compile)
 
 - ### [get_next_line](42cursus/get_next_line)
 
