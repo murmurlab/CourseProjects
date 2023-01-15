@@ -1,6 +1,5 @@
 {
 	"files.associations": {
-		"stddef.h": "c"
-	},
-	"C_Cpp.errorSquiggles": "disabled"
+		"get_next_line.h": "c"
+	}
 }
