@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 05:34:48 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/19 14:03:18 by codespace        ###   ########.fr       */
+/*   Updated: 2023/01/20 10:47:12 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ char	*get_next_line(int fd)
 	static size_t	index;
 	ssize_t			err;
 
+	if (0 > fd)
+		return (NULL);
 	line = malloc(1);
 	line[0] = 0;
 	if (!buffer)
@@ -51,7 +53,9 @@ char	*get_next_line(int fd)
 			line = ft_strjoin(line, ft_substr(buffer, index, buffer_index - index), 1);
 			free(buffer);
 			buffer = malloc(BUFFER_SIZE);
-			read(fd, buffer, BUFFER_SIZE);
+			err = read(fd, buffer, BUFFER_SIZE);
+			if (!err)
+				return ("");
 			buffer_index = -1;
 			index = 0;
 		}

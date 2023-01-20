@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 00:49:51 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/19 13:58:46 by codespace        ###   ########.fr       */
+/*   Updated: 2023/01/20 10:51:42 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,17 @@ int	main(void)
 	l[0] = read(1000, l, 44);
  */
 
-	while (i++ < 19)
+
+
+	close(fd);
+	l = get_next_line(fd);
+
+
+
+
+
+
+	while (i++ < 21)
 	{
  		l = get_next_line(fd);
 		write(1, l, ft_strlen(l));
