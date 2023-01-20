@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 05:34:48 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/20 15:15:27 by codespace        ###   ########.fr       */
+/*   Updated: 2023/01/20 16:17:35 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,19 @@ char	init(int *fd, char **line, char **buffer, ssize_t *err)
 	return (0);
 }
 
+int	check(char *buffer, size_t *buffer_index, char **line, size_t *index)
+{
+	if (buffer[*buffer_index] == '\n')
+	{
+		*line = ft_strjoin(*line, ft_substr(buffer, *index, (*buffer_index
+						- *index + 1)), 1);
+		(*buffer_index)++;
+		*index = *buffer_index;
+		return (1);
+	}
+	return (0);
+}
+
 char	norminette(char **buffer, char **line, ssize_t *err, int *fd)
 {
 	static size_t	buffer_index;
@@ -39,14 +52,8 @@ char	norminette(char **buffer, char **line, ssize_t *err, int *fd)
 
 	while (1)
 	{
-		if (buffer[0][buffer_index] == '\n')
-		{
-			*line = ft_strjoin(*line, ft_substr(*buffer, index, (buffer_index
-							- index + 1)), 1);
-			buffer_index++;
-			index = buffer_index;
+		if (check(*buffer, &buffer_index, line, &index))
 			break ;
-		}
 		if (buffer_index == BUFFER_SIZE)
 		{
 			*line = ft_strjoin(*line, ft_substr(*buffer, index, buffer_index

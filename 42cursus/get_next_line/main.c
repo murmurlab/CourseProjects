@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 00:49:51 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/20 12:10:19 by codespace        ###   ########.fr       */
+/*   Updated: 2023/01/20 16:20:01 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-int	main(void)
+void funct()
 {
 	int		fd;
 	int		i;
@@ -44,4 +44,10 @@ int	main(void)
 			write(1, l, ft_strlen(l));
 	}
 	close(fd);
+}
+
+int	main(void)
+{
+	funct();
+	system("leaks a.out");
 }
