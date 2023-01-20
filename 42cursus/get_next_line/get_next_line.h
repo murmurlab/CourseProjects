@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 00:46:12 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/19 14:10:21 by codespace        ###   ########.fr       */
+/*   Updated: 2023/01/20 11:43:01 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdlib.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
+#  define BUFFER_SIZE 22
 # endif
 
 size_t	ft_strlen(const char *s);
