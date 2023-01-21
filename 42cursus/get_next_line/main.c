@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 00:49:51 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/20 16:20:01 by codespace        ###   ########.fr       */
+/*   Updated: 2023/01/20 19:34:06 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,14 @@ void funct()
 	l[0] = read(1000, l, 44);
  */
 
-
-
-
-	l = get_next_line(fd);
-
-
-
-
-
-
-	while (i++ < 21)
+	while (i++ < 9)
 	{
  		l = get_next_line(fd);
 		if (l)
+		{
 			write(1, l, ft_strlen(l));
+			free(l);
+		}
 	}
 	close(fd);
 }
