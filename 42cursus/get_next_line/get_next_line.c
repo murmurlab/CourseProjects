@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 05:34:48 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/20 19:38:34 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/01/22 11:48:02 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char	init(int *fd, char **line, char **buffer, ssize_t *err)
 		if (!*err || (int)*err == -1)
 		{
 			free(*buffer);
+			*buffer = NULL;
 			free(*line);
 			return (1);
 		}
@@ -82,6 +83,10 @@ char	*get_next_line(int fd)
 		return (NULL);
 	norminette_return_value = norminette(&buffer, &line, &err, &fd);
 	if (norminette_return_value)
-		return ("");
+	{
+		free(line);
+		//free(buffer);
+		return (malloc(1));
+	}
 	return (line);
 }
