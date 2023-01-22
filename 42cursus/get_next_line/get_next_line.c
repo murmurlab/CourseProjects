@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 05:34:48 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/22 11:48:02 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/01/22 14:06:08 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	check(char *buffer, size_t *buffer_index, char **line, size_t *index)
 	if (buffer[*buffer_index] == '\n')
 	{
 		*line = ft_strjoin(*line, ft_substr(buffer, *index, (*buffer_index
-						- *index + 1)), 1);
+						- *index + 1), 0), 1);
 		(*buffer_index)++;
 		*index = *buffer_index;
 		return (1);
@@ -58,8 +58,8 @@ char	norminette(char **buffer, char **line, ssize_t *err, int *fd)
 		if (buffer_index == BUFFER_SIZE)
 		{
 			*line = ft_strjoin(*line, ft_substr(*buffer, index, buffer_index
-						- index), 1);
-			free(*buffer);
+						- index, 1), 1);
+			//free(*buffer);
 			*buffer = malloc(BUFFER_SIZE);
 			*err = read(*fd, *buffer, BUFFER_SIZE);
 			if (!*err)

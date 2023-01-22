@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 00:51:22 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/22 06:32:18 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/01/22 13:52:21 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *s)
 	return (c);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len, char x)
 {
 	size_t	i;
 	size_t	j;
@@ -44,6 +44,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		}
 	}
 	str[j] = 0;
+	if (x)
+		free((char *)s);
 	return (str);
 }
 
