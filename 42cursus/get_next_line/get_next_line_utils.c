@@ -6,11 +6,23 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 00:51:22 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/22 13:52:21 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/01/23 19:14:47 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*ft_strchr(const char *s, int c)
+{
+	while (*s)
+	{
+		if (*s++ == (char)c)
+			return ((char *)s - 1);
+	}
+	if ((char)c == '\0')
+		return ((char *)s);
+	return (NULL);
+}
 
 size_t	ft_strlen(const char *s)
 {
