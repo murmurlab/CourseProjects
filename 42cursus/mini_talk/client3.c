@@ -5,49 +5,60 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/13 12:09:19 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/02/13 12:12:11 by ahbasara         ###   ########.fr       */
+/*   Created: 2022/12/12 18:28:51 by yciftci           #+#    #+#             */
+/*   Updated: 2023/02/03 19:24:43 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
-#include <unistd.h>
-#include "../libft/libft.h"
+#include "mini_talk.h"
 
-char	**_message;
-
-void	to_bit(int sig)
+static void	get_bit(int pid, char c)
 {
-	static int	i = 0;
+	int	bit;
+	int	n;
+	int	i;
 
-	if (i == 8)
+	n = 7;
+	i = 0;
+	while (n >= 0)
 	{
-		if (!*(_message + 2))
-		{		
-			return ;
-		}
-		(*(2 + _message))++;
-		i = 0;
+		bit = (c >> n) & 1;
+		if (bit == 0)
+			kill(pid, SIGUSR1);
+		else
+			kill(pid, SIGUSR2);
+		usleep(50);
+		n--;
 	}
-	if ((**(_message + 2) >> i) | 1)
-		kill(**(_message + 1), SIGUSR2);
-	else
-		kill(**(_message + 1), SIGUSR1);
-	i++;
 }
 
-void	send_char(char c)
+static void	get_char(int pid, char *str)
 {
-	//to_bit(_message[i]);
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		get_bit(pid, str[i]);
+		i++;
+	}
 }
 
-int	main(int argc, char **argv)
+int	main(int argc, char *argv[])
 {
 	int	pid;
 
+	if (argc < 3)
+	{
+		ft_putstr_fd(LOWARGERR, 1);
+		return (0);
+	}
+	if (argc > 3)
+	{
+		ft_putstr_fd(TOOARGERR, 1);
+		return (0);
+	}
 	pid = ft_atoi(argv[1]);
-	_message = argv;
-	*(_message + 1) = (char *)&pid;
-	to_bit(0);
-	signal(SIGUSR1, to_bit);
+	get_char(pid, argv[2]);
+	return (0);
 }

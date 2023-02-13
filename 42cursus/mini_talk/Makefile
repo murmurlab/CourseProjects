@@ -1,22 +1,13 @@
-NAME = libft.a
-LIBFT = Libft
+CC		= cc
+CFLAGS	= -Wall -Wextra -Werror
+libft	= ../libft/libft
 
-all: $(NAME)
-	gcc server.c $(NAME) -o server
-	gcc client.c $(NAME) -o client
-
-$(NAME): $(LIBFT)
-	make -C $(LIBFT)
-	cp Libft/libft.a .
-
+libft:
+	cd ../libft
+	make re
+all: libft
+	${CC} client.c libft -o client
+	${CC} server.c libft -o server
 clean:
-	make clean -C $(LIBFT)
-
-fclean: clean
-	make fclean -C $(LIBFT)
-	rm -rf $(NAME)
-	rm -rf server client
-
-re: fclean all
-
-.PHONY: clean fclean all
+	rm -fr client server
+re: clean all
