@@ -1,7 +1,7 @@
-srcs            = ${find . ! -name ft_lst*.c -name ft_*.c}
+srcs            = $(shell find . ! -name "ft_lst*.c" -name "ft_*.c")
 OBJS            = $(srcs:.c=.o)
 
-BONUS			= ${wildcard ft_lst*.c}
+BONUS			= $(wildcard ft_lst*.c)
 BONUS_OBJS		= $(BONUS:.c=.o)
 
 CC              = cc
@@ -13,12 +13,10 @@ NAME			= libft.a
 all:            $(NAME)
 
 $(NAME):        $(OBJS)
-				
 				ar rcs $(NAME) $(OBJS)
-
 clean: 
-				$(RM) $(OBJS)
-
+				$(RM) $(OBJS) $(BONUS_OBJS)
+				
 fclean:         clean
 				$(RM) $(NAME)
 
