@@ -28,7 +28,7 @@
         "type": "cppdbg",
         "request": "launch",
         "program": "${workspaceFolder}/42cursus/mini_talk/client",
-        "args": ["3800", "asd"],
+        "args": ["17925", "asd"],
         "stopAtEntry": false,
         "cwd": "${fileDirname}",
         "environment": [],
