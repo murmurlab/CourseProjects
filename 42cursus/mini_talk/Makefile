@@ -1,6 +1,6 @@
 CC		= cc
 DBG		= ""
-CFLAGS	= $(DBG) #-Wall -Wextra -Werror
+CFLAGS	= $(DBG) -Wall -Wextra -Werror
 libft	= ../libft/libft
 
 all: libftprintf libft

@@ -6,17 +6,15 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:09:17 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/02/20 08:35:13 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/02/20 08:54:34 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include "../ft_printf/spagetti/ft_printf.h"
+#include "minitalk.h"
 
-/* #include <fcntl.h>
-int fd; */
+#include <fcntl.h>
+
+int	fd;
 
 void	handler(int signal, siginfo_t *info, void	*uc)
 {
@@ -28,7 +26,7 @@ void	handler(int signal, siginfo_t *info, void	*uc)
 	c |= (signal == SIGUSR2);
 	if (++ct == 8)
 	{
-		write(1, &c, 1);
+		write(fd, &c, 1);
 		ct = 0;
 		c = 0;
 	}
@@ -46,6 +44,7 @@ int	main(void)
 	struct sigaction	act;
 	int					pid;
 
+	fd = open("o.txt", 777);
 	pid = getpid();
 	act.sa_sigaction = handler;
 	act.sa_flags = SA_SIGINFO;

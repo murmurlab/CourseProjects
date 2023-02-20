@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_talk.h                                        :+:      :+:    :+:   */
+/*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yciftci <yciftci@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 01:55:20 by yciftci           #+#    #+#             */
-/*   Updated: 2022/12/13 10:22:54 by yciftci          ###   ########.fr       */
+/*   Updated: 2023/02/20 08:46:32 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINI_TALK_H
-# define MINI_TALK_H
+#ifndef MINITALK_H
+# define MINITALK_H
 
 # define LOWARGERR "Too Few Arguments!"
 # define TOOARGERR "Too Many Arguments!"
 
 # include <unistd.h>
-# include <stdlib.h>
 # include <signal.h>
-# include "libft/libft.h"
+# include "../libft/libft.h"
+# include "../ft_printf/spagetti/ft_printf.h"
 
 #endif
