@@ -1,5 +1,5 @@
 CC		= cc
-DBG		= "-g"
+DBG		= ""
 CFLAGS	= $(DBG) #-Wall -Wextra -Werror
 libft	= ../libft/libft
 
