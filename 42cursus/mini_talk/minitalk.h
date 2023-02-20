@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 01:55:20 by yciftci           #+#    #+#             */
-/*   Updated: 2023/02/20 08:46:32 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/02/20 17:28:45 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 # include <unistd.h>
 # include <signal.h>
+# include <stdio.h>
 # include "../libft/libft.h"
 # include "../ft_printf/spagetti/ft_printf.h"
 

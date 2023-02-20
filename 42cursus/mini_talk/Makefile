@@ -1,5 +1,5 @@
 CC		= cc
-DBG		= ""
+DBG		= "-g"
 CFLAGS	= $(DBG) -Wall -Wextra -Werror
 SRC		= $(wildcard *.c)
 OBJ		= $(SRC:.c=.o)
@@ -8,6 +8,8 @@ libft	= ../libft/libft
 all:		libftprintf libft $(OBJ)
 	${CC} ${CFLAGS} client.o ../libft/libft.a ../ft_printf/spagetti/libftprintf.a -o client
 	${CC} ${CFLAGS} server.o ../libft/libft.a ../ft_printf/spagetti/libftprintf.a -o server
+bonus:
+
 libft:
 	make -C ../libft re
 libftprintf:

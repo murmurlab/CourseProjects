@@ -1,0 +1,42 @@
+#include <unistd.h>
+#include <stdio.h>
+#include <signal.h>
+
+void	handler1(int signal, siginfo_t *info, void	*uc)
+{
+	write(1, "handler11111\n", 13);
+}
+
+void	handler2(int signal, siginfo_t *info, void	*uc)
+{
+	write(1, "handler22222\n", 13);
+}
+
+int main()
+{
+/*     char *uc;
+	uc = "😀";
+	static char ax = sizeof(size_t);
+
+	char a
+		,b
+		,c
+		,d;
+
+	a = -16;
+	b = -97;
+	c = -104;
+	d = -128;
+	printf("%c", a);
+	printf("%c", b);
+		printf("%c",c);
+	printf("%c", d); */
+		struct sigaction	act;
+	act.sa_sigaction = handler1;
+	act.sa_flags = SA_SIGINFO;
+	sigaction(SIGINT, &act, NULL);
+	act.sa_sigaction = handler2;
+	sigaction(SIGINT, &act, NULL);
+	while(1)
+		pause();
+}

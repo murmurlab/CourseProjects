@@ -1,0 +1,15 @@
+{
+  "name": "mini_talk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ddos.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "ddos"
+  },
+  "author": "anan (annen)",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.34.0"
+  }
+}
