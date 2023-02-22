@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:09:17 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/02/20 17:40:38 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/02/22 07:28:10 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,18 @@ int	fd; */
 
 typedef struct s_data
 {
-	char	*buffer;
-	size_t	len;
-	int		pid_fb;
+	char				*buffer;
+	size_t				len;
+	int					pid_fb;
+	struct sigaction	act;
 }	t_data;
 
 t_data	g_data;
 
 void	feedback(int signal, siginfo_t *info, void	*uc)
 {
+	// printf("1%d\n", signal);
+	// fflush(stdout);
 	static unsigned char	c;
 	static unsigned char	ct = 8;
 	static int				temp = 0;
@@ -55,8 +58,13 @@ void	pre_handler(int signal, siginfo_t *info, void	*uc)
 	(void)uc;
 	g_data.len |= (signal == SIGUSR2);
 	if (max_shift-- == 1)
-	{		
-		g_data.len <<= 1;
+	{
+		printf("av:%zu s:%d\n", g_data.len, signal);
+		fflush(stdout);
+		g_data.act.sa_sigaction = feedback;
+		sigaction(SIGUSR1, &g_data.act, NULL);
+		sigaction(SIGUSR2, &g_data.act, NULL);
+		kill(g_data.pid_fb, SIGUSR1);
 		return ;
 	}
 	g_data.len <<= 1;
@@ -65,30 +73,25 @@ void	pre_handler(int signal, siginfo_t *info, void	*uc)
 	if (g_data.pid_fb != info->si_pid && info->si_pid != 0)
 		g_data.pid_fb = info->si_pid;
 	kill(g_data.pid_fb, SIGUSR1);
-	printf("v: %zu", g_data.len);
+	printf("v:%zu s:%d\n", g_data.len, signal);
 	fflush(stdout);
 }
 
 int	main(void)
 {
-	struct sigaction	act;
 	int					pid;
 	char				i;
 
 	g_data.pid_fb = 0;
 	i = sizeof(size_t) * 8;
 	pid = getpid();
-	act.sa_sigaction = pre_handler;
-	act.sa_flags = SA_SIGINFO;
+	g_data.act.sa_sigaction = pre_handler;
+	g_data.act.sa_flags = SA_SIGINFO;
 	ft_printf("%d\n", pid);
-	sigaction(SIGUSR1, &act, NULL);
-	sigaction(SIGUSR2, &act, NULL);
-	while (i--)
-		pause();
-	act.sa_sigaction = feedback;
-	sigaction(SIGUSR1, &act, NULL);
-	sigaction(SIGUSR2, &act, NULL);
-	kill(g_data.pid_fb, SIGUSR1);
-	while (1)
+	sigaction(SIGUSR1, &g_data.act, NULL);
+	sigaction(SIGUSR2, &g_data.act, NULL);
+	while (
+		1
+	)
 		pause();
 }

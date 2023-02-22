@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:09:19 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/02/20 17:23:03 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/02/21 20:35:10 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ void	send(int signal)
 	}
 }
 
-void	send_head(int signal)
+void	send_head(int aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa)
 {
 	static char		left_shift = sizeof(size_t) * 8;
 
-	(void)signal;
-	if (left_shift-- > 1)
+	(void)aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;
+	if (left_shift-- > -1)
 	{
 		if ((g_data.len >> left_shift) & 1)
 		{
@@ -61,6 +61,11 @@ void	send_head(int signal)
 		{
 			kill(g_data.pid, SIGUSR1);
 		}
+	}
+	else
+	{
+		signal(SIGUSR1, send);
+		send(123);
 	}
 }
 
@@ -76,10 +81,6 @@ int	main(int argc, char **argv)
 	ft_printf("sending %p bytes...", g_data.len);
 	signal(SIGUSR1, send_head);
 	send_head(123);
-	while (i--)
-		pause();
-	signal(SIGUSR1, send);
-	send(123);
 	while (1)
 		pause();
 }
