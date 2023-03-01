@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:09:19 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/02/21 20:35:10 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/03/01 14:37:27 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_data	g_data;
 void	send(int signal)
 {
 	static int	i = 8;
+	// ft_printf("g %d\n", (*g_data.message >> i));
 
 	(void)signal;
 	if (i < 1)
@@ -48,19 +49,15 @@ void	send(int signal)
 
 void	send_head(int aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa)
 {
-	static char		left_shift = sizeof(size_t) * 8;
+	static int left_shift = sizeof(size_t) * 8;
 
 	(void)aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;
-	if (left_shift-- > -1)
+	if (left_shift-- > 0)
 	{
 		if ((g_data.len >> left_shift) & 1)
-		{
 			kill(g_data.pid, SIGUSR2);
-		}
 		else
-		{
 			kill(g_data.pid, SIGUSR1);
-		}
 	}
 	else
 	{
@@ -78,7 +75,6 @@ int	main(int argc, char **argv)
 	g_data.pid = ft_atoi(argv[1]);
 	g_data.message = argv[2];
 	g_data.len = ft_strlen(g_data.message);
-	ft_printf("sending %p bytes...", g_data.len);
 	signal(SIGUSR1, send_head);
 	send_head(123);
 	while (1)

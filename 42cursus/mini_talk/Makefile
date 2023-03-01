@@ -1,6 +1,6 @@
 CC		= cc
 DBG		= "-g"
-CFLAGS	= $(DBG) -Wall -Wextra -Werror
+CFLAGS	= $(DBG) #-Wall -Wextra -Werror
 SRC		= $(wildcard *.c)
 OBJ		= $(SRC:.c=.o)
 libft	= ../libft/libft
