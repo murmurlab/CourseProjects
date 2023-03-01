@@ -6,15 +6,17 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:09:17 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/03/01 14:37:08 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/03/01 21:45:23 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+
 typedef struct s_data
 {
 	char				*buffer;
 	size_t				len;
+	size_t				len_now;
 	int					pid_fb;
 	struct sigaction	act;
 }	t_data;
@@ -22,6 +24,17 @@ typedef struct s_data
 t_data	g_data;
 
 void	pre_handler(int signal, siginfo_t *info, void	*uc);
+
+void	print(void)
+{
+	write(1, g_data.buffer - (g_data.len_now), g_data.len_now);
+	free(g_data.buffer - (g_data.len_now));
+	g_data.len = 0;
+	g_data.len_now = 0;
+	g_data.act.sa_sigaction = pre_handler;
+	sigaction(SIGUSR1, &g_data.act, NULL);
+	sigaction(SIGUSR2, &g_data.act, NULL);
+}
 
 void	feedback(int signal, siginfo_t *info, void	*uc)
 {
@@ -32,17 +45,13 @@ void	feedback(int signal, siginfo_t *info, void	*uc)
 	c |= (signal == SIGUSR2);
 	if (ct-- == 0)
 	{
-		if(c)
-			*g_data.buffer++ = c;
-		else
+		if (c)
 		{
-			write(1, g_data.buffer - (g_data.len), g_data.len);
-			free(g_data.buffer - (g_data.len));
-			g_data.len = 0;
-			g_data.act.sa_sigaction = pre_handler;
-			sigaction(SIGUSR1, &g_data.act, NULL);
-			sigaction(SIGUSR2, &g_data.act, NULL);
+			g_data.len_now++;
+			*g_data.buffer++ = c;
 		}
+		else
+			print();
 		ct = 7;
 		c = 0;
 	}
@@ -86,6 +95,7 @@ int	main(void)
 	int					pid;
 	char				i;
 
+	g_data.len_now = 0;
 	g_data.len = 0;
 	g_data.pid_fb = 0;
 	i = sizeof(size_t) * 8;
