@@ -22,7 +22,7 @@
 
     ...
 
-## [42cursus projects](42cursus/)
+## [42courses projects](42cursus)
 
 - ### [libft](42cursus/libft)
 
