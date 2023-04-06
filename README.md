@@ -4,17 +4,21 @@
 
 ---
 
-## first projects
+## pre projects
 
-- ### zer00
-
-    *Loading...*
-
-- ### zer01
+- ### unix1
 
     *Loading...*
 
-- ### langc
+- ### unix2
+
+    *Loading...*
+
+- ### langc99
+
+    *Loading...*
+
+- ### langc98
 
     *Loading...*
 
@@ -22,24 +26,24 @@
 
     ...
 
-## [main_project](42cursus)
+## [main_project](main)
 
-- ### [murmurlibc](42cursus/libft)
+- ### [murmurlibc](main/murmurlibc)
 
     *b*
 
     > nice b
 
-- ### [vm](42cursus/born2beroot)
+- ### [vm](main/vm)
 
     *b*
 
-- ### [ft_printf](42cursus/murmurlibc/ft_printf)
+- ### [console.log()](main/murmurlibc/i_printf)
 
     *m*
 
     > nice m
 
-- ### [line_read_from_file](42cursus/murmurlibc/get_next_line)
+- ### [line_read_from_file](main/murmurlibc/line_read)
 
     *Loading...*
