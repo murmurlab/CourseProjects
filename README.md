@@ -1,20 +1,20 @@
-# ecole42kocaeli
+# projects
 
 ## please send pull request for my mistakes
 
 ---
 
-## piscine42 projects
+## first projects
 
-- ### shell00
-
-    *Loading...*
-
-- ### shell01
+- ### zer00
 
     *Loading...*
 
-- ### c00
+- ### zer01
+
+    *Loading...*
+
+- ### langc
 
     *Loading...*
 
@@ -22,24 +22,24 @@
 
     ...
 
-## [42courses projects](42cursus)
+## [main_project](42cursus)
 
-- ### [libft](42cursus/libft)
+- ### [murmurlibc](42cursus/libft)
 
-    *125%*
+    *b*
 
-    > initial_errors: | test_ft_isalpha: OK | test_ft_isdigit: OK | test_ft_isalnum: OK | test_ft_isascii: OK | test_ft_isprint: OK | test_ft_strlen: OK | test_ft_memset: OK | test_ft_bzero: OK | test_ft_memcpy: OK | test_ft_memmove: OK | test_ft_strlcpy: OK | test_ft_strlcat: OK | test_ft_toupper: OK | test_ft_tolower: OK | test_ft_strchr: OK | test_ft_strrchr: OK | test_ft_strncmp: OK | test_ft_memchr: OK | test_ft_memcmp: OK | test_ft_strnstr: OK | test_ft_atoi: OK | test_ft_calloc: OK | test_ft_strdup: OK | test_ft_substr: OK | test_ft_strjoin: OK | test_ft_strtrim: OK | test_ft_split: OK | test_ft_itoa: OK | test_ft_strmapi: OK | test_ft_striteri: OK | test_ft_putchar_fd: OK | test_ft_putstr_fd: OK | test_ft_putendl_fd: OK | test_ft_putnbr_fd: OK | bonus: 9/9 functions correct
+    > nice b
 
-- ### [born2beroot](42cursus/born2beroot)
+- ### [vm](42cursus/born2beroot)
 
-    *125%*
+    *b*
 
 - ### [ft_printf](42cursus/murmurlibc/ft_printf)
 
-    *100%*
+    *m*
 
-    > test_spdxiucpercent: 8/8 correct functions | bonus_one: KO (Does not compile) | bonus_two: KO (Does not compile)
+    > nice m
 
-- ### [get_next_line](42cursus/murmurlibc/get_next_line)
+- ### [line_read_from_file](42cursus/murmurlibc/get_next_line)
 
     *Loading...*
