@@ -1,6 +1,18 @@
 {
     "configurations": [
     {
+        "name": "fdf",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/main/projection_engine/fdf",
+        "args": ["", ""],
+        "stopAtEntry": false,
+        "cwd": "${fileDirname}",
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "lldb"
+    },
+    {
         "name": "minitalk-server",
         "type": "cppdbg",
         "request": "launch",
