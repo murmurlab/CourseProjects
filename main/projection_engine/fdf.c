@@ -3,21 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: logname <logname@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: murmur <murmur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 16:48:03 by logname           #+#    #+#             */
-/*   Updated: 2023/05/02 10:09:39 by logname          ###   ########.fr       */
+/*   Updated: 2023/05/09 05:23:03 by murmur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//
-// Created by Ahmet Faruk Basaran on 3/22/23.
-//
-
 #include <stdio.h>
+#include <stdlib.h>
 
-int main(void)
+int	init_map(void)
 {
-//31
+	char	a;
+}
 
+int	main(void)
+{
+	char	**map;
+
+	map = malloc(sizeof(char *) * 2);
 }
