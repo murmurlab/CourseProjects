@@ -36,23 +36,38 @@
         ] */
     },
     {
-        "name": "minitalk-client",
+        "name": "com3031-server",
         "type": "cppdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/42cursus/mini_talk/client",
+        "program": "${workspaceFolder}/main/COM_3031/client",
         "args": ["64779", "asd"],
         "stopAtEntry": false,
         "cwd": "${fileDirname}",
         "environment": [],
         "externalConsole": false,
-        "MIMode": "lldb"
-    }
+        "MIMode": "lldb",
+        "miDebuggerPath": "C:\\Program Files\\LLVM\\bin\\lldb-vscode.exe"
+
+    },
+    {
+        "name": "com3031-client",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/main/COM_3031/client",
+        "args": ["", ""],
+        "stopAtEntry": false,
+        "cwd": "${fileDirname}",
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "lldb",
+        "miDebuggerPath": "C:\\Program Files\\LLVM\\bin\\lldb-vscode.exe"
+    },
     ],
     "compounds": [
         {
           "name": "Server/Client",
-          "configurations": ["minitalk-server", "minitalk-client"],
-          "preLaunchTask": "${defaultBuildTask}",
+          "configurations": ["com3031-server", "com3031-client"],
+          "preLaunchTask": "build",
           "stopAll": true
         }
       ]

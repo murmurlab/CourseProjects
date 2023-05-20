@@ -1,0 +1,35 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"problemMatcher": [],
+			"label": "build",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"command": "wsl",
+			"args": [
+				"-e",
+				"make",
+				"-C",
+				"${pwd}"
+			],
+			"windows": {
+				"command": "wsl",
+				"args": [
+					"--cd",
+					"${fileDirname}",
+					"make"
+				]
+			},
+			"linux": {
+				"command": "make",
+				"args": [
+					"${fileDirname}"
+				]
+			}
+		}
+	]
+}

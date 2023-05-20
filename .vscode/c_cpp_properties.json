@@ -1,19 +1,21 @@
 {
     "configurations": [
+        
         {
-            "name": "Mac",
+            "name": "winamaunix",
             "includePath": [
-                "${workspaceFolder}/**"
+                "//wsl$/Ubuntu/usr/include"
             ],
-            "defines": [],
-            "macFrameworkPath": [
-                "/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks"
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"'
             ],
-            "compilerPath": "/usr/bin/clang",
-            "cStandard": "c17",
+            "windowsSdkVersion": "10.0.22000.0",
+            "cStandard": "c99",
             "cppStandard": "c++17",
-            "intelliSenseMode": "macos-clang-x64",
-            "configurationProvider": "ms-vscode.makefile-tools"
+            "intelliSenseMode": "clang-x86",
+            "compilerPath": "//wsl$/Ubuntu/usr/bin/cc"
         }
     ],
     "version": 4
