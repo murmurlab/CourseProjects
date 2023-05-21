@@ -1,5 +1,8 @@
 {
     "configurations": [
+        
+        
+        
     {
         "name": "fdf",
         "type": "cppdbg",
@@ -13,16 +16,17 @@
         "MIMode": "lldb"
     },
     {
-        "name": "minitalk-server",
+        "name": "a",
         "type": "cppdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/42cursus/mini_talk/server",
+        "program": "${workspaceFolder}/a.exe",
         "args": [],
         "stopAtEntry": false,
         "cwd": "${fileDirname}",
         "environment": [],
-        "externalConsole": false,
+        "externalConsole": true,
         "MIMode": "lldb",
+        "miDebuggerPath": "C:\\Program Files\\LLVM\\bin\\lldb.exe"
         /* "setupCommands": [
             {
                 "description": "Enable pretty-printing for gdb",
@@ -39,14 +43,14 @@
         "name": "com3031-server",
         "type": "cppdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/main/COM_3031/client",
+        "program": "${workspaceFolder}/main/COM_3031/server",
         "args": ["64779", "asd"],
         "stopAtEntry": false,
         "cwd": "${fileDirname}",
         "environment": [],
         "externalConsole": false,
         "MIMode": "lldb",
-        "miDebuggerPath": "C:\\Program Files\\LLVM\\bin\\lldb-vscode.exe"
+        "miDebuggerPath": "C:\\Program Files\\LLVM\\bin\\lldb.exe"
 
     },
     {
@@ -60,7 +64,7 @@
         "environment": [],
         "externalConsole": false,
         "MIMode": "lldb",
-        "miDebuggerPath": "C:\\Program Files\\LLVM\\bin\\lldb-vscode.exe"
+        "miDebuggerPath": "C:\\Program Files\\LLVM\\bin\\lldb.exe"
     },
     ],
     "compounds": [
