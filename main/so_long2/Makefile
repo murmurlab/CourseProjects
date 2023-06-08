@@ -1,4 +1,4 @@
-CC = 			cc
+CC = 			clang
 CFLAGS = 		-std=c99 -g #-Wall -Werror -Werror
 mlxLinkFlags = 	-lmlx -lXext -lX11 -L minilibx-linux
 
