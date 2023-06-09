@@ -16,7 +16,7 @@ typedef struct s_game
 	t_obj	*e;
 }		t_game;
 
-void	load_map(t_game *s_game, char **c);
-void	init(t_game *s_game, char **c);
+int	load_map(t_game *s_game, char **c);
+int	init(t_game *s_game, char **c);
 
 #endif

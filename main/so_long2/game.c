@@ -1,8 +1,13 @@
 #include "game.h"
 
-void	init(t_game *s_game, char **c)
+int	init(t_game *s_game, char **c)
 {
-	load_map(s_game, c);
+	if (load_map(s_game, c))
+	{
+		p("error load map\n");
+		return (1);
+	}
+	return (0);
 }
 
 int	main(int c, char *v[])
@@ -13,6 +18,7 @@ int	main(int c, char *v[])
 
 	mlx_p = mlx_init();
 	w_p = mlx_new_window(mlx_p, 500, 500, "game");
-	init(&s_game, v);
+	if (init(&s_game, v))
+		return (1);
 	mlx_loop(mlx_p);
 }
