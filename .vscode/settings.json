@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "minitalk.h": "c"
-    }
+        "minitalk.h": "c",
+        "murmurlibc.h": "c",
+        "mlx.h": "c"
+    },
+    "C_Cpp.default.compilerPath": "/usr/bin/clang"
 }
