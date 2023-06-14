@@ -1,78 +1,84 @@
 {
-    "configurations": [
+    "configurations": [        
         
+        {
+            "type": "lldb-mi",
+            "request": "launch",
+            "name": "lldb-mi",
+            "target": "${fileDirname}/game",
+            "valuesFormatting": "parseText",
+            "preLaunchTask": "build",
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "lldb",
+            "program": "${fileDirname}/game",
+            "args": ["maps/map00.ber"],
+            "cwd": "${fileDirname}",
+            "preLaunchTask": "build",
+        },
+        {
+            "name": "fdf",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/main/projection_engine/fdf",
+            "args": [
+                "",
+                ""
+            ],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        },
+        {
+            "name": "com3031-server",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/main/COM_3031/server",
+            "args": [
+                "64779",
+                "asd"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "miDebuggerPath": "C:\\Program Files\\LLVM\\bin\\lldb.exe"
+        },
+        {
+            "name": "com3031-client",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/main/COM_3031/client",
+            "args": [
+                "",
+                ""
+            ],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "miDebuggerPath": "C:\\Program Files\\LLVM\\bin\\lldb.exe"
+        },
         
-        
-    {
-        "name": "fdf",
-        "type": "cppdbg",
-        "request": "launch",
-        "program": "${workspaceFolder}/main/projection_engine/fdf",
-        "args": ["", ""],
-        "stopAtEntry": false,
-        "cwd": "${fileDirname}",
-        "environment": [],
-        "externalConsole": false,
-        "MIMode": "lldb"
-    },
-    {
-        "name": "a",
-        "type": "cppdbg",
-        "request": "launch",
-        "program": "${workspaceFolder}/a.exe",
-        "args": [],
-        "stopAtEntry": false,
-        "cwd": "${fileDirname}",
-        "environment": [],
-        "externalConsole": true,
-        "MIMode": "lldb",
-        "miDebuggerPath": "C:\\Program Files\\LLVM\\bin\\lldb.exe"
-        /* "setupCommands": [
-            {
-                "description": "Enable pretty-printing for gdb",
-                "text": "-enable-pretty-printing",
-                "ignoreFailures": true
-            },
-            {
-                "description": "ignore SIGUSR2 signal",
-                "text": "handle SIGUSR2 nostop noprint pass"
-            }
-        ] */
-    },
-    {
-        "name": "com3031-server",
-        "type": "cppdbg",
-        "request": "launch",
-        "program": "${workspaceFolder}/main/COM_3031/server",
-        "args": ["64779", "asd"],
-        "stopAtEntry": false,
-        "cwd": "${fileDirname}",
-        "environment": [],
-        "externalConsole": false,
-        "MIMode": "lldb",
-        "miDebuggerPath": "C:\\Program Files\\LLVM\\bin\\lldb.exe"
-
-    },
-    {
-        "name": "com3031-client",
-        "type": "cppdbg",
-        "request": "launch",
-        "program": "${workspaceFolder}/main/COM_3031/client",
-        "args": ["", ""],
-        "stopAtEntry": false,
-        "cwd": "${fileDirname}",
-        "environment": [],
-        "externalConsole": false,
-        "MIMode": "lldb",
-        "miDebuggerPath": "C:\\Program Files\\LLVM\\bin\\lldb.exe"
-    },
     ],
     "compounds": [
         {
-          "name": "Server/Client",
-          "configurations": ["com3031-server", "com3031-client"],
-          "preLaunchTask": "build",
-          "stopAll": true
+            "name": "Server/Client",
+            "configurations": [
+                "com3031-server",
+                "com3031-client"
+            ],
+            "preLaunchTask": "build",
+            "stopAll": true
         }
-      ]
+    ],
+    "version": "2.0.0"
 }

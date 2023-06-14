@@ -2,20 +2,20 @@
     "configurations": [
         
         {
-            "name": "winamaunix",
+            "name": "wsl",
             "includePath": [
-                "//wsl$/Ubuntu/usr/include"
+                "/usr/include"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
-                "_UNICODE"'
+                "_UNICODE"
             ],
             "windowsSdkVersion": "10.0.22000.0",
             "cStandard": "c99",
             "cppStandard": "c++17",
-            "intelliSenseMode": "clang-x86",
-            "compilerPath": "//wsl$/Ubuntu/usr/bin/cc"
+            "intelliSenseMode": "linux-clang-x64",
+            "compilerPath": "/bin/clang"
         }
     ],
     "version": 4
