@@ -10,6 +10,7 @@ int	init(t_game *s_game, char **c)
 		p("error load map\n");
 		return (1);
 	}
+	validate_map(s_game);
 	return (0);
 }
 
