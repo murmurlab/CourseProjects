@@ -2,19 +2,23 @@
 
 int	init(t_game *s_game, char **c)
 {
-	if (load_map(s_game, c))
+	struct s_read_map	s_read_map;
+
+	s_read_map.s_game = s_game;
+	if (load_map(&s_read_map, c))
 	{
 		p("error load map\n");
 		return (1);
 	}
+	validate_map(s_game);
 	return (0);
 }
 
 int	main(int c, char *v[])
 {
-	void	*mlx_p;
-	void	*w_p;
-	t_game	s_game;
+	void				*mlx_p;
+	void				*w_p;
+	t_game				s_game;
 
 	mlx_p = mlx_init();
 	w_p = mlx_new_window(mlx_p, 500, 500, "game");
