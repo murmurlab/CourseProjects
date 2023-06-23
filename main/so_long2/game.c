@@ -1,4 +1,5 @@
 #include "game.h"
+#include <signal.h>
 
 int	init(t_game *s_game, char **c)
 {

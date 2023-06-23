@@ -8,7 +8,7 @@ int	check_lines\
 	s_read_map->s_game->p = malloc(2);
 	// count 'c'
 	// check double 'e' 'p'
-	if (*(s_read_map->line + 0) != '1' || *(s_read_map->line + \
+	if (*(s_read_map->line) != '1' || *(s_read_map->line + \
 	(s_read_map->old_x_len - 2)) != '1')
 		return (1);
 	if (s_read_map->old_x_len != xstrlen(s_read_map->line))
@@ -25,10 +25,13 @@ int	check_lines\
 	malloc(s_read_map->old_x_len);
 	xstrlcpy(s_read_map->s_game->map[(*s_read_map).i - 1], \
 	s_read_map->line, s_read_map->old_x_len);
-	s_read_map->p_e = xstrchr(s_read_map->line, 'E');
+
 	s_read_map->p_p = xstrchr(s_read_map->line, 'P');
-	if (s_read_map->p_e)
-		;
+	if (s_read_map->p_p)
+	{
+		s_read_map->s_game->p = malloc(2);
+		s_read_map->s_game->p[0] = s_read_map->line - ;
+	}
 	return (0);
 }
 
