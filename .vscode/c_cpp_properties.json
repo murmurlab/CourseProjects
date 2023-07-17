@@ -1,6 +1,5 @@
 {
     "configurations": [
-        
         {
             "name": "wsl",
             "includePath": [
@@ -14,8 +13,8 @@
             "windowsSdkVersion": "10.0.22000.0",
             "cStandard": "c99",
             "cppStandard": "c++17",
-            "intelliSenseMode": "linux-clang-x64",
-            "compilerPath": "/bin/clang"
+            "intelliSenseMode": "macos-clang-x64",
+            "compilerPath": "/usr/bin/cc"
         }
     ],
     "version": 4
