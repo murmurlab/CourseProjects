@@ -1,6 +1,9 @@
 [submodule "main/projection_engine/minilibx-linux"]
 	path = main/projection_engine/minilibx-linux
 	url = https://github.com/42Paris/minilibx-linux
-[submodule "main/so_long2/main/so_long2/minilibx-linux"]
+[submodule "main/so_long2/minilibx-linux"]
 	path = main/so_long2/minilibx-linux
 	url = https://github.com/42Paris/minilibx-linux
+[submodule "main/murmurlibc"]
+	path = main/murmurlibc
+	url = https://github.com/murmurlab/murmurlibc.git
