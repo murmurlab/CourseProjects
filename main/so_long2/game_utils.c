@@ -30,7 +30,8 @@ int	check_lines\
 	if (s_read_map->p_p)
 	{
 		s_read_map->s_game->p = malloc(2);
-		s_read_map->s_game->p[0] = s_read_map->line - ;
+		s_read_map->s_game->p[0] = (s_read_map->p_p - s_read_map->line);
+		s_read_map->s_game->p[1] = s_read_map->i - 1;
 	}
 	return (0);
 }
