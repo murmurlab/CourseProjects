@@ -26,7 +26,8 @@ int	check_lines\
 	xstrlcpy(s_read_map->s_game->map[(*s_read_map).i - 1], \
 	s_read_map->line, s_read_map->old_x_len);
 
-	s_read_map->p_p = xstrchr(s_read_map->line, 'P');
+	s_read_map->p_p = xstrchr(s_read_map->line, 'P'); // maybe not need player coords
+	s_read_map->s_game->colls += (short)strclen(s_read_map->line, 'C');
 	if (s_read_map->p_p)
 	{
 		s_read_map->s_game->p = malloc(2);
