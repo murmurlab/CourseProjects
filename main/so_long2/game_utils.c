@@ -21,9 +21,10 @@ int	check_lines\
 			return (1);
 		}
 	}
-	s_read_map->s_game->map[(*s_read_map).i - 1] = \
+	
+	findex(s_read_map->s_game->map, (*s_read_map).i - 1)->content = \
 	malloc(s_read_map->old_x_len);
-	xstrlcpy(s_read_map->s_game->map[(*s_read_map).i - 1], \
+	xstrlcpy(findex(s_read_map->s_game->map, (*s_read_map).i - 1)->content, \
 	s_read_map->line, s_read_map->old_x_len);
 
 	s_read_map->p_p = xstrchr(s_read_map->line, 'P'); // maybe not need player coords
@@ -75,20 +76,16 @@ int	load_map(struct s_read_map *s_read_map, char **c)
 
 	fd_map = open(*(c + 1), O_RDONLY);
 	(*s_read_map).line = multiRowRead(fd_map);
-	(*s_read_map).old_x_len = xstrlen((*s_read_map).line);
-	(*(*s_read_map).s_game).x_len = s_read_map->old_x_len - 1;
-	(*(*s_read_map).s_game).y_len = get_y_len(*(c + 1));
 	if (check_y_border((*s_read_map).line))
 		return (1);
 	(*s_read_map).i = 1;
-	(*s_read_map).s_game->map = \
-	(char **)malloc((*s_read_map).s_game->y_len * sizeof(char *));
+	(*s_read_map).s_game->map = llnew(0);
 	while (1)
 	{
+		(*s_read_map).old_x_len = xstrlen((*s_read_map).line);
 		if (check_lines(s_read_map))
 			return (1);
-		(*s_read_map).old_x_len = xstrlen((*s_read_map).line);
-		if ((*s_read_map).s_game->y_len > (*s_read_map).i)
+		if (s_read_map->line)
 		{
 			free((*s_read_map).line);
 			(*s_read_map).line = multiRowRead(fd_map);

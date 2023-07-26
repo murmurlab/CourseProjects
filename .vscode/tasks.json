@@ -30,6 +30,13 @@
                     "-C",
                     "${fileDirname}"
                 ]
+            },
+            "osx": {
+                "command": "make",
+                "args": [
+                    "-C",
+                    "${fileDirname}"
+                ]
             }
         },
         {

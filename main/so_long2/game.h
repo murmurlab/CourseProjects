@@ -12,7 +12,7 @@
 
 typedef struct s_game
 {
-	char			**map;
+	t_list			*map;
 	char			*p;
 	int				y_len;
 	int				x_len;
