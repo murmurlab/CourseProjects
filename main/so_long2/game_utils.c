@@ -21,12 +21,10 @@ int	check_lines\
 			return (1);
 		}
 	}
-	
 	findex(s_read_map->s_game->map, (*s_read_map).i - 1)->content = \
 	malloc(s_read_map->old_x_len);
 	xstrlcpy(findex(s_read_map->s_game->map, (*s_read_map).i - 1)->content, \
 	s_read_map->line, s_read_map->old_x_len);
-
 	s_read_map->p_p = xstrchr(s_read_map->line, 'P'); // maybe not need player coords
 	s_read_map->s_game->colls += (short)strclen(s_read_map->line, 'C');
 	if (s_read_map->p_p)
@@ -85,22 +83,27 @@ int	load_map(struct s_read_map *s_read_map, char **c)
 		(*s_read_map).old_x_len = xstrlen((*s_read_map).line);
 		if (check_lines(s_read_map))
 			return (1);
+		free((*s_read_map).line);
+		(*s_read_map).line = multiRowRead(fd_map);
 		if (s_read_map->line)
 		{
-			free((*s_read_map).line);
-			(*s_read_map).line = multiRowRead(fd_map);
+			(*s_read_map).i++;
+			lladd(&s_read_map->s_game->map, llnew(0));
 		}
 		else
 			break ;
-		(*s_read_map).i++;
 	}
-	if (check_y_border((*s_read_map).line))
+	if (check_y_border(llend(s_read_map->s_game->map)->content))
 		return (1);
 	free((*s_read_map).line);
 	close(fd_map);
 	return (0);
 }
 
+void iter(void *s)
+{
+	p("%s\n", s);
+}
 // struct arithmetic
 int	validate_map(struct s_game *s_game)
 {
@@ -113,5 +116,6 @@ int	validate_map(struct s_game *s_game)
 	}
 	p("%d\n", s_game->x_len);
 	p("%d\n", s_game->x_len);
+	lliter(s_game->map, &iter);
 	return (0);
 }
