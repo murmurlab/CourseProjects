@@ -17,7 +17,16 @@ typedef struct s_game
 	int				y_len;
 	int				x_len;
 	short			colls;
+	t_list			path;
 }		t_game;
+
+typedef struct s_around
+{
+	char	w;
+	char	a;
+	char	s;
+	char	d;
+}		t_around;
 struct s_read_map
 {
 	int		count_E;
@@ -33,6 +42,6 @@ struct s_read_map
 
 int	load_map(struct s_read_map *s_read_map, char **c);
 int	init(t_game *s_game, char **c);
-int	validate_map(struct s_game *s_game);
+int	validate_map(struct s_game *s_game, char c);
 
 #endif

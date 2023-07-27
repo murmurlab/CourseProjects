@@ -109,9 +109,35 @@ void iter(void *s)
 	p("%s\n", s);
 }
 // struct arithmetic
-int	validate_map(struct s_game *s_game)
+t_around	wasd(struct s_game *s_game)
 {
-	int	i;
+	t_around	wasd;
+
+	wasd.w = (((char *)(findex(s_game->map, s_game->p[1] - 1)->content))[s_game->p[0]]);
+	wasd.a = (((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0] - 1]);
+	wasd.s = (((char *)(findex(s_game->map, s_game->p[1] + 1)->content))[s_game->p[0]]);
+	wasd.d = (((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0] + 1]);
+	return(wasd);
+}
+
+int	move(char c, struct s_game *s_game)
+{
+	t_around	wasd1;
+
+	wasd1 = wasd(s_game);
+	if (c == 'w' && wasd1.w == '0' || wasd1.w == 'C' || wasd1.w == 'E');
+		return (((char *)(findex(s_game->map, s_game->p[1] - 1)->content))[s_game->p[0]]);
+	if (c == 'a' && wasd1.a == '0' || wasd1.a == 'C' || wasd1.a == 'E');
+		return (((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0] - 1]);
+	if (c == 's' && wasd1.s == '0' || wasd1.s == 'C' || wasd1.s == 'E');
+		return (((char *)(findex(s_game->map, s_game->p[1] + 1)->content))[s_game->p[0]]);
+	if (c == 'd' && wasd1.d == '0' || wasd1.d == 'C' || wasd1.d == 'E');
+		return (((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0] + 1]);
+}
+
+int	validate_map(struct s_game *s_game, char c)
+{
+/* 	int	i;
 
 	i = 0;
 	while (i < s_game->y_len)
@@ -120,11 +146,29 @@ int	validate_map(struct s_game *s_game)
 	}
 	p("%d\n", s_game->x_len);
 	p("%d\n", s_game->x_len);
-	lliter(s_game->map, &iter);
+	lliter(s_game->map, &iter); */
 
 
 
+	//path-finder
 
+	if (wasd('w', s_game) == 'E')
+		return (1);
+		;
+	if (wasd('a', s_game) == 'E')
+		return (1);
+		;
+	if (wasd('s', s_game) == 'E')
+		return (1);
+		;
+	if (wasd('d', s_game) == 'E')
+		return (1);
+		;
+
+	
+	t_list	*path;
+
+	path = llnew(0);
 
 	return (0);
 }
