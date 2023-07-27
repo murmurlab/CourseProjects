@@ -26,6 +26,7 @@ struct s_read_map
 	char	*line;
 	int		i;
 	t_game	*s_game;
+	int		end;
 };
 
 int	load_map(struct s_read_map *s_read_map, char **c);

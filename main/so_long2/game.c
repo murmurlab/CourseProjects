@@ -7,6 +7,8 @@ int	init(t_game *s_game, char **c)
 
 	s_read_map.s_game = s_game;
 	s_game->colls = 0;
+	s_read_map.end = 0;
+	s_read_map.p_p = 0;
 	if (load_map(&s_read_map, c))
 	{
 		p("error load map\n");
