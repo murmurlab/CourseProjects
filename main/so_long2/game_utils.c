@@ -6,7 +6,6 @@ int	check_lines\
 )
 {
 	s_read_map->s_game->p = malloc(2);
-	// check double 'e' 'p' !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	if (*(s_read_map->line) != '1' || *(s_read_map->line + \
 	(s_read_map->old_x_len - 2)) != '1')
 		return (1);
@@ -15,19 +14,21 @@ int	check_lines\
 		if (!xstrchr(s_read_map->line, '\n'))
 			s_read_map->end = 1;
 		else
-			return (1);
+			return (2);
 	}
 	findex(s_read_map->s_game->map, (*s_read_map).i - 1)->content = \
 	malloc(s_read_map->old_x_len);
 	xstrlcpy(findex(s_read_map->s_game->map, (*s_read_map).i - 1)->content, \
 	s_read_map->line, s_read_map->old_x_len + s_read_map->end);
 	//p("%s", findex(s_read_map->s_game->map, (*s_read_map).i - 1)->content);
+	s_read_map->count_P += (short)strclen(s_read_map->line, 'P');
+	s_read_map->count_E += (short)strclen(s_read_map->line, 'E');
+	if (s_read_map->count_E > 1 || s_read_map->count_P > 1)
+		return (6);
 	s_read_map->p_p = xstrchr(s_read_map->line, 'P'); // maybe not need player coords
 	s_read_map->s_game->colls += (short)strclen(s_read_map->line, 'C');
 	if (s_read_map->p_p)
 	{
-		if (!s_read_map->p_p)
-			return (1);
 		s_read_map->s_game->p = malloc(2);
 		s_read_map->s_game->p[0] = (s_read_map->p_p - s_read_map->line);
 		s_read_map->s_game->p[1] = s_read_map->i - 1;
@@ -35,7 +36,7 @@ int	check_lines\
 	return (0);
 }
 
-int	get_y_len(char *fname)
+/* int	get_y_len(char *fname)
 {
 	int		fd_map;
 	int		y;
@@ -52,7 +53,7 @@ int	get_y_len(char *fname)
 	}
 	close(fd_map);
 	return (y);
-}
+} */
 
 int	check_y_border(char *line)
 {
@@ -62,7 +63,7 @@ int	check_y_border(char *line)
 	while (line[i] != '\n' && line[i])
 	{
 		if (line[i++] != '1')
-			return (1);
+			return (4);
 	}
 	return (0);
 }
@@ -75,13 +76,14 @@ int	load_map(struct s_read_map *s_read_map, char **c)
 	(*s_read_map).line = multiRowRead(fd_map);
 	(*s_read_map).old_x_len = xstrlen((*s_read_map).line); //first check_lines(s_read_map)
 	if (check_y_border((*s_read_map).line))
-		return (1);
+		return (5);
 	(*s_read_map).i = 1;
 	(*s_read_map).s_game->map = llnew(0);
 	while (1)
 	{
-		if (check_lines(s_read_map))
-			return (1);
+		s_read_map->exit_code = check_lines(s_read_map);
+		if (s_read_map->exit_code)
+			return (s_read_map->exit_code);
 		free((*s_read_map).line);
 		(*s_read_map).old_x_len = xstrlen((*s_read_map).line);
 		(*s_read_map).line = multiRowRead(fd_map);
@@ -93,8 +95,10 @@ int	load_map(struct s_read_map *s_read_map, char **c)
 		else
 			break ;
 	}
+	s_read_map->s_game->y_len = s_read_map->i;
+	
 	if (check_y_border(llend(s_read_map->s_game->map)->content))
-		return (1);
+		return (7);
 	free((*s_read_map).line);
 	close(fd_map);
 	return (0);
@@ -117,5 +121,10 @@ int	validate_map(struct s_game *s_game)
 	p("%d\n", s_game->x_len);
 	p("%d\n", s_game->x_len);
 	lliter(s_game->map, &iter);
+
+
+
+
+
 	return (0);
 }

@@ -20,13 +20,15 @@ typedef struct s_game
 }		t_game;
 struct s_read_map
 {
-	char	*p_e;
+	int		count_E;
+	int		count_P;
 	char	*p_p;
 	int		old_x_len;
 	char	*line;
 	int		i;
 	t_game	*s_game;
 	int		end;
+	int		exit_code;
 };
 
 int	load_map(struct s_read_map *s_read_map, char **c);

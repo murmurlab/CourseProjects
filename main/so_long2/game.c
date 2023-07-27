@@ -9,12 +9,21 @@ int	init(t_game *s_game, char **c)
 	s_game->colls = 0;
 	s_read_map.end = 0;
 	s_read_map.p_p = 0;
-	if (load_map(&s_read_map, c))
+	s_read_map.exit_code = 0;
+	s_read_map.count_E = 0;
+	s_read_map.count_P = 0;
+	s_read_map.exit_code = load_map(&s_read_map, c);
+	if (s_read_map.exit_code)
 	{
-		p("error load map\n");
+		p("error load map: %d\n", s_read_map.exit_code);
 		return (1);
 	}
-	validate_map(s_game);
+	s_read_map.exit_code = validate_map(s_game);
+	if (s_read_map.exit_code)
+	{
+		p("error load map: %d\n", s_read_map.exit_code);
+		return (1);
+	}
 	return (0);
 }
 
