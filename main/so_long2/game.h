@@ -37,6 +37,7 @@ typedef struct s_around
 	char	a;
 	char	s;
 	char	d;
+	char	o;
 }		t_around;
 struct s_read_map
 {

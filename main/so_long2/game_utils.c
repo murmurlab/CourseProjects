@@ -116,7 +116,18 @@ t_around	wasd(struct s_game *s_game)
 	wasd.a = (((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0] - 1]);
 	wasd.s = (((char *)(findex(s_game->map, s_game->p[1] + 1)->content))[s_game->p[0]]);
 	wasd.d = (((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0] + 1]);
+	wasd.o = (((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0]]);
 	return(wasd);
+}
+
+char	*setter(t_game *s_game, char val, int x, int y)
+{
+	((char *)(findex(s_game->map, y)->content))[x] = val;
+}
+
+int		update(t_game *s_game , char ch, int x)
+{
+
 }
 
 int	move(char c, struct s_game *s_game)
@@ -124,31 +135,51 @@ int	move(char c, struct s_game *s_game)
 	t_around	wasd1;
 
 	wasd1 = wasd(s_game);
-	if (c == 'w' && wasd1.w == '0' || (wasd1.w == 'C' && (s_game->my_colls++ || 1)) || (wasd1.w == 'E' && (s_game->end++ || 1)))
+	if (c == 'w' && (wasd1.w == '0' || (wasd1.w == 'C' && (s_game->my_colls++ || 1))))
 	{
-		((char *)(findex(s_game->map, s_game->p[1] - 1)->content))[s_game->p[0]] = 'P';
-		((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0]] = '0';
-		draw(s_game->p[1], s_game->p[0] - 1, s_game->plyr, s_game);
-		draw(s_game->p[1], s_game->p[0], s_game->bcgr, s_game);
+		if (wasd1.w == 'E' && s_game->my_colls == s_game->colls)
+			return (0);
+		else
+		{
+				
+		}
+		setter(s_game, 'P', s_game->p[0], s_game->p[1] - 1);
+		setter(s_game, '0', s_game->p[0], s_game->p[1]);
+		draw(s_game->p[0], s_game->p[1] - 1, s_game->plyr, s_game);
+		draw(s_game->p[0], s_game->p[1], s_game->bcgr, s_game);
+		s_game->p[1]--;
 		lliter(s_game->map, &iter);
+		p("x: %d, y: %d", s_game->p[0], s_game->p[1]);
 	}
-	if (c == 'a' && wasd1.a == '0' || (wasd1.a == 'C' && (s_game->my_colls++ || 1)) || (wasd1.a == 'E' && (s_game->end++ || 1)))
+	if (c == 'a' && (wasd1.a == '0' || (wasd1.a == 'C' && (s_game->my_colls++ || 1))))
 	{
-		((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0] - 1] = 'P';
-		((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0]] = '0';
+		setter(s_game, 'P', s_game->p[0] - 1, s_game->p[1]);
+		setter(s_game, '0', s_game->p[0], s_game->p[1]);
 		draw(s_game->p[0] - 1, s_game->p[1], s_game->plyr, s_game);
 		draw(s_game->p[0], s_game->p[1], s_game->bcgr, s_game);
+		s_game->p[0]--;
 		lliter(s_game->map, &iter);
+		p("x: %d, y: %d", s_game->p[0], s_game->p[1]);
 	}	
-	if (c == 's' && wasd1.s == '0' || (wasd1.s == 'C' && (s_game->my_colls++ || 1)) || (wasd1.s == 'E' && (s_game->end++ || 1)))
+	if (c == 's' && (wasd1.s == '0' || (wasd1.s == 'C' && (s_game->my_colls++ || 1))))
 	{
-		((char *)(findex(s_game->map, s_game->p[1] + 1)->content))[s_game->p[0]] = 'P';
-		((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0]] = '0';
+		setter(s_game, 'P', s_game->p[0], s_game->p[1] + 1);
+		setter(s_game, '0', s_game->p[0], s_game->p[1]);
+		draw(s_game->p[0], s_game->p[1] + 1, s_game->plyr, s_game);
+		draw(s_game->p[0], s_game->p[1], s_game->bcgr, s_game);
+		s_game->p[1]++;
+		lliter(s_game->map, &iter);
+		p("x: %d, y: %d", s_game->p[0], s_game->p[1]);
 	}
-	if (c == 'd' && wasd1.d == '0' || (wasd1.d == 'C' && (s_game->my_colls++ || 1)) || (wasd1.d == 'E' && (s_game->end++ || 1)))
+	if (c == 'd' && (wasd1.d == '0' || (wasd1.d == 'C' && (s_game->my_colls++ || 1))))
 	{
-		((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0] + 1] = 'P';
-		((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0]] = '0';
+		setter(s_game, 'P', s_game->p[0] + 1, s_game->p[1]);
+		setter(s_game, '0', s_game->p[0], s_game->p[1]);
+		draw(s_game->p[0] + 1, s_game->p[1], s_game->plyr, s_game);
+		draw(s_game->p[0], s_game->p[1], s_game->bcgr, s_game);
+		s_game->p[0]++;
+		lliter(s_game->map, &iter);
+		p("x: %d, y: %d", s_game->p[0], s_game->p[1]);
 	}
 	return (0);
 }

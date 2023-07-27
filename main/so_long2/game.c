@@ -44,6 +44,10 @@ int	events(int k, struct s_game *param)
 		move('w', param);
 	if (k == 0)
 		move('a', param);
+	if (k == 1)
+		move('s', param);
+	if (k == 2)
+		move('d', param);
 	p("<%d> ", k);
 	return (0);
 }
