@@ -5,7 +5,6 @@ int	check_lines\
 	struct s_read_map *s_read_map
 )
 {
-	s_read_map->s_game->p = malloc(2);
 	if (*(s_read_map->line) != '1' || *(s_read_map->line + \
 	(s_read_map->old_x_len - 2)) != '1')
 		return (1);
@@ -125,43 +124,54 @@ int	move(char c, struct s_game *s_game)
 	t_around	wasd1;
 
 	wasd1 = wasd(s_game);
-	if (c == 'w' && wasd1.w == '0' || wasd1.w == 'C' || wasd1.w == 'E');
-		return (((char *)(findex(s_game->map, s_game->p[1] - 1)->content))[s_game->p[0]]);
-	if (c == 'a' && wasd1.a == '0' || wasd1.a == 'C' || wasd1.a == 'E');
-		return (((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0] - 1]);
-	if (c == 's' && wasd1.s == '0' || wasd1.s == 'C' || wasd1.s == 'E');
-		return (((char *)(findex(s_game->map, s_game->p[1] + 1)->content))[s_game->p[0]]);
-	if (c == 'd' && wasd1.d == '0' || wasd1.d == 'C' || wasd1.d == 'E');
-		return (((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0] + 1]);
+	if (c == 'w' && wasd1.w == '0' || (wasd1.w == 'C' && (s_game->my_colls++ || 1)) || (wasd1.w == 'E' && (s_game->end++ || 1)))
+	{
+		((char *)(findex(s_game->map, s_game->p[1] - 1)->content))[s_game->p[0]] = 'P';
+		((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0]] = '0';
+		draw(s_game->p[1], s_game->p[0] - 1, s_game->plyr, s_game);
+		draw(s_game->p[1], s_game->p[0], s_game->bcgr, s_game);
+		lliter(s_game->map, &iter);
+	}
+	if (c == 'a' && wasd1.a == '0' || (wasd1.a == 'C' && (s_game->my_colls++ || 1)) || (wasd1.a == 'E' && (s_game->end++ || 1)))
+	{
+		((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0] - 1] = 'P';
+		((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0]] = '0';
+		draw(s_game->p[0] - 1, s_game->p[1], s_game->plyr, s_game);
+		draw(s_game->p[0], s_game->p[1], s_game->bcgr, s_game);
+		lliter(s_game->map, &iter);
+	}	
+	if (c == 's' && wasd1.s == '0' || (wasd1.s == 'C' && (s_game->my_colls++ || 1)) || (wasd1.s == 'E' && (s_game->end++ || 1)))
+	{
+		((char *)(findex(s_game->map, s_game->p[1] + 1)->content))[s_game->p[0]] = 'P';
+		((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0]] = '0';
+	}
+	if (c == 'd' && wasd1.d == '0' || (wasd1.d == 'C' && (s_game->my_colls++ || 1)) || (wasd1.d == 'E' && (s_game->end++ || 1)))
+	{
+		((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0] + 1] = 'P';
+		((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0]] = '0';
+	}
+	return (0);
 }
 
 int	validate_map(struct s_game *s_game, char c)
 {
-/* 	int	i;
-
-	i = 0;
-	while (i < s_game->y_len)
-	{
-		p("%s\n", s_game->map[i++]);
-	}
 	p("%d\n", s_game->x_len);
 	p("%d\n", s_game->x_len);
-	lliter(s_game->map, &iter); */
 
 
 
 	//path-finder
 
-	if (wasd('w', s_game) == 'E')
+	if (wasd(s_game).w == 'E')
 		return (1);
 		;
-	if (wasd('a', s_game) == 'E')
+	if (wasd(s_game).a == 'E')
 		return (1);
 		;
-	if (wasd('s', s_game) == 'E')
+	if (wasd(s_game).s == 'E')
 		return (1);
 		;
-	if (wasd('d', s_game) == 'E')
+	if (wasd(s_game).d == 'E')
 		return (1);
 		;
 

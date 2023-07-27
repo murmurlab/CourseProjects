@@ -12,11 +12,22 @@
 
 typedef struct s_game
 {
+	void			*mlx_p;
+	void			*w_p;
+	int				w;
+	int				h;
+	void			*bcgr;
+	void			*plyr;
+	void			*wall;
+	void			*exit;
+	void			*coll;
 	t_list			*map;
 	char			*p;
 	int				y_len;
 	int				x_len;
 	short			colls;
+	short			my_colls;
+	int				end;
 	t_list			path;
 }		t_game;
 
@@ -43,5 +54,7 @@ struct s_read_map
 int	load_map(struct s_read_map *s_read_map, char **c);
 int	init(t_game *s_game, char **c);
 int	validate_map(struct s_game *s_game, char c);
+int draw(int x, int y, void *pt, t_game *s_game);
+int	move(char c, struct s_game *s_game);
 
 #endif
