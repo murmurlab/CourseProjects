@@ -15,44 +15,26 @@ int	check_lines\
 		else
 			return (2);
 	}
-	findex(s_read_map->s_game->map, (*s_read_map).i - 1)->content = \
-	malloc(s_read_map->old_x_len);
-	xstrlcpy(findex(s_read_map->s_game->map, (*s_read_map).i - 1)->content, \
-	s_read_map->line, s_read_map->old_x_len + s_read_map->end);
-	//p("%s", findex(s_read_map->s_game->map, (*s_read_map).i - 1)->content);
 	s_read_map->count_P += (short)strclen(s_read_map->line, 'P');
 	s_read_map->count_E += (short)strclen(s_read_map->line, 'E');
+	findex(s_read_map->s_game->map, (*s_read_map).i - 1)->content = \
+	malloc(s_read_map->old_x_len);
+	//p("%s", findex(s_read_map->s_game->map, (*s_read_map).i - 1)->content);
 	if (s_read_map->count_E > 1 || s_read_map->count_P > 1)
 		return (6);
 	s_read_map->p_p = xstrchr(s_read_map->line, 'P'); // maybe not need player coords
 	s_read_map->s_game->colls += (short)strclen(s_read_map->line, 'C');
 	if (s_read_map->p_p)
 	{
+		*s_read_map->p_p = '0';
 		s_read_map->s_game->p = malloc(2);
 		s_read_map->s_game->p[0] = (s_read_map->p_p - s_read_map->line);
 		s_read_map->s_game->p[1] = s_read_map->i - 1;
 	}
+	xstrlcpy(findex(s_read_map->s_game->map, (*s_read_map).i - 1)->content, \
+	s_read_map->line, s_read_map->old_x_len + s_read_map->end);
 	return (0);
 }
-
-/* int	get_y_len(char *fname)
-{
-	int		fd_map;
-	int		y;
-	char	*temporal;
-
-	y = 0;
-	fd_map = open(fname, O_RDONLY);
-	temporal = multiRowRead(fd_map);
-	while (temporal)
-	{
-		free(temporal);
-		temporal = multiRowRead(fd_map);
-		y++;
-	}
-	close(fd_map);
-	return (y);
-} */
 
 int	check_y_border(char *line)
 {
@@ -120,56 +102,36 @@ t_around	wasd(struct s_game *s_game)
 	return(wasd);
 }
 
-char	*setter(t_game *s_game, char val, int x, int y)
-{
-	((char *)(findex(s_game->map, y)->content))[x] = val;
-}
-
-int		update(t_game *s_game , char x, char y)
-{
-	setter(s_game, 'P', s_game->p[0] + x, s_game->p[1] + y);
-	setter(s_game, '0', s_game->p[0], s_game->p[1]);
-	draw(s_game->p[0] + x, s_game->p[1] + y, s_game->plyr, s_game);
-	draw(s_game->p[0], s_game->p[1], s_game->bcgr, s_game);
-	s_game->p[1] += y;
-	s_game->p[0] += x;
-	lliter(s_game->map, &iter);
-	p("x: %d, y: %d", s_game->p[0], s_game->p[1]);
-}
-
-int	move(char c, struct s_game *s_game)
+int		update(t_game *s_game)
 {
 	t_around	wasd1;
 
 	wasd1 = wasd(s_game);
-	if (c == 'w' && (wasd1.w == '0' || (wasd1.w == 'C' && (s_game->my_colls++ || 1))))
-	{
-		if (wasd1.w == 'E' && s_game->my_colls == s_game->colls)
+	if (wasd1.w == 'E' && s_game->my_colls == s_game->colls)
 			return (0);
-		else
-			update(s_game, 0, -1);
+	p("x:%d, y:%d ", s_game->p[0], s_game->p[1]);
+	if (wasd1.w == 'C')
+	{
+
 	}
-	if (c == 'a' && (wasd1.a == '0' || (wasd1.a == 'C' && (s_game->my_colls++ || 1))))
-	{
-		if (wasd1.w == 'E' && s_game->my_colls == s_game->colls)
-			return (0);
-		else
-			update(s_game, -1, 0);
-	}	
-	if (c == 's' && (wasd1.s == '0' || (wasd1.s == 'C' && (s_game->my_colls++ || 1))))
-	{
-		if (wasd1.w == 'E' && s_game->my_colls == s_game->colls)
-			return (0);
-		else
-			update(s_game, 0, 1);
-	}
-	if (c == 'd' && (wasd1.d == '0' || (wasd1.d == 'C' && (s_game->my_colls++ || 1))))
-	{
-		if (wasd1.w == 'E' && s_game->my_colls == s_game->colls)
-			return (0);
-		else
-			update(s_game, 1, 0);
-	}
+	draw_block(s_game->p[0] + s_game->wasd[s_game->select][0], s_game->p[1] + s_game->wasd[s_game->select][1], s_game, s_game->plyr);
+	draw_block(s_game->p[0], s_game->p[1], s_game, NULL);
+	s_game->p[1] += s_game->wasd[s_game->select][1];
+	s_game->p[0] += s_game->wasd[s_game->select][0];
+	// lliter(s_game->map, &iter);
+}
+
+int	move(char c, struct s_game *s_game)
+{
+
+	if (c == 'w' && (wasd1.w == 'C' && (s_game->my_colls++ || 1) || wasd1.w != '1'))
+		update(s_game, 0, -1, wasd1);
+	if (c == 'a' && (wasd1.a == 'C' && (s_game->my_colls++ || 1) || wasd1.a != '1'))
+		update(s_game, -1, 0, wasd1);
+	if (c == 's' && (wasd1.s == 'C' && (s_game->my_colls++ || 1) || wasd1.s != '1'))
+		update(s_game, 0, 1, wasd1);
+	if (c == 'd' && (wasd1.d == 'C' && (s_game->my_colls++ || 1) || wasd1.d != '1'))
+		update(s_game, 1, 0, wasd1);
 	return (0);
 }
 

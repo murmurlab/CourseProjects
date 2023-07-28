@@ -12,6 +12,8 @@
 
 typedef struct s_game
 {
+	char			wasd[13][2];
+	char			select;
 	void			*mlx_p;
 	void			*w_p;
 	int				w;
@@ -52,6 +54,7 @@ struct s_read_map
 	int		exit_code;
 };
 
+int draw_block(int x, int y, t_game *s_game, void *img);
 int	load_map(struct s_read_map *s_read_map, char **c);
 int	init(t_game *s_game, char **c);
 int	validate_map(struct s_game *s_game, char c);
