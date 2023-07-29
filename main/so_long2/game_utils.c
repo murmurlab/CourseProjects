@@ -65,8 +65,8 @@ int	load_map(struct s_read_map *s_read_map, char **c)
 		s_read_map->exit_code = check_lines(s_read_map);
 		if (s_read_map->exit_code)
 			return (s_read_map->exit_code);
-		free((*s_read_map).line);
 		(*s_read_map).old_x_len = xstrlen((*s_read_map).line);
+		free((*s_read_map).line);
 		(*s_read_map).line = multiRowRead(fd_map);
 		if (s_read_map->line)
 		{

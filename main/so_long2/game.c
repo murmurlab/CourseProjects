@@ -20,7 +20,7 @@ int draw_block(int x, int y, t_game *s_game, void *img)
 	return (1);
 }
 
-char	*draw_all(t_game *s_game, int xy)
+char	*draw_all(t_game *s_game, int *xy)
 {
 	int		i;
 	int		j;
@@ -90,10 +90,10 @@ int	init1(t_game *s_game, char **c)
 	s_read_map.exit_code = load_map(&s_read_map, c);
 	if (s_read_map.exit_code)
 	{
-		p("error load map: %d\n", s_read_map.exit_code);
+		p("error load map1: %d\n", s_read_map.exit_code);
 		return (1);
 	}
-	draw_all(s_game);
+	draw_all(s_game, NULL);
 	mlx_key_hook(s_game->w_p, &events, s_game);
 	s_read_map.exit_code = validate_map(s_game, pf);
 	if (s_read_map.exit_code)
