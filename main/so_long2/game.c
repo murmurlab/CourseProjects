@@ -20,11 +20,13 @@ int draw_block(int x, int y, t_game *s_game, void *img)
 	return (1);
 }
 
-int draw_all(t_game *s_game)
+char	*draw_all(t_game *s_game, int xy)
 {
 	int		i;
 	int		j;
 
+	if (xy)
+		return ((char *)(findex(s_game->map, xy[1] - 1)->content));
 	i = 0;
 	j = 0;
 	while (i < s_game->y_len)
