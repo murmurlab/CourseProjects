@@ -77,7 +77,7 @@ int	load_map(struct s_read_map *s_read_map, char **c)
 			break ;
 	}
 	s_read_map->s_game->y_len = s_read_map->i;
-	
+	s_read_map->s_game->x_len = s_read_map->old_x_len;
 	if (check_y_border(llend(s_read_map->s_game->map)->content))
 		return (7);
 	free((*s_read_map).line);
@@ -90,77 +90,85 @@ void iter(void *s)
 	p("%s\n", s);
 }
 // struct arithmetic
-t_around	wasd(struct s_game *s_game)
+void	wasd(struct s_game *s_game, char *xy, int a)
 {
-	t_around	wasd;
-
-	wasd.w = (((char *)(findex(s_game->map, s_game->p[1] - 1)->content))[s_game->p[0]]);
-	wasd.a = (((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0] - 1]);
-	wasd.s = (((char *)(findex(s_game->map, s_game->p[1] + 1)->content))[s_game->p[0]]);
-	wasd.d = (((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0] + 1]);
-	wasd.o = (((char *)(findex(s_game->map, s_game->p[1])->content))[s_game->p[0]]);
-	return(wasd);
+	if (a)
+	{
+		draw_block(xy[0] + s_game->set_wasd[s_game->select][0], xy[1] + s_game->set_wasd[s_game->select][1], s_game, s_game->key_map['P']);
+		draw_block(xy[0], xy[1], s_game, NULL);
+		xy[1] += s_game->set_wasd[s_game->select][1];
+		xy[0] += s_game->set_wasd[s_game->select][0];
+		return ;
+	}
+	s_game->get_wasd[13] = (((char *)(findex(s_game->map, xy[1] - 1)->content)) + xy[0]);
+	s_game->get_wasd[0] = (((char *)(findex(s_game->map, xy[1])->content)) + (xy[0] - 1));
+	s_game->get_wasd[1] = (((char *)(findex(s_game->map, xy[1] + 1)->content)) + xy[0]);
+	s_game->get_wasd[2] = (((char *)(findex(s_game->map, xy[1])->content)) + (xy[0] + 1));
+	s_game->get_wasd[3] = (((char *)(findex(s_game->map, xy[1])->content)) + xy[0]);
 }
 
 int		update(t_game *s_game)
 {
-	t_around	wasd1;
-
-	wasd1 = wasd(s_game);
-	if (wasd1.w == 'E' && s_game->my_colls == s_game->colls)
-			return (0);
-	p("x:%d, y:%d ", s_game->p[0], s_game->p[1]);
-	if (wasd1.w == 'C')
+	wasd(s_game, s_game->p, 0);
+	if (s_game->get_wasd[s_game->select][0] == 'E' && s_game->my_colls == s_game->colls)
+			exit(0);
+	if (s_game->get_wasd[s_game->select][0] == 'C')
 	{
+		*s_game->get_wasd[s_game->select] = '0';
+		wasd(s_game, s_game->p, 1);
+		// lliter(s_game->map, &iter);
+		s_game->my_colls++;
+	}
+	else if(s_game->get_wasd[s_game->select][0] != '1')
+		wasd(s_game, s_game->p, 1);
+	p("x:%d, y:%d ", s_game->p[0], s_game->p[1]);
+	return (1);
+}
+
+int	validate_map(struct s_game *s_game, t_pf *pf)
+{
+	return (0);
+	// p("%d\n", s_game->x_len);
+	// p("%d\n", s_game->x_len);
+
+	char xy[2];
+
+	pf->i = 0;
+	xy[0] = s_game->p[0];
+	xy[1] = s_game->p[1];
+	//path-finder
+	pf->path = ll4new(0);
+
+
+	while (1)
+	{
+		wasd(s_game, xy, 0);
+
+		while (pf->i == 4)
+		{			
+			if (s_game->get_wasd[pf->key_map[pf->i]][0] == 'E' && (s_game->my_colls == s_game->colls))
+			{
+				pf->flag = 1;
+				break ;
+			}
+			
+			pf->i++;
+		}
+		
 
 	}
-	draw_block(s_game->p[0] + s_game->wasd[s_game->select][0], s_game->p[1] + s_game->wasd[s_game->select][1], s_game, s_game->plyr);
-	draw_block(s_game->p[0], s_game->p[1], s_game, NULL);
-	s_game->p[1] += s_game->wasd[s_game->select][1];
-	s_game->p[0] += s_game->wasd[s_game->select][0];
-	// lliter(s_game->map, &iter);
-}
-
-int	move(char c, struct s_game *s_game)
-{
-
-	if (c == 'w' && (wasd1.w == 'C' && (s_game->my_colls++ || 1) || wasd1.w != '1'))
-		update(s_game, 0, -1, wasd1);
-	if (c == 'a' && (wasd1.a == 'C' && (s_game->my_colls++ || 1) || wasd1.a != '1'))
-		update(s_game, -1, 0, wasd1);
-	if (c == 's' && (wasd1.s == 'C' && (s_game->my_colls++ || 1) || wasd1.s != '1'))
-		update(s_game, 0, 1, wasd1);
-	if (c == 'd' && (wasd1.d == 'C' && (s_game->my_colls++ || 1) || wasd1.d != '1'))
-		update(s_game, 1, 0, wasd1);
-	return (0);
-}
-
-int	validate_map(struct s_game *s_game, char c)
-{
-	p("%d\n", s_game->x_len);
-	p("%d\n", s_game->x_len);
-
-
-
-	//path-finder
-
-	if (wasd(s_game).w == 'E')
+	if (s_game->get_wasd[s_game->select][0] == 'E')
 		return (1);
 		;
-	if (wasd(s_game).a == 'E')
+	if (s_game->get_wasd[s_game->select][0] == 'E')
 		return (1);
 		;
-	if (wasd(s_game).s == 'E')
+	if (s_game->get_wasd[s_game->select][0] == 'E')
 		return (1);
 		;
-	if (wasd(s_game).d == 'E')
+	if (s_game->get_wasd[s_game->select][0] == 'E')
 		return (1);
 		;
-
-	
-	t_list	*path;
-
-	path = llnew(0);
-
+	s_game->my_colls = 0;
 	return (0);
 }
