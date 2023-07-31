@@ -1,30 +1,39 @@
 #ifndef GAME_H
 # if defined(__linux__)
-	/* Linux. --------------------------------------------------- */
+	/* wsl Linux. --------------------------------------------------- */
 #  include "./minilibx-linux/mlx.h"
+#  define W 119
+#  define A 97
+#  define S 115
+#  define D 100
 # elif defined(__APPLE__)
 	/* OSX. --------------------------------------------------- */
 #  include "./minilibx_opengl_20191021/mlx.h"
+#  define W 13
+#  define A 0
+#  define S 1
+#  define D 2
 # endif
 
+# define w
+# define a
+# define s
+# define d
 # include <fcntl.h>
 # include "../murmurlibc/murmurlibc.h"
 
 typedef struct s_game
 {
-	char			set_wasd[14][2];
+	char			set_wasd[W+1][2];
 	int				select;
-	char			*get_wasd[14];
+	int				ct;
+	char			*get_wasd[W+1];
 	void			*mlx_p;
 	void			*w_p;
-	int				w;
-	int				h;
+	int				wt;
+	int				hh;
+	int				key_arr[4];
 	void			*key_map[81];
-	void			*bcgr;
-	void			*plyr;
-	void			*wall;
-	void			*exit;
-	void			*coll;
 	t_list			*map;
 	char			*p;
 	int				y_len;
@@ -51,11 +60,11 @@ typedef struct s_simulation
 {
 	int		i;
 	int		flag;
-	int		key_map[4];
 	t_wasd	*path;
 }		t_pf;
 
 
+char	*draw_all(t_game *s_game, int y);
 int 	draw_block(int x, int y, t_game *s_game, void *img);
 int		load_map(struct s_read_map *s_read_map, char **c);
 int		init(t_game *s_game, char **c);

@@ -9,8 +9,10 @@ program = game
 
 all: $(NAME) mlx murmurlibc
 ifeq '$(os)' 'Darwin'
+	pwd | cat
 	$(CC) $(CFLAGS) -o $(program) $(NAME) minilibx_opengl_20191021/libmlx.a ../murmurlibc/murmurlibc.a $(mlxLinkFlagsOSX)
 else ifeq '$(os)' 'Linux'
+	pwd | cat
 	$(CC) $(CFLAGS) -o $(program) $(NAME) minilibx-linux/libmlx_Linux.a ../murmurlibc/murmurlibc.a $(mlxLinkFlags_linux)
 endif
 $(NAME):

@@ -85,14 +85,14 @@ int	load_map(struct s_read_map *s_read_map, char **c)
 	return (0);
 }
 
-void iter(void *s)
+void iter(void *ss)
 {
-	p("%s\n", s);
+	p("%s\n", ss);
 }
 // struct arithmetic
-void	wasd(struct s_game *s_game, char *xy, int a)
+void	wasd(struct s_game *s_game, char *xy, int aa)
 {
-	if (a)
+	if (aa)
 	{
 		draw_block(xy[0] + s_game->set_wasd[s_game->select][0], xy[1] + s_game->set_wasd[s_game->select][1], s_game, s_game->key_map['P']);
 		draw_block(xy[0], xy[1], s_game, NULL);
@@ -100,11 +100,10 @@ void	wasd(struct s_game *s_game, char *xy, int a)
 		xy[0] += s_game->set_wasd[s_game->select][0];
 		return ;
 	}
-	s_game->get_wasd[13] = (((char *)(findex(s_game->map, xy[1] - 1)->content)) + xy[0]);
-	s_game->get_wasd[0] = (((char *)(findex(s_game->map, xy[1])->content)) + (xy[0] - 1));
-	s_game->get_wasd[1] = (((char *)(findex(s_game->map, xy[1] + 1)->content)) + xy[0]);
-	s_game->get_wasd[2] = (((char *)(findex(s_game->map, xy[1])->content)) + (xy[0] + 1));
-	s_game->get_wasd[3] = (((char *)(findex(s_game->map, xy[1])->content)) + xy[0]);
+	while (s_game->ct < 4)
+		s_game->get_wasd[s_game->key_arr[s_game->ct++]] = draw_all(s_game, xy[1] + s_game->set_wasd[s_game->key_arr[s_game->ct]][1]) + xy[0] + (s_game->set_wasd[s_game->key_arr[s_game->ct]][0]);
+	s_game->ct = 0;
+	s_game->get_wasd[3] = (draw_all(s_game, xy[1]) + xy[0]);
 }
 
 int		update(t_game *s_game)
@@ -139,14 +138,14 @@ int	validate_map(struct s_game *s_game, t_pf *pf)
 	//path-finder
 	pf->path = ll4new(0);
 
-
 	while (1)
 	{
 		wasd(s_game, xy, 0);
 
 		while (pf->i == 4)
-		{			
-			if (s_game->get_wasd[pf->key_map[pf->i]][0] == 'E' && (s_game->my_colls == s_game->colls))
+		{
+
+			if (s_game->get_wasd[s_game->key_arr[pf->i]][0] == 'E' && (s_game->my_colls == s_game->colls))
 			{
 				pf->flag = 1;
 				break ;
