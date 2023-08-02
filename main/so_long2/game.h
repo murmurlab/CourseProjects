@@ -60,7 +60,7 @@ struct s_read_map
 typedef struct s_simulation
 {
 	int		i;
-	int		flag;
+	int		e_flag;
 	t_wasd	*path;
 }		t_pf;
 

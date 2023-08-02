@@ -61,7 +61,6 @@ int	init1(t_game *s_game, char **c)
 	t_pf				*pf;
 	pf = malloc(sizeof(t_pf));
 
-	s_game->ct = 0;
 	s_read_map.s_game = s_game;
 	s_game->colls = 0;
 	s_read_map.end = 0;
@@ -88,6 +87,7 @@ int	init1(t_game *s_game, char **c)
 	s_game->key_arr[1] = A;
 	s_game->key_arr[2] = S;
 	s_game->key_arr[3] = D;
+	pf->e_flag = 0;
 	s_read_map.exit_code = load_map(&s_read_map, c);
 	if (s_read_map.exit_code)
 	{

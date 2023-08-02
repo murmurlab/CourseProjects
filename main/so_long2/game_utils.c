@@ -143,23 +143,33 @@ int	validate_map(struct s_game *s_game, t_pf *pf)
 	while (1)
 	{
 		wasd(s_game, xy, 0);
+		// update directions in link
 		while (pf->i == 4)
 		{
-			if (s_game->get_wasd[s_game->key_arr[pf->i]][0] == 'E' && (s_game->my_colls == s_game->colls))
+			if (s_game->get_wasd[s_game->key_arr[pf->i]][0] != '1')
 			{
-				pf->flag = 1;
-				break ;
+				if (s_game->get_wasd[s_game->key_arr[pf->i]][0] == 'E')
+				{
+					if (s_game->my_colls == s_game->colls)
+						return(0);
+					pf->e_flag = 1;
+				}
+				else if (s_game->get_wasd[s_game->key_arr[pf->i]][0] == 'C')
+				{
+					if (pf->e_flag && (s_game->my_colls == s_game->colls))
+						return(0);
+					s_game->my_colls++;
+				}
+				// register coord in stack(murmurlibc) if has now alternate path
+				// go in map
+				// make footprint ('#')
+				pf->i = 0;
+				continue ;
 			}
 			pf->i++;
 		}
-		while (pf->i == 4)
-		{
-			if (s_game->get_wasd[s_game->key_arr[pf->i]][0] == '0')
-			{
-				break ;
-			}
-			pf->i++;
-		}
+		// tp to last alternate path
+		pf->i = 0;
 	}
 	s_game->my_colls = 0;
 	return (0);
