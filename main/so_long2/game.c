@@ -46,7 +46,7 @@ char	*draw_all(t_game *s_game, int y)
 int	events(int k, struct s_game *s_game)
 {
 	p("key<%d> ", k);
-	if (k == 53 && k == 65307)
+	if (k == 53 || k == 65307)
 		xit(0, s_game);
 	if (k != W && k != A && k != S && k != D)
 		return (0);
@@ -94,6 +94,7 @@ int	init1(t_game *s_game, char **c)
 		p("error load map1: %d\n", s_read_map.exit_code);
 		return (1);
 	}
+	s_game->w_p = mlx_new_window(s_game->mlx_p, s_game->hh * s_game->x_len, s_game->wt * s_game->y_len, "game");
 	draw_all(s_game, NULL);
 	mlx_key_hook(s_game->w_p, &events, s_game);
 	s_read_map.exit_code = validate_map(s_game, pf);
@@ -112,7 +113,7 @@ int	main(int c, char *v[])
 	s_game = malloc(sizeof(t_game));
 	p("BUFFER_SIZE: %d\n", BUFFER_SIZE);
 	s_game->mlx_p = mlx_init();
-	s_game->w_p = mlx_new_window(s_game->mlx_p, 500, 500, "game");
+	// s_game->w_p = mlx_new_window(s_game->mlx_p, 16 * 10, 16 * 11, "game");
 	if (init1(s_game, v))
 		return (1);
 	mlx_loop(s_game->mlx_p);
