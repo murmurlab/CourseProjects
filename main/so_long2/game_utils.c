@@ -44,7 +44,7 @@ int	check_y_border(char *line)
 	while (line[i] != '\n' && line[i])
 	{
 		if (line[i++] != '1')
-			return (4);
+			return (1);
 	}
 	return (0);
 }
@@ -100,10 +100,10 @@ void	wasd(struct s_game *s_game, char *xy, int aa)
 		xy[0] += s_game->set_wasd[s_game->select][0];
 		return ;
 	}
-	s_game->get_wasd[13] = (((char *)(findex(s_game->map, xy[1] - 1)->content)) + xy[0]);
-	s_game->get_wasd[0] = (((char *)(findex(s_game->map, xy[1])->content)) + (xy[0] - 1));
-	s_game->get_wasd[1] = (((char *)(findex(s_game->map, xy[1] + 1)->content)) + xy[0]);
-	s_game->get_wasd[2] = (((char *)(findex(s_game->map, xy[1])->content)) + (xy[0] + 1));
+	s_game->get_wasd[W] = (((char *)(findex(s_game->map, xy[1] - 1)->content)) + xy[0]);
+	s_game->get_wasd[A] = (((char *)(findex(s_game->map, xy[1])->content)) + (xy[0] - 1));
+	s_game->get_wasd[S] = (((char *)(findex(s_game->map, xy[1] + 1)->content)) + xy[0]);
+	s_game->get_wasd[D] = (((char *)(findex(s_game->map, xy[1])->content)) + (xy[0] + 1));
 	s_game->get_wasd[3] = (((char *)(findex(s_game->map, xy[1])->content)) + xy[0]);
 }
 
