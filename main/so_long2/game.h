@@ -1,7 +1,8 @@
 #ifndef GAME_H
 # if defined(__linux__)
-	/* wsl Linux. --------------------------------------------------- */
+	/* Linux. --------------------------------------------------- */
 #  include "./minilibx-linux/mlx.h"
+	/* WSL keycodes */
 #  define W 119
 #  define A 97
 #  define S 115

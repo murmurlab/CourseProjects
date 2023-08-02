@@ -139,11 +139,10 @@ int	validate_map(struct s_game *s_game, t_pf *pf)
 	//path-finder
 	pf->path = ll4new(0);
 
-
+	
 	while (1)
 	{
 		wasd(s_game, xy, 0);
-
 		while (pf->i == 4)
 		{
 			if (s_game->get_wasd[s_game->key_arr[pf->i]][0] == 'E' && (s_game->my_colls == s_game->colls))
@@ -151,22 +150,17 @@ int	validate_map(struct s_game *s_game, t_pf *pf)
 				pf->flag = 1;
 				break ;
 			}
-			
+			pf->i++;
+		}
+		while (pf->i == 4)
+		{
+			if (s_game->get_wasd[s_game->key_arr[pf->i]][0] == '0')
+			{
+				break ;
+			}
 			pf->i++;
 		}
 	}
-	if (s_game->get_wasd[s_game->select][0] == 'E')
-		return (1);
-		;
-	if (s_game->get_wasd[s_game->select][0] == 'E')
-		return (1);
-		;
-	if (s_game->get_wasd[s_game->select][0] == 'E')
-		return (1);
-		;
-	if (s_game->get_wasd[s_game->select][0] == 'E')
-		return (1);
-		;
 	s_game->my_colls = 0;
 	return (0);
 }

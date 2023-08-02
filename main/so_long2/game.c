@@ -113,7 +113,6 @@ int	main(int c, char *v[])
 	s_game = malloc(sizeof(t_game));
 	p("BUFFER_SIZE: %d\n", BUFFER_SIZE);
 	s_game->mlx_p = mlx_init();
-	// s_game->w_p = mlx_new_window(s_game->mlx_p, 16 * 10, 16 * 11, "game");
 	if (init1(s_game, v))
 		return (1);
 	mlx_loop(s_game->mlx_p);
