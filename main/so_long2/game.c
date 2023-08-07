@@ -89,15 +89,20 @@ int	init1(t_game *s_game, char **c)
 	s_game->key_arr[3] = D;
 	pf->e_flag = 0;
 	s_read_map.exit_code = load_map(&s_read_map, c);
+	p("asd2");
 	if (s_read_map.exit_code)
 	{
 		p("error load map1: %d\n", s_read_map.exit_code);
 		return (1);
 	}
+	p("asd5");
 	s_game->w_p = mlx_new_window(s_game->mlx_p, s_game->hh * s_game->x_len, s_game->wt * s_game->y_len, "game");
+	p("asd444444444444444444");
 	draw_all(s_game, NULL);
 	mlx_key_hook(s_game->w_p, &events, s_game);
+	p("asd3");
 	s_read_map.exit_code = validate_map(s_game, pf);
+	p("asd");
 	if (s_read_map.exit_code)
 	{
 		p("error load map: %d\n", s_read_map.exit_code);
@@ -113,6 +118,7 @@ int	main(int c, char *v[])
 	s_game = malloc(sizeof(t_game));
 	p("BUFFER_SIZE: %d\n", BUFFER_SIZE);
 	s_game->mlx_p = mlx_init();
+	p("asd1");
 	if (init1(s_game, v))
 		return (1);
 	mlx_loop(s_game->mlx_p);

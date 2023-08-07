@@ -31,13 +31,15 @@ int	check_lines\
 		s_read_map->s_game->p[0] = (s_read_map->p_p - s_read_map->line);
 		s_read_map->s_game->p[1] = s_read_map->i - 1;
 	}
-	xstrlcpy(findex(s_read_map->s_game->map, (*s_read_map).i - 1)->content, \
+	llend(s_read_map->s_game->map)->content = s_read_map->line;
+	// xstrlcpy(findex(s_read_map->s_game->map, (*s_read_map).i - 1)->content, \
 	s_read_map->line, s_read_map->old_x_len + s_read_map->end);
 	return (0);
 }
 
 int	check_y_border(char *line)
 {
+	// p("<%s>", line);
 	int	i;
 
 	i = 0;
@@ -55,6 +57,7 @@ int	load_map(struct s_read_map *s_read_map, char **c)
 
 	fd_map = open(*(c + 1), O_RDONLY);
 	(*s_read_map).line = multiRowRead(fd_map);
+	p("\n<%s>", (*s_read_map).line);
 	(*s_read_map).old_x_len = xstrlen((*s_read_map).line); //first check_lines(s_read_map)
 	if (check_y_border((*s_read_map).line))
 		return (5);
@@ -66,8 +69,9 @@ int	load_map(struct s_read_map *s_read_map, char **c)
 		if (s_read_map->exit_code)
 			return (s_read_map->exit_code);
 		(*s_read_map).old_x_len = xstrlen((*s_read_map).line);
-		free((*s_read_map).line);
+		// free((*s_read_map).line);
 		(*s_read_map).line = multiRowRead(fd_map);
+		p("<%s>", (*s_read_map).line);
 		if (s_read_map->line)
 		{
 			(*s_read_map).i++;
@@ -78,6 +82,7 @@ int	load_map(struct s_read_map *s_read_map, char **c)
 	}
 	s_read_map->s_game->y_len = s_read_map->i;
 	s_read_map->s_game->x_len = s_read_map->old_x_len;
+	p("|%s|", findex(s_read_map->s_game->map, s_read_map->i - 1)->content);
 	if (check_y_border(llend(s_read_map->s_game->map)->content))
 		return (7);
 	free((*s_read_map).line);
@@ -100,11 +105,10 @@ void	wasd(struct s_game *s_game, char *xy, int aa)
 		xy[0] += s_game->set_wasd[s_game->select][0];
 		return ;
 	}
-	s_game->get_wasd[W] = (((char *)(findex(s_game->map, xy[1] - 1)->content)) + xy[0]);
-	s_game->get_wasd[A] = (((char *)(findex(s_game->map, xy[1])->content)) + (xy[0] - 1));
-	s_game->get_wasd[S] = (((char *)(findex(s_game->map, xy[1] + 1)->content)) + xy[0]);
-	s_game->get_wasd[D] = (((char *)(findex(s_game->map, xy[1])->content)) + (xy[0] + 1));
-	s_game->get_wasd[3] = (((char *)(findex(s_game->map, xy[1])->content)) + xy[0]);
+	while (s_game->ct < 4)
+		s_game->get_wasd[s_game->key_arr[s_game->ct++]] = draw_all(s_game, xy[1] + s_game->set_wasd[s_game->key_arr[s_game->ct]][1]) + xy[0] + (s_game->set_wasd[s_game->key_arr[s_game->ct]][0]);
+	s_game->ct = 0;
+	s_game->get_wasd[3] = (draw_all(s_game, xy[1]) + xy[0]);
 }
 
 int		update(t_game *s_game)
