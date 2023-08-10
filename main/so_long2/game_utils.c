@@ -141,7 +141,7 @@ int	validate_map(struct s_game *s_game, t_pf *pf)
 	xy[0] = s_game->p[0];
 	xy[1] = s_game->p[1];
 	//path-finder
-	pf->path = ll4new(0);
+	pf->stack = llnew(0);
 
 	
 	while (1)
@@ -150,8 +150,14 @@ int	validate_map(struct s_game *s_game, t_pf *pf)
 		// update directions in link
 		while (pf->i == 4)
 		{
-			if (s_game->get_wasd[s_game->key_arr[pf->i]][0] != '1')
+			if (s_game->get_wasd[s_game->key_arr[pf->i]][0] != '1' &&
+				s_game->get_wasd[s_game->key_arr[pf->i]][0] != '#')
 			{
+				if (pf->stack)
+				{
+					
+				}
+				
 				if (s_game->get_wasd[s_game->key_arr[pf->i]][0] == 'E')
 				{
 					if (s_game->my_colls == s_game->colls)

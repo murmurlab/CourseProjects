@@ -61,7 +61,7 @@ typedef struct s_simulation
 {
 	int		i;
 	int		e_flag;
-	t_wasd	*path;
+	t_list	*stack;
 }		t_pf;
 
 
