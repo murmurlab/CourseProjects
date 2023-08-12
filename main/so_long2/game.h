@@ -61,6 +61,7 @@ typedef struct s_simulation
 {
 	int		i;
 	int		e_flag;
+	t_list	*que;
 	t_list	*stack;
 }		t_pf;
 

@@ -142,6 +142,7 @@ int	validate_map(struct s_game *s_game, t_pf *pf)
 	xy[1] = s_game->p[1];
 	//path-finder
 	pf->stack = llnew(0);
+	pf->que = NULL;
 
 	
 	while (1)
@@ -153,11 +154,13 @@ int	validate_map(struct s_game *s_game, t_pf *pf)
 			if (s_game->get_wasd[s_game->key_arr[pf->i]][0] != '1' &&
 				s_game->get_wasd[s_game->key_arr[pf->i]][0] != '#')
 			{
-				if (pf->stack)
+				lladd(&pf->que, llnew(0));
+				(llend(pf->que))->i = s_game->key_arr[pf->i];
+				if (lllen(pf->que) >= 1)
 				{
-					
+					lladd(&pf->stack->que, llnew(0));
+					(llend(pf->stack->que))->i = s_game->key_arr[pf->i];
 				}
-				
 				if (s_game->get_wasd[s_game->key_arr[pf->i]][0] == 'E')
 				{
 					if (s_game->my_colls == s_game->colls)
@@ -178,6 +181,7 @@ int	validate_map(struct s_game *s_game, t_pf *pf)
 			}
 			pf->i++;
 		}
+		if (lllen(pf->que) > 1)
 		// tp to last alternate path
 		pf->i = 0;
 	}
