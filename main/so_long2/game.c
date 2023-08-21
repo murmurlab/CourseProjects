@@ -60,7 +60,7 @@ int	init1(t_game *s_game, char **c)
 	struct s_read_map	s_read_map;
 	t_pf				*pf;
 	pf = malloc(sizeof(t_pf));
-
+	pf->p = malloc(2 * sizeof(int));
 	s_read_map.s_game = s_game;
 	s_game->colls = 0;
 	s_read_map.end = 0;
@@ -75,6 +75,7 @@ int	init1(t_game *s_game, char **c)
 	s_game->key_map[49] = mlx_xpm_file_to_image(s_game->mlx_p, "assets/wall.xpm", &s_game->wt, &s_game->hh);
 	s_game->key_map[69] = mlx_xpm_file_to_image(s_game->mlx_p, "assets/exit_1.xpm", &s_game->wt, &s_game->hh);
 	s_game->key_map[67] = mlx_xpm_file_to_image(s_game->mlx_p, "assets/main_c.xpm", &s_game->wt, &s_game->hh);
+	s_game->key_map[35] = mlx_xpm_file_to_image(s_game->mlx_p, "assets/wall.xpm", &s_game->wt, &s_game->hh);
 	s_game->set_wasd[W][0] = 0;
 	s_game->set_wasd[W][1] = -1;
 	s_game->set_wasd[A][0] = -1;
@@ -113,8 +114,10 @@ int	init1(t_game *s_game, char **c)
 
 int	main(int c, char *v[])
 {
-	t_game				*s_game;
+	t_game	*s_game;
+	int		*asd;
 
+	asd = (int a[22]){2};
 	s_game = malloc(sizeof(t_game));
 	p("BUFFER_SIZE: %d\n", BUFFER_SIZE);
 	s_game->mlx_p = mlx_init();

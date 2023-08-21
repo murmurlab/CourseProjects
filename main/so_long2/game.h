@@ -36,7 +36,7 @@ typedef struct s_game
 	int				key_arr[4];
 	void			*key_map[81];
 	t_list			*map;
-	char			*p;
+	int				*p;
 	int				y_len;
 	int				x_len;
 	short			colls;
@@ -61,7 +61,8 @@ typedef struct s_simulation
 {
 	int		i;
 	int		e_flag;
-	t_list	*que;
+	int		first;
+	int		*p;
 	t_list	*stack;
 }		t_pf;
 
@@ -73,7 +74,7 @@ int		init(t_game *s_game, char **c);
 int		validate_map(struct s_game *s_game, t_pf *pf);
 int 	draw(int x, int y, void *pt, t_game *s_game);
 int		move(char c, struct s_game *s_game);
-void	wasd(struct s_game *s_game, char *xy, int a);
+void	wasd(struct s_game *s_game, int *xy, int a);
 int		update(t_game *s_game);
 int		xit(int x, t_game *s_game);
 #endif

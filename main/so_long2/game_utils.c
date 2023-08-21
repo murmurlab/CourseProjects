@@ -74,7 +74,7 @@ int	load_map(struct s_read_map *s_read_map, char **c)
 		p("<%s>", (*s_read_map).line);
 		if (s_read_map->line)
 		{
-			(*s_read_map).i++;
+			(*s_read_map).i++; //optimize
 			lladd(&s_read_map->s_game->map, llnew(0));
 		}
 		else
@@ -95,7 +95,7 @@ void iter(void *ss)
 	p("%s\n", ss);
 }
 // struct arithmetic
-void	wasd(struct s_game *s_game, char *xy, int aa)
+void	wasd(struct s_game *s_game, int *xy, int aa)
 {
 	if (aa)
 	{
@@ -131,58 +131,73 @@ int		update(t_game *s_game)
 
 int	validate_map(struct s_game *s_game, t_pf *pf)
 {
-	return (0);
+	// return (0);
+	draw_all(s_game, 0);
 	// p("%d\n", s_game->x_len);
 	// p("%d\n", s_game->x_len);
 
 	char xy[2];
-
+	t_list	*tmp;
 	pf->i = 0;
-	xy[0] = s_game->p[0];
-	xy[1] = s_game->p[1];
+	pf->p[0] = s_game->p[0];
+	pf->p[1] = s_game->p[1];
 	//path-finder
 	pf->stack = llnew(0);
-	pf->que = NULL;
+	// pf->first = 0;
+	s_game->select = 0;
 
-	
 	while (1)
 	{
-		wasd(s_game, xy, 0);
+		wasd(s_game, pf->p, 0);
 		// update directions in link
 		while (pf->i == 4)
 		{
 			if (s_game->get_wasd[s_game->key_arr[pf->i]][0] != '1' &&
 				s_game->get_wasd[s_game->key_arr[pf->i]][0] != '#')
 			{
-				lladd(&pf->que, llnew(0));
-				(llend(pf->que))->i = s_game->key_arr[pf->i];
-				if (lllen(pf->que) >= 1)
+				if (pf->first)
 				{
-					lladd(&pf->stack->que, llnew(0));
-					(llend(pf->stack->que))->i = s_game->key_arr[pf->i];
+					tmp = llnew(0); // key map[:)] - lladd(llnew) llend.i =)
+					tmp->i = s_game->key_arr[pf->i];
+					lladd(&llend(pf->stack)->que, tmp);
 				}
-				if (s_game->get_wasd[s_game->key_arr[pf->i]][0] == 'E')
-				{
-					if (s_game->my_colls == s_game->colls)
-						return(0);
-					pf->e_flag = 1;
-				}
-				else if (s_game->get_wasd[s_game->key_arr[pf->i]][0] == 'C')
-				{
-					if (pf->e_flag && (s_game->my_colls == s_game->colls))
-						return(0);
-					s_game->my_colls++;
-				}
+				else
+					s_game->select = s_game->key_arr[pf->i];
+				// if (s_game->get_wasd[s_game->key_arr[pf->i]][0] == 'E')
+				// {
+				// 	if (s_game->my_colls == s_game->colls)
+				// 		return(0);
+				// 	pf->e_flag = 1;
+				// }
+				// else if (s_game->get_wasd[s_game->key_arr[pf->i]][0] == 'C')
+				// {
+				// 	if (pf->e_flag && (s_game->my_colls == s_game->colls))
+				// 		return(0);
+				// 	s_game->my_colls++;
+				// }
 				// register coord in stack(murmurlibc) if has now alternate path
 				// go in map
 				// make footprint ('#')
-				pf->i = 0;
-				continue ;
+				// pf->i = 0;
+				// continue ;
 			}
 			pf->i++;
 		}
-		if (lllen(pf->que) > 1)
-		// tp to last alternate path
+		// if (lllen(pf->que) > 1)
+		// 	pf->stack->que = pf->que;
+		// pf->first;
+		// s_game->select = pf->first;
+		if (s_game->select)
+		{
+			draw_all(s_game, pf->p[1])[pf->p[0]]="#";
+			wasd(s_game, pf->p, 1);
+		}
+		else
+		{
+
+			// tp to last alternate path
+		}
+		s_game->select = 0;
 		pf->i = 0;
 	}
 	s_game->my_colls = 0;

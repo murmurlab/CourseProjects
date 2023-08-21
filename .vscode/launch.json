@@ -17,7 +17,7 @@
             "request": "launch",
             "name": "lldb",
             "program": "${fileDirname}/game",
-            "args": ["maps/map00.ber"],
+            "args": ["maps/map02.ber"],
             "cwd": "${fileDirname}",
             "preLaunchTask": "build",
         },
