@@ -196,10 +196,10 @@ int	validate_map(struct s_game *s_game, t_pf *pf)
 		}
 		else
 		{
-
+			pf
 			// tp to last alternate path
 		}
-		s_game->select = 0;
+		s_game->select = -1;
 		pf->i = 0;
 		print_map(s_game);
 	}
