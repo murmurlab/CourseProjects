@@ -196,7 +196,9 @@ int	validate_map(struct s_game *s_game, t_pf *pf)
 		}
 		else
 		{
-			pf
+			pointer1 = draw_all(s_game, pf->p[1]);
+			pointer1[(pf->p)[0]]='#';
+			wasd(s_game, pf->p, 1);
 			// tp to last alternate path
 		}
 		s_game->select = -1;
