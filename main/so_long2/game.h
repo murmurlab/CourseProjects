@@ -66,7 +66,7 @@ typedef struct s_simulation
 	t_list	*stack;
 }		t_pf;
 
-
+void	print_map(t_game *s_game);
 char	*draw_all(t_game *s_game, int y);
 int 	draw_block(int x, int y, t_game *s_game, void *img);
 int		load_map(struct s_read_map *s_read_map, char **c);

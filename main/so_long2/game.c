@@ -7,6 +7,15 @@ int	xit(int x, t_game *s_game)
 	exit(x);
 }
 
+void	print_map(t_game *s_game)
+{
+	int	i;
+
+	i = 0;
+	while (i < s_game->y_len)
+		p("%s", draw_all(s_game, i++));
+}
+
 int draw_block(int x, int y, t_game *s_game, void *img)
 {
 	char	q;
@@ -99,10 +108,10 @@ int	init1(t_game *s_game, char **c)
 	p("asd5");
 	s_game->w_p = mlx_new_window(s_game->mlx_p, s_game->hh * s_game->x_len, s_game->wt * s_game->y_len, "game");
 	p("asd444444444444444444");
-	draw_all(s_game, NULL);
-	mlx_key_hook(s_game->w_p, &events, s_game);
+	draw_all(s_game, 0);
 	p("asd3");
 	s_read_map.exit_code = validate_map(s_game, pf);
+	mlx_key_hook(s_game->w_p, &events, s_game);
 	p("asd");
 	if (s_read_map.exit_code)
 	{

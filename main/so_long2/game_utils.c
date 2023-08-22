@@ -131,6 +131,7 @@ int		update(t_game *s_game)
 
 int	validate_map(struct s_game *s_game, t_pf *pf)
 {
+	char	*pointer1;
 	// return (0);
 	draw_all(s_game, 0);
 	// p("%d\n", s_game->x_len);
@@ -144,18 +145,18 @@ int	validate_map(struct s_game *s_game, t_pf *pf)
 	//path-finder
 	pf->stack = llnew(0);
 	// pf->first = 0;
-	s_game->select = 0;
+	s_game->select = -1;
 
 	while (1)
 	{
 		wasd(s_game, pf->p, 0);
 		// update directions in link
-		while (pf->i == 4)
+		while (pf->i != 4)
 		{
 			if (s_game->get_wasd[s_game->key_arr[pf->i]][0] != '1' &&
 				s_game->get_wasd[s_game->key_arr[pf->i]][0] != '#')
 			{
-				if (pf->first)
+				if (s_game->select != -1)
 				{
 					tmp = llnew(0); // key map[:)] - lladd(llnew) llend.i =)
 					tmp->i = s_game->key_arr[pf->i];
@@ -187,9 +188,10 @@ int	validate_map(struct s_game *s_game, t_pf *pf)
 		// 	pf->stack->que = pf->que;
 		// pf->first;
 		// s_game->select = pf->first;
-		if (s_game->select)
+		if (s_game->select != -1)
 		{
-			draw_all(s_game, pf->p[1])[pf->p[0]]="#";
+			pointer1 = draw_all(s_game, pf->p[1]);
+			pointer1[(pf->p)[0]]='#';
 			wasd(s_game, pf->p, 1);
 		}
 		else
@@ -199,6 +201,7 @@ int	validate_map(struct s_game *s_game, t_pf *pf)
 		}
 		s_game->select = 0;
 		pf->i = 0;
+		print_map(s_game);
 	}
 	s_game->my_colls = 0;
 	return (0);
