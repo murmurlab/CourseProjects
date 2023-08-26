@@ -1,137 +1,240 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   game.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/25 22:56:36 by ahbasara          #+#    #+#             */
+/*   Updated: 2023/08/25 22:56:36 by ahbasara         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "game.h"
 #include <signal.h>
 
-int	xit(int x, t_game *s_game)
+int	xit(int x, t_game *s_g)
 {
-	free(s_game);
+	free(s_g->key_map[48]);
+	free(s_g->key_map[80]);
+	free(s_g->key_map[49]);
+	free(s_g->key_map[69]);
+	free(s_g->key_map[67]);
+	free(s_g->key_map[35]);
+	free(s_g->p);
+	llclr(&s_g->colls_xy, &dell);
+	llclr(&s_g->map, &dell);
 	exit(x);
 }
 
-void	print_map(t_game *s_game)
+void	print_map(t_game *s_g)
 {
 	int	i;
 
 	i = 0;
-	while (i < s_game->y_len)
-		p("%s", draw_all(s_game, i++));
+	p("\n[\n");
+	while (i < s_g->y_len)
+	{
+		p("%s", draw_all(s_g, i));
+		i++;
+	}
+	p("\n]\n");
 }
 
-int draw_block(int x, int y, t_game *s_game, void *img)
+int	draw_block(int x, int y, t_game *s_g, void *img)
 {
 	char	q;
-	
+
 	if (img)
-		return (mlx_put_image_to_window(s_game->mlx_p, s_game->w_p, img, x * 16, y * 16));
-	q = ((char *)(findex(s_game->map, y)->content))[x];
-	p("zz: %c, %d", q, s_game->key_map[q]);
-	mlx_put_image_to_window(s_game->mlx_p, s_game->w_p, s_game->key_map[q], x * 16, y * 16);
-	// p("draw_block: w<%d>, h<%d>\n", s_game->w, s_game->h);
+		return (mlx_put_image_to_window(s_g->mlx_p, s_g->w_p, img, x * \
+				16, y * 16));
+	q = ((char *)(findex(s_g->map, y)->content))[x];
+	// p("zz: %c, %d", q, s_g->key_map[q]);
+	mlx_put_image_to_window(s_g->mlx_p, s_g->w_p, s_g->key_map[q], x *\
+							16, y * 16);
+	// p("draw_block: w<%d>, h<%d>\n", s_g->w, s_g->h);
 	return (1);
 }
 
-char	*draw_all(t_game *s_game, int y)
+char	*draw_all(t_game *s_g, int y)
 {
 	int		i;
 	int		j;
 
-	if (y)
-		return ((char *)(findex(s_game->map, y)->content));
+	if (y != -1)
+		return ((char *)(findex(s_g->map, y)->content));
 	i = 0;
 	j = 0;
-	while (i < s_game->y_len)
+	while (i < s_g->y_len)
 	{
-		while (j < s_game->x_len)
+		while (j < s_g->x_len - 1)
 		{
-			draw_block(j, i, s_game, NULL);
+			draw_block(j, i, s_g, NULL);
 			j++;
 		}
 		j = 0;
 		i++;
 	}
-	draw_block(s_game->p[0], s_game->p[1], s_game, s_game->key_map['P']);
+	draw_block(s_g->p[0], s_g->p[1], s_g, s_g->key_map['P']);
 	return (0);
 }
 
-int	events(int k, struct s_game *s_game)
+int	events_u(int k, struct s_g *s_g)
 {
-	p("key<%d> ", k);
+	// validate_map(s_g, pf);
+	p("\nkey<%d> ", k);
+	// s_g->select = -1;
+
+	s_g->direction[0] -= s_g->set_wasd[k][0];
+	s_g->direction[1] -= s_g->set_wasd[k][1];
+	resolve_key(s_g);
+	return (0);
+}
+
+void	resolve_key(t_game *sgame)
+{
+	if (sgame->direction[0] == 1)
+		sgame->select = D;
+	if (sgame->direction[0] == -1)
+		sgame->select = A;
+	if (sgame->direction[1] == 1)
+		sgame->select = S;
+	if (sgame->direction[1] == -1)
+		sgame->select = W;
+	if (sgame->direction[0] == 0 && sgame->direction[1] == 0)
+		sgame->select = -1;
+}
+
+int	events_d(int k, void *rr)
+{
+	// if (!fork())
+		// validate_map(*(void **)rr, *(((void **)rr) + 1));
+
+	p("\nkey<%d> ", k);
 	if (k == 53 || k == 65307)
-		xit(0, s_game);
+		xit(0, *(void **)rr);
 	if (k != W && k != A && k != S && k != D)
 		return (0);
-	s_game->select = k;
-	update(s_game);
+	(*(t_game **)rr)->select = k;
+
+	(*(t_game **)rr)->direction[0] += (*(t_game **)rr)->set_wasd[k][0];
+	(*(t_game **)rr)->direction[1] += (*(t_game **)rr)->set_wasd[k][1];
+	// resolve_key((*(t_game **)rr));
+	// update(*(void **)rr);
 	return (0);
 }
 
-int	init1(t_game *s_game, char **c)
+int loop(void *rr)
 {
-	struct s_read_map	s_read_map;
+	// usleep(1000000 / 30);
+	// draw_all(*(void **)rr, -1);
+	// validate_map(*(void **)rr, *(((void **)rr) + 1));
+	if (((*(t_game **)rr)->loop)++ == 500)
+	{
+		update(*(void **)rr);
+		(*(t_game **)rr)->loop = 0;
+	}
+	// exit(0);
+	return (0);
+}
+
+int	init1(t_game *s_g, char **c)
+{
+	struct s_init	s_init;
 	t_pf				*pf;
-	pf = malloc(sizeof(t_pf));
-	pf->p = malloc(2 * sizeof(int));
-	s_read_map.s_game = s_game;
-	s_game->colls = 0;
-	s_read_map.end = 0;
-	s_read_map.p_p = 0;
-	s_read_map.exit_code = 0;
-	s_read_map.count_E = 0;
-	s_read_map.count_P = 0;
-	s_game->my_colls = 0;
-	s_game->end = 0;
-	s_game->key_map[48] = mlx_xpm_file_to_image(s_game->mlx_p, "assets/bg.xpm", &s_game->wt, &s_game->hh);
-	s_game->key_map[80] = mlx_xpm_file_to_image(s_game->mlx_p, "assets/ghasta.xpm", &s_game->wt, &s_game->hh);
-	s_game->key_map[49] = mlx_xpm_file_to_image(s_game->mlx_p, "assets/wall.xpm", &s_game->wt, &s_game->hh);
-	s_game->key_map[69] = mlx_xpm_file_to_image(s_game->mlx_p, "assets/exit_1.xpm", &s_game->wt, &s_game->hh);
-	s_game->key_map[67] = mlx_xpm_file_to_image(s_game->mlx_p, "assets/main_c.xpm", &s_game->wt, &s_game->hh);
-	s_game->key_map[35] = mlx_xpm_file_to_image(s_game->mlx_p, "assets/wall.xpm", &s_game->wt, &s_game->hh);
-	s_game->set_wasd[W][0] = 0;
-	s_game->set_wasd[W][1] = -1;
-	s_game->set_wasd[A][0] = -1;
-	s_game->set_wasd[A][1] = 0;
-	s_game->set_wasd[S][0] = 0;
-	s_game->set_wasd[S][1] = 1;
-	s_game->set_wasd[D][0] = 1;
-	s_game->set_wasd[D][1] = 0;
-	s_game->key_arr[0] = W;
-	s_game->key_arr[1] = A;
-	s_game->key_arr[2] = S;
-	s_game->key_arr[3] = D;
+	void				*rr;
+
+	rr = malloc(sizeof(void *) * 2);
+	pf = &(t_pf){};
+	*(((void **)rr) + 1)= pf;
+	pf->p = malloc(3 * sizeof(int));
+	s_init.end = 0;
+	s_init.p_p = 0;
+	s_init.x_p = 0;
+	s_init.exit_code = 0;
+	s_init.count_e = 0;
+	s_init.count_p = 0;
+	s_g = &(t_game){0, {0, 0}, (char [W + 1][2]){}, -1, 0, (char *[W + 1]\
+			){}, NULL, NULL, 0, 0, {}, (void *[81]){}\
+			, NULL, NULL, 0, 0, 0, 0, NULL, (int [2]){}, 0};
+	*(((void **)rr) + 0) = s_g;
+	s_init.s_g = s_g;
+	// p("\n||%d||", s_init.s_g->select);
+	// p("\n||%p, %p||", s_init.s_g, s_g);
+	// s_g->loop = 0;
+	// s_g->colls = 0;
+	// s_g->my_colls = 0;
+	// s_g->end = 0;
+	// s_g->ct = 0;
+	// s_g->colls_xy = NULL;
+	s_g->mlx_p = mlx_init();
+	s_g->key_map[48] = mlx_xpm_file_to_image(s_g->mlx_p, "assets/bg.xpm", &s_g->wt, &s_g->hh);
+	s_g->key_map[80] = mlx_xpm_file_to_image(s_g->mlx_p, "assets/ghasta.xpm", &s_g->wt, &s_g->hh);
+	s_g->key_map[49] = mlx_xpm_file_to_image(s_g->mlx_p, "assets/wall.xpm", &s_g->wt, &s_g->hh);
+	s_g->key_map[69] = mlx_xpm_file_to_image(s_g->mlx_p, "assets/exit_1.xpm", &s_g->wt, &s_g->hh);
+	s_g->key_map[67] = mlx_xpm_file_to_image(s_g->mlx_p, "assets/main_c.xpm", &s_g->wt, &s_g->hh);
+	s_g->key_map[35] = mlx_xpm_file_to_image(s_g->mlx_p, "assets/wall.xpm", &s_g->wt, &s_g->hh);
+	s_g->set_wasd[W][0] = 0;
+	s_g->set_wasd[W][1] = -1;
+	s_g->set_wasd[A][0] = -1;
+	s_g->set_wasd[A][1] = 0;
+	s_g->set_wasd[S][0] = 0;
+	s_g->set_wasd[S][1] = 1;
+	s_g->set_wasd[D][0] = 1;
+	s_g->set_wasd[D][1] = 0;
+	s_g->map = malloc(sizeof(t_list));
+	s_g->select = -1;
+	s_g->key_arr[0] = W;
+	s_g->key_arr[1] = A;
+	s_g->key_arr[2] = S;
+	s_g->key_arr[3] = D;
 	pf->e_flag = 0;
-	s_read_map.exit_code = load_map(&s_read_map, c);
-	p("asd2");
-	if (s_read_map.exit_code)
+	s_init.exit_code = load_map(&s_init, c);
+	// print_alter(s_g->colls_xy);
+	// p("\n||%p, %p||", s_init.s_g, s_g);
+	// p("\nexit[%d %d]\n", s_g->x_p[0], s_g->x_p[1]);
+	// p("\nexit[%d %d]\n", s_init.s_g->x_p[0], s_init.s_g->x_p[1]);
+	if (s_init.exit_code)
 	{
-		p("error load map1: %d\n", s_read_map.exit_code);
+		p("error load map1: %d\n", s_init.exit_code);
 		return (1);
 	}
-	p("asd5");
-	s_game->w_p = mlx_new_window(s_game->mlx_p, s_game->hh * s_game->x_len, s_game->wt * s_game->y_len, "game");
-	p("asd444444444444444444");
-	draw_all(s_game, 0);
-	p("asd3");
-	s_read_map.exit_code = validate_map(s_game, pf);
-	mlx_key_hook(s_game->w_p, &events, s_game);
-	p("asd");
-	if (s_read_map.exit_code)
+	// p("asd5");
+	s_g->w_p = mlx_new_window(s_g->mlx_p, s_g->hh * s_g->x_len, s_g->wt * s_g->y_len, "game");
+	// p("asd444444444444444444");
+	draw_all(s_g, -1);
+	// p("asd3");
+	mlx_hook(s_g->w_p, 2, 1L<<0, &events_d, rr);
+	mlx_hook(s_g->w_p, 3, 1L<<0, &events_u, s_g);
+	mlx_loop_hook(s_g->mlx_p, loop, rr);
+	mlx_do_key_autorepeatoff(s_g->mlx_p);
+	s_init.exit_code = validate_map(s_g, pf);
+	render(s_g, pf);
+	draw_all(s_g, -1);
+	if (s_init.exit_code)
 	{
-		p("error load map: %d\n", s_read_map.exit_code);
-		return (1);
+		p("invalid map: %d\n", s_init.exit_code);
+		xit(0, s_g);
 	}
+	mlx_loop(s_g->mlx_p);
+	// p("asd");
+	render(s_g, pf);
+	draw_all(s_g, -1);
 	return (0);
 }
 
 int	main(int c, char *v[])
 {
-	t_game	*s_game;
+	t_game	*s_g;
 	int		*asd;
 
-	asd = (int a[22]){2};
-	s_game = malloc(sizeof(t_game));
+	asd = (int [2]){2};
+	// s_g = malloc(sizeof(t_game));
+	s_g = NULL;
 	p("BUFFER_SIZE: %d\n", BUFFER_SIZE);
-	s_game->mlx_p = mlx_init();
-	p("asd1");
-	if (init1(s_game, v))
+	// s_g->mlx_p = mlx_init();
+	// p("asd1");
+	if (init1(s_g, v))
 		return (1);
-	mlx_loop(s_game->mlx_p);
+	// mlx_loop(s_g->mlx_p);
 }
