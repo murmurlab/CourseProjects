@@ -1,5 +1,5 @@
 CC = 					clang
-CFLAGS = 				-D BUFFER_SIZE=1000000 -std=c99 -g -Wall -Werror -Werror
+CFLAGS = 				-D BUFFER_SIZE=1000000 -std=c99 -g #-Wall -Werror -Werror
 mlxLinkFlags_linux = 	-lmlx -lXext -lX11 -L minilibx-linux
 mlxLinkFlagsOSX =		-framework OpenGL -framework AppKit
 os = ${shell uname -s}

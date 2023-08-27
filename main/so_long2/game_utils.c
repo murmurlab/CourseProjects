@@ -29,7 +29,6 @@ int	check_lines\
 	}
 	s_init->count_p += (short)strclen(s_init->line, 'P');
 	s_init->count_e += (short)strclen(s_init->line, 'E');
-
 	// p("%p", s_init->s_g->map);
 	// p("%s", findex(s_init->s_g->map, (*s_init).i - 1)->content);
 	findex(s_init->s_g->map, (*s_init).i - 1)->content = \
@@ -52,7 +51,7 @@ int	check_lines\
 		s_init->s_g->p[0] = (s_init->p_p - s_init->line);
 		s_init->s_g->p[1] = s_init->i - 1;
 	}
-	llend(&s_init->s_g->map)->content = s_init->line;
+	llend(s_init->s_g->map)->content = s_init->line;
 	// xstrlcpy(findex(s_init->s_g->map, (*s_init).i - 1)->content, \
 	s_init->line, s_init->old_x_len + s_init->end);
 	return (0);
@@ -105,7 +104,7 @@ int	load_map(struct s_init *s_init, char **c)
 	s_init->s_g->y_len = s_init->i;
 	s_init->s_g->x_len = s_init->old_x_len;
 	// p("|%s|", findex(s_init->s_g->map, s_init->i - 1)->content);
-	if (check_y_border(llend(&s_init->s_g->map)->content))
+	if (check_y_border(llend(s_init->s_g->map)->content))
 		return (7);
 	free((*s_init).line);
 	close(fd_map);
@@ -199,18 +198,24 @@ void replace35(unsigned int i, char *ss, void *ptr)
 
 void put_coll(void *ptr, void *ptr2)
 {
-	((char *)(findex(((t_game *)ptr2)->map, ((int *)(((t_list *)ptr)->content))[1])->content))[((int *)(((t_list *)ptr)->content))[0]] = 'C';
+	p("<%d>", ((int *)ptr)[0]);
+	p("<%d> ", ((int *)ptr)[1]);
+	
+	((char *)(findex(((t_game *)ptr2)->map, ((int *)ptr)[1])->content))[((int *)ptr)[0]] = 'C';
 }
 
 void restore(void *ptr, void *ptr2)
 {
 	(void)ptr2;
-	striter((char *)(((t_list *)ptr)->content), replace35, NULL);
+	striter((char *)ptr, replace35, NULL);
 }
 
 void render(t_game *s_g, t_pf *pf)
 {
 	((char *)(findex(s_g->map, s_g->x_p[1])->content))[s_g->x_p[0]] = 'E';
+
+	p("%d", ((int *)(s_g->colls_xy->content))[1]);
+	
 	lliter(s_g->colls_xy, put_coll, s_g);
 	lliter(s_g->map, restore, NULL);
 	s_g->my_colls = 0;
