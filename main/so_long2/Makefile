@@ -6,6 +6,7 @@ os = ${shell uname -s}
 src = ${shell find . -maxdepth 1 -name '*.c'}
 NAME = ${src:.c=.o}
 program = game
+MAKEFLAGS += -j$(NPROCS)
 
 all: $(NAME) mlx murmurlibc
 ifeq '$(os)' 'Darwin'

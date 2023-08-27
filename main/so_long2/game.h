@@ -36,16 +36,16 @@ typedef struct s_g
 {
 	int				loop;
 	int				direction[2];
-	char			set_wasd[W + 1][2];
+	char			set[W + 1][2];
 	int				select;
 	int				ct;
-	char			*get_wasd[W + 1];
-	void			*mlx_p;
+	char			*get[W + 1];
+	void			*m_p;
 	void			*w_p;
-	int				wt;
-	int				hh;
-	int				key_arr[4];
-	void			*key_map[81];
+	int				g;
+	int				y;
+	int				karr[4];
+	void			*km[81];
 	t_list			*map;
 	int				*p;
 	int				y_len;
@@ -57,13 +57,13 @@ typedef struct s_g
 	int				end;
 }		t_game;
 
-struct s_init
+struct s_i
 {
 	int		count_e;
 	int		count_p;
 	char	*p_p;
 	char	*x_p;
-	int		old_x_len;
+	int		oldlen;
 	char	*line;
 	int		i;
 	t_game	*s_g;
@@ -80,20 +80,33 @@ typedef struct s_simulation
 	t_list	*stack;
 }		t_pf;
 
-void	dell(void *p);
+void	load_map2(struct s_i *s_i, int *fd_map, char **c, t_game *s_g);
+void	validate4(t_pf *pf, t_game *s_g);
+int		validate3(t_pf *pf, t_game *s_g, char **pointer1);
+void	validate2(t_pf *pf, t_list *tmp, t_game *s_g);
+void	init3(t_game *s_g);
 void	resolve_key(t_game *sgame);
-void	render(t_game *s_g, t_pf *pf);
+int		events_d(int k, void *rr);
+int		loop(void *rr);
+void	dell(void *p);
+int		events_u(int k, struct s_g *s_g);
+void	resolve_key(t_game *sgame);
+void	render(t_game *s_g, t_pf *pf, int aa);
 void	print_alter(t_list *tt);
 void	check3(unsigned int i, char *ss, void *ptr);
 void	print_map(t_game *s_g);
-char	*draw_all(t_game *s_g, int y);
-int		draw_block(int x, int y, t_game *s_g, void *img);
-int		load_map(struct s_init *s_init, char **c);
-int		init(t_game *s_g, char **c);
+char	*putall(t_game *s_g, int y);
+int		draw_block(int x, int y, t_game *s_g);
+int		check_y_border(char *line);
+int		draw_b(int x, int y, t_game *s_g, void *img);
+int		load_map(struct s_i *s_i, char **c, t_game *s_g);
+int		init1(t_game *s_g, char **c);
 int		validate_map(struct s_g *s_g, t_pf *pf);
 int		draw(int x, int y, void *pt, t_game *s_g);
 int		move(char c, struct s_g *s_g);
 void	wasd(struct s_g *s_g, int *xy, int a);
 int		update(t_game *s_g);
-int		xit(int x, t_game *s_g);
+int		xit(t_game *s_g, t_pf *pf, int aa);
+int		init2(t_game *s_g, char **c, t_pf *pf, struct s_i *s_i);
+
 #endif
