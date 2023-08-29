@@ -29,11 +29,12 @@
 #  define D 2
 # endif
 
-# include <fcntl.h>
 # include "../murmurlibc/murmurlibc.h"
 
 typedef struct s_g
 {
+	void			*p_anim[2];
+	int				step;
 	int				loop;
 	int				direction[2];
 	char			set[W + 1][2];
@@ -45,7 +46,7 @@ typedef struct s_g
 	int				g;
 	int				y;
 	int				karr[4];
-	void			*km[81];
+	void			*km[89];
 	t_list			*map;
 	int				*p;
 	int				y_len;
@@ -53,6 +54,7 @@ typedef struct s_g
 	short			colls;
 	short			my_colls;
 	t_list			*colls_xy;
+	t_list			*enemy_xy;
 	int				x_p[2];
 	int				end;
 }		t_game;
@@ -80,6 +82,12 @@ typedef struct s_simulation
 	t_list	*stack;
 }		t_pf;
 
+void	move_enemy(t_game *s_g);
+void	animate(t_game *s_g);
+void	animate_player(t_game *s_g);
+void	step(t_game *s_g);
+void	print_map(t_game *s_g);
+void	check_lines2(struct s_i *s_i);
 void	load_map2(struct s_i *s_i, int *fd_map, char **c, t_game *s_g);
 void	validate4(t_pf *pf, t_game *s_g);
 int		validate3(t_pf *pf, t_game *s_g, char **pointer1);
@@ -104,7 +112,7 @@ int		init1(t_game *s_g, char **c);
 int		validate_map(struct s_g *s_g, t_pf *pf);
 int		draw(int x, int y, void *pt, t_game *s_g);
 int		move(char c, struct s_g *s_g);
-void	wasd(struct s_g *s_g, int *xy, int a);
+void	wasd(struct s_g *s_g, int *xy, int a, char ch);
 int		update(t_game *s_g);
 int		xit(t_game *s_g, t_pf *pf, int aa);
 int		init2(t_game *s_g, char **c, t_pf *pf, struct s_i *s_i);

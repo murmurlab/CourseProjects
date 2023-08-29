@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 03:11:46 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/08/27 10:11:35 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/08/29 18:21:05 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ int	main(int c, char *v[])
 	int		*asd;
 
 	s_g = malloc(sizeof(t_game));
-	s_g->loop = 0;
 	s_g->direction[0] = 0;
 	s_g->direction[1] = 0;
 	s_g->select = -1;
 	s_g->ct = 0;
+	s_g->map = 0;
 	s_g->colls = 0;
 	s_g->my_colls = 0;
 	s_g->end = 0;
@@ -70,6 +70,7 @@ int	main(int c, char *v[])
 	s_g->km[69] = mlx_xpm_file_to_image(s_g->m_p, "a/E.xpm", &s_g->g, &s_g->y);
 	s_g->km[67] = mlx_xpm_file_to_image(s_g->m_p, "a/C.xpm", &s_g->g, &s_g->y);
 	s_g->km[35] = mlx_xpm_file_to_image(s_g->m_p, "a/1.xpm", &s_g->g, &s_g->y);
+	s_g->km[88] = mlx_xpm_file_to_image(s_g->m_p, "a/X.xpm", &s_g->g, &s_g->y);
 	s_g->set[W][0] = 0;
 	s_g->set[W][1] = -1;
 	asd = (int [2]){2};
@@ -78,7 +79,7 @@ int	main(int c, char *v[])
 		return (1);
 }
 
-void	wasd(struct s_g *s_g, int *xy, int aa)
+void	wasd(struct s_g *s_g, int *xy, int aa, char ch)
 {
 	if (aa)
 	{
@@ -86,7 +87,7 @@ void	wasd(struct s_g *s_g, int *xy, int aa)
 		if (s_g->select != -1)
 		{
 			draw_b(xy[0] + s_g->set[s_g->select][0], xy[1] + s_g->\
-			set[s_g->select][1], s_g, s_g->km['P']);
+			set[s_g->select][1], s_g, s_g->km[ch]);
 			xy[1] += s_g->set[s_g->select][1];
 			xy[0] += s_g->set[s_g->select][0];
 		}

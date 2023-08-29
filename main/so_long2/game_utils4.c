@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 09:39:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/08/27 10:22:44 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/08/29 08:39:21 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	init2(t_game *s_g, char **c, t_pf *pf, struct s_i *s_i)
 {
-	void		*rr;
+	void	*rr;
 
 	s_i->exit_code = load_map(s_i, c, s_g);
 	rr = malloc(sizeof(void *) * 2);
@@ -22,8 +22,8 @@ int	init2(t_game *s_g, char **c, t_pf *pf, struct s_i *s_i)
 	*(((void **)rr) + 1) = pf;
 	if (s_i->exit_code)
 		return (p("error load map1: %d\n", s_i->exit_code), 1);
-	s_g->w_p = mlx_new_window(s_g->m_p, s_g->y * s_g->x_len, s_g->g * s_g-> \
-	y_len, "game");
+	s_g->w_p = mlx_new_window(s_g->m_p, s_g->y * (s_g->x_len - 1), s_g->g * \
+	s_g->y_len, "game");
 	putall(s_g, -1);
 	mlx_hook(s_g->w_p, 2, 1L << 0, &events_d, rr);
 	mlx_hook(s_g->w_p, 3, 1L << 0, &events_u, s_g);
@@ -44,13 +44,19 @@ int	init2(t_game *s_g, char **c, t_pf *pf, struct s_i *s_i)
 void	init3(t_game *s_g)
 {
 	s_g->colls_xy = 0;
+	s_g->enemy_xy = 0;
 	s_g->set[A][0] = -1;
 	s_g->set[A][1] = 0;
 	s_g->set[S][0] = 0;
 	s_g->set[S][1] = 1;
 	s_g->set[D][0] = 1;
 	s_g->set[D][1] = 0;
-	s_g->map = malloc(sizeof(t_list));
+	s_g->p_anim[0] = mlx_xpm_file_to_image(s_g->m_p, "a/P.xpm", &s_g->g, \
+	&s_g->y);
+	s_g->p_anim[1] = mlx_xpm_file_to_image(s_g->m_p, "a/ghast.xpm", &s_g->g, \
+	&s_g->y);
+	s_g->step = 0;
+	s_g->map = llnew(0);
 	s_g->karr[0] = W;
 	s_g->karr[1] = A;
 	s_g->karr[2] = S;
@@ -66,7 +72,7 @@ int	validate_map(struct s_g *s_g, t_pf *pf)
 	validate4(pf, s_g);
 	while (1)
 	{
-		wasd(s_g, pf->p, 0);
+		wasd(s_g, pf->p, 0, '\0');
 		if (s_g->get[3][0] == 'E')
 		{
 			pf->e_flag = 1;
@@ -125,7 +131,7 @@ int	validate3(t_pf *pf, t_game *s_g, char **pointer1)
 	{
 		*pointer1 = putall(s_g, pf->p[1]);
 		(*pointer1)[(pf->p)[0]] = '#';
-		wasd(s_g, pf->p, 1);
+		wasd(s_g, pf->p, 1, 'P');
 	}
 	else
 	{
@@ -133,7 +139,7 @@ int	validate3(t_pf *pf, t_game *s_g, char **pointer1)
 			return (1);
 		*pointer1 = putall(s_g, pf->p[1]);
 		(*pointer1)[(pf->p)[0]] = '#';
-		wasd(s_g, pf->p, 1);
+		wasd(s_g, pf->p, 1, 'P');
 		pf->p[0] = ((int *)(pf->stack->content))[0];
 		pf->p[1] = ((int *)(pf->stack->content))[1];
 		pf->p[2] = 1;
