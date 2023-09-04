@@ -61,7 +61,7 @@ void	end(int a)
 int	main(int argc, char **argv)
 {
 	(void)argc;
-	g_data.pid = toInt(argv[1]);
+	g_data.pid = x_atoi(argv[1]);
 	g_data.message = argv[2];
 	g_data.len = xstrlen(g_data.message);
 	signal(SIGUSR1, send_head);

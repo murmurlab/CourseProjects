@@ -12,7 +12,7 @@
 
 #include "game.h"
 
-void	print_map(t_game *s_g)
+/* void	print_map(t_game *s_g)
 {
 	int	i;
 
@@ -24,7 +24,7 @@ void	print_map(t_game *s_g)
 		i++;
 	}
 	p("\n]\n");
-}
+} */
 
 /* void print_alter(t_list *tt)
 {
@@ -39,11 +39,6 @@ void	print_map(t_game *s_g)
 
 #include "game.h"
 
-void	dell(void *p)
-{
-	free(p);
-}
-
 int	draw_block(int x, int y, t_game *s_g)
 {
 	char	q;
@@ -51,7 +46,7 @@ int	draw_block(int x, int y, t_game *s_g)
 
 	p = findex(s_g->map, y);
 	q = ((char *)(p->content))[x];
-	mlx_put_image_to_window(s_g->m_p, s_g->w_p, s_g->km[q], x * \
+	mlx_put_image_to_window(s_g->m_p, s_g->w_p, s_g->km[(int)q], x * \
 							16, y * 16);
 	return (1);
 }
@@ -77,7 +72,7 @@ char	*putall(t_game *s_g, int y)
 	j = 0;
 	while (i < s_g->y_len)
 	{
-		while (j < s_g->x_len - 1)
+		while (j < s_g->x_len)
 		{
 			draw_block(j, i, s_g);
 			j++;
@@ -89,25 +84,17 @@ char	*putall(t_game *s_g, int y)
 	return (0);
 }
 
-int	init1(t_game *s_g, char **c)
+void	init1(t_game *s_g, char **c)
 {
 	struct s_i	*s_i;
 	t_pf		*pf;
-	int			st;
 
-	s_i = malloc(sizeof(struct s_i));
-	s_g->loop = 0;
+	s_i = callocate(1, sizeof(struct s_i));
 	pf = &(t_pf){};
-	pf->e_flag = 0;
 	s_i->s_g = s_g;
-	s_i->end = 0;
-	s_i->p_p = 0;
-	s_i->x_p = 0;
-	s_i->exit_code = 0;
-	s_i->count_e = 0;
-	s_i->count_p = 0;
 	init3(s_g);
-	pf->p = malloc(3 * sizeof(int));
-	st = init2(s_g, c, pf, s_i);
-	return (st);
+	pf->p = callocate(3, sizeof(int));
+	init2(s_g, c, pf, s_i);
 }
+
+

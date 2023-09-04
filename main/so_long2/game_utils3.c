@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 08:31:04 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/08/29 11:26:41 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/08/31 15:17:33 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,32 +44,12 @@ void	restore(void *ptr, void *ptr2)
 	striter((char *)ptr, replace35, NULL);
 }
 
-void	render(t_game *s_g, t_pf *pf, int aa)
+void	render(t_game *s_g, t_pf *pf)
 {
-	if (aa != 3000)
-	{
-		mlx_destroy_image(s_g->m_p, s_g->km[48]);
-		mlx_destroy_image(s_g->m_p, s_g->km[80]);
-		mlx_destroy_image(s_g->m_p, s_g->km[49]);
-		mlx_destroy_image(s_g->m_p, s_g->km[69]);
-		mlx_destroy_image(s_g->m_p, s_g->km[67]);
-		mlx_destroy_image(s_g->m_p, s_g->km[35]);
-		mlx_destroy_image(s_g->m_p, s_g->km[88]);
-		mlx_destroy_image(s_g->m_p, s_g->p_anim[0]);
-		mlx_destroy_image(s_g->m_p, s_g->p_anim[1]);
-		free(s_g->p);
-		free(s_g);
-		llclr(&s_g->colls_xy, &dell);
-		llclr(&s_g->map, &dell);
-		mlx_destroy_window(s_g->m_p, s_g->w_p);
-		exit(aa);
-	}
-	p("%d", s_g->x_p[1]);
 	((char *)(findex(s_g->map, s_g->x_p[1])->content))[s_g->x_p[0]] = 'E';
-	p("%d", ((int *)(s_g->colls_xy->content))[1]);
 	lliter(s_g->colls_xy, put_coll, s_g);
 	lliter(s_g->map, restore, NULL);
 	s_g->my_colls = 0;
-	llclr(&pf->stack, &dell);
-	free(pf->p);
+	llclr(&pf->stack, &freedom);
+	freedom((void **)&pf->p);
 }
