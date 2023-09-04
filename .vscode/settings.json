@@ -16,7 +16,8 @@
         "vector": "c",
         "algorithm": "c",
         "bitset": "c",
-        "chrono": "c"
+        "chrono": "c",
+        "sstream": "c"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/clang",
     "lldb.displayFormat": "auto",
