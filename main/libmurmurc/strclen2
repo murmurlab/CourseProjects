@@ -1,0 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   strclen2.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/30 00:28:28 by ahbasara          #+#    #+#             */
+/*   Updated: 2023/08/30 00:33:17 by ahbasara         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "murmurlibc.h"
+
+/* size_t	strclen2(const char *s, char c)
+{
+	size_t	r;
+
+	r = 0;
+	while((s = xstrchr(s, c)) && s++ && (r++ || 1))
+		;
+	return (r);
+} */
+/* 
+int	main(void)
+{
+	size_t s;
+	char *arr = "cekoslavakyalilastiramadiklarimizdanmistircasina";
+
+	s = strclen2(arr, 'a');
+	p("%d\n", s);
+}
+ */

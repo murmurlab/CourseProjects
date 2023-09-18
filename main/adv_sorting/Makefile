@@ -1,26 +1,75 @@
-CC = 					clang
-CFLAGS = 				-std=c99 -g -Wall -Werror -Werror
-os = ${shell uname -s}
-src = ${shell find . -maxdepth 1 -name '*.c'}
-NAME = ${src:.c=.o}
-program = sorter
-# MAKEFLAGS += -j$(NPROCS)
+CC =					cc
 
-all: $(NAME) murmurlibc
+libs =					libs
+libr =					-L../libmurmurc -lmurmurc
+incs =					-I incs -I ../libmurmurc
+
+CFLAGS =				-D BUFFER_SIZE=65535 -std=c99 -g -Wall -Wextra -Werror $(incs)
+
+os =					${shell uname -s}
+
 ifeq '$(os)' 'Darwin'
-	$(CC) $(CFLAGS) -o $(program) $(NAME) lib/murmurlibc.a
+	mlxLinkFlags =		-framework OpenGL -framework AppKit -L$(libs)/minilibx_opengl_20191021 -lmlx
+	incs +=				-I $(libs)/minilibx_opengl_20191021
 else ifeq '$(os)' 'Linux'
-	$(CC) $(CFLAGS) -o $(program) $(NAME) lib/murmurlibc.a
+	mlxLinkFlags =		-L minilibx-linux -L$(libs)/minilibx-linux -lmlx -lXext -lX11
+	incs +=				-I $(libs)/minilibx-linux
 endif
-$(NAME):
 
-murmurlibc:
-	make -C lib
+src_dir = srcs
+b_src_dir = b_srcs
+
+B_SRC =					$(b_src_dir)/
+
+SRC =					$(src_dir)/game.c			\
+						$(src_dir)/game_utils.c	\
+						$(src_dir)/game_utils2.c	\
+						$(src_dir)/game_utils3.c	\
+						$(src_dir)/game_utils4.c	\
+						$(src_dir)/game_utils5.c	\
+						$(src_dir)/game_utils6.c	\
+						$(src_dir)/game_utils7.c
+
+OBJ =					${SRC:.c=.o}
+B_OBJ =					${B_SRC:.c=.o}
+NAME =					game
+bonus =					game_bonus
+MAKEFLAGS +=			-j$(NPROCS)
+
+all:					$(NAME) #bonus
+
+bonus:				depend $(B_OBJ)
+	$(CC) $(CFLAGS) $(B_OBJ) -o $(bonus) $(mlxLinkFlags) $(libr)
+
+$(NAME):				depend $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(mlxLinkFlags) $(libr)
+
+depend:					libmurmurc mlx
+
+libmurmurc:
+	make -C ../libmurmurc -j$(NPROCS)
+
+mlx:
+ifeq "$(os)" "Darwin"
+	make -C $(libs)/minilibx_opengl_20191021 -j$(NPROCS) &> /dev/null
+else ifeq ($(os),Linux)
+	make -C $(libs)/minilibx-linux -j$(NPROCS) &> /dev/null
+endif
+
 clean:
-	find . -maxdepth 1 -name "*.o" -exec rm {} +
-fclean: clean
-	make -C lib clean
-	rm -f $(program)
-re: fclean all
+	rm -f $(OBJ)
+# 	rm -f $(B_OBJ)
 
-.PHONY: re fclean clean murmurlibc all
+fclean:					clean
+ifeq "$(os)" "Darwin"
+	make -C $(libs)/minilibx_opengl_20191021 clean
+else ifeq ($(os),Linux)
+	make -C $(libs)/minilibx-linux clean
+endif
+	make -C ../libmurmurc clean &
+	rm -f $(program) & wait
+
+re:						fclean
+	$(MAKE) all
+
+.PHONY:					re fclean clean mlx libmurmurc depend all 
