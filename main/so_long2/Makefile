@@ -1,8 +1,8 @@
 CC =					cc
 
 libs =					libs
-libr =					-L../libmurmurc -lmurmurc
-incs =					-I incs -I ../libmurmurc
+libr =					-L../murmurlibc -lmurmurc
+incs =					-I incs -I ../murmurlibc
 
 CFLAGS =				-D BUFFER_SIZE=65535 -std=c99 -g -Wall -Wextra -Werror $(incs)
 
@@ -47,7 +47,7 @@ $(NAME):				depend $(OBJ)
 depend:					libmurmurc mlx
 
 libmurmurc:
-	make -C ../libmurmurc -j$(NPROCS)
+	make -C ../murmurlibc -j$(NPROCS)
 
 mlx:
 ifeq "$(os)" "Darwin"
@@ -66,7 +66,7 @@ ifeq "$(os)" "Darwin"
 else ifeq ($(os),Linux)
 	make -C $(libs)/minilibx-linux clean
 endif
-	make -C ../libmurmurc clean &
+	make -C ../murmurlibc clean &
 	rm -f $(program) & wait
 
 re:						fclean
