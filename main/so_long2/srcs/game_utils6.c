@@ -77,8 +77,6 @@ int	check_lines(struct s_i *s_i)
 	striter(s_i->line, &forbidden_ch, s_i);
 	if (s_i->f_line)
 		abandonner(0, s_i, "forbidden char", 0);
-	if (s_i->f_line)
-		return (3);
 	if (*(s_i->line) != '1' || *(s_i->line + (s_i->oldlen - 1)) != '1')
 		return (1);
 	if (s_i->oldlen != (int)xstrlen(s_i->line))

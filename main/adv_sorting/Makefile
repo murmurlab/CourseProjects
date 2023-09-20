@@ -1,60 +1,53 @@
 CC =					cc
 
 libs =					libs
-libr =					-L../libmurmurc -lmurmurc
-incs =					-I incs -I ../libmurmurc
+libr =					-L../murmurlibc -lmurmurc
+incs =					-I incs -I ../murmurlibc
 
 CFLAGS =				-D BUFFER_SIZE=65535 -std=c99 -g -Wall -Wextra -Werror $(incs)
 
 os =					${shell uname -s}
 
 ifeq '$(os)' 'Darwin'
-	mlxLinkFlags =		-framework OpenGL -framework AppKit -L$(libs)/minilibx_opengl_20191021 -lmlx
-	incs +=				-I $(libs)/minilibx_opengl_20191021
+# 	mlxLinkFlags =		-framework OpenGL -framework AppKit -L$(libs)/minilibx_opengl_20191021 -lmlx
+# 	incs +=				-I $(libs)/minilibx_opengl_20191021
 else ifeq '$(os)' 'Linux'
-	mlxLinkFlags =		-L minilibx-linux -L$(libs)/minilibx-linux -lmlx -lXext -lX11
-	incs +=				-I $(libs)/minilibx-linux
+# 	mlxLinkFlags =		-L minilibx-linux -L$(libs)/minilibx-linux -lmlx -lXext -lX11
+# 	incs +=				-I $(libs)/minilibx-linux
 endif
 
 src_dir = srcs
 b_src_dir = b_srcs
 
-B_SRC =					$(b_src_dir)/
+B_SRC =					# $(b_src_dir)/
 
-SRC =					$(src_dir)/game.c			\
-						$(src_dir)/game_utils.c	\
-						$(src_dir)/game_utils2.c	\
-						$(src_dir)/game_utils3.c	\
-						$(src_dir)/game_utils4.c	\
-						$(src_dir)/game_utils5.c	\
-						$(src_dir)/game_utils6.c	\
-						$(src_dir)/game_utils7.c
+SRC =					$(src_dir)/program.c \
 
 OBJ =					${SRC:.c=.o}
 B_OBJ =					${B_SRC:.c=.o}
-NAME =					game
-bonus =					game_bonus
+NAME =					push_swap
+bonus =					ceker
 MAKEFLAGS +=			-j$(NPROCS)
 
 all:					$(NAME) #bonus
 
-bonus:				depend $(B_OBJ)
-	$(CC) $(CFLAGS) $(B_OBJ) -o $(bonus) $(mlxLinkFlags) $(libr)
+bonus:					depend $(B_OBJ)
+	$(CC) $(CFLAGS) $(B_OBJ) -o $(bonus) $(libr)
 
 $(NAME):				depend $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(mlxLinkFlags) $(libr)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(libr)
 
-depend:					libmurmurc mlx
+depend:					libmurmurc
 
 libmurmurc:
-	make -C ../libmurmurc -j$(NPROCS)
+	make -C ../murmurlibc -j$(NPROCS)
 
-mlx:
-ifeq "$(os)" "Darwin"
-	make -C $(libs)/minilibx_opengl_20191021 -j$(NPROCS) &> /dev/null
-else ifeq ($(os),Linux)
-	make -C $(libs)/minilibx-linux -j$(NPROCS) &> /dev/null
-endif
+# mlx:
+# ifeq "$(os)" "Darwin"
+# 	make -C $(libs)/minilibx_opengl_20191021 -j$(NPROCS) &> /dev/null
+# else ifeq ($(os),Linux)
+# 	make -C $(libs)/minilibx-linux -j$(NPROCS) &> /dev/null
+# endif
 
 clean:
 	rm -f $(OBJ)
@@ -62,14 +55,14 @@ clean:
 
 fclean:					clean
 ifeq "$(os)" "Darwin"
-	make -C $(libs)/minilibx_opengl_20191021 clean
+# 	make -C $(libs)/minilibx_opengl_20191021 clean
 else ifeq ($(os),Linux)
-	make -C $(libs)/minilibx-linux clean
+# 	make -C $(libs)/minilibx-linux clean
 endif
-	make -C ../libmurmurc clean &
+	make -C ../murmurlibc clean &
 	rm -f $(program) & wait
 
 re:						fclean
 	$(MAKE) all
 
-.PHONY:					re fclean clean mlx libmurmurc depend all 
+.PHONY:					re fclean clean libmurmurc depend all 

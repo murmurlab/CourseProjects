@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_utils4.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahbasara <ahbasara@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 09:39:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/08/31 14:57:23 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/09/19 17:10:44 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	validate_map(struct s_g *s_g, t_pf *pf)
 	validate4(pf, s_g);
 	while (1)
 	{
+		// mlx_do_sync(s_g->m_p);
 		wasd(s_g, pf->p, 0, '\0');
 		if (s_g->get[3][0] == 'E')
 		{
