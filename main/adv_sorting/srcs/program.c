@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   program.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/04 13:06:47 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/09/20 12:18:08 by anonymous        ###   ########.fr       */
+/*   Created: 2023/09/20 23:13:33 by ahbasara          #+#    #+#             */
+/*   Updated: 2023/09/20 23:13:45 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#define nodeNext(node) node + 8
 
 #include "include.h"
 
@@ -34,5 +32,6 @@ int	main(void)
 	node3[0] = (void *)999999;
 	node3[1] = NULL;
 	p("|%d|\n", lpnod(node1, 2)[0]);
+	
 	return (0);
 }
