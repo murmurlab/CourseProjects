@@ -22,6 +22,7 @@ b_src_dir = b_srcs
 B_SRC =					# $(b_src_dir)/
 
 SRC =					$(src_dir)/program.c \
+						$(src_dir)/testing.c
 
 OBJ =					${SRC:.c=.o}
 B_OBJ =					${B_SRC:.c=.o}
@@ -29,8 +30,11 @@ NAME =					push_swap
 bonus =					ceker
 MAKEFLAGS +=			-j$(NPROCS)
 
-all:					$(NAME) #bonus
+# $(src_dir)%.o: $(src_dir)%.c
+# 	gcc -c $< -o $@ > /dev/null
 
+all:					$(NAME) #bonus
+	@echo "===================================program======================================\n"
 bonus:					depend $(B_OBJ)
 	$(CC) $(CFLAGS) $(B_OBJ) -o $(bonus) $(libr)
 

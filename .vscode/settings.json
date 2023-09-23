@@ -18,7 +18,10 @@
         "bitset": "c",
         "chrono": "c",
         "sstream": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "include.h": "c",
+        "__node_handle": "c",
+        "stdio.h": "c"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/clang",
     "lldb.displayFormat": "auto",
