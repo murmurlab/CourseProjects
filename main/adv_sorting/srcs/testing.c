@@ -6,48 +6,48 @@
 
 
 int isDuplicate(int *array, int size, int number) {
-    for (int i = 0; i < size; ++i) {
-        if (array[i] == number) {
-            return 1;
-        }
-    }
-    return 0;
+	for (int i = 0; i < size; ++i) {
+		if (array[i] == number) {
+			return 1;
+		}
+	}
+	return 0;
 }
 
 void appendRandomNumbersToFile(const char *filePath, int numberOfRandomNumbers) {
-    FILE *file = fopen(filePath, "a");
-    if (file == NULL) {
-        printf("Dosya açılamadı.\n");
-        return;
-    }
+	FILE *file = fopen(filePath, "a");
+	if (file == NULL) {
+		printf("Dosya açılamadı.\n");
+		return;
+	}
 
-    srand(time(0));
+	srand(time(0));
 
-    int *generatedNumbers = (int *)malloc(numberOfRandomNumbers * sizeof(int));
-    if (generatedNumbers == NULL) {
-        printf("Bellek hatası\n");
-        fclose(file);
-        return;
-    }
+	int *generatedNumbers = (int *)malloc(numberOfRandomNumbers * sizeof(int));
+	if (generatedNumbers == NULL) {
+		printf("Bellek hatası\n");
+		fclose(file);
+		return;
+	}
 
-    int generatedCount = 0;
+	int generatedCount = 0;
 
-    while (generatedCount < numberOfRandomNumbers) {
-        int randomNumber = rand();
-        if (!isDuplicate(generatedNumbers, generatedCount, randomNumber)) {
-            generatedNumbers[generatedCount] = randomNumber;
-            generatedCount++;
-        }
-    }
-    printf("writing.\n");
-    fflush(stdout);
-    for (int i = 0; i < numberOfRandomNumbers; ++i) {
-        fprintf(file, "%d\n", generatedNumbers[i]);
-    }
+	while (generatedCount < numberOfRandomNumbers) {
+		int randomNumber = rand();
+		if (!isDuplicate(generatedNumbers, generatedCount, randomNumber)) {
+			generatedNumbers[generatedCount] = randomNumber;
+			generatedCount++;
+		}
+	}
+	printf("writing.\n");
+	fflush(stdout);
+	for (int i = 0; i < numberOfRandomNumbers; ++i) {
+		fprintf(file, "%d\n", generatedNumbers[i]);
+	}
 
-    free(generatedNumbers);
-    fclose(file);
-    printf("Rastgele sayılar dosyaya eklendi.\n");
+	free(generatedNumbers);
+	fclose(file);
+	printf("Rastgele sayılar dosyaya eklendi.\n");
 }
 
 
@@ -64,59 +64,59 @@ int	print_stacks(t_stacks *stacks)
 	b = stacks->stack_b;
 	if (stacks->stack_a || stacks->stack_b)
 	{
-		p(" ___________ 	 ___________\n");
-		p("|           |	|           |\n");
+		p("\033[1;34m ___________\033[0m 	 \033[1;31m___________\033[0m\n");
+		p("\033[1;34m|           |\033[0m	\033[1;31m|           |\033[0m\n");
 		while (a || b)
 		{
 			if (a)
 			{
-				p("| ");
+				p("\033[1;34m| ");
 				x = p("%d", a[0]);
 				if (x <= 5)
-					p("	    |");
+					p("	    |\033[0m");
 				else if (x == 6)
-					p("    |");
+					p("    |\033[0m");
 				else if (x == 7)
-					p("   |");
+					p("   |\033[0m");
 				else if (x == 8)
-					p("  |");
+					p("  |\033[0m");
 				else if (x == 9)
-					p(" |");
+					p(" |\033[0m");
 				else if (x == 10)
-					p("|");
+					p("|\033[0m");
 				a = a[1];
 			}
 			else
 				p("-");
 			if (b)
 			{
-				p("	| ");
+				p("	\033[1;31m| ");
 				x = p("%d", b[0]);
 				if (x <= 5)
 				{
-					p("	    |");
+					p("	    |\033[0m");
 				}
 				else if (x == 6)
 				{
-					p("    |");
+					p("    |\033[0m");
 				}
 				else if (x == 7)
 				{
-					p("   |");
+					p("   |\033[0m");
 				}
 				else if (x == 8)
 				{
-					p("  |");
+					p("  |\033[0m");
 				}
 				else if (x == 9)
 				{
-					p(" |");
+					p(" |\033[0m");
 				}
 				else if (x == 10)
 				{
-					p("|");
+					p("|\033[0m");
 				}
-				p("\n");
+				p("\n\033[0m");
 				b = b[1];
 			}
 			else
@@ -124,8 +124,8 @@ int	print_stacks(t_stacks *stacks)
 			i++;
 			// p("---------------------------\n");
 		}
-		p("|___________|	|___________|\n");
-		p("      a  	      b   \n");
+		p("\033[1;34m|___________|\033[0m	\033[1;31m|___________|\n");
+		p("      \033[1;34ma\033[0m  	      \033[1;31mb\033[0m   \n");
 	}
 	return (i);
 }
@@ -134,7 +134,11 @@ void	print_links(void *iter, void *data)
 {
 	t_link a;
 	t_link b;
+	int	offset1;
+	int	offset2;
 
+	offset1 = 22;
+	offset2 = 29;
 	a = (t_link)iter;
 	b = (t_link)data;
 	while (a || b)
@@ -142,85 +146,85 @@ void	print_links(void *iter, void *data)
 		char *template;
 		char *tmp;
 
-		tmp = callocate(91, 1);
-		template = callocate(91, 1);
-		xmemset(template, ' ', 91);
+		tmp = callocate(100, 1);
+		template = callocate(100, 1);
+		xmemset(template, ' ', 100);
 
 		(void)b;
-		sprintf(tmp, "v: %d", (int)((t_link)a)[0]);
-		xstrlcpy(template, tmp, 15);
+		sprintf(tmp, "\033[1;34mv: %d", (int)((t_link)a)[0]);
+		xstrlcpy(template, tmp, offset1);
 		// p("{%s}", template);
 		xmemset(tmp, '\0', 80);
 		if (((t_link)(((t_link)a)[1])))
 		{
 			sprintf(tmp, "n: %d", (int)((t_link)(((t_link)a)[1]))[0]);
-			xstrlcpy(template + 15, tmp, 15);
+			xstrlcpy(template + offset1, tmp, 15);
 			xmemset(tmp, '\0', 80);
 		}
 		else
 		{
 			sprintf(tmp, "n: %d", 0);
-			xstrlcpy(template + 15, tmp, 15);
+			xstrlcpy(template + offset1, tmp, 15);
 			xmemset(tmp, '\0', 80);
 		}
 
 		if (((t_link)(((t_link)a)[2])))
 		{
 			sprintf(tmp, "p: %d", (int)((t_link)(((t_link)a)[2]))[0]);
-			xstrlcpy(template + 15 + 15, tmp, 15);
+			xstrlcpy(template + offset1 + 15, tmp, 15);
 			xmemset(tmp, '\0', 80);
 		}
 		else
 		{
 			sprintf(tmp, "p: %d", 0);
-			xstrlcpy(template + 15 + 15, tmp, 15);
+			xstrlcpy(template + offset1 + 15, tmp, 15);
 			xmemset(tmp, '\0', 80);
 		}
 
-        if (((t_link)b))
+		if (((t_link)b))
 		{
-			sprintf(tmp, "\t|\tv: %d, ", (int)((t_link)b)[0]);
-			xstrlcpy(template + 15 + 15 + 15, tmp, 18);
-			xmemset(tmp, '\0', 80);
-		}
-        else
-        {
-            sprintf(tmp, "\t|\tv: %d, ", 0);
-			xstrlcpy(template + 15 + 15 + 15, tmp, 18);
-			xmemset(tmp, '\0', 80);
-        }
-		
-		if (((t_link)b) && ((t_link)(((t_link)b)[1])))
-		{
-			sprintf(tmp, "n: %d, ", (int)((t_link)(((t_link)b)[1]))[0]);
-			xstrlcpy(template + 15 + 15 + 15 + 18, tmp, 15);
+			sprintf(tmp, "\t|\033[0m\t\033[1;31mv: %d ", (int)((t_link)b)[0]);
+			xstrlcpy(template + offset1 + 15 + 15, tmp, offset2);
 			xmemset(tmp, '\0', 80);
 		}
 		else
 		{
-			sprintf(tmp, "n: %d, ", 0);
-			xstrlcpy(template + 15 + 15 + 15 + 18, tmp, 15);
+			sprintf(tmp, "\t|\033[0m\t\033[1;31mv: %d ", 0);
+			xstrlcpy(template + offset1 + 15 + 15, tmp, offset2);
+			xmemset(tmp, '\0', 80);
+		}
+		
+		if (((t_link)b) && ((t_link)(((t_link)b)[1])))
+		{
+			sprintf(tmp, "n: %d ", (int)((t_link)(((t_link)b)[1]))[0]);
+			xstrlcpy(template + offset1 + 15 + 15 + offset2, tmp, 15);
+			xmemset(tmp, '\0', 80);
+		}
+		else
+		{
+			sprintf(tmp, "n: %d ", 0);
+			xstrlcpy(template + offset1 + 15 + 15 + offset2, tmp, 15);
 			xmemset(tmp, '\0', 80);
 		}
 		if (((t_link)b) && ((t_link)(((t_link)b)[2])))
 		{
 			sprintf(tmp, "p: %d", (int)((t_link)(((t_link)b)[2]))[0]);
-			xstrlcpy(template + 15 + 15 + 15 + 18 + 15, tmp, 15);
+			xstrlcpy(template + offset1 + 15 + 15 + offset2 + 15, tmp, 15);
 			xmemset(tmp, '\0', 80);
 		}
 		else
 		{
 			sprintf(tmp, "p: %d", 0);
-			xstrlcpy(template + 15 + 15 + 15 + 18 + 15, tmp, 15);
+			xstrlcpy(template + offset1 + 15 + 15 + offset2 + 15, tmp, 15);
 			xmemset(tmp, '\0', 80);
 		}
-		p("%s\n", template);
+		p("%s\033[0m\n", template);
 		free(tmp);
 		free(template);
-        if (a)
-            a = a[1];
-        if (b)
-            b = b[1];
+		if (a)
+			a = a[1];
+		if (b)
+			b = b[1];
 	}
 }
 
@@ -229,7 +233,7 @@ static void iter1(void *iter, int index, void *data)
 	(void)index;
 	(void)iter;
 	(void)data;
-    ((char **)data)[index] = ((t_link)iter)[0];
+	((char **)data)[index] = ((t_link)iter)[0];
 }
 
 int     tablen(char **tab)
@@ -244,26 +248,26 @@ int     tablen(char **tab)
 
 char    **file_load(char *path)
 {
-    int     fd;
-    char    *str;
-    t_link  lines;
+	int     fd;
+	char    *str;
+	t_link  lines;
 
-    lines = NULL;
-    fd = open(path, 600, O_RDONLY);
-    str = multi_get_line(fd);
+	lines = NULL;
+	fd = open(path, 600, O_RDONLY);
+	str = multi_get_line(fd);
 
-    // appendRandomNumbersToFile("./ast", 235468/3);
+	// appendRandomNumbersToFile("./ast", 235468/3);
 
-    while (str)
-    {
-        lp_add(&lines, lp_new(str));
-        str = multi_get_line(fd);
-    }
-    str = callocate(sizeof(char *), 1 + lp_len(lines));
-    lp_iter(lines, 0, iter1, str);
-    ((char **)str)[lp_len(lines)] = 0;
-    while (lines)
-        lp_pop(&lines, del);
-    close(fd);
-    return ((char **)str);
+	while (str)
+	{
+		lp_add(&lines, lp_new(str));
+		str = multi_get_line(fd);
+	}
+	str = callocate(sizeof(char *), 1 + lp_len(lines));
+	lp_iter(lines, 0, iter1, str);
+	((char **)str)[lp_len(lines)] = 0;
+	while (lines)
+		lp_pop(&lines, del);
+	close(fd);
+	return ((char **)str);
 }

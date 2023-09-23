@@ -53,6 +53,9 @@ libmurmurc:
 # 	make -C $(libs)/minilibx-linux -j$(NPROCS) &> /dev/null
 # endif
 
+run: all
+	./push_swap
+
 clean:
 	rm -f $(OBJ)
 # 	rm -f $(B_OBJ)

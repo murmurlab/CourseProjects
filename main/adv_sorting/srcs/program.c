@@ -29,10 +29,11 @@ void	load_nums(int ac, char **av, t_stacks *stacks)
 			exit((p("Error:\nduplicate number.\n", num), 1));
 		else
 		{
+			// if (ac == 1 && sorted)
+				// p("already sorted");
 			// p("[OK]\n", num);
 			tmp = lp_new((void *)num);
 			lp_push(&stacks->stack_a, tmp);
-			// dup
 			// sorted
 
 		}
@@ -45,7 +46,6 @@ void iter_stack_func(void *iter, int index, void *data)
 	(void)iter;
 	(void)index;
 	(void)data;
-
 	// p("[%d][%d]\n", (*(t_link *)data), ((t_link)iter)[0]);
 	lp_push((t_link *)data, lp_new(((t_link)iter)[0]));
 	
@@ -67,15 +67,16 @@ int	main(int ac, char *av[])
 	stacks.stack_b = NULL;
 	av2 = file_load("./aww");
 	load_nums(tablen(av2), av2, &stacks);
+	// load_nums(ac, av, &stacks);
 	lp_iter(stacks.stack_a, 0, iter_stack_func, &stacks.stack_b);
-	
-	lp_pop(&stacks.stack_b, del);
-	lp_pop(&stacks.stack_b, del);
-	lp_pop(&stacks.stack_b, del);
-	lp_pop(&stacks.stack_b, del);
-	lp_pop(&stacks.stack_b, del);
-	lp_pop(&stacks.stack_b, del);
-	lp_pop(&stacks.stack_b, del);
+
+	// lp_pop(&stacks.stack_b, del);
+	// lp_pop(&stacks.stack_b, del);
+	// lp_pop(&stacks.stack_b, del);
+	// lp_pop(&stacks.stack_b, del);
+	// lp_pop(&stacks.stack_b, del);
+	// lp_pop(&stacks.stack_b, del);
+	// lp_pop(&stacks.stack_b, del);
 
     p("\na: %d		b: %d\n", lp_len(stacks.stack_a), lp_len(stacks.stack_b));
 	print_stacks(&stacks);
