@@ -62,6 +62,7 @@ int	print_stacks(t_stacks *stacks)
 	i = 0;
 	a = stacks->stack_a;
 	b = stacks->stack_b;
+    p("\na: %d		b: %d\n", lp_len(stacks->stack_a), lp_len(stacks->stack_b));
 	if (stacks->stack_a || stacks->stack_b)
 	{
 		p("\033[1;34m ___________\033[0m 	 \033[1;31m___________\033[0m\n");
@@ -141,82 +142,87 @@ void	print_links(void *iter, void *data)
 	offset2 = 29;
 	a = (t_link)iter;
 	b = (t_link)data;
+	p("\n		a: %d							b: %d\n", lp_len(iter), lp_len(data));
+	p("===================================================================================================\n");
+	p("===================================================================================================\n");
 	while (a || b)
 	{
-		char *template;
-		char *tmp;
+		char	*template;
+		char	*tmp;
+		int		miktar;
 
-		tmp = callocate(100, 1);
-		template = callocate(100, 1);
-		xmemset(template, ' ', 100);
+		miktar = 110;
+		tmp = callocate(miktar, 1);
+		template = callocate(miktar, 1);
+		xmemset(template, ' ', miktar);
 
 		(void)b;
 		sprintf(tmp, "\033[1;34mv: %d", (int)((t_link)a)[0]);
 		xstrlcpy(template, tmp, offset1);
 		// p("{%s}", template);
-		xmemset(tmp, '\0', 80);
+		xmemset(tmp, '\0', miktar);
 		if (((t_link)(((t_link)a)[1])))
 		{
 			sprintf(tmp, "n: %d", (int)((t_link)(((t_link)a)[1]))[0]);
 			xstrlcpy(template + offset1, tmp, 15);
-			xmemset(tmp, '\0', 80);
+			xmemset(tmp, '\0', miktar);
 		}
 		else
 		{
 			sprintf(tmp, "n: %d", 0);
 			xstrlcpy(template + offset1, tmp, 15);
-			xmemset(tmp, '\0', 80);
+			xmemset(tmp, '\0', miktar);
 		}
 
 		if (((t_link)(((t_link)a)[2])))
 		{
 			sprintf(tmp, "p: %d", (int)((t_link)(((t_link)a)[2]))[0]);
 			xstrlcpy(template + offset1 + 15, tmp, 15);
-			xmemset(tmp, '\0', 80);
+			xmemset(tmp, '\0', miktar);
 		}
 		else
 		{
 			sprintf(tmp, "p: %d", 0);
 			xstrlcpy(template + offset1 + 15, tmp, 15);
-			xmemset(tmp, '\0', 80);
+			xmemset(tmp, '\0', miktar);
 		}
 
 		if (((t_link)b))
 		{
 			sprintf(tmp, "\t|\033[0m\t\033[1;31mv: %d ", (int)((t_link)b)[0]);
 			xstrlcpy(template + offset1 + 15 + 15, tmp, offset2);
-			xmemset(tmp, '\0', 80);
+			xmemset(tmp, '\0', miktar);
 		}
 		else
 		{
 			sprintf(tmp, "\t|\033[0m\t\033[1;31mv: %d ", 0);
 			xstrlcpy(template + offset1 + 15 + 15, tmp, offset2);
-			xmemset(tmp, '\0', 80);
+			xmemset(tmp, '\0', miktar);
 		}
 		
 		if (((t_link)b) && ((t_link)(((t_link)b)[1])))
 		{
 			sprintf(tmp, "n: %d ", (int)((t_link)(((t_link)b)[1]))[0]);
 			xstrlcpy(template + offset1 + 15 + 15 + offset2, tmp, 15);
-			xmemset(tmp, '\0', 80);
+			xmemset(tmp, '\0', miktar);
 		}
 		else
 		{
 			sprintf(tmp, "n: %d ", 0);
 			xstrlcpy(template + offset1 + 15 + 15 + offset2, tmp, 15);
-			xmemset(tmp, '\0', 80);
+			xmemset(tmp, '\0', miktar);
 		}
 		if (((t_link)b) && ((t_link)(((t_link)b)[2])))
 		{
 			sprintf(tmp, "p: %d", (int)((t_link)(((t_link)b)[2]))[0]);
 			xstrlcpy(template + offset1 + 15 + 15 + offset2 + 15, tmp, 15);
-			xmemset(tmp, '\0', 80);
+			xmemset(tmp, '\0', miktar);
 		}
 		else
 		{
 			sprintf(tmp, "p: %d", 0);
 			xstrlcpy(template + offset1 + 15 + 15 + offset2 + 15, tmp, 15);
-			xmemset(tmp, '\0', 80);
+			xmemset(tmp, '\0', miktar);
 		}
 		p("%s\033[0m\n", template);
 		free(tmp);
@@ -226,6 +232,8 @@ void	print_links(void *iter, void *data)
 		if (b)
 			b = b[1];
 	}
+	p("===================================================================================================\n");
+	p("===================================================================================================\n");
 }
 
 static void iter1(void *iter, int index, void *data)
