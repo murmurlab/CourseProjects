@@ -1,65 +1,43 @@
 #include "include.h"
 
-	// push swap kolay ve kisa bir proje
-int		print_stacks(t_stacks *stacks);// del
-char    **file_load(char *path);
-int     tablen(char **tab);
-void	print_links(void *iter, void *data);
-
-int		dup_cntl(void *nod, void *cmp)
+// push swap kolay ve kisa bir proje
+// int		print_stacks(t_stacks *stacks);// del
+// char    **file_load(char *path);
+// int     tablen(char **tab);
+// void	print_links(void *iter, void *data);
+void	pivot_util(void *elm, int index, void *data)
 {
-	if (((t_link)nod)[0] == cmp)
-		return (1);
-	return (0);
-}
+	static int	big;
+	static int	tmp;
 
-void	load_nums(int ac, char **av, t_stacks *stacks)
-{
-	long	num;
-	t_link	tmp;
-	int		sorted;
-
-	sorted = 0;
-	ac--;
-	while (ac)
-	{
-		num = x_atoi(av[ac]);
-		if (num == 0 && av[ac][0] != '0')
-			exit((p("Error:\nnot integer.\n"), 1));
-		if (num > INT32_MAX || num < INT32_MIN)
-			exit((p("Error:\nout of int range.\n"), 1));
-		else if (lp_filter(stacks->stack_a, dup_cntl, (void *)num))
-			exit((p("Error:\nduplicate number.\n"), 1));
-		else
-		{
-
-			if (stacks->stack_a && num > (int)((stacks->stack_a)[0]) && !sorted)
-				sorted = 99999;
-			if (ac == 1 && !sorted)
-				p("already sorted\n");
-			// p("[OK]\n", num);
-			tmp = lp_new((void *)num);
-			lp_push(&stacks->stack_a, tmp);
-			// sorted
-
-		}
-		ac--;
-	}
-	
-}
-void iter_stack_func(void *iter, int index, void *data)
-{
-	(void)iter;
 	(void)index;
-	(void)data;
-	// p("[%d][%d]\n", (*(t_link *)data), ((t_link)iter)[0]);
-	lp_push((t_link *)data, lp_new(((t_link)iter)[0]));
-	
+	if ((int)(((t_link)(elm))[0]) > big)
+		big = (int)(((t_link)(elm))[0]);
+	if (ft_fabs((big / 2) - *((int *)data)) > ft_fabs((big / 2) - tmp))
+		*((int *)data) = tmp;
+	tmp = (int)(((t_link)(elm))[0]);
 }
 
-void     del(void **tab)
+int	find_pivot(t_stacks stacks)
 {
-	(void)tab;
+	int	pivot;
+
+	pivot = 0;
+	lp_iter(stacks.stack_a, 0, pivot_util, &pivot);
+	return (pivot);
+}
+
+int	start_sort(t_stacks stacks)
+{
+	int	pivot;
+	pivot = find_pivot(stacks);
+	p("pivot %d\n", pivot);
+	print_stacks(&stacks);
+	cmd(&stacks.stack_a, &stacks.stack_b, "rra\n", 1);
+	print_stacks(&stacks);
+	cmd(&stacks.stack_a, &stacks.stack_b, "sa\n", 1);
+	print_stacks(&stacks);
+	return (0);
 }
 
 int	main(int ac, char *av[])
@@ -75,7 +53,7 @@ int	main(int ac, char *av[])
 	// av2 = file_load("./aww");
 	// load_nums(tablen(av2), av2, &stacks);
 	load_nums(ac, av, &stacks);
-	lp_iter(stacks.stack_a, 0, iter_stack_func, &stacks.stack_b);
+	// lp_iter(stacks.stack_a, 0, iter_stack_func, &stacks.stack_b);
 
 	// lp_pop(&stacks.stack_b, del);
 	// lp_pop(&stacks.stack_b, del);
@@ -84,6 +62,9 @@ int	main(int ac, char *av[])
 	// lp_pop(&stacks.stack_b, del);
 	// lp_pop(&stacks.stack_b, del);
 	// lp_pop(&stacks.stack_b, del);
+	// p("rra\n");
+	// p("sa\n");
+	start_sort(stacks);
 
 	// print_stacks(&stacks);
 	// print_links(stacks.stack_a, stacks.stack_b);

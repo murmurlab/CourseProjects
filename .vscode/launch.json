@@ -15,9 +15,9 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "lldb",
-            "program": "${fileDirname}/../push_swap",
-            "args": ["maps/map02.ber"],
+            "name": "push_swap",
+            "program": "${fileDirname}/../${fileBasenameNoExtension}",
+            "args": ["2", "3", "1"],
             "cwd": "${fileDirname}/../",
             "preLaunchTask": "build",
         },

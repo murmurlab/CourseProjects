@@ -1,9 +1,4 @@
-#include "include.h"
-#include <stdio.h>
-#include <time.h>
-#include <stdlib.h>
-
-
+#include "testing.h"
 
 int isDuplicate(int *array, int size, int number) {
 	for (int i = 0; i < size; ++i) {
@@ -88,7 +83,7 @@ int	print_stacks(t_stacks *stacks)
 				a = a[1];
 			}
 			else
-				p("-");
+				p("|     -     |");
 			if (b)
 			{
 				p("	\033[1;31m| ");
@@ -263,6 +258,7 @@ char    **file_load(char *path)
 	lines = NULL;
 	fd = open(path, 600, O_RDONLY);
 	str = multi_get_line(fd);
+	str[xstrlen(str)-1] = 0;
 
 	// appendRandomNumbersToFile("./ast", 235468/3);
 
@@ -270,6 +266,8 @@ char    **file_load(char *path)
 	{
 		lp_add(&lines, lp_new(str));
 		str = multi_get_line(fd);
+		if (str)
+		str[xstrlen(str)-1] = 0;
 	}
 	str = callocate(sizeof(char *), 1 + lp_len(lines));
 	lp_iter(lines, 0, iter1, str);

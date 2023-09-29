@@ -1,8 +1,10 @@
 CC =					cc
 
-libs =					libs
-libr =					-L../murmurlibc -lmurmurc
-incs =					-I incs -I ../murmurlibc
+tests	=					testing
+libs	=					libs
+libr	=					-L../murmurlibc -lmurmurc
+incl	=					incs
+incs	=					-I $(incl) -I ../murmurlibc -I $(tests)/incs
 
 CFLAGS =				-D BUFFER_SIZE=65535 -std=c99 -g -Wall -Wextra -Werror $(incs)
 
@@ -17,31 +19,39 @@ else ifeq '$(os)' 'Linux'
 endif
 
 src_dir = srcs
-b_src_dir = b_srcs
+b_src_dir = srcs
 
-B_SRC =					# $(b_src_dir)/
+S_SRC =					$(src_dir)/shared.c \
+						$(tests)/testing.c
+
+B_SRC =					$(b_src_dir)/checker.c \
+						$(S_SRC)
 
 SRC =					$(src_dir)/program.c \
-						$(src_dir)/testing.c
+						$(src_dir)/math.c \
+						$(S_SRC)
 
-OBJ =					${SRC:.c=.o}
-B_OBJ =					${B_SRC:.c=.o}
+OBJ =					$(SRC:.c=.o)
+B_OBJ =					$(B_SRC:.c=.o)
 NAME =					push_swap
-bonus =					ceker
+BNAME =					checker
 MAKEFLAGS +=			-j$(NPROCS)
 
 # $(src_dir)%.o: $(src_dir)%.c
 # 	gcc -c $< -o $@ > /dev/null
 
-all:					$(NAME) #bonus
+all:		$(NAME) #bonus
 	@echo "===================================program======================================\n"
-bonus:					depend $(B_OBJ)
-	$(CC) $(CFLAGS) $(B_OBJ) -o $(bonus) $(libr)
 
-$(NAME):				depend $(OBJ)
+b: bonus
+
+bonus:		depend $(B_OBJ)
+	$(CC) $(CFLAGS) $(B_OBJ) -o $(BNAME) $(libr)
+
+$(NAME):	depend $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(libr)
 
-depend:					libmurmurc
+depend:		libmurmurc
 
 libmurmurc:
 	make -C ../murmurlibc -j$(NPROCS)
@@ -57,8 +67,7 @@ run: all
 	./push_swap
 
 clean:
-	rm -f $(OBJ)
-# 	rm -f $(B_OBJ)
+	rm -f $(OBJ) $(B_OBJ)
 
 fclean:					clean
 ifeq "$(os)" "Darwin"
@@ -67,7 +76,7 @@ else ifeq ($(os),Linux)
 # 	make -C $(libs)/minilibx-linux clean
 endif
 	make -C ../murmurlibc clean &
-	rm -f $(program) & wait
+	rm -f $(NAME) $(BNAME) & wait
 
 re:						fclean
 	$(MAKE) all

@@ -1,5 +1,5 @@
-#ifndef INCLUDE_H
-# define INCLUDE_H
+#ifndef TESTING_H
+# define TESTING_H
 # if defined(__linux__)
 	/* Linux. --------------------------------------------------- */
 // #  include "./linux.h"
@@ -17,19 +17,16 @@
 #  define D 2 */
 # endif
 
-# include "murmurlibc.h"
+# include <stdio.h>
+# include <time.h>
+# include <stdlib.h>
 
-typedef struct s_stacks
-{
-	t_link	stack_a;
-	t_link	stack_b;
-}		t_stacks;
+# include "include.h"
 
-# include "testing.h"
+int     tablen(char **tab);
+void	print_links(void *iter, void *data);
+char    **file_load(char *path);
+int     print_stacks(t_stacks *stacks);
 
-int		check_sort(t_link stack, int size);
-void	del(void **tab);
-void	load_nums(int ac, char **av, t_stacks *stacks);
-double	ft_fabs(register double x);
 
 #endif

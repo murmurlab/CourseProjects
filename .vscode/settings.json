@@ -21,7 +21,8 @@
         "time.h": "c",
         "include.h": "c",
         "__node_handle": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "testing.h": "c"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/clang",
     "lldb.displayFormat": "auto",
