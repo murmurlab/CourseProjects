@@ -1,42 +1,61 @@
 #include "include.h"
-
 // push swap kolay ve kisa bir proje
-// int		print_stacks(t_stacks *stacks);// del
-// char    **file_load(char *path);
-// int     tablen(char **tab);
-// void	print_links(void *iter, void *data);
-void	pivot_util(void *elm, int index, void *data)
+void	pivot_util1(void *elm, int index, void *data)
 {
-	static int	big;
-	static int	tmp;
-
 	(void)index;
-	if ((int)(((t_link)(elm))[0]) > big)
-		big = (int)(((t_link)(elm))[0]);
-	if (ft_fabs((big / 2) - *((int *)data)) > ft_fabs((big / 2) - tmp))
-		*((int *)data) = tmp;
-	tmp = (int)(((t_link)(elm))[0]);
+	if ((int)(((t_link)(elm))[0]) > *((int *)data))
+		*((int *)data) = (int)(((t_link)(elm))[0]);
+}
+
+void	pivot_util2(void *elm, int index, void *data)
+{
+	(void)index;
+	if (ft_fabs((*((int *)data) / 2) - *((int *)data + 1)) > ft_fabs((*((int *)data) / 2) - *((int *)data + 2)))
+		*((int *)data + 1) = *((int *)data + 2);
+	*((int *)data + 2) = (int)(((t_link)(elm))[0]);
 }
 
 int	find_pivot(t_stacks stacks)
 {
-	int	pivot;
+	int	bin[3];
 
-	pivot = 0;
-	lp_iter(stacks.stack_a, 0, pivot_util, &pivot);
-	return (pivot);
+	bin[0] = 0;
+	bin[1] = 0;
+	bin[2] = 0;
+	lp_iter(stacks.stack_a, 0, pivot_util1, bin);
+	lp_iter(stacks.stack_a, 0, pivot_util2, bin);
+	return (bin[1]);
 }
 
-int	start_sort(t_stacks stacks)
+int	start_sort(t_stacks stacks, int argc)
 {
 	int	pivot;
+
 	pivot = find_pivot(stacks);
 	p("pivot %d\n", pivot);
 	print_stacks(&stacks);
-	cmd(&stacks.stack_a, &stacks.stack_b, "rra\n", 1);
-	print_stacks(&stacks);
-	cmd(&stacks.stack_a, &stacks.stack_b, "sa\n", 1);
-	print_stacks(&stacks);
+	// cmd(&stacks.stack_a, &stacks.stack_b, "rra\n", 1);
+	{
+		char		*input;
+
+		while (42)
+		{
+			input = multi_get_line(0);
+			if (input && xstrncmp(input, "ext\n", 4))
+				cmd(&stacks.stack_a, &stacks.stack_b, input, 1);
+			else
+				break ;
+			{
+				// usleep(3000000);
+				// system("clear");
+				print_stacks(&stacks);
+			}
+		}
+		if (!check_sort(stacks.stack_a, argc))
+			p("[OK!]\n");
+		else
+			p("[KO!]\n");
+	}
 	return (0);
 }
 
@@ -64,7 +83,7 @@ int	main(int ac, char *av[])
 	// lp_pop(&stacks.stack_b, del);
 	// p("rra\n");
 	// p("sa\n");
-	start_sort(stacks);
+	start_sort(stacks, ac);
 
 	// print_stacks(&stacks);
 	// print_links(stacks.stack_a, stacks.stack_b);

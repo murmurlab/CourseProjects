@@ -29,5 +29,5 @@ int main(int argc, char *argv[])
 		p("[OK!]\n");
 	else
 		p("[KO!]\n");
-    return 0;
+    return (0);
 }
