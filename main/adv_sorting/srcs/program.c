@@ -27,6 +27,16 @@ int	find_pivot(t_stacks stacks)
 	return (bin[1]);
 }
 
+int	**biggest_gap(int *zone, int pivot, t_link stack, int len)
+{
+	while (zone[0] != zone[1])
+	{
+		lp_nod(stack, len - ft_fabs(zone[0] % len))
+		zone[0]++;
+	}
+	
+}
+
 int	start_sort(t_stacks stacks, int argc)
 {
 	int	pivot;
