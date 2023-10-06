@@ -16,10 +16,10 @@
             "type": "lldb",
             "request": "launch",
             "name": "push_swap",
-            "program": "${fileDirname}/../${fileBasenameNoExtension}",
+            "program": "${fileDirname}/../push_swap",
             "args": ["2", "3", "1"],
             "cwd": "${fileDirname}/../",
-            "preLaunchTask": "build",
+            "preLaunchTask": "",
         },
         {
             "name": "fdf",

@@ -28,7 +28,7 @@ void	load_nums(int ac, char **av, t_stacks *stacks)
 		if (num > INT32_MAX || num < INT32_MIN)
 			exit((write(2, "Error:\nout of int range.\n", 25), 1));
 		else if (lp_filter(stacks->stack_a, dup_cntl, (void *)num))
-			exit((write(2, "Error:\nduplicate number.\n", 26), 1));
+			exit((write(2, "Error:\nduplicate number.\n", 26), p("%d", num), 1));
 		else
 		{
 

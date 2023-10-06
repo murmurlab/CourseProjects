@@ -53,7 +53,9 @@ int	print_stacks(t_stacks *stacks)
 	int		x;
 	t_link	a;
 	t_link	b;
+	int		ct;
 
+	ct = 0;
 	i = 0;
 	a = stacks->stack_a;
 	b = stacks->stack_b;
@@ -112,11 +114,11 @@ int	print_stacks(t_stacks *stacks)
 				{
 					p("|\033[0m");
 				}
-				p("\n\033[0m");
+				p(" %d\n\033[0m", ct++);
 				b = b[1];
 			}
 			else
-				p("	|     -     |\n");
+				p("	|     -     | %d\n", ct++);
 			i++;
 			// p("---------------------------\n");
 		}

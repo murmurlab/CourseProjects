@@ -1,4 +1,4 @@
-CC =					cc
+CC =					clang
 
 tests	=					testing
 libs	=					libs
@@ -6,7 +6,8 @@ libr	=					-L../murmurlibc -lmurmurc
 incl	=					incs
 incs	=					-I $(incl) -I ../murmurlibc -I $(tests)/incs
 
-CFLAGS =				-D BUFFER_SIZE=65535 -std=c99 -g -Wall -Wextra -Werror $(incs)
+wflags	=				-Wall -Wextra -Werror
+CFLAGS =				-D BUFFER_SIZE=65535 -std=c99 -g $(incs)
 
 os =					${shell uname -s}
 
