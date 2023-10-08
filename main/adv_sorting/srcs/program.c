@@ -192,19 +192,130 @@ int	*biggest_gap(int *zone, int pivot, t_link stack, int len)
 			// p("[%d %d %d]\n", zone[0], ret[0], ret[1]);
 		}
 		// p("num: %d\n", zone[0]);
+		zone[0]++;
 		if (zone[0] == (len))
 			zone[0] = 0;
-		zone[0]++;
 	}
 	return (ret);
 }
 
-int	go_path(int pivot, t_link stack, int len)
+void go(int len, int direction, char stack, t_stacks *stacks)
 {
-	while (1)
+	char	*op;
+
+	if (direction)
 	{
-		
+		if (stack == 'a')
+			op = strcln("rra");
+		else if (stack == 'b')
+			op = strcln("rrb");
 	}
+	else
+	{
+		if (stack == 'a')
+			op = strcln("ra");
+		else if (stack == 'b')
+			op = strcln("rb");
+	}
+	while (len--)
+		cmd(&stacks->stack_a, &stacks->stack_b, op, 1);
+}
+int	get_closest(t_link stack, int pivot, int mod)
+{
+	int	ct2;
+	int	ct;
+	int	len;
+
+	len = lp_len(stack);
+	ct = 0;
+	ct2 = 0;
+	while (stack)
+	{
+		if (mod)
+		{
+			if (pivot > (int)stack[0])
+			{
+				ct2 = 1;
+				break ;
+			}
+		}
+		else
+		{
+			if (pivot <= (int)stack[0])
+			{
+				ct2 = 1;
+				break ;
+			}
+		}
+		stack = stack[1];
+		ct++;
+	}
+	if (!ct2)
+		return (-1);
+	stack = lp_end(stack);
+	ct2 = len;
+	while (stack)
+	{
+		if (mod)
+		{
+			if (pivot > (int)stack[0])
+				break ;
+		}
+		else
+		{
+			if (pivot < (int)stack[0])
+				break ;
+		}
+		stack = stack[2];
+		ct2++;
+	}
+	if (ct < (ct2 % len))
+		return (ct);
+	else
+		return (ct2);
+	return (-1);
+}
+
+int	go_path(int pivot, t_stacks *stacks, int len, int c)
+{
+	int		ct;
+	int		*gap;
+	t_link	stack;
+
+	ct = 0;
+	if ((c & 127) == 'a')
+		stack = stacks->stack_a;
+	if ((c & 127) == 'b')
+		stack = stacks->stack_b;
+	while (ct != len / 2)
+	{
+		gap = biggest_gap((int [2]){0, 0}, pivot, stack, len);
+		p("%d %d\n", gap[0], gap[1]);
+		if (!gap[0] || !gap[1])
+		{
+			; // full backward rra
+			gap[0] = get_closest(stack, pivot, (c & 128));
+			go(gap[0] % len, (gap[0] >= len), (c & 127), stacks);
+		}
+		else if (gap[0] > gap[1])
+		{
+			if (gap[1] < len - gap[0])
+				go(gap[1], 0, (c & 127), stacks); // ra
+			else
+				go(len - gap[0], 1, (c & 127), stacks); // rra
+		}
+		else if (gap[0] <= gap[1])
+		{
+			if (gap[0] < len - gap[1])
+				go(gap[0], 0, (c & 127), stacks); // ra
+			else
+				go(len - gap[1], 1, (c & 127), stacks); // rra
+		}
+		print_stacks(stacks);
+		cmd(&stacks->stack_a, &stacks->stack_b, "pb\n", 0);
+		ct++;
+	}
+	return (1);
 }
 
 int	start_sort(t_stacks stacks, int argc)
@@ -215,14 +326,15 @@ int	start_sort(t_stacks stacks, int argc)
 	int	op;
 
 	op = 0;
-	a_b[0] = 8;
-	a_b[1] = 8;
+	a_b[0] = 0;
+	a_b[1] = 0;
 	pivot = find_pivot(stacks.stack_a);
-	res = biggest_gap(a_b, 132, stacks.stack_a, argc - 2);
+	res = biggest_gap(a_b, pivot, stacks.stack_a, argc - 2);
 	// p("len: %d\n", argc);
 	p("big gap: %d, %d\n", res[0], res[1]);
 	p("pivot %d\n", pivot);
 	print_stacks(&stacks);
+	go_path(pivot, &stacks, argc - 1, 'a' | BIGGER_THAN_PIVOT);
 	// cmd(&stacks.stack_a, &stacks.stack_b, "rra\n", 1);
 	{
 		char		*input;

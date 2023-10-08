@@ -17,9 +17,9 @@
             "request": "launch",
             "name": "push_swap",
             "program": "${fileDirname}/../push_swap",
-            "args": ["2", "3", "1"],
+            "args": ["42", "74", "73", "72", "71", "14", "65","67","88","12","54","13","155","15","0","11","2","77","34","123","43","32","44","18","23","329"],
             "cwd": "${fileDirname}/../",
-            "preLaunchTask": "",
+            "preLaunchTask": "build",
         },
         {
             "name": "fdf",

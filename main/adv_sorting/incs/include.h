@@ -15,6 +15,8 @@
 #  define A 0
 #  define S 1
 #  define D 2 */
+#  define BIGGER_THAN_PIVOT 128
+#  define REVERSE 1
 # endif
 
 # include "murmurlibc.h"
