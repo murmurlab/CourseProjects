@@ -272,10 +272,11 @@ void go(long len, long direction, char c, t_stacks *stacks)
 	}
 	while (len & 0xFFFFFFFF)
 	{
-
+		// p("%d\n", len & 0xFFFFFFFF);
 		// if (flag)
 		// 	len = ((len & 0xFFFFFFFF) - flag) | (len & 0xFFFFFFFF00000000);
-
+		if (len <= 0)
+			break ;
 		if (((len / (long)0x100000000) > (int)((*stack)[0])) && !(direction & 0xFFFFFFFF00000000))
 			cmd(&stacks->stack_a, &stacks->stack_b, arr, 1);
 		if ((direction & 0xFFFFFFFF00000000) && ((((int)lp_end(stacks->stack_a)[0] < (int)((*stack)[0])) && ((int)((*stack)[0]) == find_smallest(*stack))) || (((int)lp_end(stacks->stack_a)[0] > (int)((*stack)[0])) && ((int)((*stack)[0]) == find_smallest(*stack)))))
@@ -286,17 +287,36 @@ void go(long len, long direction, char c, t_stacks *stacks)
 			// p("smallest: %d\n", find_smallest(*stack));
 			cmd(&stacks->stack_a, &stacks->stack_b, "pa\n", 1);
 			cmd(&stacks->stack_a, &stacks->stack_b, "ra\n", 1);
-			len = ((len & 0xFFFFFFFF) - 1) | (len & 0xFFFFFFFF00000000);
+			if (!(direction & 0x00000000FFFFFFFF))
+			{
+				if ((len & 0xFFFFFFFF) != 1)
+					len = ((len & 0xFFFFFFFF) - 1) | (len & 0xFFFFFFFF00000000);
+				else
+					break ;
+			}
+
 		}
 		else if (!flag && (find_2nd_biggest(*stack) == (int)((*stack)[0])) && (direction & 0xFFFFFFFF00000000))
 		{
 			cmd(&stacks->stack_a, &stacks->stack_b, "pa\n", 1);
 			flag = 1;
 			if (direction & 0x00000000FFFFFFFF)
-				cmd(&stacks->stack_a, &stacks->stack_b, "rrb\n", 1);
+			{
+				// if ((len & 0xFFFFFFFF) == 1)
+				// 	cmd(&stacks->stack_a, &stacks->stack_b, "rb\n", 1);
+				// else
+				// 	len = ((len & 0xFFFFFFFF) - 1) | (len & 0xFFFFFFFF00000000);
+			}
+			else
+			{
+				if ((len & 0xFFFFFFFF) == 1)
+					cmd(&stacks->stack_a, &stacks->stack_b, "rrb\n", 1);
+				else
+					len = ((len & 0xFFFFFFFF) - 1) | (len & 0xFFFFFFFF00000000);
+			}
+			// len = ((len & 0xFFFFFFFF) - 1) | (len & 0xFFFFFFFF00000000);
 		}
-		else
-			cmd(&stacks->stack_a, &stacks->stack_b, op, 1);
+		cmd(&stacks->stack_a, &stacks->stack_b, op, 1);
 		// print_stacks(stacks);
 		// 1 ve 2. kontrolu
 		len = ((len & 0xFFFFFFFF) - 1) | (len & 0xFFFFFFFF00000000);
@@ -455,6 +475,84 @@ void	triple_sort(t_stacks *stacks)
 		cmd(&stacks->stack_a, &stacks->stack_b, "ra\n", 1);
 }
 
+int	find_index_of_biggest(t_link stack)
+{
+	int	ret;
+	int	ct;
+
+	ret = 0;
+	ct = 0;
+	while (stack)
+	{
+		if ((int)stack[0] > ret)
+			ret = ct;
+		stack = stack[1];
+		ct++;
+	}
+	return (ret);
+}
+
+int	get_index_of_higher(t_link stack, int val)
+{
+	int	ret;
+	int	ct;
+
+	ret = 0;
+	ct = 0;
+	while (stack)
+	{
+		if ((int)stack[0] > val)
+			ret = ct;
+		stack = stack[1];
+		ct++;
+	}
+	return (ret);
+}
+
+int	get_closest(t_link stack, int val)
+{
+	int	ct;
+	int	len;
+
+	len = lp_len(stack);
+	ct = 0;
+	while (ct++ < len/2)
+	{
+		if ((int)stack[0] > val)
+			return (ct);
+		stack = stack[1];
+	}
+	{
+		/* code */
+	}
+	
+}
+
+int	calc_moves(t_stacks *stacks, int index)
+{
+	int	val;
+	int	move_a;
+	int	move_b;
+
+	val = lp_nod(stacks->stack_b, index)[0];
+	move_b = get_index_of_higher(stacks->stack_b, val);
+	if (index > lp_len(stacks->stack_b) / 2)
+		move_b = lp_len(stacks->stack_b) - index;
+	else
+		move_b = index;
+	move_a = 
+	
+}
+
+int	ft_sort(t_stacks *stacks)
+{
+	while ()
+	{
+
+	}
+	
+}
+
 int	start_sort(t_stacks stacks, int argc)
 {
 	int	a_b[2];
@@ -462,6 +560,7 @@ int	start_sort(t_stacks stacks, int argc)
 	int	pivot;
 	int	*res;
 	int	op;
+	int	x;
 
 	a_b[0] = 0;
 	a_b[1] = 0;
@@ -488,20 +587,27 @@ int	start_sort(t_stacks stacks, int argc)
 		if ((int)(size_t)(lp_nod(stacks.stack_a, 0)[0]) > (int)(size_t)(lp_nod(stacks.stack_a, 1)[0]))
 			cmd(&stacks.stack_a, &stacks.stack_b, "sa\n", 1);
 	}
-	while (1)
-	{
-		// print_stacks(&stacks);
-		if (lp_len(stacks.stack_b) < 1)
-			break ;
-		op = get_closest(stacks.stack_b, find_biggest(stacks.stack_b), 0);
-		pivot = (((op == lp_len(stacks.stack_b)) * lp_len(stacks.stack_b)) + op % lp_len(stacks.stack_b));
-		go(((pivot % lp_len(stacks.stack_b)) + (op >= lp_len(stacks.stack_b))) | ((long)find_biggest(stacks.stack_b)) * (long)0x100000000, (long)(op >= lp_len(stacks.stack_b)) | (long)1 * (long)0x100000000, 'b', &stacks);
-		cmd(&stacks.stack_a, &stacks.stack_b, "pa\n", 1);
-		if ((int)(lp_nod(stacks.stack_a, 0)[0]) > (int)(lp_nod(stacks.stack_a, 1)[0]))
-			cmd(&stacks.stack_a, &stacks.stack_b, "sa\n", 1);
-		// p("paaaaaaaaaaaaww\n");
-		// print_stacks(&stacks);
-	}
+	// while (1)
+	// {
+	// 	// print_stacks(&stacks);
+	// 	if (lp_len(stacks.stack_b) < 1)
+	// 		break ;
+	// 	op = get_closest(stacks.stack_b, find_biggest(stacks.stack_b), 0);
+	// 	pivot = (((op == lp_len(stacks.stack_b)) * lp_len(stacks.stack_b)) + op % lp_len(stacks.stack_b));
+	// 	go(((pivot % lp_len(stacks.stack_b)) + (op >= lp_len(stacks.stack_b))) | ((long)find_biggest(stacks.stack_b)) * (long)0x100000000, (long)(op >= lp_len(stacks.stack_b)) | (long)1 * (long)0x100000000, 'b', &stacks);
+	// 	cmd(&stacks.stack_a, &stacks.stack_b, "pa\n", 1);
+	// 	if ((int)(lp_nod(stacks.stack_a, 0)[0]) > (int)(lp_nod(stacks.stack_a, 1)[0]))
+	// 		cmd(&stacks.stack_a, &stacks.stack_b, "sa\n", 1);
+	// 	// p("paaaaaaaaaaaaww\n");
+	// 	// print_stacks(&stacks);
+	// }
+	// // p("\n||%d||\n", find_index_of_biggest(stacks.stack_a));
+	// x = lp_len(stacks.stack_a) - find_index_of_biggest(stacks.stack_a);
+	// while (x-- > 1)
+	// {
+	// 	cmd(&stacks.stack_a, &stacks.stack_b, "rra\n", 1);
+	// }
+	
 	// print_stacks(&stacks);
 	exit(0);
 	op = 0;
@@ -520,7 +626,7 @@ int	start_sort(t_stacks stacks, int argc)
 				// usleep(3000000);
 				// system("clear");
 				p("operations: %d\n", op);
-				print_stacks(&stacks);
+				// print_stacks(&stacks);
 			}
 		}
 		if (!check_sort(stacks.stack_a, argc))

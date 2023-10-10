@@ -115,6 +115,7 @@ int main(int argc, char *argv[])
 	t_stacks	stacks;
 	char		*input;
 	int			i;
+    int         tmp;
 
 	i = 0;
 	stacks.stack_a = NULL;
@@ -146,13 +147,15 @@ int main(int argc, char *argv[])
 		}
 		i++;
 	}
-	if (!check_sort(stacks.stack_a, argc))
+    tmp = check_sort(stacks.stack_a, argc);
+    print_stacks(&stacks);
+	if (!tmp)
 	{
-		print_stacks(&stacks);
+		// print_stacks(&stacks);
 		p("[OK!]\n");
 		p("Number of commands: %d\n", i);
 	}
 	else
-		p("[KO!]\n");
+		p("[KO!] %d\n", tmp);
     return (0);
 }

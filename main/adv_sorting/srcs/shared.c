@@ -54,7 +54,7 @@ int	check_sort(t_link stack, int i)
 	while (i > 0)
 	{
 		if (lp_nod(stack, i)[0] < lp_nod(stack, i - 1)[0])
-			return (1);
+			return (i);
 		i--;
 	}
 	return (0);
