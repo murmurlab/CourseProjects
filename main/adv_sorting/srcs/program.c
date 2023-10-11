@@ -256,6 +256,54 @@ void go(long len, long direction, char c, t_stacks *stacks)
 		stack = &stacks->stack_a;
 	if ((c & 127) == 'b')
 		stack = &stacks->stack_b;
+	else
+		stack = &stacks->stack_a;
+	// p("%d\n", len);
+	if (direction & 0x00000000FFFFFFFF)
+	{
+		if (c == 'a')
+			op = strcln("rra\n");
+		else if (c == 'b')
+			op = strcln("rrb\n");
+		else if ((unsigned char)c == 222)
+			op = strcln("rrr\n");
+	}
+	else
+	{
+		if (c == 'a')
+			op = strcln("ra\n");
+		else if (c == 'b')
+			op = strcln("rb\n");
+		else if ((unsigned char)c == 222)
+			op = strcln("rr\n");
+	}
+	while (len & 0xFFFFFFFF)
+	{
+		// p("%d\n", len & 0xFFFFFFFF);
+		// if (flag)
+		// 	len = ((len & 0xFFFFFFFF) - flag) | (len & 0xFFFFFFFF00000000);
+		if (len <= 0)
+			break ;
+		if (((len / (long)0x100000000) > (int)((*stack)[0])) && !(direction & 0xFFFFFFFF00000000))
+			cmd(&stacks->stack_a, &stacks->stack_b, arr, 1);
+		cmd(&stacks->stack_a, &stacks->stack_b, op, 1);
+		// print_stacks(stacks);
+		// 1 ve 2. kontrolu
+		len = ((len & 0xFFFFFFFF) - 1) | (len & 0xFFFFFFFF00000000);
+	}
+}
+
+char go_single(long direction, char c, t_stacks *stacks)
+{
+	char	*op;
+	t_link	*stack;
+
+	if ((c & 127) == 'a')
+		stack = &stacks->stack_a;
+	if ((c & 127) == 'b')
+		stack = &stacks->stack_b;
+	else
+		stack = &stacks->stack_a;
 	// p("%d\n", len);
 	if (direction & 0x00000000FFFFFFFF)
 	{
@@ -271,57 +319,16 @@ void go(long len, long direction, char c, t_stacks *stacks)
 		else if (c == 'b')
 			op = strcln("rb\n");
 	}
-	while (len & 0xFFFFFFFF)
-	{
-		// p("%d\n", len & 0xFFFFFFFF);
-		// if (flag)
-		// 	len = ((len & 0xFFFFFFFF) - flag) | (len & 0xFFFFFFFF00000000);
-		if (len <= 0)
-			break ;
-		if (((len / (long)0x100000000) > (int)((*stack)[0])) && !(direction & 0xFFFFFFFF00000000))
-			cmd(&stacks->stack_a, &stacks->stack_b, arr, 1);
-/* 		if ((direction & 0xFFFFFFFF00000000) && ((((int)lp_end(stacks->stack_a)[0] < (int)((*stack)[0])) && ((int)((*stack)[0]) == find_smallest(*stack))) || (((int)lp_end(stacks->stack_a)[0] > (int)((*stack)[0])) && ((int)((*stack)[0]) == find_smallest(*stack)))))
-		{
-			// print_stacks(stacks);
-			// p("end: %d\n", (int)lp_end(stacks->stack_a)[0]);
-			// p("now: %d\n", (int)((*stack)[0]));
-			// p("smallest: %d\n", find_smallest(*stack));
-			cmd(&stacks->stack_a, &stacks->stack_b, "pa\n", 1);
-			cmd(&stacks->stack_a, &stacks->stack_b, "ra\n", 1);
-			if (!(direction & 0x00000000FFFFFFFF))
-			{
-				if ((len & 0xFFFFFFFF) != 1)
-					len = ((len & 0xFFFFFFFF) - 1) | (len & 0xFFFFFFFF00000000);
-				else
-					break ;
-			}
-
-		} */
-/* 		else if (!flag && (find_2nd_biggest(*stack) == (int)((*stack)[0])) && (direction & 0xFFFFFFFF00000000))
-		{
-			cmd(&stacks->stack_a, &stacks->stack_b, "pa\n", 1);
-			flag = 1;
-			if (direction & 0x00000000FFFFFFFF)
-			{
-				// if ((len & 0xFFFFFFFF) == 1)
-				// 	cmd(&stacks->stack_a, &stacks->stack_b, "rb\n", 1);
-				// else
-				// 	len = ((len & 0xFFFFFFFF) - 1) | (len & 0xFFFFFFFF00000000);
-			}
-			else
-			{
-				if ((len & 0xFFFFFFFF) == 1)
-					cmd(&stacks->stack_a, &stacks->stack_b, "rrb\n", 1);
-				else
-					len = ((len & 0xFFFFFFFF) - 1) | (len & 0xFFFFFFFF00000000);
-			}
-			// len = ((len & 0xFFFFFFFF) - 1) | (len & 0xFFFFFFFF00000000);
-		} */
-		cmd(&stacks->stack_a, &stacks->stack_b, op, 1);
-		// print_stacks(stacks);
-		// 1 ve 2. kontrolu
-		len = ((len & 0xFFFFFFFF) - 1) | (len & 0xFFFFFFFF00000000);
-	}
+	// cmd(&stacks->stack_a, &stacks->stack_b, op, 1);
+	if (!xstrncmp(op, "ra\n", 4))
+		return (0b00000001);
+	else if (!xstrncmp(op, "rb\n", 4))
+		return (0b00000010);
+	else if (!xstrncmp(op, "rra\n", 5))
+		return (0b00000100);
+	else if (!xstrncmp(op, "rrb\n", 5))
+		return (0b00001000);
+	return (0);
 }
 int	get_closest(t_link stack, int pivot, int mod)
 {
@@ -504,51 +511,28 @@ int	index_of_between(t_link stack, int val)
 	ct = 0;
 	biggest = find_biggest(stack);
 	smallest = find_smallest(stack);
+	if (val < smallest)
+		smallest = val;
 	while (lp_nod(stack, ct))
 	{
 		if (lp_nod(stack, ct - 1))
 			prev = (int)(size_t)(lp_nod(stack, ct - 1)[0]);
 		else
-			(prev = lp_end(stack)[0]);
+			(prev = (int)(lp_end(stack)[0]));
 		if (lp_nod(stack, ct))
 			next = (int)(size_t)(lp_nod(stack, ct)[0]);
 		else
-			(next = stack[0]);
-		if((prev < val && next > val) || (prev == biggest && next == smallest) || (prev < val && next == smallest))
+			(next = (int)(stack[0]));
+		if((prev < val && next > val) || (prev == biggest && val == smallest) || (prev < val && next == smallest))
 			return (ct);
 		ct++;
 	}
 	return (ct);
 }
 
-/* int	get_closest(t_link stack, int val)
-{
-	// this func gets the closest distance from middle of given value
-	int	ct;
-	int	len;
-
-	len = lp_len(stack);
-	ct = 0;
-	while (ct < len/2)
-	{
-		if ((int)stack[0] == val)
-			return (ct);
-		ct++;
-		stack = stack[1];
-	}
-	while(ct > 0 && stack)
-	{
-		if ((int)stack[0] == val)
-			return (ct);
-		ct--;
-		stack = stack[1];
-	}
-	
-} */
-
 int	distance_from_middle(int val, int len)
 {
-	if (val > len / 2)
+	if (val > len / 2 && len > 1)
 		return (len - val);
 	else
 		return (val);
@@ -561,7 +545,7 @@ int	calc_moves(t_stacks *stacks, int index)
 	int	move_b;
 
 	move_b = index;
-	val = lp_nod(stacks->stack_b, index)[0];
+	val = (int)(lp_nod(stacks->stack_b, index)[0]);
 	move_a = index_of_between(stacks->stack_a, val);
 	move_a = distance_from_middle(move_a, lp_len(stacks->stack_a));
 	move_b = distance_from_middle(move_b, lp_len(stacks->stack_b));
@@ -576,6 +560,7 @@ int	cheapest(t_stacks *stacks)
 
 	index = 0;
 	len = lp_len(stacks->stack_b);
+	cheapest[0] = 0x7FFFFFFF;
 	while (index < len)
 	{
 		if (cheapest[0] > calc_moves(stacks, index))
@@ -585,22 +570,39 @@ int	cheapest(t_stacks *stacks)
 	return (cheapest[1]);
 }
 
+int	find_index_of_smallest(t_link stack)
+{
+	int	ret;
+	int	small;
+	int	ct;
+
+	small = (int)stack[0];
+	ret = 0;
+	ct = 0;
+	while (stack)
+	{
+		if (small > (int)stack[0])
+		{
+			small = (int)stack[0];
+			ret = ct;
+		}
+		stack = stack[1];
+		ct++;
+	}
+	return (ret);
+}
+
 int	start_sort(t_stacks stacks, int argc)
 {
 	int	a_b[2];
 	int	pvt[2];
 	int	pivot;
-	// int	*res;
 	int	op;
-	// int	x;
 	int abs;
+	int abs_b;
 
 	a_b[0] = 0;
 	a_b[1] = 0;
-	// res = biggest_gap(a_b, pvt, stacks.stack_a, argc - 2);
-	// p("len: %d\n", argc);
-	// p("big gap: %d, %d\n", res[0], res[1]);
-	// p("pivot %d\n", pvt[0]);
 
 	while (1)
 	{
@@ -621,31 +623,55 @@ int	start_sort(t_stacks stacks, int argc)
 			cmd(&stacks.stack_a, &stacks.stack_b, "sa\n", 1);
 	}
 	// go stack_a
-	abs = index_of_between(stacks.stack_a, lp_nod(stacks.stack_b, cheapest(&stacks))[0]);
+	while (lp_len(stacks.stack_b))
+	{
+		// getchar();
+		abs = index_of_between(stacks.stack_a, (int)(lp_nod(stacks.stack_b, cheapest(&stacks))[0]));
+		abs_b = cheapest(&stacks);
+		a_b[0] = distance_from_middle(abs, lp_len(stacks.stack_a));
+		a_b[1] = distance_from_middle(abs_b, lp_len(stacks.stack_b));
+		while (1)
+		{
+			pvt[0] = 0;
+			pvt[1] = 0;
+			if (!a_b[0] && !a_b[1])
+				break ;
+			if (a_b[0])
+			{
+				pvt[0] = go_single((abs > lp_len(stacks.stack_a) / 2), 'a', &stacks);
+				a_b[0]--;
+			}
+			if (a_b[1])
+			{
+				pvt[1] = go_single((abs_b > lp_len(stacks.stack_b) / 2), 'b', &stacks);
+				a_b[1]--;
+			}
+			op = pvt[0] | pvt[1];
+
+			if ((op) == 0b00000011)
+			{
+				cmd(&stacks.stack_a, &stacks.stack_b, "rr\n", 1);
+				continue ;
+			}
+			else if (op == 0b00001100)
+			{
+				cmd(&stacks.stack_a, &stacks.stack_b, "rrr\n", 1);
+				continue ;
+			}
+			if ((op & 0b00000001) == 0b00000001)
+				cmd(&stacks.stack_a, &stacks.stack_b, "ra\n", 1);
+			if ((op & 0b00000010) == 0b00000010)
+				cmd(&stacks.stack_a, &stacks.stack_b, "rb\n", 1);
+			if ((op & 0b00000100) == 0b00000100)
+				cmd(&stacks.stack_a, &stacks.stack_b, "rra\n", 1);
+			if ((op & 0b00001000) == 0b00001000)
+				cmd(&stacks.stack_a, &stacks.stack_b, "rrb\n", 1);
+		}
+		cmd(&stacks.stack_a, &stacks.stack_b, "pa\n", 1);	
+		// print_stacks(&stacks);
+	}
+	abs = find_index_of_smallest(stacks.stack_a);
 	go(distance_from_middle(abs, lp_len(stacks.stack_a)), (abs > lp_len(stacks.stack_a) / 2), 'a', &stacks);
-	;
-	// while (1)
-	// {
-	// 	// print_stacks(&stacks);
-	// 	if (lp_len(stacks.stack_b) < 1)
-	// 		break ;
-	// 	op = get_closest(stacks.stack_b, find_biggest(stacks.stack_b), 0);
-	// 	pivot = (((op == lp_len(stacks.stack_b)) * lp_len(stacks.stack_b)) + op % lp_len(stacks.stack_b));
-	// 	go(((pivot % lp_len(stacks.stack_b)) + (op >= lp_len(stacks.stack_b))) | ((long)find_biggest(stacks.stack_b)) * (long)0x100000000, (long)(op >= lp_len(stacks.stack_b)) | (long)1 * (long)0x100000000, 'b', &stacks);
-	// 	cmd(&stacks.stack_a, &stacks.stack_b, "pa\n", 1);
-	// 	if ((int)(lp_nod(stacks.stack_a, 0)[0]) > (int)(lp_nod(stacks.stack_a, 1)[0]))
-	// 		cmd(&stacks.stack_a, &stacks.stack_b, "sa\n", 1);
-	// 	// p("paaaaaaaaaaaaww\n");
-	// 	// print_stacks(&stacks);
-	// }
-	// // p("\n||%d||\n", find_index_of_biggest(stacks.stack_a));
-	// x = lp_len(stacks.stack_a) - find_index_of_biggest(stacks.stack_a);
-	// while (x-- > 1)
-	// {
-	// 	cmd(&stacks.stack_a, &stacks.stack_b, "rra\n", 1);
-	// }
-	
-	// print_stacks(&stacks);
 	exit(0);
 	op = 0;
 	// cmd(&stacks.stack_a, &stacks.stack_b, "rra\n", 1);
@@ -659,12 +685,6 @@ int	start_sort(t_stacks stacks, int argc)
 				op +=  !cmd(&stacks.stack_a, &stacks.stack_b, input, 0);
 			else
 				break ;
-			{
-				// usleep(3000000);
-				// system("clear");
-				p("operations: %d\n", op);
-				// print_stacks(&stacks);
-			}
 		}
 		if (!check_sort(stacks.stack_a, argc))
 			p("[OK!]\n");
@@ -688,26 +708,7 @@ int	main(int ac, char *av[])
 	// load_nums(tablen(av2), av2, &stacks);
 	load_nums(ac, av, &stacks);
 	// lp_iter(stacks.stack_a, 0, iter_stack_func, &stacks.stack_b);
-
-	// lp_pop(&stacks.stack_b, del);
-	// lp_pop(&stacks.stack_b, del);
-	// lp_pop(&stacks.stack_b, del);
-	// lp_pop(&stacks.stack_b, del);
-	// lp_pop(&stacks.stack_b, del);
-	// lp_pop(&stacks.stack_b, del);
-	// lp_pop(&stacks.stack_b, del);
-	// p("rra\n");
-	// p("sa\n");
-	// print_links(stacks.stack_a, stacks.stack_b);
 	start_sort(stacks, ac);
-
-	// print_stacks(&stacks);
-	// cmd(&stacks.stack_a, &stacks.stack_b, "rr");
-	// tmp = lp_nod(stacks.stack_a, 1);
-	// lp_swap(lp_nod(stacks.stack_a, 0), lp_nod(stacks.stack_a, 1));
-	// stacks.stack_a = tmp;
-	// print_stacks(&stacks);
-	// print_links(stacks.stack_a, stacks.stack_b);
 	while (stacks.stack_a)
         lp_pop(&stacks.stack_a, del);
 	while (stacks.stack_b)

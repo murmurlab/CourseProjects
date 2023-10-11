@@ -102,7 +102,7 @@ int cmd(t_link *stack_a, t_link *stack_b, char *cmd, int print)
 
 
 
-// 79 80 94 67 35 95 45 89 44 74 52 57 34 49 72 2 84 87 68 55 97 59 83 40 11 53 6 70 27 100 4 9 90 5 28 36 66 33 22 51 14 81 42 18 73 48 82 65 96 77 86 47 32 50 19 29 39 3 54 16 88 20 64 10 69 78 7 38 63 75 25 21 23 13 31 92 24 85 8 61 91 93 37 56 62 1 99 98 41 43 15 12 30 76 60 46 17 26 58 71
+
 
 
 
@@ -124,34 +124,18 @@ int main(int argc, char *argv[])
 	load_nums(argc, argv, &stacks);
 
 	char		**av2;
-
-	// p("sss%dss", atoi("-+1"));
-	// av2 = file_load("./aww");
-	// load_nums(tablen(av2), av2, &stacks);
-
-	{
-		// system("clear");
-		print_stacks(&stacks);
-	}
 	while (42)
 	{
 		input = multi_get_line(0);
 		if (input && xstrncmp(input, "ext\n", 4))
-			cmd(&stacks.stack_a, &stacks.stack_b, input, 1);
+			cmd(&stacks.stack_a, &stacks.stack_b, input, 0);
 		else
 			break ;
-		{
-			// usleep(3000000);
-			// system("clear");
-			// print_stacks(&stacks);
-		}
 		i++;
 	}
     tmp = check_sort(stacks.stack_a, argc);
-    print_stacks(&stacks);
 	if (!tmp)
 	{
-		// print_stacks(&stacks);
 		p("[OK!]\n");
 		p("Number of commands: %d\n", i);
 	}

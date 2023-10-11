@@ -25,6 +25,8 @@ typedef struct s_stacks
 {
 	t_link	stack_a;
 	t_link	stack_b;
+	char	buff;
+	int		multi;
 }		t_stacks;
 
 # include "testing.h"
