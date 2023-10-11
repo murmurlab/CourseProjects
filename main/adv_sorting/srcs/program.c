@@ -1,4 +1,5 @@
 #include "include.h"
+#include "fcntl.h"
 // push swap kolay ve kisa bir proje
 
 
@@ -279,7 +280,7 @@ void go(long len, long direction, char c, t_stacks *stacks)
 			break ;
 		if (((len / (long)0x100000000) > (int)((*stack)[0])) && !(direction & 0xFFFFFFFF00000000))
 			cmd(&stacks->stack_a, &stacks->stack_b, arr, 1);
-		if ((direction & 0xFFFFFFFF00000000) && ((((int)lp_end(stacks->stack_a)[0] < (int)((*stack)[0])) && ((int)((*stack)[0]) == find_smallest(*stack))) || (((int)lp_end(stacks->stack_a)[0] > (int)((*stack)[0])) && ((int)((*stack)[0]) == find_smallest(*stack)))))
+/* 		if ((direction & 0xFFFFFFFF00000000) && ((((int)lp_end(stacks->stack_a)[0] < (int)((*stack)[0])) && ((int)((*stack)[0]) == find_smallest(*stack))) || (((int)lp_end(stacks->stack_a)[0] > (int)((*stack)[0])) && ((int)((*stack)[0]) == find_smallest(*stack)))))
 		{
 			// print_stacks(stacks);
 			// p("end: %d\n", (int)lp_end(stacks->stack_a)[0]);
@@ -295,8 +296,8 @@ void go(long len, long direction, char c, t_stacks *stacks)
 					break ;
 			}
 
-		}
-		else if (!flag && (find_2nd_biggest(*stack) == (int)((*stack)[0])) && (direction & 0xFFFFFFFF00000000))
+		} */
+/* 		else if (!flag && (find_2nd_biggest(*stack) == (int)((*stack)[0])) && (direction & 0xFFFFFFFF00000000))
 		{
 			cmd(&stacks->stack_a, &stacks->stack_b, "pa\n", 1);
 			flag = 1;
@@ -315,7 +316,7 @@ void go(long len, long direction, char c, t_stacks *stacks)
 					len = ((len & 0xFFFFFFFF) - 1) | (len & 0xFFFFFFFF00000000);
 			}
 			// len = ((len & 0xFFFFFFFF) - 1) | (len & 0xFFFFFFFF00000000);
-		}
+		} */
 		cmd(&stacks->stack_a, &stacks->stack_b, op, 1);
 		// print_stacks(stacks);
 		// 1 ve 2. kontrolu
@@ -492,40 +493,65 @@ int	find_index_of_biggest(t_link stack)
 	return (ret);
 }
 
-int	get_index_of_higher(t_link stack, int val)
+int	index_of_between(t_link stack, int val)
 {
-	int	ret;
 	int	ct;
+	int	next;
+	int	prev;
+	int	smallest;
+	int	biggest;
 
-	ret = 0;
 	ct = 0;
-	while (stack)
+	biggest = find_biggest(stack);
+	smallest = find_smallest(stack);
+	while (lp_nod(stack, ct))
 	{
-		if ((int)stack[0] > val)
-			ret = ct;
-		stack = stack[1];
+		if (lp_nod(stack, ct - 1))
+			prev = (int)(size_t)(lp_nod(stack, ct - 1)[0]);
+		else
+			(prev = lp_end(stack)[0]);
+		if (lp_nod(stack, ct))
+			next = (int)(size_t)(lp_nod(stack, ct)[0]);
+		else
+			(next = stack[0]);
+		if((prev < val && next > val) || (prev == biggest && next == smallest) || (prev < val && next == smallest))
+			return (ct);
 		ct++;
 	}
-	return (ret);
+	return (ct);
 }
 
-int	get_closest(t_link stack, int val)
+/* int	get_closest(t_link stack, int val)
 {
+	// this func gets the closest distance from middle of given value
 	int	ct;
 	int	len;
 
 	len = lp_len(stack);
 	ct = 0;
-	while (ct++ < len/2)
+	while (ct < len/2)
 	{
-		if ((int)stack[0] > val)
+		if ((int)stack[0] == val)
 			return (ct);
+		ct++;
 		stack = stack[1];
 	}
+	while(ct > 0 && stack)
 	{
-		/* code */
+		if ((int)stack[0] == val)
+			return (ct);
+		ct--;
+		stack = stack[1];
 	}
 	
+} */
+
+int	distance_from_middle(int val, int len)
+{
+	if (val > len / 2)
+		return (len - val);
+	else
+		return (val);
 }
 
 int	calc_moves(t_stacks *stacks, int index)
@@ -534,23 +560,29 @@ int	calc_moves(t_stacks *stacks, int index)
 	int	move_a;
 	int	move_b;
 
+	move_b = index;
 	val = lp_nod(stacks->stack_b, index)[0];
-	move_b = get_index_of_higher(stacks->stack_b, val);
-	if (index > lp_len(stacks->stack_b) / 2)
-		move_b = lp_len(stacks->stack_b) - index;
-	else
-		move_b = index;
-	move_a = 
-	
+	move_a = index_of_between(stacks->stack_a, val);
+	move_a = distance_from_middle(move_a, lp_len(stacks->stack_a));
+	move_b = distance_from_middle(move_b, lp_len(stacks->stack_b));
+	return (move_a + move_b);
 }
 
-int	ft_sort(t_stacks *stacks)
+int	cheapest(t_stacks *stacks)
 {
-	while ()
-	{
+	int	index;
+	int	len;
+	int	cheapest[2];
 
+	index = 0;
+	len = lp_len(stacks->stack_b);
+	while (index < len)
+	{
+		if (cheapest[0] > calc_moves(stacks, index))
+			(cheapest[0] = calc_moves(stacks, index), cheapest[1] = index);
+		index++;
 	}
-	
+	return (cheapest[1]);
 }
 
 int	start_sort(t_stacks stacks, int argc)
@@ -558,13 +590,14 @@ int	start_sort(t_stacks stacks, int argc)
 	int	a_b[2];
 	int	pvt[2];
 	int	pivot;
-	int	*res;
+	// int	*res;
 	int	op;
-	int	x;
+	// int	x;
+	int abs;
 
 	a_b[0] = 0;
 	a_b[1] = 0;
-	res = biggest_gap(a_b, pvt, stacks.stack_a, argc - 2);
+	// res = biggest_gap(a_b, pvt, stacks.stack_a, argc - 2);
 	// p("len: %d\n", argc);
 	// p("big gap: %d, %d\n", res[0], res[1]);
 	// p("pivot %d\n", pvt[0]);
@@ -587,6 +620,10 @@ int	start_sort(t_stacks stacks, int argc)
 		if ((int)(size_t)(lp_nod(stacks.stack_a, 0)[0]) > (int)(size_t)(lp_nod(stacks.stack_a, 1)[0]))
 			cmd(&stacks.stack_a, &stacks.stack_b, "sa\n", 1);
 	}
+	// go stack_a
+	abs = index_of_between(stacks.stack_a, lp_nod(stacks.stack_b, cheapest(&stacks))[0]);
+	go(distance_from_middle(abs, lp_len(stacks.stack_a)), (abs > lp_len(stacks.stack_a) / 2), 'a', &stacks);
+	;
 	// while (1)
 	// {
 	// 	// print_stacks(&stacks);
