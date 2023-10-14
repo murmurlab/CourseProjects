@@ -5,12 +5,11 @@ int	main(int argc, char *argv[])
 	t_stacks	stacks;
 	char		*input;
 	int			i;
-	int			tmp;
 
 	i = 0;
 	stacks.stack_a = NULL;
 	stacks.stack_b = NULL;
-	load_nums(argc, argv, &stacks);
+	load_nums(argc, argv, &stacks, 0);
 	while (42)
 	{
 		input = multi_get_line(0);
@@ -20,13 +19,9 @@ int	main(int argc, char *argv[])
 			break ;
 		i++;
 	}
-	tmp = check_sort(stacks.stack_a, argc);
-	if (!tmp)
-	{
-		p("[OK!]\n");
-		p("Number of commands: %d\n", i);
-	}
+	if (!check_sort(stacks.stack_a, lp_len(stacks.stack_a) + 1))
+		p("OK\n");
 	else
-		p("[KO!] %d\n", tmp);
+		write(2, "KO\n", 3);
 	return (0);
 }

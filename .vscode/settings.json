@@ -23,7 +23,10 @@
         "__node_handle": "c",
         "stdio.h": "c",
         "testing.h": "c",
-        "bit": "c"
+        "bit": "c",
+        "ostream": "c",
+        "optional": "cpp",
+        "functional": "c"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/clang",
     "lldb.displayFormat": "auto",

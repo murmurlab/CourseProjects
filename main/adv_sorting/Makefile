@@ -29,7 +29,6 @@ B_SRC =					$(b_src_dir)/checker.c \
 						$(S_SRC)
 
 SRC =					$(src_dir)/program.c \
-						$(src_dir)/math.c \
 						$(S_SRC)
 
 OBJ =					$(SRC:.c=.o)
@@ -81,5 +80,6 @@ endif
 
 re:						fclean
 	$(MAKE) all
+	$(MAKE) bonus
 
 .PHONY:					re fclean clean libmurmurc depend all 

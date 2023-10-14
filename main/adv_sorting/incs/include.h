@@ -29,11 +29,34 @@ typedef struct s_stacks
 	int		multi;
 }		t_stacks;
 
+typedef struct s_utils
+{
+	char		*op;
+	char		arr[4];
+	t_link		*stack;
+	int			flag;
+	long		len;
+	long		direction;
+	char		c;
+}		t_utils;
+
+typedef struct s_sort
+{
+	int			a_b[3];
+	int			pvt[2];
+	int			pivot;
+	int			op;
+	int			abs;
+	int			abs_b;
+	int			argc;
+	t_stacks	*stacks
+}		t_sort;
+
 # include "testing.h"
 
 int		check_sort(t_link stack, int size);
 void	del(void **tab);
-void	load_nums(int ac, char **av, t_stacks *stacks);
+void	load_nums(int ac, char **av, t_stacks *stacks, int sort_cntl);
 double	ft_fabs(register double x);
 
 #endif
