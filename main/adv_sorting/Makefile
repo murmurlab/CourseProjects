@@ -29,6 +29,8 @@ B_SRC =					$(b_src_dir)/checker.c \
 						$(S_SRC)
 
 SRC =					$(src_dir)/program.c \
+						$(src_dir)/program_utils.c \
+						$(src_dir)/program_utils2.c \
 						$(S_SRC)
 
 OBJ =					$(SRC:.c=.o)

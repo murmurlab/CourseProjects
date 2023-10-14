@@ -49,11 +49,20 @@ typedef struct s_sort
 	int			abs;
 	int			abs_b;
 	int			argc;
-	t_stacks	*stacks
+	int			*gap;
+	char		*arr;
+	t_stacks	*stacks;
 }		t_sort;
 
 # include "testing.h"
 
+int		run_ops(t_sort *sort);
+int		cost(t_stacks *stacks);
+void	triple_sort(t_stacks *stacks);
+void	go(long len, long direction, char c, t_stacks *stacks);
+char	go_single(long direction, char c, t_stacks *stacks);
+int		go_path(t_sort *sort, int len, int c);
+void	assign_op(t_utils *utils);
 int		check_sort(t_link stack, int size);
 void	del(void **tab);
 void	load_nums(int ac, char **av, t_stacks *stacks, int sort_cntl);
