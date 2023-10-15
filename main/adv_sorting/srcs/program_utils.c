@@ -27,6 +27,7 @@ void	go(long len, long direction, char c, t_stacks *stacks)
 			cmd(&stacks->stack_a, &stacks->stack_b, utils.op, 1);
 		len = ((len & 0xFFFFFFFF) - 1) | (len & 0xFFFFFFFF00000000);
 	}
+	free(utils.op);
 }
 
 char	go_single(long direction, char c, t_stacks *stacks)
@@ -46,13 +47,13 @@ char	go_single(long direction, char c, t_stacks *stacks)
 		stack = &stacks->stack_a;
 	assign_op(&utils);
 	if (!xstrncmp(utils.op, "ra\n", 4))
-		return (0b00000001);
+		return (free(utils.op), 0b00000001);
 	else if (!xstrncmp(utils.op, "rb\n", 4))
-		return (0b00000010);
+		return (free(utils.op), 0b00000010);
 	else if (!xstrncmp(utils.op, "rra\n", 5))
-		return (0b00000100);
+		return (free(utils.op), 0b00000100);
 	else if (!xstrncmp(utils.op, "rrb\n", 5))
-		return (0b00001000);
+		return (free(utils.op), 0b00001000);
 	return (0);
 }
 
@@ -103,7 +104,7 @@ int	go_path(t_sort *sort , int len, int c)
 				lp_len(*stack));
 		if (!sort->gap[0] || !sort->gap[1])
 		{
-			if (case1(sort, sort->gap, c, stack))
+			if (case1(sort, sort->gap, c, stack) && (free(sort->gap), 1))
 				break ;
 		}
 		else if (sort->gap[0] > sort->gap[1])
@@ -112,6 +113,7 @@ int	go_path(t_sort *sort , int len, int c)
 			case3(sort, sort->gap, c, len);
 		if (sort->pvt[0] >= (int)((*stack)[0]))
 			cmd(&sort->stacks->stack_a, &sort->stacks->stack_b, sort->arr, 1);
+	free(sort->gap);
 	}
 	return (1);
 }

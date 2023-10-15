@@ -61,11 +61,11 @@ void	zort(t_sort *sort)
 	}
 }
 
-int	start_sort(t_stacks stacks, int argc)
+int	start_sort(t_stacks *stacks, int argc)
 {
 	t_sort	sort;
 
-	sort.stacks = &stacks;
+	sort.stacks = stacks;
 	sort.a_b[0] = 0;
 	sort.a_b[1] = 0;
 
@@ -88,10 +88,13 @@ int	main(int ac, char *av[])
 	stacks.stack_a = NULL;
 	stacks.stack_b = NULL;
 	load_nums(ac, av, &stacks, 1);
-	start_sort(stacks, ac);
-	while (stacks.stack_a)
-		lp_pop(&stacks.stack_a, del);
-	while (stacks.stack_b)
-		lp_pop(&stacks.stack_b, del);
+	start_sort(&stacks, ac);
+	print_stacks(&stacks);
+	free_stack(&stacks);
 	return (0);
 }
+
+// void	__attribute__((destructor))after_main()
+// {
+// 	pause();
+// }

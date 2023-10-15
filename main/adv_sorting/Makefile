@@ -7,7 +7,7 @@ incl	=					incs
 incs	=					-I $(incl) -I ../murmurlibc -I $(tests)/incs
 
 wflags	=				-Wall -Wextra -Werror
-CFLAGS =				-D BUFFER_SIZE=65535 -std=c99 -g $(incs)
+CFLAGS =				-D BUFFER_SIZE=65535 -std=c99 -g $(incs) $(wflags)
 
 os =					${shell uname -s}
 
@@ -51,7 +51,7 @@ bonus:		depend $(B_OBJ)
 	$(CC) $(CFLAGS) $(B_OBJ) -o $(BNAME) $(libr)
 
 $(NAME):	depend $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(libr)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(libr) #-fsanitize=address -fno-omit-frame-pointer
 
 depend:		libmurmurc
 

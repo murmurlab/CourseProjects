@@ -66,6 +66,7 @@ void	assign_op(t_utils *utils);
 int		check_sort(t_link stack, int size);
 void	del(void **tab);
 void	load_nums(int ac, char **av, t_stacks *stacks, int sort_cntl);
+void	free_stack(t_stacks *stacks);
 double	ft_fabs(register double x);
 
 #endif
