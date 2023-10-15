@@ -14,14 +14,18 @@ int	main(int argc, char *argv[])
 	{
 		input = multi_get_line(0);
 		if (input && xstrncmp(input, "ext\n", 4))
-			cmd(&stacks.stack_a, &stacks.stack_b, input, 0);
+			(cmd(&stacks.stack_a, &stacks.stack_b, input, 0), free(input));
 		else
+		{
+			free(input);
 			break ;
+		}
 		i++;
 	}
 	if (!check_sort(stacks.stack_a, lp_len(stacks.stack_a) + 1))
 		p("OK\n");
 	else
 		write(2, "KO\n", 3);
+	free_stack(&stacks);
 	return (0);
 }
