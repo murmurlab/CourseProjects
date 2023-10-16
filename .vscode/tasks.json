@@ -35,7 +35,7 @@
                 "command": "make",
                 "args": [
                     "-C",
-                    "${fileDirname}/../"
+                    "${fileDirname}/../../"
                 ]
             }
         },
