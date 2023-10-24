@@ -51,7 +51,7 @@ bonus:		depend $(B_OBJ)
 	$(CC) $(CFLAGS) $(B_OBJ) -o $(BNAME) $(libr)
 
 $(NAME):	depend $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(libr) #-fsanitize=address -fno-omit-frame-pointer
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(libr)
 
 depend:		libmurmurc
 

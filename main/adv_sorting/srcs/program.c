@@ -65,10 +65,10 @@ int	start_sort(t_stacks *stacks, int argc)
 {
 	t_sort	sort;
 
+	(void)argc;
 	sort.stacks = stacks;
 	sort.a_b[0] = 0;
 	sort.a_b[1] = 0;
-
 	prepare(&sort);
 	zort(&sort);
 	sort.abs = find_index_of_smallest(sort.stacks->stack_a);
@@ -81,7 +81,6 @@ int	start_sort(t_stacks *stacks, int argc)
 int	main(int ac, char *av[])
 {
 	t_stacks	stacks;
-	char		**av2;
 
 	(void)av;
 	(void)ac;
@@ -89,7 +88,7 @@ int	main(int ac, char *av[])
 	stacks.stack_b = NULL;
 	load_nums(ac, av, &stacks, 1);
 	start_sort(&stacks, ac);
-	print_stacks(&stacks);
+	// print_stacks(&stacks);
 	free_stack(&stacks);
 	return (0);
 }

@@ -37,25 +37,30 @@ B_OBJ =					$(B_SRC:.c=.o)
 NAME =					program
 BNAME =					checker
 MAKEFLAGS +=			-j$(NPROCS)
-
+murmurc				=	../murmurlibc/libmurmurc.a
+depend				=	r_murmurc
 # $(src_dir)%.o: $(src_dir)%.c
 # 	gcc -c $< -o $@ > /dev/null
 
-all:		$(NAME) #bonus
+all:	$(depend) #bonus
+	$(MAKE) $(NAME)
 	@echo "===================================program======================================\n"
 
 b: bonus
 
-bonus:		depend $(B_OBJ)
+m: mandatory
+
+mandatory: all
+
+bonus:		$(depend) $(B_OBJ)
 	$(CC) $(CFLAGS) $(B_OBJ) -o $(BNAME) $(libr)
 
-$(NAME):	depend $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(libr) #-fsanitize=address -fno-omit-frame-pointer
+$(NAME):	$(murmurc) $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(libr) -fsanitize=thread
 
-depend:		#libmurmurc
-
-libmurmurc:
+r_murmurc:
 	make -C ../murmurlibc -j$(NPROCS)
+
 
 # mlx:
 # ifeq "$(os)" "Darwin"
@@ -83,4 +88,4 @@ re:						fclean
 	$(MAKE) all
 	$(MAKE) bonus
 
-.PHONY:					re fclean clean libmurmurc depend all 
+.PHONY:					re fclean clean all murmurc

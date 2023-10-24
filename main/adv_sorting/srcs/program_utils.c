@@ -32,13 +32,11 @@ void	go(long len, long direction, char c, t_stacks *stacks)
 
 char	go_single(long direction, char c, t_stacks *stacks)
 {
-	char	*op;
 	t_link	*stack;
 	t_utils	utils;
 
 	utils.direction = direction;
 	utils.c = c;
-	utils.op = op;
 	if ((c & 127) == 'a')
 		stack = &stacks->stack_a;
 	if ((c & 127) == 'b')

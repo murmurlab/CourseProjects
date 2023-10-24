@@ -21,7 +21,7 @@ void	load_nums_ok(int ac, char **av, t_stacks *stacks, int sort_cntl)
 			if (stacks->stack_a && num > (int)((stacks->stack_a)[0]) && !sorted)
 				sorted = 99999;
 			if (ac == 1 && !sorted && sort_cntl)
-				(exit(0), free_stack(stacks));
+				exit((free_stack(stacks), 1));
 			tmp = lp_new((void *)num);
 			lp_push(&stacks->stack_a, tmp);
 		}
