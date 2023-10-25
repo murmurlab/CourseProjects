@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "*.c": "c",
         "minitalk.h": "c",
         "murmurlibc.h": "c",
         "mlx.h": "c",
@@ -26,7 +27,18 @@
         "bit": "c",
         "ostream": "c",
         "optional": "cpp",
-        "functional": "c"
+        "functional": "c",
+        "unistd.h": "c",
+        "valgrind.h": "c",
+        "memcheck.h": "c",
+        "__threading_support": "c",
+        "stdlib.h": "c",
+        "pthread.h": "c",
+        "_pthread_attr_t.h": "c",
+        "iterator": "c",
+        "_pthread_types.h": "c",
+        "typeinfo": "c",
+        "signal.h": "c"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/clang",
     "lldb.displayFormat": "auto",
