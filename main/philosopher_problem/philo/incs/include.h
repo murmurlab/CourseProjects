@@ -1,20 +1,20 @@
 #ifndef INCLUDE_H
 # define INCLUDE_H
 # if defined(__linux__)
-	/* Linux. --------------------------------------------------- */
-// #  include "./linux.h"
-	/* WSL keycodes */
-/* #  define W 119
-#  define A 97
-#  define S 115
-#  define D 100 */
+/* Linux. --------------------------------------------------- */
+/*
+**  #  include "./linux.h"
+** WSL keycodes
+** #  define W 119
+** #  define A 97
+** #  define S 115
+** #  define D 100
+*/
 # elif defined(__APPLE__)
-	/* OSX. --------------------------------------------------- */
-/* #  include "./apple.h"
-#  define W 13
-#  define A 0
-#  define S 1
-#  define D 2 */
+/* OSX. --------------------------------------------------- */
+/*
+** #  include "./apple.h"
+*/
 #  define ARG1 "<(number_of_philosophers > 0)>"
 #  define ARG2 "<time_to_die>"
 #  define ARG3 "<time_to_eat>"
@@ -42,17 +42,26 @@
 
 // # include "testing.h"
 
+/*
+**
+**
+** pthread_mutex_t			count_mutex; // odd
+** pthread_mutex_t			tlast_mutex; // even
+*/
+typedef void	t_if;
+
 typedef struct s_controller
 {
 	int						consts[5];
 	pthread_t				*p_threads;
 	pthread_mutex_t			*f_mutexes;
-	int						p_count;
+	volatile int			p_count;
 	pthread_mutex_t			count_mutex;
 	pthread_mutex_t			tlast_mutex;
 	pthread_mutex_t			tmain_mutex;
 	__darwin_suseconds_t	*p_lap_eat;
 	char					*p_stats;
+	_Bool					flag1;
 }	t_controller;
 typedef struct s_order
 {
