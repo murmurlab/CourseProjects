@@ -1,0 +1,5158 @@
+[34m<(number_of_philosophers > 0)>: 2040,
+[33m<time_to_die>: 600,
+[33m<time_to_eat>: 200,
+[33m<time_to_sleep>: 200,
+[32m[number_of_times_each_philosopher_must_eat]: -291936576[0m
+main wait
+unlock tlast_mutex
+main cycle
+190 2040 has taken a fork
+190 1 is thinking
+190 2039 is thinking
+191 2038 has taken a fork
+191 2038 is eating
+191 2033 is thinking
+191 2035 is thinking
+191 2029 is thinking
+191 2031 is thinking
+191 2030 has taken a fork
+191 2024 has taken a fork
+191 2024 is eating
+191 2026 has taken a fork
+191 2026 is eating
+191 2019 is thinking
+191 2030 is eating
+191 2017 is thinking
+191 2016 has taken a fork
+191 2016 is eating
+191 2022 has taken a fork
+191 2022 is eating
+191 2040 is eating
+191 2021 is thinking
+191 2027 is thinking
+191 2020 has taken a fork
+191 2020 is eating
+191 2028 has taken a fork
+191 2028 is eating
+191 2018 has taken a fork
+191 2002 has taken a fork
+191 2002 is eating
+191 2014 has taken a fork
+191 2014 is eating
+191 2013 is thinking
+191 1996 has taken a fork
+191 1996 is eating
+191 2011 is thinking
+191 2010 has taken a fork
+191 2010 is eating
+191 2009 is thinking
+191 2007 is thinking
+191 2006 has taken a fork
+191 2006 is eating
+191 2025 is thinking
+191 1987 is thinking
+191 1985 is thinking
+191 2003 is thinking
+191 1979 is thinking
+191 1978 has taken a fork
+191 2001 is thinking
+191 2000 has taken a fork
+192 2000 is eating
+191 1999 is thinking
+191 1998 has taken a fork
+192 1998 is eating
+191 2036 has taken a fork
+192 2036 is eating
+191 2012 has taken a fork
+192 2012 is eating
+191 1994 has taken a fork
+192 1994 is eating
+191 1993 is thinking
+191 2008 has taken a fork
+192 1963 is thinking
+191 1990 has taken a fork
+192 1990 is eating
+191 2005 is thinking
+191 1988 has taken a fork
+192 1988 is eating
+191 2004 has taken a fork
+192 1952 has taken a fork
+192 1952 is eating
+191 1984 has taken a fork
+192 1984 is eating
+191 1982 has taken a fork
+192 1982 is eating
+191 1980 has taken a fork
+192 1980 is eating
+191 2032 has taken a fork
+192 1942 has taken a fork
+192 1942 is eating
+192 1941 is thinking
+192 1939 is thinking
+192 1974 has taken a fork
+192 1936 has taken a fork
+192 1936 is eating
+192 1972 has taken a fork
+192 1972 is eating
+192 1970 has taken a fork
+192 1970 is eating
+192 1969 is thinking
+192 1933 is thinking
+192 1932 has taken a fork
+192 1932 is eating
+192 1967 is thinking
+192 1965 is thinking
+191 1992 has taken a fork
+192 1926 has taken a fork
+192 1926 is eating
+192 2008 is eating
+192 1962 has taken a fork
+192 1962 is eating
+192 1961 is thinking
+192 1959 is thinking
+192 1958 has taken a fork
+192 1958 is eating
+191 1989 is thinking
+192 1956 has taken a fork
+192 1956 is eating
+192 1955 is thinking
+192 1954 has taken a fork
+192 1954 is eating
+192 1953 is thinking
+192 1903 is thinking
+192 1902 has taken a fork
+192 1950 has taken a fork
+193 1950 is eating
+193 1897 is thinking
+192 1948 has taken a fork
+193 1948 is eating
+192 1947 is thinking
+191 2018 is eating
+192 1946 has taken a fork
+193 1946 is eating
+192 1945 is thinking
+191 1977 is thinking
+192 1943 is thinking
+192 2032 is eating
+191 1978 is eating
+191 1976 has taken a fork
+193 1976 is eating
+192 1975 is thinking
+191 2015 is thinking
+192 1938 has taken a fork
+193 1938 is eating
+192 1937 is thinking
+192 1973 is thinking
+192 1971 is thinking
+193 1867 is thinking
+191 1997 is thinking
+193 1864 has taken a fork
+193 1864 is eating
+193 1862 has taken a fork
+194 1862 is eating
+191 2034 has taken a fork
+194 2034 is eating
+194 1857 is thinking
+192 1929 is thinking
+192 1928 has taken a fork
+194 1928 is eating
+194 1852 has taken a fork
+194 1849 is thinking
+192 1925 is thinking
+192 1924 has taken a fork
+194 1924 is eating
+194 1845 is thinking
+192 1922 has taken a fork
+194 1843 is thinking
+192 1960 has taken a fork
+194 1960 is eating
+194 1840 has taken a fork
+194 1840 is eating
+192 1918 has taken a fork
+194 1918 is eating
+192 1916 has taken a fork
+194 1916 is eating
+192 1914 has taken a fork
+194 1914 is eating
+194 1828 has taken a fork
+194 1827 is thinking
+192 1910 has taken a fork
+191 1986 has taken a fork
+194 1986 is eating
+192 1908 has taken a fork
+194 1908 is eating
+192 2004 is eating
+194 1818 has taken a fork
+194 1818 is eating
+192 1905 is thinking
+191 2023 is thinking
+192 1951 is thinking
+192 1901 is thinking
+192 1900 has taken a fork
+195 1900 is eating
+193 1899 is thinking
+193 1898 has taken a fork
+195 1898 is eating
+191 1983 is thinking
+193 1896 has taken a fork
+195 1896 is eating
+193 1895 is thinking
+193 1894 has taken a fork
+195 1799 is thinking
+195 1798 has taken a fork
+195 1798 is eating
+192 1944 has taken a fork
+195 1944 is eating
+193 1889 is thinking
+193 1888 has taken a fork
+195 1888 is eating
+193 1886 has taken a fork
+195 1886 is eating
+193 1885 is thinking
+195 1783 is thinking
+193 1882 has taken a fork
+195 1882 is eating
+193 1881 is thinking
+193 1880 has taken a fork
+195 1880 is eating
+193 1879 is thinking
+193 1877 is thinking
+193 1876 has taken a fork
+195 1876 is eating
+195 1768 has taken a fork
+193 1874 has taken a fork
+195 1766 has taken a fork
+195 1764 has taken a fork
+195 1764 is eating
+193 1871 is thinking
+195 1760 has taken a fork
+195 1760 is eating
+193 1868 has taken a fork
+195 1868 is eating
+193 1866 has taken a fork
+195 1866 is eating
+192 1934 has taken a fork
+195 1934 is eating
+192 1968 has taken a fork
+195 1968 is eating
+193 1861 is thinking
+195 1746 has taken a fork
+195 1746 is eating
+194 1858 has taken a fork
+195 1858 is eating
+192 1931 is thinking
+194 1856 has taken a fork
+195 1856 is eating
+194 1855 is thinking
+194 1853 is thinking
+192 1927 is thinking
+195 1731 is thinking
+195 1730 has taken a fork
+195 1729 is thinking
+195 1727 is thinking
+194 1852 is eating
+194 1848 has taken a fork
+196 1848 is eating
+194 1847 is thinking
+192 1923 is thinking
+191 1991 is thinking
+194 1844 has taken a fork
+196 1844 is eating
+194 1922 is eating
+194 1842 has taken a fork
+196 1842 is eating
+196 1711 is thinking
+192 1919 is thinking
+196 1709 is thinking
+194 1838 has taken a fork
+196 1838 is eating
+192 1917 is thinking
+196 1704 has taken a fork
+196 1702 has taken a fork
+196 1702 is eating
+194 1834 has taken a fork
+196 1834 is eating
+194 1833 is thinking
+196 1698 has taken a fork
+196 1698 is eating
+194 1831 is thinking
+194 1829 is thinking
+192 1913 is thinking
+196 1688 has taken a fork
+196 1688 is eating
+194 1828 is eating
+194 1826 has taken a fork
+196 1826 is eating
+194 1825 is thinking
+196 1678 has taken a fork
+196 1678 is eating
+196 1677 is thinking
+192 1909 is thinking
+196 1672 has taken a fork
+196 1669 is thinking
+194 1820 has taken a fork
+196 1664 has taken a fork
+192 1906 has taken a fork
+196 1906 is eating
+194 1816 has taken a fork
+196 1657 is thinking
+192 1904 has taken a fork
+196 1904 is eating
+194 1814 has taken a fork
+196 1814 is eating
+194 1812 has taken a fork
+196 1812 is eating
+195 1810 has taken a fork
+196 1810 is eating
+195 1809 is thinking
+195 1807 is thinking
+192 1949 is thinking
+195 1806 has taken a fork
+197 1806 is eating
+197 1642 has taken a fork
+197 1636 has taken a fork
+197 1636 is eating
+191 1981 is thinking
+195 1801 is thinking
+197 1631 is thinking
+195 1894 is eating
+193 1893 is thinking
+193 1892 has taken a fork
+197 1892 is eating
+195 1797 is thinking
+195 1796 has taken a fork
+197 1796 is eating
+195 1795 is thinking
+195 1794 has taken a fork
+197 1794 is eating
+195 1793 is thinking
+195 1791 is thinking
+195 1790 has taken a fork
+197 1790 is eating
+195 1789 is thinking
+197 1609 is thinking
+195 1787 is thinking
+195 1786 has taken a fork
+197 1786 is eating
+195 1785 is thinking
+193 1884 has taken a fork
+197 1884 is eating
+193 1883 is thinking
+197 1596 has taken a fork
+195 1780 has taken a fork
+197 1780 is eating
+195 1779 is thinking
+195 1778 has taken a fork
+197 1778 is eating
+197 1589 is thinking
+193 1878 has taken a fork
+197 1878 is eating
+197 1583 is thinking
+195 1773 is thinking
+195 1772 has taken a fork
+197 1772 is eating
+195 1771 is thinking
+195 1769 is thinking
+193 1875 is thinking
+192 1974 is eating
+197 1573 is thinking
+195 1768 is eating
+195 1874 is eating
+193 1873 is thinking
+197 1568 has taken a fork
+197 1568 is eating
+195 1766 is eating
+195 1763 is thinking
+193 1870 has taken a fork
+198 1870 is eating
+195 1762 has taken a fork
+198 1762 is eating
+195 1759 is thinking
+195 1758 has taken a fork
+198 1758 is eating
+192 1935 is thinking
+193 1865 is thinking
+198 1549 is thinking
+195 1755 is thinking
+195 1754 has taken a fork
+198 1544 has taken a fork
+198 1544 is eating
+198 1543 is thinking
+195 1751 is thinking
+191 1995 is thinking
+198 1538 has taken a fork
+198 1538 is eating
+195 1749 is thinking
+198 1533 is thinking
+198 1532 has taken a fork
+198 1531 is thinking
+195 1745 is thinking
+195 1744 has taken a fork
+198 1744 is eating
+195 1743 is thinking
+192 1930 has taken a fork
+198 1930 is eating
+195 1742 has taken a fork
+198 1742 is eating
+195 1739 is thinking
+198 1516 has taken a fork
+198 1516 is eating
+195 1737 is thinking
+195 1736 has taken a fork
+198 1736 is eating
+195 1735 is thinking
+195 1733 is thinking
+195 1732 has taken a fork
+198 1732 is eating
+194 1851 is thinking
+195 1730 is eating
+194 1850 has taken a fork
+198 1850 is eating
+195 1728 has taken a fork
+198 1728 is eating
+196 1726 has taken a fork
+198 1726 is eating
+196 1724 has taken a fork
+198 1724 is eating
+196 1723 is thinking
+198 1497 is thinking
+196 1720 has taken a fork
+198 1493 is thinking
+196 1718 has taken a fork
+198 1718 is eating
+196 1717 is thinking
+196 1715 is thinking
+199 1487 is thinking
+199 1486 has taken a fork
+199 1486 is eating
+196 1713 is thinking
+194 1841 is thinking
+192 1920 has taken a fork
+199 1477 is thinking
+194 1839 is thinking
+196 1708 has taken a fork
+199 1708 is eating
+194 1837 is thinking
+196 1706 has taken a fork
+199 1706 is eating
+196 1705 is thinking
+196 1703 is thinking
+192 1957 is thinking
+196 1704 is eating
+199 1461 is thinking
+194 1835 is thinking
+196 1700 has taken a fork
+199 1455 is thinking
+196 1699 is thinking
+194 1832 has taken a fork
+199 1448 has taken a fork
+196 1696 has taken a fork
+199 1696 is eating
+194 1830 has taken a fork
+199 1830 is eating
+196 1694 has taken a fork
+199 1694 is eating
+196 1692 has taken a fork
+199 1692 is eating
+196 1690 has taken a fork
+199 1690 is eating
+192 1912 has taken a fork
+199 1438 has taken a fork
+199 1438 is eating
+196 1685 is thinking
+196 1683 is thinking
+199 1434 has taken a fork
+199 1434 is eating
+196 1682 has taken a fork
+199 1428 has taken a fork
+199 1428 is eating
+194 1824 has taken a fork
+199 1824 is eating
+194 1910 is eating
+194 1822 has taken a fork
+199 1822 is eating
+196 1676 has taken a fork
+199 1420 has taken a fork
+199 1419 is thinking
+194 1821 is thinking
+196 1671 is thinking
+199 1412 has taken a fork
+200 1412 is eating
+196 1672 is eating
+192 1907 is thinking
+196 1667 is thinking
+200 1405 is thinking
+200 1402 has taken a fork
+200 1400 has taken a fork
+200 1400 is eating
+194 1819 is thinking
+196 1662 has taken a fork
+200 1662 is eating
+196 1664 is eating
+200 1394 has taken a fork
+200 1394 is eating
+194 1817 is thinking
+196 1658 has taken a fork
+200 1387 is thinking
+194 1815 is thinking
+196 1656 has taken a fork
+200 1656 is eating
+196 1655 is thinking
+200 1381 is thinking
+196 1653 is thinking
+196 1652 has taken a fork
+200 1377 is thinking
+200 1376 has taken a fork
+200 1376 is eating
+192 1902 is eating
+195 1808 has taken a fork
+200 1808 is eating
+196 1649 is thinking
+196 1647 is thinking
+197 1646 has taken a fork
+201 1646 is eating
+197 1645 is thinking
+201 1370 has taken a fork
+201 1370 is eating
+195 1805 is thinking
+201 1367 is thinking
+197 1641 is thinking
+197 1639 is thinking
+197 1638 has taken a fork
+197 1637 is thinking
+201 1358 has taken a fork
+201 1358 is eating
+197 1635 is thinking
+197 1634 has taken a fork
+201 1634 is eating
+201 1355 is thinking
+201 1353 is thinking
+201 1350 has taken a fork
+201 1350 is eating
+197 1630 has taken a fork
+201 1630 is eating
+197 1628 has taken a fork
+201 1628 is eating
+197 1625 is thinking
+201 1343 is thinking
+201 1341 is thinking
+197 1622 has taken a fork
+201 1622 is eating
+193 1891 is thinking
+197 1620 has taken a fork
+201 1620 is eating
+197 1619 is thinking
+197 1617 is thinking
+193 1890 has taken a fork
+202 1890 is eating
+202 1328 has taken a fork
+195 1792 has taken a fork
+202 1792 is eating
+197 1614 has taken a fork
+202 1614 is eating
+197 1612 has taken a fork
+202 1612 is eating
+197 1610 has taken a fork
+202 1610 is eating
+197 1608 has taken a fork
+202 1608 is eating
+197 1606 has taken a fork
+202 1606 is eating
+197 1604 has taken a fork
+202 1604 is eating
+197 1603 is thinking
+197 1602 has taken a fork
+202 1602 is eating
+197 1600 has taken a fork
+202 1600 is eating
+197 1598 has taken a fork
+202 1598 is eating
+195 1782 has taken a fork
+202 1782 is eating
+195 1781 is thinking
+197 1596 is eating
+197 1594 has taken a fork
+202 1594 is eating
+197 1593 is thinking
+192 1940 has taken a fork
+202 1940 is eating
+197 1591 is thinking
+195 1777 is thinking
+195 1776 has taken a fork
+202 1776 is eating
+197 1587 is thinking
+197 1588 has taken a fork
+202 1588 is eating
+197 1585 is thinking
+195 1775 is thinking
+195 1774 has taken a fork
+202 1774 is eating
+197 1582 has taken a fork
+202 1304 has taken a fork
+202 1304 is eating
+197 1579 is thinking
+197 1578 has taken a fork
+202 1578 is eating
+197 1576 has taken a fork
+202 1576 is eating
+197 1575 is thinking
+195 1767 is thinking
+197 1572 has taken a fork
+203 1572 is eating
+197 1571 is thinking
+197 1569 is thinking
+203 1295 is thinking
+197 1567 is thinking
+197 1566 has taken a fork
+203 1292 has taken a fork
+203 1292 is eating
+197 1564 has taken a fork
+203 1564 is eating
+197 1563 is thinking
+198 1561 is thinking
+198 1560 has taken a fork
+203 1560 is eating
+198 1559 is thinking
+193 1869 is thinking
+198 1558 has taken a fork
+203 1558 is eating
+198 1557 is thinking
+198 1555 is thinking
+198 1554 has taken a fork
+203 1554 is eating
+198 1553 is thinking
+198 1552 has taken a fork
+203 1552 is eating
+198 1551 is thinking
+195 1756 has taken a fork
+203 1279 is thinking
+198 1547 is thinking
+203 1277 is thinking
+198 1545 is thinking
+198 1754 is eating
+195 1753 is thinking
+193 1863 is thinking
+195 1752 has taken a fork
+203 1752 is eating
+198 1542 has taken a fork
+203 1542 is eating
+198 1540 has taken a fork
+203 1270 has taken a fork
+198 1537 is thinking
+203 1268 has taken a fork
+203 1268 is eating
+195 1748 has taken a fork
+203 1266 has taken a fork
+203 1266 is eating
+193 1860 has taken a fork
+204 1860 is eating
+198 1532 is eating
+198 1530 has taken a fork
+204 1530 is eating
+198 1528 has taken a fork
+204 1528 is eating
+198 1526 has taken a fork
+204 1526 is eating
+198 1525 is thinking
+192 1966 has taken a fork
+204 1966 is eating
+198 1523 is thinking
+198 1521 is thinking
+204 1255 is thinking
+198 1519 is thinking
+204 1253 is thinking
+204 1252 has taken a fork
+204 1251 is thinking
+204 1250 has taken a fork
+204 1249 is thinking
+194 1854 has taken a fork
+204 1854 is eating
+198 1514 has taken a fork
+204 1514 is eating
+198 1513 is thinking
+195 1734 has taken a fork
+204 1734 is eating
+198 1511 is thinking
+198 1509 is thinking
+198 1508 has taken a fork
+204 1508 is eating
+198 1507 is thinking
+198 1506 has taken a fork
+204 1506 is eating
+198 1505 is thinking
+192 1964 has taken a fork
+204 1964 is eating
+198 1502 has taken a fork
+204 1502 is eating
+196 1725 is thinking
+198 1500 has taken a fork
+204 1500 is eating
+194 1846 has taken a fork
+204 1846 is eating
+198 1498 has taken a fork
+204 1498 is eating
+196 1721 is thinking
+198 1495 is thinking
+198 1494 has taken a fork
+205 1494 is eating
+198 1720 is eating
+196 1719 is thinking
+198 1491 is thinking
+198 1490 has taken a fork
+205 1490 is eating
+196 1716 has taken a fork
+205 1716 is eating
+199 1488 has taken a fork
+205 1224 has taken a fork
+205 1224 is eating
+199 1484 has taken a fork
+205 1222 has taken a fork
+205 1222 is eating
+199 1482 has taken a fork
+205 1482 is eating
+199 1481 is thinking
+199 1479 is thinking
+205 1218 has taken a fork
+199 1920 is eating
+199 1476 has taken a fork
+206 1476 is eating
+196 1710 has taken a fork
+206 1710 is eating
+206 1214 has taken a fork
+196 1707 is thinking
+199 1472 has taken a fork
+206 1214 is eating
+199 1470 has taken a fork
+206 1470 is eating
+194 1836 has taken a fork
+206 1836 is eating
+199 1467 is thinking
+199 1466 has taken a fork
+206 1466 is eating
+199 1465 is thinking
+199 1463 is thinking
+199 1462 has taken a fork
+206 1462 is eating
+196 1701 is thinking
+199 1459 is thinking
+206 1204 has taken a fork
+206 1204 is eating
+199 1456 has taken a fork
+206 1456 is eating
+199 1700 is eating
+192 1915 is thinking
+199 1453 is thinking
+199 1452 has taken a fork
+206 1452 is eating
+199 1451 is thinking
+199 1449 is thinking
+199 1832 is eating
+199 1447 is thinking
+206 1193 is thinking
+199 1448 is eating
+199 1446 has taken a fork
+206 1446 is eating
+199 1445 is thinking
+196 1693 is thinking
+206 1188 has taken a fork
+207 1188 is eating
+196 1691 is thinking
+199 1442 has taken a fork
+207 1442 is eating
+196 1689 is thinking
+207 1184 has taken a fork
+207 1184 is eating
+199 1439 is thinking
+199 1912 is eating
+196 1687 is thinking
+199 1437 is thinking
+196 1684 has taken a fork
+207 1684 is eating
+199 1436 has taken a fork
+207 1436 is eating
+199 1432 has taken a fork
+207 1432 is eating
+199 1431 is thinking
+199 1430 has taken a fork
+207 1430 is eating
+199 1429 is thinking
+199 1682 is eating
+199 1427 is thinking
+207 1171 is thinking
+196 1679 is thinking
+199 1426 has taken a fork
+207 1426 is eating
+194 1823 is thinking
+199 1424 has taken a fork
+207 1424 is eating
+199 1423 is thinking
+199 1421 is thinking
+199 1422 has taken a fork
+207 1422 is eating
+196 1674 has taken a fork
+207 1674 is eating
+199 1418 has taken a fork
+207 1418 is eating
+199 1417 is thinking
+199 1416 has taken a fork
+207 1416 is eating
+199 1414 has taken a fork
+207 1414 is eating
+196 1670 has taken a fork
+207 1157 is thinking
+200 1410 has taken a fork
+207 1410 is eating
+200 1409 is thinking
+207 1154 has taken a fork
+208 1154 is eating
+200 1407 is thinking
+200 1404 has taken a fork
+208 1404 is eating
+196 1666 has taken a fork
+208 1666 is eating
+196 1665 is thinking
+200 1402 is eating
+200 1399 is thinking
+208 1148 has taken a fork
+196 1663 is thinking
+208 1146 has taken a fork
+208 1146 is eating
+200 1397 is thinking
+200 1395 is thinking
+196 1661 is thinking
+196 1660 has taken a fork
+208 1660 is eating
+200 1392 has taken a fork
+208 1392 is eating
+196 1659 is thinking
+200 1390 has taken a fork
+208 1390 is eating
+200 1389 is thinking
+200 1658 is eating
+196 1816 is eating
+208 1135 is thinking
+200 1385 is thinking
+200 1384 has taken a fork
+208 1384 is eating
+200 1383 is thinking
+200 1382 has taken a fork
+208 1382 is eating
+200 1380 has taken a fork
+208 1380 is eating
+200 1379 is thinking
+200 1652 is eating
+208 1127 is thinking
+208 1126 has taken a fork
+208 1126 is eating
+200 1375 is thinking
+196 1648 has taken a fork
+208 1648 is eating
+201 1373 is thinking
+201 1372 has taken a fork
+208 1372 is eating
+197 1644 has taken a fork
+208 1121 is thinking
+197 1643 is thinking
+209 1118 has taken a fork
+209 1118 is eating
+197 1640 has taken a fork
+209 1116 has taken a fork
+209 1116 is eating
+201 1365 is thinking
+201 1363 is thinking
+201 1362 has taken a fork
+209 1362 is eating
+201 1361 is thinking
+201 1360 has taken a fork
+209 1360 is eating
+197 1642 is eating
+209 1109 is thinking
+195 1803 is thinking
+201 1356 has taken a fork
+209 1356 is eating
+195 1802 has taken a fork
+209 1802 is eating
+201 1352 has taken a fork
+209 1352 is eating
+201 1351 is thinking
+201 1349 is thinking
+201 1348 has taken a fork
+209 1348 is eating
+201 1347 is thinking
+197 1629 is thinking
+201 1346 has taken a fork
+209 1346 is eating
+197 1627 is thinking
+201 1345 is thinking
+201 1344 has taken a fork
+209 1344 is eating
+197 1624 has taken a fork
+209 1624 is eating
+197 1623 is thinking
+209 1093 is thinking
+201 1338 has taken a fork
+210 1338 is eating
+197 1621 is thinking
+201 1336 has taken a fork
+210 1336 is eating
+201 1334 has taken a fork
+210 1334 is eating
+201 1332 has taken a fork
+210 1332 is eating
+197 1618 has taken a fork
+210 1618 is eating
+202 1329 is thinking
+197 1616 has taken a fork
+210 1616 is eating
+202 1327 is thinking
+202 1328 is eating
+202 1326 has taken a fork
+211 1326 is eating
+197 1613 is thinking
+202 1325 is thinking
+195 1788 has taken a fork
+211 1788 is eating
+211 1078 has taken a fork
+193 1887 is thinking
+202 1322 has taken a fork
+211 1322 is eating
+197 1607 is thinking
+197 1605 is thinking
+202 1320 has taken a fork
+211 1320 is eating
+211 1071 is thinking
+197 1601 is thinking
+211 1069 is thinking
+197 1599 is thinking
+202 1317 is thinking
+197 1597 is thinking
+202 1316 has taken a fork
+211 1316 is eating
+202 1315 is thinking
+202 1314 has taken a fork
+211 1314 is eating
+197 1592 has taken a fork
+211 1592 is eating
+197 1590 has taken a fork
+211 1590 is eating
+202 1310 has taken a fork
+211 1310 is eating
+197 1586 has taken a fork
+211 1586 is eating
+197 1584 has taken a fork
+211 1584 is eating
+202 1306 has taken a fork
+211 1306 is eating
+202 1305 is thinking
+202 1582 is eating
+197 1580 has taken a fork
+212 1048 has taken a fork
+212 1048 is eating
+195 1770 has taken a fork
+212 1770 is eating
+212 1046 has taken a fork
+212 1046 is eating
+202 1300 has taken a fork
+212 1300 is eating
+212 1043 is thinking
+203 1297 is thinking
+212 1040 has taken a fork
+212 1040 is eating
+203 1296 has taken a fork
+212 1296 is eating
+203 1294 has taken a fork
+212 1294 is eating
+197 1565 is thinking
+203 1291 is thinking
+193 1872 has taken a fork
+212 1872 is eating
+212 1031 is thinking
+203 1289 is thinking
+203 1288 has taken a fork
+212 1288 is eating
+195 1761 is thinking
+203 1286 has taken a fork
+212 1286 is eating
+198 1556 has taken a fork
+212 1556 is eating
+203 1284 has taken a fork
+213 1284 is eating
+195 1757 is thinking
+203 1281 is thinking
+198 1550 has taken a fork
+213 1550 is eating
+213 1018 has taken a fork
+213 1017 is thinking
+203 1278 has taken a fork
+213 1278 is eating
+198 1546 has taken a fork
+213 1546 is eating
+203 1275 is thinking
+213 1012 has taken a fork
+213 1011 is thinking
+213 1010 has taken a fork
+213 1009 is thinking
+213 1008 has taken a fork
+213 1007 is thinking
+195 1750 has taken a fork
+213 1750 is eating
+213 1005 is thinking
+198 1536 has taken a fork
+213 1536 is eating
+203 1267 is thinking
+203 1748 is eating
+198 1534 has taken a fork
+213 1534 is eating
+203 1265 is thinking
+204 1264 has taken a fork
+213 1264 is eating
+193 1859 is thinking
+204 1262 has taken a fork
+213 1262 is eating
+198 1529 is thinking
+198 1527 is thinking
+204 1260 has taken a fork
+214 1260 is eating
+198 1524 has taken a fork
+214 1524 is eating
+204 1258 has taken a fork
+214 1258 is eating
+198 1522 has taken a fork
+214 1522 is eating
+195 1741 is thinking
+198 1520 has taken a fork
+214 1520 is eating
+195 1740 has taken a fork
+214 1740 is eating
+198 1518 has taken a fork
+214 1518 is eating
+195 1738 has taken a fork
+214 1738 is eating
+204 1248 has taken a fork
+214 1248 is eating
+204 1247 is thinking
+214 978 has taken a fork
+214 978 is eating
+204 1245 is thinking
+214 975 is thinking
+204 1243 is thinking
+214 972 has taken a fork
+214 972 is eating
+204 1241 is thinking
+204 1240 has taken a fork
+198 1504 has taken a fork
+215 1504 is eating
+215 967 is thinking
+198 1503 is thinking
+215 965 is thinking
+215 964 has taken a fork
+215 964 is eating
+215 963 is thinking
+198 1499 is thinking
+204 1234 has taken a fork
+215 1234 is eating
+196 1722 has taken a fork
+215 958 has taken a fork
+204 1232 has taken a fork
+215 1232 is eating
+205 1230 has taken a fork
+215 1230 is eating
+205 1229 is thinking
+205 1228 has taken a fork
+216 1228 is eating
+205 1227 is thinking
+198 1489 is thinking
+205 1225 is thinking
+192 1921 is thinking
+205 1488 is eating
+196 1714 has taken a fork
+216 945 is thinking
+199 1485 is thinking
+205 1484 is eating
+196 1712 has taken a fork
+216 1712 is eating
+205 1221 is thinking
+205 1220 has taken a fork
+216 1220 is eating
+199 1480 has taken a fork
+216 1480 is eating
+216 937 is thinking
+205 1218 is eating
+206 1216 has taken a fork
+216 1216 is eating
+216 933 is thinking
+199 1474 has taken a fork
+216 931 is thinking
+216 930 has taken a fork
+216 930 is eating
+206 1472 is eating
+199 1471 is thinking
+199 1469 is thinking
+206 1211 is thinking
+199 1468 has taken a fork
+216 1468 is eating
+206 1210 has taken a fork
+216 1210 is eating
+216 922 has taken a fork
+216 922 is eating
+206 1207 is thinking
+216 919 is thinking
+199 1460 has taken a fork
+217 917 is thinking
+217 916 has taken a fork
+217 916 is eating
+199 1457 is thinking
+206 1201 is thinking
+199 1454 has taken a fork
+217 1454 is eating
+206 1200 has taken a fork
+217 1200 is eating
+206 1198 has taken a fork
+217 909 is thinking
+206 1196 has taken a fork
+217 1196 is eating
+206 1194 has taken a fork
+217 1194 is eating
+196 1697 is thinking
+206 1191 is thinking
+206 1190 has taken a fork
+217 1190 is eating
+196 1695 is thinking
+217 898 has taken a fork
+217 898 is eating
+207 1187 is thinking
+207 1186 has taken a fork
+217 1186 is eating
+207 1185 is thinking
+196 1686 has taken a fork
+217 1686 is eating
+199 1440 has taken a fork
+217 1440 is eating
+217 888 has taken a fork
+207 1180 has taken a fork
+217 1180 is eating
+207 1179 is thinking
+207 1177 is thinking
+199 1435 is thinking
+218 881 is thinking
+218 880 has taken a fork
+218 879 is thinking
+218 878 has taken a fork
+218 878 is eating
+207 1174 has taken a fork
+218 875 is thinking
+207 1172 has taken a fork
+218 871 is thinking
+218 870 has taken a fork
+218 870 is eating
+207 1169 is thinking
+199 1425 is thinking
+207 1167 is thinking
+207 1166 has taken a fork
+218 1166 is eating
+196 1675 is thinking
+207 1164 has taken a fork
+218 1164 is eating
+207 1163 is thinking
+207 1162 has taken a fork
+218 1162 is eating
+199 1420 is eating
+196 1673 is thinking
+207 1160 has taken a fork
+218 855 is thinking
+199 1415 is thinking
+207 1158 has taken a fork
+218 1158 is eating
+199 1413 is thinking
+218 850 has taken a fork
+218 850 is eating
+207 1156 has taken a fork
+219 1156 is eating
+200 1408 has taken a fork
+219 1408 is eating
+200 1406 has taken a fork
+219 844 has taken a fork
+219 844 is eating
+208 1151 is thinking
+200 1401 is thinking
+219 839 is thinking
+208 1149 is thinking
+196 1820 is eating
+208 1147 is thinking
+220 834 has taken a fork
+220 832 has taken a fork
+220 830 has taken a fork
+220 830 is eating
+220 826 has taken a fork
+220 823 is thinking
+220 820 has taken a fork
+220 820 is eating
+208 1141 is thinking
+208 1140 has taken a fork
+220 1140 is eating
+200 1391 is thinking
+220 802 has taken a fork
+220 802 is eating
+220 799 is thinking
+220 796 has taken a fork
+220 796 is eating
+220 793 is thinking
+208 1133 is thinking
+208 1132 has taken a fork
+220 775 is thinking
+208 1131 is thinking
+220 765 is thinking
+220 763 is thinking
+220 760 has taken a fork
+220 758 has taken a fork
+220 758 is eating
+208 1128 has taken a fork
+196 1651 is thinking
+220 744 has taken a fork
+220 742 has taken a fork
+220 740 has taken a fork
+220 740 is eating
+220 737 is thinking
+221 734 has taken a fork
+221 734 is eating
+201 1371 is thinking
+201 1369 is thinking
+221 721 is thinking
+221 718 has taken a fork
+221 715 is thinking
+221 712 has taken a fork
+221 712 is eating
+209 1640 is eating
+201 1366 has taken a fork
+221 1366 is eating
+209 1115 is thinking
+221 703 is thinking
+209 1113 is thinking
+201 1638 is eating
+221 698 has taken a fork
+221 695 is thinking
+209 1110 has taken a fork
+221 689 is thinking
+201 1357 is thinking
+221 684 has taken a fork
+221 684 is eating
+209 1106 has taken a fork
+221 1106 is eating
+209 1105 is thinking
+201 1354 has taken a fork
+221 1354 is eating
+209 1104 has taken a fork
+221 661 is thinking
+209 1102 has taken a fork
+221 1102 is eating
+195 1800 has taken a fork
+221 649 is thinking
+209 1099 is thinking
+221 643 is thinking
+197 1626 has taken a fork
+221 640 has taken a fork
+209 1096 has taken a fork
+222 1096 is eating
+222 633 is thinking
+209 1094 has taken a fork
+222 1094 is eating
+222 623 is thinking
+209 1092 has taken a fork
+222 614 has taken a fork
+222 614 is eating
+210 1091 is thinking
+222 608 has taken a fork
+222 608 is eating
+222 605 is thinking
+210 1088 has taken a fork
+222 1088 is eating
+210 1087 is thinking
+222 595 is thinking
+201 1330 has taken a fork
+222 1330 is eating
+222 586 has taken a fork
+222 586 is eating
+222 583 is thinking
+222 580 has taken a fork
+222 580 is eating
+222 578 has taken a fork
+222 578 is eating
+211 1081 is thinking
+222 573 is thinking
+202 1323 is thinking
+222 563 is thinking
+222 561 is thinking
+211 1076 has taken a fork
+222 1076 is eating
+222 556 has taken a fork
+222 553 is thinking
+211 1073 is thinking
+222 551 is thinking
+222 549 is thinking
+202 1319 is thinking
+211 1070 has taken a fork
+223 1070 is eating
+223 540 has taken a fork
+223 537 is thinking
+211 1067 is thinking
+223 533 is thinking
+223 532 has taken a fork
+211 1064 has taken a fork
+223 525 is thinking
+197 1595 is thinking
+211 1061 is thinking
+223 515 is thinking
+223 513 is thinking
+223 510 has taken a fork
+202 1313 is thinking
+202 1312 has taken a fork
+223 1312 is eating
+223 499 is thinking
+223 497 is thinking
+202 1309 is thinking
+211 1055 is thinking
+202 1308 has taken a fork
+223 484 has taken a fork
+223 484 is eating
+211 1053 is thinking
+223 478 has taken a fork
+223 478 is eating
+223 475 is thinking
+223 473 is thinking
+212 1049 is thinking
+223 468 has taken a fork
+223 468 is eating
+202 1303 is thinking
+202 1302 has taken a fork
+223 1302 is eating
+202 1301 is thinking
+224 457 is thinking
+197 1574 has taken a fork
+224 1574 is eating
+224 451 is thinking
+202 1298 has taken a fork
+224 1298 is eating
+212 1041 is thinking
+224 441 is thinking
+224 438 has taken a fork
+224 435 is thinking
+212 1038 has taken a fork
+224 1038 is eating
+203 1293 is thinking
+212 1036 has taken a fork
+224 1036 is eating
+203 1566 is eating
+224 418 has taken a fork
+224 415 is thinking
+212 1032 has taken a fork
+224 1032 is eating
+203 1290 has taken a fork
+212 1030 has taken a fork
+224 400 has taken a fork
+224 397 is thinking
+212 1027 is thinking
+203 1287 is thinking
+212 1026 has taken a fork
+224 1026 is eating
+224 377 is thinking
+203 1285 is thinking
+224 368 has taken a fork
+212 1023 is thinking
+224 361 is thinking
+203 1282 has taken a fork
+225 1282 is eating
+213 1021 is thinking
+225 345 is thinking
+225 343 is thinking
+225 341 is thinking
+225 339 is thinking
+225 336 has taken a fork
+225 336 is eating
+213 1015 is thinking
+203 1276 has taken a fork
+225 1276 is eating
+225 326 has taken a fork
+225 324 has taken a fork
+225 323 is thinking
+213 1012 is eating
+203 1272 has taken a fork
+225 1272 is eating
+225 315 is thinking
+203 1271 is thinking
+198 1539 is thinking
+225 305 is thinking
+225 302 has taken a fork
+203 1540 is eating
+225 298 has taken a fork
+225 298 is eating
+213 1004 has taken a fork
+225 1004 is eating
+225 293 is thinking
+225 290 has taken a fork
+225 290 is eating
+213 1000 has taken a fork
+225 1000 is eating
+213 999 is thinking
+225 284 has taken a fork
+225 284 is eating
+213 997 is thinking
+204 1263 is thinking
+225 275 is thinking
+226 272 has taken a fork
+226 272 is eating
+204 1261 is thinking
+226 263 is thinking
+213 991 is thinking
+213 990 has taken a fork
+226 990 is eating
+226 254 has taken a fork
+214 988 has taken a fork
+226 988 is eating
+204 1257 is thinking
+226 244 has taken a fork
+214 986 has taken a fork
+226 986 is eating
+214 985 is thinking
+214 984 has taken a fork
+226 226 has taken a fork
+226 223 is thinking
+198 1517 is thinking
+226 216 has taken a fork
+226 216 is eating
+204 1250 is eating
+226 210 has taken a fork
+226 210 is eating
+214 980 has taken a fork
+226 207 is thinking
+226 204 has taken a fork
+226 204 is eating
+204 1246 has taken a fork
+214 976 has taken a fork
+226 197 is thinking
+214 974 has taken a fork
+226 974 is eating
+226 187 is thinking
+214 971 is thinking
+227 177 is thinking
+215 970 has taken a fork
+227 970 is eating
+215 968 has taken a fork
+227 968 is eating
+215 1240 is eating
+204 1238 has taken a fork
+227 1238 is eating
+204 1237 is thinking
+227 149 is thinking
+204 1235 is thinking
+227 139 is thinking
+227 137 is thinking
+227 135 is thinking
+227 136 has taken a fork
+204 1233 is thinking
+215 959 is thinking
+215 1722 is eating
+198 1496 has taken a fork
+227 1496 is eating
+215 958 is eating
+215 956 has taken a fork
+227 106 has taken a fork
+227 103 is thinking
+227 101 is thinking
+198 1492 has taken a fork
+227 1492 is eating
+215 953 is thinking
+216 951 is thinking
+227 85 is thinking
+216 950 has taken a fork
+227 79 is thinking
+227 76 has taken a fork
+227 76 is eating
+227 75 is thinking
+216 947 is thinking
+228 73 is thinking
+228 70 has taken a fork
+228 70 is eating
+216 1714 is eating
+216 943 is thinking
+228 64 has taken a fork
+216 940 has taken a fork
+228 57 is thinking
+216 938 has taken a fork
+228 938 is eating
+199 1478 has taken a fork
+228 1478 is eating
+216 936 has taken a fork
+228 936 is eating
+228 44 has taken a fork
+228 42 has taken a fork
+228 42 is eating
+199 1475 is thinking
+216 1474 is eating
+199 1473 is thinking
+228 35 is thinking
+228 33 is thinking
+228 31 is thinking
+228 30 has taken a fork
+228 30 is eating
+216 926 has taken a fork
+228 27 is thinking
+216 924 has taken a fork
+228 924 is eating
+216 923 is thinking
+206 1208 has taken a fork
+228 10 has taken a fork
+228 10 is eating
+216 921 is thinking
+216 920 has taken a fork
+228 920 is eating
+206 1205 is thinking
+217 1460 is eating
+199 1458 has taken a fork
+229 1458 is eating
+206 1203 is thinking
+206 1202 has taken a fork
+229 1202 is eating
+217 914 has taken a fork
+229 914 is eating
+206 1199 is thinking
+217 911 is thinking
+206 1197 is thinking
+217 910 has taken a fork
+229 910 is eating
+217 908 has taken a fork
+229 908 is eating
+217 907 is thinking
+217 906 has taken a fork
+229 906 is eating
+217 905 is thinking
+217 904 has taken a fork
+229 904 is eating
+217 903 is thinking
+217 902 has taken a fork
+229 902 is eating
+217 901 is thinking
+206 1189 is thinking
+217 899 is thinking
+199 1444 has taken a fork
+229 1444 is eating
+199 1443 is thinking
+217 896 has taken a fork
+229 896 is eating
+217 895 is thinking
+199 1441 is thinking
+217 893 is thinking
+217 892 has taken a fork
+229 892 is eating
+217 891 is thinking
+217 890 has taken a fork
+230 890 is eating
+207 1182 has taken a fork
+230 1182 is eating
+217 888 is eating
+217 887 is thinking
+217 886 has taken a fork
+230 886 is eating
+207 1178 has taken a fork
+230 1178 is eating
+218 883 is thinking
+218 882 has taken a fork
+230 882 is eating
+207 1176 has taken a fork
+230 1176 is eating
+207 1175 is thinking
+218 877 is thinking
+196 1681 is thinking
+218 876 has taken a fork
+230 876 is eating
+199 1433 is thinking
+218 873 is thinking
+218 874 has taken a fork
+207 1173 is thinking
+218 872 has taken a fork
+230 872 is eating
+196 1680 has taken a fork
+230 1680 is eating
+218 869 is thinking
+207 1168 has taken a fork
+230 1168 is eating
+218 868 has taken a fork
+230 868 is eating
+218 865 is thinking
+218 864 has taken a fork
+207 1165 is thinking
+218 863 is thinking
+218 862 has taken a fork
+231 862 is eating
+218 861 is thinking
+218 860 has taken a fork
+231 860 is eating
+207 1161 is thinking
+218 858 has taken a fork
+231 858 is eating
+218 856 has taken a fork
+231 856 is eating
+218 854 has taken a fork
+231 854 is eating
+218 853 is thinking
+218 852 has taken a fork
+231 852 is eating
+218 851 is thinking
+199 1411 is thinking
+218 849 is thinking
+218 848 has taken a fork
+231 848 is eating
+207 1155 is thinking
+196 1668 has taken a fork
+231 1668 is eating
+207 1153 is thinking
+219 845 is thinking
+219 1406 is eating
+219 843 is thinking
+208 1152 has taken a fork
+231 1152 is eating
+200 1403 is thinking
+219 841 is thinking
+219 840 has taken a fork
+232 840 is eating
+220 838 has taken a fork
+232 838 is eating
+220 837 is thinking
+220 835 is thinking
+220 833 is thinking
+220 831 is thinking
+208 1145 is thinking
+220 834 is eating
+220 824 has taken a fork
+232 824 is eating
+220 817 is thinking
+220 814 has taken a fork
+232 814 is eating
+220 813 is thinking
+220 812 has taken a fork
+220 811 is thinking
+220 821 is thinking
+220 810 has taken a fork
+232 810 is eating
+220 828 has taken a fork
+232 828 is eating
+220 807 is thinking
+220 806 has taken a fork
+232 806 is eating
+220 829 is thinking
+220 827 is thinking
+220 803 is thinking
+208 1148 is eating
+220 801 is thinking
+208 1137 is thinking
+208 1136 has taken a fork
+232 1136 is eating
+220 789 is thinking
+220 791 is thinking
+220 788 has taken a fork
+232 788 is eating
+220 786 has taken a fork
+220 785 is thinking
+220 784 has taken a fork
+233 784 is eating
+220 826 is eating
+220 782 has taken a fork
+233 782 is eating
+220 781 is thinking
+220 780 has taken a fork
+233 780 is eating
+220 779 is thinking
+220 778 has taken a fork
+220 777 is thinking
+220 776 has taken a fork
+233 776 is eating
+200 1398 has taken a fork
+233 1398 is eating
+220 771 is thinking
+220 770 has taken a fork
+233 770 is eating
+220 773 is thinking
+220 768 has taken a fork
+233 768 is eating
+220 767 is thinking
+220 766 has taken a fork
+233 766 is eating
+220 792 has taken a fork
+233 792 is eating
+220 774 has taken a fork
+233 774 is eating
+220 760 is eating
+220 754 has taken a fork
+220 751 is thinking
+220 750 has taken a fork
+233 750 is eating
+220 749 is thinking
+220 755 is thinking
+220 748 has taken a fork
+233 748 is eating
+220 747 is thinking
+220 798 has taken a fork
+233 798 is eating
+220 745 is thinking
+208 1125 is thinking
+220 741 is thinking
+220 738 has taken a fork
+233 738 is eating
+220 736 has taken a fork
+233 736 is eating
+221 727 is thinking
+221 726 has taken a fork
+233 726 is eating
+221 725 is thinking
+220 752 has taken a fork
+234 752 is eating
+221 723 is thinking
+221 722 has taken a fork
+234 722 is eating
+195 1811 is thinking
+221 719 is thinking
+209 1119 is thinking
+221 714 has taken a fork
+234 714 is eating
+221 717 is thinking
+221 709 is thinking
+221 708 has taken a fork
+221 716 has taken a fork
+234 716 is eating
+201 1368 has taken a fork
+235 1368 is eating
+221 706 has taken a fork
+221 704 has taken a fork
+235 704 is eating
+221 707 is thinking
+221 702 has taken a fork
+235 702 is eating
+221 700 has taken a fork
+235 700 is eating
+209 1120 has taken a fork
+235 1120 is eating
+221 699 is thinking
+221 697 is thinking
+209 1111 is thinking
+221 693 is thinking
+221 692 has taken a fork
+221 691 is thinking
+221 690 has taken a fork
+208 1129 is thinking
+221 1110 is eating
+221 686 has taken a fork
+235 686 is eating
+221 687 is thinking
+221 694 has taken a fork
+235 694 is eating
+209 1108 has taken a fork
+235 1108 is eating
+221 681 is thinking
+221 680 has taken a fork
+235 680 is eating
+221 678 has taken a fork
+235 678 is eating
+208 1124 has taken a fork
+236 1124 is eating
+221 675 is thinking
+221 674 has taken a fork
+236 674 is eating
+197 1633 is thinking
+221 672 has taken a fork
+236 672 is eating
+221 671 is thinking
+221 670 has taken a fork
+236 670 is eating
+221 668 has taken a fork
+236 668 is eating
+220 739 is thinking
+221 666 has taken a fork
+236 666 is eating
+197 1632 has taken a fork
+236 1632 is eating
+221 658 has taken a fork
+209 1103 is thinking
+221 657 is thinking
+221 656 has taken a fork
+221 655 is thinking
+221 654 has taken a fork
+236 654 is eating
+221 653 is thinking
+221 698 is eating
+221 651 is thinking
+221 650 has taken a fork
+236 650 is eating
+209 1107 is thinking
+221 646 has taken a fork
+236 646 is eating
+221 644 has taken a fork
+236 644 is eating
+201 1359 is thinking
+221 641 is thinking
+221 642 has taken a fork
+236 642 is eating
+209 1097 is thinking
+221 640 is eating
+221 639 is thinking
+201 1364 has taken a fork
+236 1364 is eating
+221 637 is thinking
+221 636 has taken a fork
+236 636 is eating
+222 634 has taken a fork
+236 634 is eating
+209 1117 is thinking
+222 629 is thinking
+222 632 has taken a fork
+236 632 is eating
+222 628 has taken a fork
+237 628 is eating
+222 626 has taken a fork
+237 626 is eating
+222 624 has taken a fork
+237 624 is eating
+201 1340 has taken a fork
+237 1340 is eating
+222 619 is thinking
+222 618 has taken a fork
+237 618 is eating
+222 617 is thinking
+222 615 is thinking
+221 660 has taken a fork
+237 660 is eating
+222 612 has taken a fork
+237 612 is eating
+210 1090 has taken a fork
+237 1090 is eating
+222 607 is thinking
+201 1335 is thinking
+222 602 has taken a fork
+237 602 is eating
+222 603 is thinking
+222 601 is thinking
+201 1342 has taken a fork
+237 1342 is eating
+222 600 has taken a fork
+237 600 is eating
+222 599 is thinking
+222 597 is thinking
+222 596 has taken a fork
+237 596 is eating
+200 1378 has taken a fork
+237 1378 is eating
+222 592 has taken a fork
+237 592 is eating
+210 1086 has taken a fork
+237 1086 is eating
+222 589 is thinking
+222 587 is thinking
+201 1374 has taken a fork
+237 1374 is eating
+210 1085 is thinking
+222 585 is thinking
+220 744 is eating
+222 581 is thinking
+211 1079 is thinking
+222 577 is thinking
+222 576 has taken a fork
+237 576 is eating
+211 1080 has taken a fork
+238 1080 is eating
+222 574 has taken a fork
+238 574 is eating
+210 1083 is thinking
+222 570 has taken a fork
+238 570 is eating
+222 569 is thinking
+222 571 is thinking
+222 567 is thinking
+222 566 has taken a fork
+238 566 is eating
+222 565 is thinking
+222 564 has taken a fork
+238 564 is eating
+210 1082 has taken a fork
+238 1082 is eating
+211 1078 is eating
+222 558 has taken a fork
+238 558 is eating
+220 757 is thinking
+222 557 is thinking
+202 1321 is thinking
+222 556 is eating
+222 552 has taken a fork
+238 552 is eating
+222 560 has taken a fork
+238 560 is eating
+222 547 is thinking
+222 546 has taken a fork
+238 546 is eating
+222 562 has taken a fork
+238 562 is eating
+222 543 is thinking
+223 542 has taken a fork
+238 542 is eating
+223 541 is thinking
+223 538 has taken a fork
+238 538 is eating
+223 536 has taken a fork
+238 536 is eating
+223 540 is eating
+223 532 is eating
+223 531 is thinking
+223 530 has taken a fork
+238 530 is eating
+211 1068 has taken a fork
+238 1068 is eating
+223 528 has taken a fork
+238 528 is eating
+222 550 has taken a fork
+238 550 is eating
+223 522 has taken a fork
+239 522 is eating
+223 520 has taken a fork
+239 520 is eating
+222 579 is thinking
+223 518 has taken a fork
+239 518 is eating
+223 517 is thinking
+222 554 has taken a fork
+239 554 is eating
+222 555 is thinking
+223 511 is thinking
+223 507 is thinking
+223 505 is thinking
+211 1058 has taken a fork
+239 1058 is eating
+223 523 is thinking
+223 504 has taken a fork
+239 504 is eating
+223 503 is thinking
+223 501 is thinking
+223 534 has taken a fork
+239 534 is eating
+223 494 has taken a fork
+239 494 is eating
+223 492 has taken a fork
+239 492 is eating
+223 490 has taken a fork
+223 489 is thinking
+223 488 has taken a fork
+239 488 is eating
+223 487 is thinking
+223 485 is thinking
+223 510 is eating
+223 1308 is eating
+222 548 has taken a fork
+239 548 is eating
+223 479 is thinking
+202 1307 is thinking
+223 477 is thinking
+223 474 has taken a fork
+239 474 is eating
+223 471 is thinking
+223 470 has taken a fork
+239 470 is eating
+223 469 is thinking
+212 1580 is eating
+223 464 has taken a fork
+239 464 is eating
+223 495 is thinking
+211 1051 is thinking
+223 462 has taken a fork
+240 462 is eating
+223 459 is thinking
+223 476 has taken a fork
+240 476 is eating
+223 465 is thinking
+224 455 is thinking
+224 454 has taken a fork
+240 454 is eating
+224 453 is thinking
+212 1044 has taken a fork
+240 1044 is eating
+197 1581 is thinking
+224 449 is thinking
+224 448 has taken a fork
+240 448 is eating
+224 447 is thinking
+224 445 is thinking
+223 460 has taken a fork
+240 460 is eating
+224 443 is thinking
+212 1050 has taken a fork
+240 1050 is eating
+197 1570 has taken a fork
+240 1570 is eating
+224 438 is eating
+224 434 has taken a fork
+224 432 has taken a fork
+240 432 is eating
+224 431 is thinking
+224 430 has taken a fork
+240 430 is eating
+224 428 has taken a fork
+240 428 is eating
+222 572 has taken a fork
+240 572 is eating
+224 425 is thinking
+223 524 has taken a fork
+240 524 is eating
+224 424 has taken a fork
+241 424 is eating
+224 422 has taken a fork
+241 422 is eating
+196 1650 has taken a fork
+224 420 has taken a fork
+241 420 is eating
+212 1034 has taken a fork
+241 1034 is eating
+212 1037 is thinking
+197 1562 has taken a fork
+241 1562 is eating
+224 409 is thinking
+224 411 is thinking
+224 407 is thinking
+224 1290 is eating
+212 1042 has taken a fork
+241 1042 is eating
+224 406 has taken a fork
+224 404 has taken a fork
+241 404 is eating
+224 450 has taken a fork
+241 450 is eating
+197 1577 is thinking
+224 401 is thinking
+211 1065 is thinking
+224 1030 is eating
+202 1311 is thinking
+224 395 is thinking
+224 394 has taken a fork
+242 394 is eating
+224 393 is thinking
+224 392 has taken a fork
+224 391 is thinking
+224 390 has taken a fork
+211 1059 is thinking
+224 389 is thinking
+224 388 has taken a fork
+242 388 is eating
+224 410 has taken a fork
+242 410 is eating
+224 385 is thinking
+223 466 has taken a fork
+242 466 is eating
+224 384 has taken a fork
+242 384 is eating
+224 382 has taken a fork
+224 381 is thinking
+211 1052 has taken a fork
+242 1052 is eating
+224 379 is thinking
+224 378 has taken a fork
+242 378 is eating
+224 398 has taken a fork
+242 398 is eating
+224 374 has taken a fork
+242 374 is eating
+224 376 has taken a fork
+242 376 is eating
+224 370 has taken a fork
+242 370 is eating
+211 1057 is thinking
+224 368 is eating
+212 1024 has taken a fork
+242 1024 is eating
+224 365 is thinking
+224 363 is thinking
+224 362 has taken a fork
+242 362 is eating
+224 366 has taken a fork
+242 366 is eating
+224 357 is thinking
+224 356 has taken a fork
+243 356 is eating
+224 359 is thinking
+224 444 has taken a fork
+243 444 is eating
+225 354 has taken a fork
+243 354 is eating
+225 352 has taken a fork
+243 352 is eating
+225 349 is thinking
+225 348 has taken a fork
+243 348 is eating
+225 347 is thinking
+225 346 has taken a fork
+243 346 is eating
+225 340 has taken a fork
+243 340 is eating
+198 1548 has taken a fork
+243 1548 is eating
+225 333 is thinking
+221 1626 is eating
+213 1016 has taken a fork
+243 1016 is eating
+225 331 is thinking
+201 1333 is thinking
+225 330 has taken a fork
+243 330 is eating
+225 329 is thinking
+225 335 is thinking
+225 327 is thinking
+222 593 is thinking
+203 1274 has taken a fork
+243 1274 is eating
+222 594 has taken a fork
+243 594 is eating
+225 320 has taken a fork
+243 320 is eating
+225 317 is thinking
+225 316 has taken a fork
+243 316 is eating
+225 342 has taken a fork
+243 342 is eating
+225 312 has taken a fork
+243 312 is eating
+225 310 has taken a fork
+243 310 is eating
+225 309 is thinking
+225 308 has taken a fork
+243 308 is eating
+225 307 is thinking
+213 1013 is thinking
+225 324 is eating
+225 303 is thinking
+225 301 is thinking
+225 299 is thinking
+203 1280 has taken a fork
+244 1280 is eating
+225 295 is thinking
+212 1039 is thinking
+225 294 has taken a fork
+244 294 is eating
+213 1003 is thinking
+225 292 has taken a fork
+244 292 is eating
+213 1001 is thinking
+225 288 has taken a fork
+244 288 is eating
+213 1002 has taken a fork
+244 1002 is eating
+225 287 is thinking
+225 286 has taken a fork
+244 286 is eating
+225 285 is thinking
+221 733 is thinking
+213 998 has taken a fork
+244 998 is eating
+225 280 has taken a fork
+244 280 is eating
+225 278 has taken a fork
+244 278 is eating
+225 274 has taken a fork
+244 274 is eating
+220 816 has taken a fork
+244 816 is eating
+226 266 has taken a fork
+244 266 is eating
+213 993 is thinking
+226 268 has taken a fork
+244 268 is eating
+226 264 has taken a fork
+244 264 is eating
+220 761 is thinking
+226 260 has taken a fork
+226 259 is thinking
+194 1813 is thinking
+226 258 has taken a fork
+244 258 is eating
+226 256 has taken a fork
+244 256 is eating
+220 1132 is eating
+213 989 is thinking
+226 254 is eating
+226 251 is thinking
+226 250 has taken a fork
+245 250 is eating
+204 1259 is thinking
+226 247 is thinking
+226 246 has taken a fork
+245 246 is eating
+214 987 is thinking
+220 762 has taken a fork
+245 762 is eating
+226 248 has taken a fork
+245 248 is eating
+204 1256 has taken a fork
+245 1256 is eating
+226 240 has taken a fork
+245 240 is eating
+204 1254 has taken a fork
+245 1254 is eating
+226 237 is thinking
+226 236 has taken a fork
+245 236 is eating
+226 235 is thinking
+226 233 is thinking
+226 242 has taken a fork
+245 242 is eating
+226 232 has taken a fork
+245 232 is eating
+226 231 is thinking
+226 229 is thinking
+226 228 has taken a fork
+245 228 is eating
+226 227 is thinking
+226 984 is eating
+226 220 has taken a fork
+245 220 is eating
+214 983 is thinking
+226 218 has taken a fork
+245 218 is eating
+226 217 is thinking
+226 215 is thinking
+226 211 is thinking
+226 270 has taken a fork
+245 270 is eating
+198 1515 is thinking
+226 208 has taken a fork
+245 208 is eating
+213 994 has taken a fork
+245 994 is eating
+225 277 is thinking
+214 977 is thinking
+226 201 is thinking
+198 1510 has taken a fork
+246 1510 is eating
+226 1246 is eating
+226 200 has taken a fork
+246 200 is eating
+226 199 is thinking
+226 203 is thinking
+226 976 is eating
+226 194 has taken a fork
+246 194 is eating
+226 193 is thinking
+226 191 is thinking
+226 190 has taken a fork
+246 190 is eating
+226 189 is thinking
+225 273 is thinking
+214 973 is thinking
+226 184 has taken a fork
+246 184 is eating
+226 186 has taken a fork
+246 186 is eating
+226 182 has taken a fork
+246 182 is eating
+226 180 has taken a fork
+246 180 is eating
+227 178 has taken a fork
+246 178 is eating
+227 174 has taken a fork
+246 174 is eating
+227 172 has taken a fork
+246 172 is eating
+227 171 is thinking
+227 169 is thinking
+227 168 has taken a fork
+246 168 is eating
+227 167 is thinking
+227 176 has taken a fork
+246 176 is eating
+227 165 is thinking
+227 163 is thinking
+227 162 has taken a fork
+246 162 is eating
+192 1992 is eating
+215 969 is thinking
+204 1239 is thinking
+227 157 is thinking
+227 156 has taken a fork
+247 156 is eating
+227 155 is thinking
+227 153 is thinking
+227 152 has taken a fork
+247 152 is eating
+226 221 is thinking
+227 150 has taken a fork
+247 150 is eating
+204 1244 has taken a fork
+247 1244 is eating
+227 145 is thinking
+198 1501 is thinking
+227 143 is thinking
+227 142 has taken a fork
+247 142 is eating
+227 141 is thinking
+226 196 has taken a fork
+247 196 is eating
+204 1236 has taken a fork
+247 1236 is eating
+227 136 is eating
+227 134 has taken a fork
+247 134 is eating
+227 133 is thinking
+227 132 has taken a fork
+247 132 is eating
+213 995 is thinking
+227 130 has taken a fork
+247 130 is eating
+226 243 is thinking
+227 128 has taken a fork
+247 128 is eating
+227 127 is thinking
+227 125 is thinking
+227 124 has taken a fork
+247 124 is eating
+227 123 is thinking
+227 122 has taken a fork
+247 122 is eating
+227 121 is thinking
+227 119 is thinking
+227 118 has taken a fork
+247 118 is eating
+227 117 is thinking
+227 115 is thinking
+227 114 has taken a fork
+247 114 is eating
+227 113 is thinking
+226 185 is thinking
+227 111 is thinking
+227 110 has taken a fork
+247 110 is eating
+227 109 is thinking
+214 982 has taken a fork
+248 982 is eating
+227 107 is thinking
+220 819 is thinking
+227 104 has taken a fork
+248 104 is eating
+227 98 has taken a fork
+248 98 is eating
+227 99 is thinking
+227 95 is thinking
+227 94 has taken a fork
+248 94 is eating
+227 92 has taken a fork
+248 92 is eating
+227 89 is thinking
+227 88 has taken a fork
+248 88 is eating
+215 966 has taken a fork
+248 966 is eating
+227 86 has taken a fork
+248 86 is eating
+227 105 is thinking
+227 82 has taken a fork
+248 82 is eating
+227 81 is thinking
+227 80 has taken a fork
+248 80 is eating
+215 955 is thinking
+216 948 has taken a fork
+248 948 is eating
+227 84 has taken a fork
+248 84 is eating
+216 946 has taken a fork
+248 946 is eating
+228 71 is thinking
+216 952 has taken a fork
+248 952 is eating
+228 65 is thinking
+228 64 is eating
+228 62 has taken a fork
+248 62 is eating
+228 63 is thinking
+228 60 has taken a fork
+248 60 is eating
+228 58 has taken a fork
+248 58 is eating
+228 66 has taken a fork
+248 66 is eating
+228 53 is thinking
+227 160 has taken a fork
+248 160 is eating
+216 942 has taken a fork
+248 942 is eating
+228 54 has taken a fork
+249 54 is eating
+228 51 is thinking
+216 941 is thinking
+228 49 is thinking
+226 195 is thinking
+228 48 has taken a fork
+249 48 is eating
+228 47 is thinking
+228 45 is thinking
+216 935 is thinking
+216 934 has taken a fork
+249 934 is eating
+228 38 has taken a fork
+249 38 is eating
+216 932 has taken a fork
+249 932 is eating
+205 1219 is thinking
+228 36 has taken a fork
+249 36 is eating
+206 1212 has taken a fork
+249 1212 is eating
+228 29 is thinking
+228 28 has taken a fork
+249 28 is eating
+228 24 has taken a fork
+249 24 is eating
+228 26 has taken a fork
+249 26 is eating
+228 41 is thinking
+228 21 is thinking
+228 20 has taken a fork
+249 20 is eating
+206 1209 is thinking
+228 18 has taken a fork
+249 18 is eating
+228 17 is thinking
+228 15 is thinking
+228 14 has taken a fork
+249 14 is eating
+228 13 is thinking
+228 11 is thinking
+227 147 is thinking
+228 1208 is eating
+228 7 is thinking
+228 6 has taken a fork
+250 6 is eating
+228 5 is thinking
+216 949 is thinking
+205 1223 is thinking
+228 2 has taken a fork
+250 2 is eating
+228 2037 is thinking
+228 8 has taken a fork
+250 8 is eating
+217 915 is thinking
+227 956 is eating
+217 913 is thinking
+228 9 is thinking
+217 912 has taken a fork
+250 912 is eating
+217 918 has taken a fork
+250 918 is eating
+206 1213 is thinking
+216 929 is thinking
+217 1198 is eating
+228 34 has taken a fork
+250 34 is eating
+199 1450 has taken a fork
+250 1450 is eating
+228 32 has taken a fork
+250 32 is eating
+206 1195 is thinking
+228 43 is thinking
+228 56 has taken a fork
+250 56 is eating
+228 72 has taken a fork
+250 72 is eating
+220 804 has taken a fork
+250 804 is eating
+198 1512 has taken a fork
+250 1512 is eating
+226 214 has taken a fork
+250 214 is eating
+226 205 is thinking
+214 981 is thinking
+206 1192 has taken a fork
+250 1192 is eating
+217 894 has taken a fork
+251 894 is eating
+228 74 has taken a fork
+251 74 is eating
+207 1183 is thinking
+217 889 is thinking
+207 1181 is thinking
+227 100 has taken a fork
+251 100 is eating
+215 954 has taken a fork
+251 954 is eating
+228 40 has taken a fork
+251 40 is eating
+217 884 has taken a fork
+251 884 is eating
+192 1911 is thinking
+204 1231 is thinking
+218 880 is eating
+226 226 is eating
+227 106 is eating
+218 1174 is eating
+226 245 is thinking
+226 224 has taken a fork
+251 224 is eating
+226 225 is thinking
+226 222 has taken a fork
+251 222 is eating
+216 927 is thinking
+207 1170 has taken a fork
+251 1170 is eating
+208 1139 is thinking
+200 1388 has taken a fork
+251 1388 is eating
+208 1138 has taken a fork
+251 1138 is eating
+218 866 has taken a fork
+251 866 is eating
+231 864 is eating
+225 281 is thinking
+208 1142 has taken a fork
+251 1142 is eating
+225 326 is eating
+222 584 has taken a fork
+251 584 is eating
+212 1047 is thinking
+211 1054 has taken a fork
+252 1054 is eating
+218 857 is thinking
+213 1020 has taken a fork
+252 1020 is eating
+218 1160 is eating
+224 418 is eating
+212 1035 is thinking
+207 1159 is thinking
+212 1029 is thinking
+223 483 is thinking
+223 508 has taken a fork
+252 508 is eating
+223 514 has taken a fork
+252 514 is eating
+207 1670 is eating
+223 467 is thinking
+223 481 is thinking
+219 847 is thinking
+223 480 has taken a fork
+252 480 is eating
+224 440 has taken a fork
+252 440 is eating
+223 512 has taken a fork
+252 512 is eating
+199 1676 is eating
+224 417 is thinking
+220 795 is thinking
+213 1019 is thinking
+208 1122 has taken a fork
+252 1122 is eating
+222 613 is thinking
+221 718 is eating
+221 720 has taken a fork
+252 720 is eating
+222 1092 is eating
+219 842 has taken a fork
+252 842 is eating
+224 416 has taken a fork
+252 416 is eating
+226 267 is thinking
+224 439 is thinking
+212 1022 has taken a fork
+253 1022 is eating
+225 283 is thinking
+232 812 is eating
+225 313 is thinking
+209 1114 has taken a fork
+253 1114 is eating
+225 338 has taken a fork
+253 338 is eating
+220 809 is thinking
+225 337 is thinking
+220 753 is thinking
+203 1756 is eating
+220 805 is thinking
+225 334 has taken a fork
+253 334 is eating
+225 322 has taken a fork
+253 322 is eating
+200 1393 is thinking
+220 787 is thinking
+233 786 is eating
+220 756 has taken a fork
+253 756 is eating
+220 783 is thinking
+221 664 has taken a fork
+253 664 is eating
+220 825 is thinking
+221 663 is thinking
+221 1800 is eating
+208 1144 has taken a fork
+253 1144 is eating
+233 778 is eating
+208 1150 has taken a fork
+253 1150 is eating
+208 1143 is thinking
+220 769 is thinking
+221 648 has taken a fork
+253 648 is eating
+221 647 is thinking
+208 1134 has taken a fork
+253 1134 is eating
+221 659 is thinking
+209 1112 has taken a fork
+253 1112 is eating
+220 759 is thinking
+233 754 is eating
+220 1128 is eating
+222 631 is thinking
+208 1130 has taken a fork
+254 1130 is eating
+220 746 has taken a fork
+254 746 is eating
+221 713 is thinking
+221 728 has taken a fork
+254 728 is eating
+220 797 is thinking
+221 724 has taken a fork
+254 724 is eating
+224 375 is thinking
+222 582 has taken a fork
+254 582 is eating
+224 367 is thinking
+224 360 has taken a fork
+254 360 is eating
+221 731 is thinking
+234 708 is eating
+224 436 has taken a fork
+254 436 is eating
+221 710 has taken a fork
+254 710 is eating
+195 1804 has taken a fork
+254 1804 is eating
+213 1006 has taken a fork
+254 1006 is eating
+212 1028 has taken a fork
+254 1028 is eating
+223 539 is thinking
+225 297 is thinking
+221 711 is thinking
+225 321 is thinking
+225 302 is eating
+221 705 is thinking
+224 400 is eating
+208 1644 is eating
+221 701 is thinking
+203 1269 is thinking
+225 300 has taken a fork
+254 300 is eating
+225 304 has taken a fork
+254 304 is eating
+235 692 is eating
+235 690 is eating
+221 685 is thinking
+221 683 is thinking
+221 682 has taken a fork
+254 682 is eating
+221 676 has taken a fork
+255 676 is eating
+221 673 is thinking
+221 688 has taken a fork
+255 688 is eating
+221 669 is thinking
+221 662 has taken a fork
+255 662 is eating
+221 665 is thinking
+236 656 is eating
+221 652 has taken a fork
+255 652 is eating
+221 645 is thinking
+221 1104 is eating
+221 696 has taken a fork
+255 696 is eating
+221 638 has taken a fork
+255 638 is eating
+222 630 has taken a fork
+255 630 is eating
+222 625 is thinking
+222 620 has taken a fork
+255 620 is eating
+222 622 has taken a fork
+255 622 is eating
+201 1337 is thinking
+222 609 is thinking
+209 1095 is thinking
+201 1331 is thinking
+222 598 has taken a fork
+255 598 is eating
+222 611 is thinking
+222 590 has taken a fork
+255 590 is eating
+222 588 has taken a fork
+255 588 is eating
+208 1123 is thinking
+202 1324 has taken a fork
+255 1324 is eating
+222 568 has taken a fork
+255 568 is eating
+211 1077 is thinking
+220 743 is thinking
+211 1072 has taken a fork
+255 1072 is eating
+195 1784 has taken a fork
+255 1784 is eating
+202 1318 has taken a fork
+255 1318 is eating
+211 1066 has taken a fork
+255 1066 is eating
+223 527 is thinking
+223 526 has taken a fork
+256 526 is eating
+211 1062 has taken a fork
+256 1062 is eating
+223 519 is thinking
+211 1060 has taken a fork
+256 1060 is eating
+223 502 has taken a fork
+256 502 is eating
+223 493 is thinking
+223 491 is thinking
+239 490 is eating
+223 486 has taken a fork
+256 486 is eating
+223 472 has taken a fork
+256 472 is eating
+223 463 is thinking
+224 458 has taken a fork
+256 458 is eating
+212 1045 is thinking
+202 1299 is thinking
+224 446 has taken a fork
+256 446 is eating
+224 442 has taken a fork
+256 442 is eating
+224 437 is thinking
+210 1084 has taken a fork
+256 1084 is eating
+224 427 is thinking
+224 426 has taken a fork
+256 426 is eating
+224 423 is thinking
+224 419 is thinking
+241 1650 is eating
+224 414 has taken a fork
+256 414 is eating
+224 412 has taken a fork
+256 412 is eating
+241 406 is eating
+224 403 is thinking
+224 402 has taken a fork
+256 402 is eating
+224 396 has taken a fork
+256 396 is eating
+242 390 is eating
+224 386 has taken a fork
+256 386 is eating
+224 383 is thinking
+223 461 is thinking
+224 380 has taken a fork
+256 380 is eating
+212 1025 is thinking
+224 372 has taken a fork
+257 372 is eating
+224 371 is thinking
+224 364 has taken a fork
+257 364 is eating
+224 433 is thinking
+224 355 is thinking
+225 353 is thinking
+224 456 has taken a fork
+257 456 is eating
+225 351 is thinking
+224 413 is thinking
+213 1018 is eating
+225 332 has taken a fork
+257 332 is eating
+222 606 has taken a fork
+257 606 is eating
+203 1273 is thinking
+225 318 has taken a fork
+257 318 is eating
+198 1541 is thinking
+213 1010 is eating
+225 325 is thinking
+225 306 has taken a fork
+257 306 is eating
+225 296 has taken a fork
+257 296 is eating
+225 289 is thinking
+195 1747 is thinking
+221 730 has taken a fork
+257 730 is eating
+225 276 has taken a fork
+257 276 is eating
+226 271 is thinking
+226 269 is thinking
+226 265 is thinking
+220 815 is thinking
+226 261 is thinking
+244 260 is eating
+226 257 is thinking
+226 255 is thinking
+226 262 has taken a fork
+257 262 is eating
+226 252 has taken a fork
+257 252 is eating
+226 249 is thinking
+226 238 has taken a fork
+257 238 is eating
+226 234 has taken a fork
+257 234 is eating
+226 230 has taken a fork
+257 230 is eating
+226 253 is thinking
+220 794 has taken a fork
+258 794 is eating
+226 209 is thinking
+214 979 is thinking
+226 202 has taken a fork
+258 202 is eating
+226 198 has taken a fork
+258 198 is eating
+226 188 has taken a fork
+258 188 is eating
+226 181 is thinking
+204 1242 has taken a fork
+258 1242 is eating
+227 173 is thinking
+227 170 has taken a fork
+258 170 is eating
+227 164 has taken a fork
+258 164 is eating
+227 154 has taken a fork
+258 154 is eating
+227 146 has taken a fork
+258 146 is eating
+227 144 has taken a fork
+258 144 is eating
+227 158 has taken a fork
+258 158 is eating
+215 960 has taken a fork
+258 960 is eating
+227 129 is thinking
+215 961 is thinking
+227 120 has taken a fork
+258 120 is eating
+227 116 has taken a fork
+258 116 is eating
+227 108 has taken a fork
+258 108 is eating
+227 97 is thinking
+227 91 is thinking
+227 90 has taken a fork
+258 90 is eating
+227 93 is thinking
+227 83 is thinking
+227 102 has taken a fork
+258 102 is eating
+227 78 has taken a fork
+258 78 is eating
+215 962 has taken a fork
+258 962 is eating
+227 138 has taken a fork
+258 138 is eating
+227 148 has taken a fork
+258 148 is eating
+228 940 is eating
+228 52 has taken a fork
+258 52 is eating
+228 50 has taken a fork
+258 50 is eating
+228 39 is thinking
+228 69 is thinking
+228 55 is thinking
+216 939 is thinking
+228 23 is thinking
+228 25 is thinking
+228 22 has taken a fork
+259 22 is eating
+228 19 is thinking
+228 12 has taken a fork
+259 12 is eating
+228 4 has taken a fork
+259 4 is eating
+199 1464 has taken a fork
+259 1464 is eating
+206 1215 is thinking
+199 1483 is thinking
+205 1217 is thinking
+216 944 has taken a fork
+259 944 is eating
+226 213 is thinking
+226 212 has taken a fork
+259 212 is eating
+217 897 is thinking
+227 950 is eating
+227 77 is thinking
+217 885 is thinking
+216 925 is thinking
+216 928 has taken a fork
+259 928 is eating
+230 874 is eating
+218 1172 is eating
+225 279 is thinking
+204 1252 is eating
+220 800 has taken a fork
+260 800 is eating
+213 996 has taken a fork
+218 859 is thinking
+225 344 has taken a fork
+260 344 is eating
+223 509 is thinking
+211 1075 is thinking
+223 1064 is eating
+219 846 has taken a fork
+260 846 is eating
+225 282 has taken a fork
+260 282 is eating
+218 867 is thinking
+200 1396 has taken a fork
+260 1396 is eating
+220 742 is eating
+220 808 has taken a fork
+260 808 is eating
+200 1386 has taken a fork
+260 1386 is eating
+209 1101 is thinking
+201 1339 is thinking
+220 772 has taken a fork
+260 772 is eating
+222 621 is thinking
+220 790 has taken a fork
+260 790 is eating
+221 729 is thinking
+221 735 is thinking
+220 764 has taken a fork
+260 764 is eating
+223 500 has taken a fork
+260 500 is eating
+223 496 has taken a fork
+260 496 is eating
+203 1270 is eating
+235 706 is eating
+221 732 has taken a fork
+261 732 is eating
+221 679 is thinking
+221 677 is thinking
+221 667 is thinking
+236 658 is eating
+209 1100 has taken a fork
+261 1100 is eating
+221 635 is thinking
+209 1098 has taken a fork
+261 1098 is eating
+222 616 has taken a fork
+261 616 is eating
+222 591 is thinking
+222 575 is thinking
+197 1611 is thinking
+222 559 is thinking
+222 545 is thinking
+222 544 has taken a fork
+261 544 is eating
+223 529 is thinking
+223 521 is thinking
+223 516 has taken a fork
+261 516 is eating
+223 506 has taken a fork
+261 506 is eating
+211 1063 is thinking
+224 452 has taken a fork
+261 452 is eating
+240 434 is eating
+224 429 is thinking
+224 421 is thinking
+224 408 has taken a fork
+261 408 is eating
+224 405 is thinking
+224 387 is thinking
+242 382 is eating
+224 373 is thinking
+224 369 is thinking
+224 358 has taken a fork
+261 358 is eating
+225 350 has taken a fork
+261 350 is eating
+225 319 is thinking
+225 314 has taken a fork
+261 314 is eating
+213 1014 has taken a fork
+262 1014 is eating
+226 244 is eating
+226 241 is thinking
+213 992 has taken a fork
+262 992 is eating
+226 239 is thinking
+226 980 is eating
+226 192 has taken a fork
+262 192 is eating
+226 183 is thinking
+227 175 is thinking
+227 166 has taken a fork
+262 166 is eating
+227 161 is thinking
+227 140 has taken a fork
+262 140 is eating
+227 159 is thinking
+227 126 has taken a fork
+262 126 is eating
+215 957 is thinking
+227 96 has taken a fork
+262 96 is eating
+227 87 is thinking
+228 68 has taken a fork
+262 68 is eating
+228 61 is thinking
+228 67 is thinking
+228 46 has taken a fork
+262 46 is eating
+228 16 has taken a fork
+262 16 is eating
+206 1206 has taken a fork
+262 1206 is eating
+217 900 has taken a fork
+262 900 is eating
+226 206 has taken a fork
+262 206 is eating
+260 996 is eating
+212 1033 is thinking
+210 1089 is thinking
+222 604 has taken a fork
+262 604 is eating
+220 822 has taken a fork
+262 822 is eating
+196 1654 has taken a fork
+262 1654 is eating
+211 1074 has taken a fork
+262 1074 is eating
+224 399 is thinking
+213 1008 is eating
+222 627 is thinking
+222 610 has taken a fork
+263 610 is eating
+223 535 is thinking
+223 498 has taken a fork
+263 498 is eating
+211 1056 has taken a fork
+263 1056 is eating
+225 328 has taken a fork
+263 328 is eating
+225 311 is thinking
+220 832 is eating
+226 219 is thinking
+227 179 is thinking
+227 151 is thinking
+227 131 is thinking
+227 112 has taken a fork
+263 112 is eating
+205 1226 has taken a fork
+263 1226 is eating
+228 3 is thinking
+228 44 is eating
+228 926 is eating
+225 291 is thinking
+220 836 has taken a fork
+263 836 is eating
+198 1535 is thinking
+203 1283 is thinking
+197 1615 is thinking
+223 482 has taken a fork
+263 482 is eating
+220 818 has taken a fork
+263 818 is eating
+228 37 is thinking
+195 1765 is thinking
+242 392 is eating
+228 59 is thinking
+393 2026 is sleeping
+393 1996 is sleeping
+393 2016 is sleeping
+393 1972 is sleeping
+393 2022 is sleeping
+393 1984 is sleeping
+393 1980 is sleeping
+394 2040 is sleeping
+394 2028 is sleeping
+394 2027 has taken a fork
+394 2027 is eating
+394 2038 is sleeping
+394 2039 has taken a fork
+395 2039 is eating
+395 1952 is sleeping
+395 2034 is sleeping
+395 1908 is sleeping
+395 1862 is sleeping
+395 1818 is sleeping
+395 2018 is sleeping
+395 1948 is sleeping
+395 2017 has taken a fork
+395 1946 is sleeping
+395 1947 has taken a fork
+395 1947 is eating
+395 1840 is sleeping
+395 2017 is eating
+395 2004 is sleeping
+395 1918 is sleeping
+395 1914 is sleeping
+395 1864 is sleeping
+395 1863 has taken a fork
+396 1863 is eating
+395 1938 is sleeping
+395 2033 has taken a fork
+395 1958 is sleeping
+396 2008 is sleeping
+395 2032 is sleeping
+396 2033 is eating
+397 1960 is sleeping
+397 1959 has taken a fork
+397 1959 is eating
+397 1976 is sleeping
+397 1924 is sleeping
+400 1926 is sleeping
+400 1886 is sleeping
+400 1842 is sleeping
+400 1841 has taken a fork
+400 1841 is eating
+400 1636 is sleeping
+400 1925 has taken a fork
+400 1925 is eating
+400 1885 has taken a fork
+400 1778 is sleeping
+400 1884 is sleeping
+400 1898 is sleeping
+400 1852 is sleeping
+400 1828 is sleeping
+401 1844 is sleeping
+401 1834 is sleeping
+400 1868 is sleeping
+400 1796 is sleeping
+401 1838 is sleeping
+401 1678 is sleeping
+401 1702 is sleeping
+400 1885 is eating
+401 1843 has taken a fork
+400 1968 is sleeping
+401 1848 is sleeping
+401 1934 is sleeping
+400 1892 is sleeping
+401 1688 is sleeping
+401 1922 is sleeping
+401 1780 is sleeping
+401 1810 is sleeping
+401 1843 is eating
+401 1746 is sleeping
+401 1839 has taken a fork
+402 1839 is eating
+401 1907 has taken a fork
+402 1907 is eating
+401 1878 is sleeping
+401 1779 has taken a fork
+402 1779 is eating
+401 1906 is sleeping
+401 1923 has taken a fork
+402 1923 is eating
+402 1888 is sleeping
+402 1887 has taken a fork
+402 1887 is eating
+402 1798 is sleeping
+402 1797 has taken a fork
+402 1797 is eating
+402 1814 is sleeping
+402 1806 is sleeping
+402 1962 is sleeping
+403 1961 has taken a fork
+403 1961 is eating
+403 1974 is sleeping
+403 1975 has taken a fork
+403 1975 is eating
+403 1772 is sleeping
+403 1973 has taken a fork
+403 1973 is eating
+403 1766 is sleeping
+403 1930 is sleeping
+403 1768 is sleeping
+403 1767 has taken a fork
+403 1874 is sleeping
+403 1767 is eating
+403 1538 is sleeping
+403 1742 is sleeping
+403 1568 is sleeping
+403 1544 is sleeping
+403 1736 is sleeping
+403 1516 is sleeping
+403 1850 is sleeping
+403 1851 has taken a fork
+403 1851 is eating
+403 1849 has taken a fork
+403 1870 is sleeping
+403 1758 is sleeping
+403 1724 is sleeping
+403 1728 is sleeping
+404 1762 is sleeping
+403 1743 has taken a fork
+403 1718 is sleeping
+403 1730 is sleeping
+404 1689 has taken a fork
+403 1869 has taken a fork
+404 1829 has taken a fork
+404 1829 is eating
+403 1744 is sleeping
+403 1729 has taken a fork
+404 1729 is eating
+404 1726 is sleeping
+404 1727 has taken a fork
+404 1727 is eating
+404 1705 has taken a fork
+404 1705 is eating
+404 1704 is sleeping
+404 1690 is sleeping
+403 1849 is eating
+404 1708 is sleeping
+404 1824 is sleeping
+404 1830 is sleeping
+404 1869 is eating
+403 1731 has taken a fork
+405 1358 is sleeping
+404 1486 is sleeping
+403 1745 has taken a fork
+405 1745 is eating
+405 1630 is sleeping
+404 1725 has taken a fork
+404 1743 is eating
+404 1692 is sleeping
+404 1691 has taken a fork
+404 1703 has taken a fork
+404 1693 has taken a fork
+404 1696 is sleeping
+404 1695 has taken a fork
+405 1902 is sleeping
+404 1707 has taken a fork
+405 1808 is sleeping
+404 1879 has taken a fork
+405 1879 is eating
+405 1400 is sleeping
+404 1909 has taken a fork
+405 1909 is eating
+403 1732 is sleeping
+405 1370 is sleeping
+404 1823 has taken a fork
+405 1731 is eating
+404 1438 is sleeping
+405 1620 is sleeping
+405 1663 has taken a fork
+404 1706 is sleeping
+405 1412 is sleeping
+405 1725 is eating
+405 1622 is sleeping
+405 1621 has taken a fork
+406 1621 is eating
+405 1628 is sleeping
+405 1691 is eating
+405 1656 is sleeping
+405 1703 is eating
+405 1646 is sleeping
+405 1693 is eating
+405 1695 is eating
+404 1689 is eating
+405 1707 is eating
+405 1809 has taken a fork
+406 1809 is eating
+405 1807 has taken a fork
+404 1434 is sleeping
+404 1910 is sleeping
+405 1664 is sleeping
+404 1428 is sleeping
+404 1822 is sleeping
+405 1634 is sleeping
+405 1635 has taken a fork
+406 1635 is eating
+405 1823 is eating
+406 1954 is sleeping
+405 1662 is sleeping
+404 1694 is sleeping
+406 1891 has taken a fork
+406 1891 is eating
+405 1350 is sleeping
+406 1614 is sleeping
+404 1880 is sleeping
+406 1807 is eating
+405 1672 is sleeping
+407 1782 is sleeping
+406 1953 has taken a fork
+406 1792 is sleeping
+405 1663 is eating
+407 1304 is sleeping
+407 1602 is sleeping
+407 1596 is sleeping
+405 1629 has taken a fork
+407 1629 is eating
+406 1776 is sleeping
+407 1594 is sleeping
+407 1611 has taken a fork
+407 1609 has taken a fork
+407 1597 has taken a fork
+407 1606 is sleeping
+407 1940 is sleeping
+407 1939 has taken a fork
+407 1939 is eating
+407 1781 has taken a fork
+407 1953 is eating
+406 1890 is sleeping
+407 1601 has taken a fork
+407 1601 is eating
+406 1889 has taken a fork
+407 1889 is eating
+407 1603 has taken a fork
+407 1603 is eating
+406 1777 has taken a fork
+407 1777 is eating
+407 1572 is sleeping
+407 1564 is sleeping
+407 1598 is sleeping
+407 1599 has taken a fork
+407 1292 is sleeping
+407 1611 is eating
+406 1612 is sleeping
+407 1609 is eating
+407 1597 is eating
+407 1607 has taken a fork
+408 1607 is eating
+407 1613 has taken a fork
+408 1613 is eating
+407 1775 has taken a fork
+408 1775 is eating
+408 1786 is sleeping
+407 1773 has taken a fork
+407 1944 is sleeping
+407 1781 is eating
+407 1578 is sleeping
+405 1394 is sleeping
+408 1964 is sleeping
+408 1963 has taken a fork
+408 1514 is sleeping
+407 1595 has taken a fork
+406 1588 is sleeping
+408 1734 is sleeping
+407 1576 is sleeping
+407 1577 has taken a fork
+408 1560 is sleeping
+408 1967 has taken a fork
+408 1965 has taken a fork
+408 1860 is sleeping
+408 1859 has taken a fork
+408 1554 is sleeping
+408 1773 is eating
+408 1498 is sleeping
+408 1508 is sleeping
+407 1604 is sleeping
+407 1858 is sleeping
+408 1963 is eating
+408 1515 has taken a fork
+409 1552 is sleeping
+408 1502 is sleeping
+409 1501 has taken a fork
+409 1506 is sleeping
+408 1733 has taken a fork
+409 1268 is sleeping
+407 1610 is sleeping
+408 1577 is eating
+407 1599 is eating
+406 1608 is sleeping
+408 1966 is sleeping
+408 1967 is eating
+407 1605 has taken a fork
+409 1605 is eating
+408 1861 has taken a fork
+409 1861 is eating
+405 1376 is sleeping
+408 1859 is eating
+407 1945 has taken a fork
+409 1945 is eating
+408 1542 is sleeping
+408 1543 has taken a fork
+409 1543 is eating
+408 1854 is sleeping
+408 1853 has taken a fork
+408 1532 is sleeping
+408 1847 has taken a fork
+409 1847 is eating
+408 1845 has taken a fork
+408 1558 is sleeping
+409 1752 is sleeping
+409 1970 is sleeping
+409 1527 has taken a fork
+409 1527 is eating
+409 1515 is eating
+409 1553 has taken a fork
+409 1553 is eating
+409 1499 has taken a fork
+409 1499 is eating
+408 1595 is eating
+409 1507 has taken a fork
+408 1735 has taken a fork
+409 1735 is eating
+409 1267 has taken a fork
+409 1224 is sleeping
+409 1529 has taken a fork
+409 1529 is eating
+409 1531 has taken a fork
+409 1531 is eating
+407 1774 is sleeping
+408 1266 is sleeping
+409 1853 is eating
+408 1846 is sleeping
+408 1559 has taken a fork
+411 1559 is eating
+409 2007 has taken a fork
+411 1913 has taken a fork
+409 2005 has taken a fork
+411 1673 has taken a fork
+411 1673 is eating
+409 1971 has taken a fork
+411 1971 is eating
+409 1717 has taken a fork
+411 1717 is eating
+406 1600 is sleeping
+409 1500 is sleeping
+409 1222 is sleeping
+409 1501 is eating
+412 1684 is sleeping
+409 1507 is eating
+412 1410 is sleeping
+409 1719 has taken a fork
+412 1682 is sleeping
+409 1267 is eating
+412 1426 is sleeping
+409 1530 is sleeping
+408 1526 is sleeping
+412 1422 is sleeping
+410 1754 is sleeping
+410 1753 has taken a fork
+411 1214 is sleeping
+412 1184 is sleeping
+411 1912 is sleeping
+411 2007 is eating
+412 1359 has taken a fork
+412 1372 is sleeping
+412 1371 has taken a fork
+412 1371 is eating
+411 1674 is sleeping
+409 1528 is sleeping
+409 1969 has taken a fork
+412 1661 has taken a fork
+411 1154 is sleeping
+409 1490 is sleeping
+413 1383 has taken a fork
+412 1414 is sleeping
+413 1357 has taken a fork
+412 1413 has taken a fork
+413 1816 is sleeping
+409 1720 is sleeping
+413 1659 has taken a fork
+413 1659 is eating
+412 1683 has taken a fork
+413 1392 is sleeping
+409 1223 has taken a fork
+413 1223 is eating
+412 1424 is sleeping
+412 1425 has taken a fork
+412 1430 is sleeping
+413 1665 has taken a fork
+413 1665 is eating
+412 1423 has taken a fork
+412 1433 has taken a fork
+413 1648 is sleeping
+412 1431 has taken a fork
+413 1431 is eating
+413 1118 is sleeping
+412 1437 has taken a fork
+412 1436 is sleeping
+412 1435 has taken a fork
+413 1435 is eating
+412 1417 has taken a fork
+413 1417 is eating
+412 1652 is sleeping
+412 1837 has taken a fork
+413 1837 is eating
+412 1835 has taken a fork
+413 1835 is eating
+409 2006 is sleeping
+412 1359 is eating
+411 1911 has taken a fork
+411 1913 is eating
+411 2005 is eating
+414 1390 is sleeping
+412 1642 is sleeping
+409 1716 is sleeping
+412 1969 is eating
+412 1660 is sleeping
+412 1661 is eating
+412 1362 is sleeping
+412 1361 has taken a fork
+414 1361 is eating
+413 1382 is sleeping
+413 1383 is eating
+413 1380 is sleeping
+413 1381 has taken a fork
+414 1381 is eating
+413 1357 is eating
+413 1356 is sleeping
+413 1413 is eating
+409 1494 is sleeping
+413 1817 has taken a fork
+414 1817 is eating
+413 1815 has taken a fork
+414 1815 is eating
+413 1657 has taken a fork
+414 1657 is eating
+413 1683 is eating
+409 1733 is eating
+413 1393 has taken a fork
+414 1393 is eating
+413 1146 is sleeping
+413 1802 is sleeping
+413 1425 is eating
+413 1666 is sleeping
+414 1710 is sleeping
+414 1709 has taken a fork
+414 1709 is eating
+413 1404 is sleeping
+412 1432 is sleeping
+413 1647 has taken a fork
+414 1346 is sleeping
+412 1753 is eating
+414 1345 has taken a fork
+413 1117 has taken a fork
+415 1117 is eating
+413 1437 is eating
+413 1352 is sleeping
+413 1351 has taken a fork
+412 1418 is sleeping
+412 1836 is sleeping
+412 1116 is sleeping
+412 1360 is sleeping
+415 1322 is sleeping
+412 1384 is sleeping
+414 1391 has taken a fork
+415 1391 is eating
+412 1415 has taken a fork
+413 1658 is sleeping
+412 1411 has taken a fork
+415 1619 has taken a fork
+415 1619 is eating
+412 1427 has taken a fork
+415 1337 has taken a fork
+415 1337 is eating
+413 1423 is eating
+414 1647 is eating
+413 1433 is eating
+414 1328 is sleeping
+414 1336 is sleeping
+414 1334 is sleeping
+414 1335 has taken a fork
+415 1335 is eating
+414 1344 is sleeping
+414 1345 is eating
+414 1348 is sleeping
+415 1349 has taken a fork
+415 1349 is eating
+413 1126 is sleeping
+415 1326 is sleeping
+415 1327 has taken a fork
+415 1327 is eating
+415 1351 is eating
+415 1333 has taken a fork
+415 1333 is eating
+415 1788 is sleeping
+413 1911 is eating
+415 1320 is sleeping
+415 2036 is sleeping
+411 1416 is sleeping
+415 1616 is sleeping
+416 1306 is sleeping
+415 1615 has taken a fork
+416 1310 is sleeping
+415 1411 is eating
+416 1593 has taken a fork
+412 1719 is eating
+416 1585 has taken a fork
+415 1338 is sleeping
+416 1316 is sleeping
+408 1965 is eating
+416 1589 has taken a fork
+416 1589 is eating
+415 1347 has taken a fork
+415 1332 is sleeping
+415 1787 has taken a fork
+416 1787 is eating
+415 2012 is sleeping
+415 1624 is sleeping
+416 1990 is sleeping
+415 2037 has taken a fork
+416 1771 has taken a fork
+416 1771 is eating
+415 1415 is eating
+416 1615 is eating
+415 1618 is sleeping
+416 1592 is sleeping
+415 1617 has taken a fork
+416 1617 is eating
+416 1593 is eating
+416 1586 is sleeping
+416 1403 has taken a fork
+416 1403 is eating
+416 1585 is eating
+415 1427 is eating
+416 1590 is sleeping
+416 1591 has taken a fork
+416 1591 is eating
+409 1845 is eating
+416 1315 has taken a fork
+416 1315 is eating
+416 1347 is eating
+415 1321 has taken a fork
+417 1321 is eating
+416 1770 is sleeping
+416 2037 is eating
+416 1769 has taken a fork
+417 1769 is eating
+416 1305 has taken a fork
+417 1698 is sleeping
+416 1583 has taken a fork
+416 1048 is sleeping
+416 1587 has taken a fork
+417 1587 is eating
+416 1584 is sleeping
+416 1401 has taken a fork
+412 1429 has taken a fork
+417 1296 is sleeping
+416 1314 is sleeping
+415 1623 has taken a fork
+415 2035 has taken a fork
+417 1305 is eating
+417 1872 is sleeping
+417 1697 has taken a fork
+417 1697 is eating
+417 1583 is eating
+417 1293 has taken a fork
+417 1293 is eating
+416 1402 is sleeping
+417 1401 is eating
+417 1429 is eating
+417 1456 is sleeping
+414 1470 is sleeping
+417 1286 is sleeping
+417 1623 is eating
+417 1047 has taken a fork
+417 1047 is eating
+417 1046 is sleeping
+417 1546 is sleeping
+417 1545 has taken a fork
+417 1550 is sleeping
+417 1551 has taken a fork
+417 1040 is sleeping
+417 1288 is sleeping
+417 1295 has taken a fork
+418 1295 is eating
+417 1300 is sleeping
+417 1278 is sleeping
+417 2035 is eating
+418 1259 has taken a fork
+417 1873 has taken a fork
+418 1873 is eating
+417 1871 has taken a fork
+418 1264 is sleeping
+418 1521 has taken a fork
+418 1534 is sleeping
+417 1525 has taken a fork
+418 1525 is eating
+417 1557 has taken a fork
+418 1557 is eating
+417 1294 is sleeping
+417 1751 has taken a fork
+418 1751 is eating
+418 1260 is sleeping
+418 1536 is sleeping
+418 1537 has taken a fork
+418 1537 is eating
+418 1748 is sleeping
+418 1747 has taken a fork
+418 1747 is eating
+418 1284 is sleeping
+417 1287 has taken a fork
+418 1287 is eating
+418 1741 has taken a fork
+418 1741 is eating
+418 1259 is eating
+416 1582 is sleeping
+417 1545 is eating
+418 1265 has taken a fork
+418 1265 is eating
+418 1523 has taken a fork
+418 1523 is eating
+418 1522 is sleeping
+418 1521 is eating
+418 1535 has taken a fork
+418 1535 is eating
+417 1551 is eating
+417 1524 is sleeping
+417 1520 is sleeping
+417 1556 is sleeping
+418 1978 is sleeping
+418 1738 is sleeping
+418 1285 has taken a fork
+419 1285 is eating
+418 1740 is sleeping
+418 1871 is eating
+419 1230 is sleeping
+418 1533 has taken a fork
+419 1232 is sleeping
+418 1979 has taken a fork
+419 1979 is eating
+418 1977 has taken a fork
+419 1480 is sleeping
+418 1737 has taken a fork
+419 1737 is eating
+419 1711 has taken a fork
+419 1711 is eating
+419 1469 has taken a fork
+419 1469 is eating
+419 1485 has taken a fork
+419 1485 is eating
+419 1519 has taken a fork
+419 1519 is eating
+418 1258 is sleeping
+417 1555 has taken a fork
+419 1555 is eating
+419 1488 is sleeping
+419 1472 is sleeping
+419 1231 has taken a fork
+419 1471 has taken a fork
+419 1505 has taken a fork
+419 1505 is eating
+418 1749 has taken a fork
+419 1749 is eating
+419 922 is sleeping
+418 1712 is sleeping
+419 1468 is sleeping
+419 1210 is sleeping
+419 1484 is sleeping
+419 1234 is sleeping
+419 1216 is sleeping
+419 1518 is sleeping
+419 1215 has taken a fork
+419 1215 is eating
+419 964 is sleeping
+419 1533 is eating
+419 1489 has taken a fork
+420 1489 is eating
+419 1233 has taken a fork
+420 1233 is eating
+419 1231 is eating
+419 1504 is sleeping
+417 1750 is sleeping
+419 1503 has taken a fork
+420 1503 is eating
+419 1471 is eating
+419 930 is sleeping
+418 1739 has taken a fork
+420 1739 is eating
+419 1229 has taken a fork
+420 1229 is eating
+419 1217 has taken a fork
+420 1217 is eating
+419 1221 has taken a fork
+420 1221 is eating
+419 1220 is sleeping
+419 1517 has taken a fork
+420 1517 is eating
+419 972 is sleeping
+419 1977 is eating
+419 1228 is sleeping
+419 1218 is sleeping
+419 978 is sleeping
+419 1219 has taken a fork
+419 1487 has taken a fork
+420 1487 is eating
+420 1219 is eating
+421 1248 is sleeping
+422 1476 is sleeping
+422 1262 is sleeping
+422 1263 has taken a fork
+422 1263 is eating
+422 1261 has taken a fork
+422 1261 is eating
+426 1452 is sleeping
+426 898 is sleeping
+426 844 is sleeping
+426 1820 is sleeping
+426 1638 is sleeping
+426 578 is sleeping
+427 1821 has taken a fork
+427 1819 has taken a fork
+427 1637 has taken a fork
+427 1637 is eating
+427 1819 is eating
+427 1821 is eating
+429 1032 is sleeping
+429 1026 is sleeping
+429 336 is sleeping
+429 284 is sleeping
+429 990 is sleeping
+430 1186 is sleeping
+430 1185 has taken a fork
+430 1185 is eating
+430 802 is sleeping
+431 1070 is sleeping
+431 478 is sleeping
+431 468 is sleeping
+431 970 is sleeping
+431 1478 is sleeping
+431 971 has taken a fork
+431 971 is eating
+431 1479 has taken a fork
+431 1240 is sleeping
+431 914 is sleeping
+431 1479 is eating
+431 1477 has taken a fork
+431 1477 is eating
+431 1250 is sleeping
+431 1249 has taken a fork
+432 973 has taken a fork
+432 973 is eating
+431 70 is sleeping
+431 1474 is sleeping
+431 1475 has taken a fork
+432 1492 is sleeping
+432 974 is sleeping
+432 938 is sleeping
+432 30 is sleeping
+432 216 is sleeping
+431 910 is sleeping
+431 210 is sleeping
+432 1493 has taken a fork
+432 920 is sleeping
+431 1473 has taken a fork
+432 1460 is sleeping
+432 204 is sleeping
+432 1491 has taken a fork
+432 1491 is eating
+432 42 is sleeping
+432 1475 is eating
+432 1493 is eating
+432 1202 is sleeping
+432 1473 is eating
+432 1249 is eating
+432 921 has taken a fork
+432 921 is eating
+433 969 has taken a fork
+433 968 is sleeping
+433 969 is eating
+433 1496 is sleeping
+433 1497 has taken a fork
+433 1495 has taken a fork
+433 1495 is eating
+433 1444 is sleeping
+433 1790 is sleeping
+433 892 is sleeping
+433 1789 has taken a fork
+434 1789 is eating
+433 1178 is sleeping
+433 1497 is eating
+433 908 is sleeping
+433 909 has taken a fork
+434 902 is sleeping
+433 891 has taken a fork
+433 890 is sleeping
+434 1076 is sleeping
+434 882 is sleeping
+434 906 is sleeping
+434 891 is eating
+434 896 is sleeping
+433 1791 has taken a fork
+434 1791 is eating
+434 907 has taken a fork
+434 905 has taken a fork
+434 905 is eating
+434 909 is eating
+434 907 is eating
+434 886 is sleeping
+434 888 is sleeping
+434 1182 is sleeping
+434 2010 is sleeping
+434 903 has taken a fork
+434 903 is eating
+434 1177 has taken a fork
+434 1177 is eating
+434 2011 has taken a fork
+434 2011 is eating
+434 904 is sleeping
+434 889 has taken a fork
+434 889 is eating
+434 1176 is sleeping
+434 897 has taken a fork
+434 897 is eating
+434 887 has taken a fork
+434 887 is eating
+434 1998 is sleeping
+434 876 is sleeping
+434 1183 has taken a fork
+435 1183 is eating
+434 1997 has taken a fork
+435 1997 is eating
+434 2009 has taken a fork
+435 2009 is eating
+435 958 is sleeping
+435 872 is sleeping
+435 1458 is sleeping
+435 1459 has taken a fork
+435 1457 has taken a fork
+435 1457 is eating
+435 1681 has taken a fork
+435 1681 is eating
+435 1680 is sleeping
+435 1168 is sleeping
+435 10 is sleeping
+435 868 is sleeping
+435 1459 is eating
+435 1679 has taken a fork
+436 1679 is eating
+436 784 is sleeping
+436 834 is sleeping
+436 1668 is sleeping
+436 1667 has taken a fork
+436 1667 is eating
+436 856 is sleeping
+436 814 is sleeping
+436 852 is sleeping
+436 848 is sleeping
+436 828 is sleeping
+436 858 is sleeping
+436 781 has taken a fork
+436 781 is eating
+436 840 is sleeping
+436 854 is sleeping
+436 853 has taken a fork
+436 782 is sleeping
+436 783 has taken a fork
+436 783 is eating
+436 855 has taken a fork
+436 788 is sleeping
+436 857 has taken a fork
+436 1152 is sleeping
+436 824 is sleeping
+436 806 is sleeping
+436 1147 has taken a fork
+436 826 is sleeping
+436 827 has taken a fork
+437 827 is eating
+436 855 is eating
+436 1153 has taken a fork
+437 1153 is eating
+436 857 is eating
+436 1148 is sleeping
+437 810 is sleeping
+437 825 has taken a fork
+437 1147 is eating
+437 1136 is sleeping
+436 780 is sleeping
+436 853 is eating
+437 825 is eating
+437 1446 is sleeping
+437 1445 has taken a fork
+437 1445 is eating
+437 1461 has taken a fork
+437 1461 is eating
+437 1701 has taken a fork
+437 1701 is eating
+437 1462 is sleeping
+437 1700 is sleeping
+437 1188 is sleeping
+437 1448 is sleeping
+437 1699 has taken a fork
+437 1699 is eating
+437 1187 has taken a fork
+437 1187 is eating
+437 1447 has taken a fork
+437 1447 is eating
+437 1190 is sleeping
+437 1189 has taken a fork
+437 776 is sleeping
+437 1399 has taken a fork
+437 1399 is eating
+437 1189 is eating
+437 1398 is sleeping
+437 1467 has taken a fork
+438 1467 is eating
+437 768 is sleeping
+438 769 has taken a fork
+438 769 is eating
+437 1466 is sleeping
+437 770 is sleeping
+438 796 is sleeping
+438 750 is sleeping
+438 792 is sleeping
+438 798 is sleeping
+438 749 has taken a fork
+438 760 is sleeping
+438 797 has taken a fork
+438 749 is eating
+438 748 is sleeping
+438 766 is sleeping
+438 767 has taken a fork
+438 767 is eating
+438 775 has taken a fork
+438 775 is eating
+438 797 is eating
+438 1541 has taken a fork
+438 1541 is eating
+438 738 is sleeping
+438 736 is sleeping
+438 737 has taken a fork
+438 737 is eating
+438 76 is sleeping
+438 752 is sleeping
+438 774 is sleeping
+438 751 has taken a fork
+438 751 is eating
+438 1539 has taken a fork
+438 722 is sleeping
+438 726 is sleeping
+438 1540 is sleeping
+438 1539 is eating
+439 924 is sleeping
+439 923 has taken a fork
+439 923 is eating
+439 1368 is sleeping
+439 704 is sleeping
+439 700 is sleeping
+439 1369 has taken a fork
+439 1369 is eating
+439 714 is sleeping
+439 702 is sleeping
+439 715 has taken a fork
+439 703 has taken a fork
+439 703 is eating
+439 701 has taken a fork
+439 701 is eating
+439 715 is eating
+439 716 is sleeping
+440 860 is sleeping
+440 859 has taken a fork
+440 859 is eating
+440 1120 is sleeping
+440 1119 has taken a fork
+440 1119 is eating
+440 1632 is sleeping
+440 646 is sleeping
+440 1633 has taken a fork
+440 1631 has taken a fork
+440 1631 is eating
+440 596 is sleeping
+440 838 is sleeping
+440 645 has taken a fork
+440 650 is sleeping
+440 645 is eating
+440 694 is sleeping
+440 1633 is eating
+440 1364 is sleeping
+440 628 is sleeping
+440 1363 has taken a fork
+440 618 is sleeping
+440 839 has taken a fork
+440 602 is sleeping
+440 612 is sleeping
+440 624 is sleeping
+440 627 has taken a fork
+440 627 is eating
+440 626 is sleeping
+440 674 is sleeping
+441 642 is sleeping
+440 625 has taken a fork
+440 680 is sleeping
+440 1363 is eating
+441 1110 is sleeping
+440 839 is eating
+441 1125 has taken a fork
+441 1125 is eating
+440 644 is sleeping
+441 1124 is sleeping
+441 1342 is sleeping
+441 600 is sleeping
+440 632 is sleeping
+441 698 is sleeping
+441 699 has taken a fork
+441 699 is eating
+441 643 has taken a fork
+441 643 is eating
+441 673 has taken a fork
+441 673 is eating
+441 1090 is sleeping
+441 668 is sleeping
+441 601 has taken a fork
+441 601 is eating
+441 625 is eating
+441 1812 is sleeping
+441 1813 has taken a fork
+441 654 is sleeping
+441 1811 has taken a fork
+441 1811 is eating
+441 1343 has taken a fork
+441 1343 is eating
+441 672 is sleeping
+441 1813 is eating
+442 666 is sleeping
+442 667 has taken a fork
+442 667 is eating
+442 670 is sleeping
+442 671 has taken a fork
+442 671 is eating
+442 669 has taken a fork
+442 669 is eating
+443 608 is sleeping
+443 640 is sleeping
+443 641 has taken a fork
+443 641 is eating
+443 1420 is sleeping
+443 1419 has taken a fork
+443 1419 is eating
+443 1421 has taken a fork
+443 1421 is eating
+443 1298 is sleeping
+443 592 is sleeping
+443 1299 has taken a fork
+443 1299 is eating
+443 1297 has taken a fork
+443 1297 is eating
+443 564 is sleeping
+443 1082 is sleeping
+443 538 is sleeping
+443 542 is sleeping
+443 562 is sleeping
+443 563 has taken a fork
+443 563 is eating
+443 1078 is sleeping
+443 566 is sleeping
+443 1077 has taken a fork
+443 528 is sleeping
+443 550 is sleeping
+443 520 is sleeping
+443 1077 is eating
+443 565 has taken a fork
+443 565 is eating
+443 556 is sleeping
+443 541 has taken a fork
+443 539 has taken a fork
+443 540 is sleeping
+443 552 is sleeping
+443 551 has taken a fork
+443 504 is sleeping
+444 1378 is sleeping
+444 1379 has taken a fork
+444 1379 is eating
+444 541 is eating
+444 539 is eating
+444 551 is eating
+444 1377 has taken a fork
+444 1377 is eating
+446 1058 is sleeping
+446 1050 is sleeping
+446 1049 has taken a fork
+446 432 is sleeping
+446 420 is sleeping
+446 1049 is eating
+446 422 is sleeping
+446 421 has taken a fork
+446 1562 is sleeping
+446 421 is eating
+446 1563 has taken a fork
+446 1563 is eating
+446 1561 has taken a fork
+446 549 has taken a fork
+446 1034 is sleeping
+446 549 is eating
+446 548 is sleeping
+446 424 is sleeping
+446 1561 is eating
+446 423 has taken a fork
+446 423 is eating
+446 1033 has taken a fork
+446 1033 is eating
+446 1290 is sleeping
+446 1291 has taken a fork
+446 1291 is eating
+446 1289 has taken a fork
+446 1289 is eating
+446 467 has taken a fork
+447 404 is sleeping
+446 450 is sleeping
+447 388 is sleeping
+447 467 is eating
+446 466 is sleeping
+447 1042 is sleeping
+447 576 is sleeping
+447 1041 has taken a fork
+447 384 is sleeping
+447 1031 has taken a fork
+447 1030 is sleeping
+447 410 is sleeping
+447 394 is sleeping
+447 398 is sleeping
+447 376 is sleeping
+447 377 has taken a fork
+447 374 is sleeping
+447 1031 is eating
+447 370 is sleeping
+447 378 is sleeping
+447 1041 is eating
+447 377 is eating
+447 362 is sleeping
+447 375 has taken a fork
+447 354 is sleeping
+447 577 has taken a fork
+447 1052 is sleeping
+447 1051 has taken a fork
+448 1051 is eating
+447 375 is eating
+448 593 has taken a fork
+448 347 has taken a fork
+447 444 is sleeping
+447 577 is eating
+447 340 is sleeping
+447 348 is sleeping
+448 330 is sleeping
+448 355 has taken a fork
+448 355 is eating
+448 353 has taken a fork
+448 353 is eating
+448 1549 has taken a fork
+448 1549 is eating
+448 368 is sleeping
+448 369 has taken a fork
+448 369 is eating
+448 594 is sleeping
+447 366 is sleeping
+448 595 has taken a fork
+448 320 is sleeping
+447 1025 has taken a fork
+448 1025 is eating
+448 1626 is sleeping
+448 1627 has taken a fork
+448 1627 is eating
+448 1625 has taken a fork
+448 1625 is eating
+448 1016 is sleeping
+448 352 is sleeping
+448 1548 is sleeping
+448 1547 has taken a fork
+448 1547 is eating
+448 356 is sleeping
+448 1274 is sleeping
+448 595 is eating
+448 346 is sleeping
+448 347 is eating
+448 593 is eating
+447 1024 is sleeping
+448 367 has taken a fork
+448 448 is sleeping
+448 449 has taken a fork
+449 449 is eating
+449 1044 is sleeping
+449 1043 has taken a fork
+449 1043 is eating
+449 367 is eating
+449 1045 has taken a fork
+449 1045 is eating
+449 572 is sleeping
+449 1308 is sleeping
+449 310 is sleeping
+449 280 is sleeping
+449 1309 has taken a fork
+450 1309 is eating
+450 274 is sleeping
+450 258 is sleeping
+450 236 is sleeping
+450 228 is sleeping
+449 1307 has taken a fork
+450 1307 is eating
+450 240 is sleeping
+450 242 is sleeping
+450 266 is sleeping
+450 246 is sleeping
+450 250 is sleeping
+450 241 has taken a fork
+450 241 is eating
+450 342 is sleeping
+450 200 is sleeping
+450 309 has taken a fork
+450 1257 has taken a fork
+450 1257 is eating
+450 1256 is sleeping
+450 308 is sleeping
+450 762 is sleeping
+450 341 has taken a fork
+450 194 is sleeping
+450 324 is sleeping
+450 270 is sleeping
+450 309 is eating
+451 1002 is sleeping
+450 984 is sleeping
+451 994 is sleeping
+450 257 has taken a fork
+451 257 is eating
+450 220 is sleeping
+450 341 is eating
+450 190 is sleeping
+450 761 has taken a fork
+451 178 is sleeping
+450 256 is sleeping
+451 184 is sleeping
+451 182 is sleeping
+451 1246 is sleeping
+451 1991 has taken a fork
+450 288 is sleeping
+451 172 is sleeping
+451 183 has taken a fork
+451 185 has taken a fork
+451 185 is eating
+451 177 has taken a fork
+451 177 is eating
+451 761 is eating
+451 179 has taken a fork
+451 975 has taken a fork
+451 975 is eating
+451 232 is sleeping
+451 209 has taken a fork
+451 1992 is sleeping
+450 998 is sleeping
+451 1247 has taken a fork
+451 156 is sleeping
+451 1991 is eating
+451 168 is sleeping
+452 151 has taken a fork
+452 151 is eating
+451 173 has taken a fork
+451 176 is sleeping
+452 1244 is sleeping
+451 180 is sleeping
+451 181 has taken a fork
+452 122 is sleeping
+451 186 is sleeping
+451 208 is sleeping
+451 209 is eating
+451 976 is sleeping
+451 316 is sleeping
+451 174 is sleeping
+452 862 is sleeping
+451 977 has taken a fork
+452 1247 is eating
+452 454 is sleeping
+452 150 is sleeping
+451 183 is eating
+451 162 is sleeping
+452 173 is eating
+451 175 has taken a fork
+453 175 is eating
+452 1245 has taken a fork
+453 1245 is eating
+452 132 is sleeping
+452 181 is eating
+452 131 has taken a fork
+453 131 is eating
+452 118 is sleeping
+451 179 is eating
+452 123 has taken a fork
+453 1883 has taken a fork
+453 1883 is eating
+452 110 is sleeping
+452 114 is sleeping
+452 196 is sleeping
+453 66 is sleeping
+452 195 has taken a fork
+453 195 is eating
+452 152 is sleeping
+452 136 is sleeping
+452 861 has taken a fork
+453 84 is sleeping
+452 135 has taken a fork
+452 104 is sleeping
+453 63 has taken a fork
+453 63 is eating
+452 983 has taken a fork
+453 983 is eating
+453 93 has taken a fork
+453 93 is eating
+452 124 is sleeping
+453 94 is sleeping
+452 142 is sleeping
+453 1882 is sleeping
+452 134 is sleeping
+453 1881 has taken a fork
+454 278 is sleeping
+452 133 has taken a fork
+454 133 is eating
+453 48 is sleeping
+452 1236 is sleeping
+453 65 has taken a fork
+454 65 is eating
+453 966 is sleeping
+453 965 has taken a fork
+452 1235 has taken a fork
+453 948 is sleeping
+453 88 is sleeping
+452 977 is eating
+453 135 is eating
+453 861 is eating
+453 62 is sleeping
+452 982 is sleeping
+453 952 is sleeping
+453 58 is sleeping
+453 942 is sleeping
+453 80 is sleeping
+453 160 is sleeping
+453 161 has taken a fork
+454 8 is sleeping
+453 61 has taken a fork
+455 61 is eating
+453 86 is sleeping
+455 14 is sleeping
+453 85 has taken a fork
+455 85 is eating
+453 54 is sleeping
+455 931 has taken a fork
+455 38 is sleeping
+454 946 is sleeping
+452 98 is sleeping
+455 1450 is sleeping
+454 83 has taken a fork
+455 912 is sleeping
+454 81 has taken a fork
+455 81 is eating
+454 254 is sleeping
+454 255 has taken a fork
+453 123 is eating
+454 248 is sleeping
+455 1192 is sleeping
+454 249 has taken a fork
+455 249 is eating
+453 967 has taken a fork
+454 218 is sleeping
+455 1512 is sleeping
+454 217 has taken a fork
+455 217 is eating
+454 965 is eating
+454 128 is sleeping
+454 129 has taken a fork
+456 1174 is sleeping
+456 864 is sleeping
+454 18 is sleeping
+454 2 is sleeping
+456 584 is sleeping
+454 161 is eating
+455 957 has taken a fork
+455 956 is sleeping
+456 1138 is sleeping
+456 419 has taken a fork
+456 419 is eating
+455 20 is sleeping
+456 880 is sleeping
+453 92 is sleeping
+456 1054 is sleeping
+455 1449 has taken a fork
+455 913 has taken a fork
+456 953 has taken a fork
+456 325 has taken a fork
+456 325 is eating
+455 31 has taken a fork
+456 885 has taken a fork
+456 885 is eating
+455 804 is sleeping
+456 1170 is sleeping
+455 83 is eating
+455 803 has taken a fork
+456 803 is eating
+455 911 has taken a fork
+456 911 is eating
+455 1191 has taken a fork
+456 1191 is eating
+455 1213 has taken a fork
+456 1213 is eating
+455 931 is eating
+455 24 is sleeping
+454 247 has taken a fork
+456 247 is eating
+455 967 is eating
+456 934 is sleeping
+455 56 is sleeping
+453 60 is sleeping
+455 1513 has taken a fork
+454 1235 is eating
+455 226 is sleeping
+455 227 has taken a fork
+457 227 is eating
+455 55 has taken a fork
+457 55 is eating
+455 57 has taken a fork
+457 57 is eating
+455 25 has taken a fork
+457 25 is eating
+454 947 has taken a fork
+457 947 is eating
+455 895 has taken a fork
+457 895 is eating
+455 72 is sleeping
+456 129 is eating
+456 1175 has taken a fork
+458 1175 is eating
+456 863 has taken a fork
+458 863 is eating
+454 1255 has taken a fork
+458 1255 is eating
+456 1020 is sleeping
+456 957 is eating
+454 9 has taken a fork
+458 9 is eating
+456 418 is sleeping
+455 932 is sleeping
+453 59 has taken a fork
+458 59 is eating
+453 87 has taken a fork
+458 87 is eating
+455 19 has taken a fork
+458 19 is eating
+456 954 is sleeping
+456 1053 has taken a fork
+459 1053 is eating
+456 913 is eating
+459 1198 is sleeping
+456 884 is sleeping
+455 805 has taken a fork
+459 805 is eating
+456 1169 has taken a fork
+456 1388 is sleeping
+456 1389 has taken a fork
+459 1389 is eating
+456 100 is sleeping
+456 99 has taken a fork
+459 99 is eating
+459 361 has taken a fork
+459 361 is eating
+454 279 has taken a fork
+456 31 is eating
+456 883 has taken a fork
+459 725 has taken a fork
+459 725 is eating
+456 105 has taken a fork
+456 866 is sleeping
+459 728 is sleeping
+455 1212 is sleeping
+454 219 has taken a fork
+455 1211 has taken a fork
+459 1211 is eating
+456 6 is sleeping
+456 7 has taken a fork
+459 301 has taken a fork
+456 106 is sleeping
+454 82 is sleeping
+460 1643 has taken a fork
+460 630 is sleeping
+457 430 is sleeping
+460 675 has taken a fork
+460 696 is sleeping
+455 222 is sleeping
+455 221 has taken a fork
+460 221 is eating
+460 1323 has taken a fork
+460 1323 is eating
+460 303 has taken a fork
+460 303 is eating
+456 1160 is sleeping
+460 598 is sleeping
+456 1137 has taken a fork
+460 1137 is eating
+456 881 has taken a fork
+456 1449 is eating
+455 32 is sleeping
+460 1066 is sleeping
+459 708 is sleeping
+456 953 is eating
+460 502 is sleeping
+459 1006 is sleeping
+459 1029 has taken a fork
+460 1029 is eating
+460 653 has taken a fork
+460 653 is eating
+459 1027 has taken a fork
+455 255 is eating
+459 710 is sleeping
+459 279 is eating
+460 1084 is sleeping
+456 1142 is sleeping
+459 724 is sleeping
+452 130 is sleeping
+459 723 has taken a fork
+459 105 is eating
+456 865 has taken a fork
+456 867 has taken a fork
+461 1649 has taken a fork
+461 1649 is eating
+459 582 is sleeping
+459 583 has taken a fork
+461 583 is eating
+459 727 has taken a fork
+461 727 is eating
+459 300 is sleeping
+455 1451 has taken a fork
+461 1451 is eating
+459 436 is sleeping
+456 933 has taken a fork
+461 933 is eating
+461 480 is sleeping
+453 64 is sleeping
+459 682 is sleeping
+459 7 is eating
+459 681 has taken a fork
+461 681 is eating
+459 623 has taken a fork
+461 623 is eating
+460 590 is sleeping
+461 390 is sleeping
+460 567 has taken a fork
+460 1644 is sleeping
+461 386 is sleeping
+457 312 is sleeping
+460 1643 is eating
+460 676 is sleeping
+460 629 has taken a fork
+461 629 is eating
+457 311 has taken a fork
+460 695 has taken a fork
+462 695 is eating
+460 1324 is sleeping
+460 675 is eating
+457 431 has taken a fork
+460 304 is sleeping
+455 893 has taken a fork
+462 893 is eating
+460 1784 is sleeping
+460 1783 has taken a fork
+462 1783 is eating
+460 697 has taken a fork
+455 894 is sleeping
+462 429 has taken a fork
+462 429 is eating
+460 597 has taken a fork
+462 597 is eating
+460 881 is eating
+462 477 has taken a fork
+462 477 is eating
+460 1317 has taken a fork
+455 26 is sleeping
+460 1062 is sleeping
+456 326 is sleeping
+460 1072 is sleeping
+454 1 has taken a fork
+462 1 is eating
+460 599 has taken a fork
+462 599 is eating
+460 486 is sleeping
+460 503 has taken a fork
+460 652 is sleeping
+460 651 has taken a fork
+462 651 is eating
+459 360 is sleeping
+460 620 is sleeping
+460 621 has taken a fork
+460 619 has taken a fork
+462 619 is eating
+460 526 is sleeping
+460 527 has taken a fork
+462 527 is eating
+460 1083 has taken a fork
+462 1083 is eating
+454 1881 is eating
+461 1061 has taken a fork
+463 1061 is eating
+461 490 is sleeping
+461 1059 has taken a fork
+464 1059 is eating
+461 442 is sleeping
+461 443 has taken a fork
+464 443 is eating
+461 1804 is sleeping
+461 1803 has taken a fork
+464 1803 is eating
+461 294 is sleeping
+461 405 has taken a fork
+464 405 is eating
+461 723 is eating
+461 425 has taken a fork
+464 425 is eating
+461 865 is eating
+461 1651 has taken a fork
+464 1651 is eating
+459 302 is sleeping
+461 867 is eating
+461 411 has taken a fork
+464 411 is eating
+459 400 is sleeping
+459 219 is eating
+461 446 is sleeping
+461 447 has taken a fork
+465 447 is eating
+461 414 is sleeping
+459 399 has taken a fork
+465 399 is eating
+459 301 is eating
+459 883 is eating
+461 479 has taken a fork
+465 479 is eating
+461 1671 has taken a fork
+465 1671 is eating
+461 1669 has taken a fork
+465 1669 is eating
+461 395 has taken a fork
+465 395 is eating
+461 380 is sleeping
+460 591 has taken a fork
+465 591 is eating
+461 379 has taken a fork
+465 379 is eating
+461 403 has taken a fork
+465 403 is eating
+461 401 has taken a fork
+465 401 is eating
+461 387 has taken a fork
+465 387 is eating
+460 1645 has taken a fork
+465 1645 is eating
+461 1135 has taken a fork
+465 1135 is eating
+460 631 has taken a fork
+465 631 is eating
+462 1104 is sleeping
+462 588 is sleeping
+462 589 has taken a fork
+462 431 is eating
+457 1513 is eating
+462 656 is sleeping
+462 655 has taken a fork
+465 655 is eating
+462 34 is sleeping
+460 1785 has taken a fork
+465 1785 is eating
+462 697 is eating
+454 1254 is sleeping
+462 427 has taken a fork
+466 427 is eating
+455 71 has taken a fork
+466 71 is eating
+460 1318 is sleeping
+462 1317 is eating
+460 1319 has taken a fork
+466 1319 is eating
+460 1071 has taken a fork
+466 1071 is eating
+460 1027 is eating
+462 621 is eating
+459 1028 is sleeping
+466 779 has taken a fork
+466 779 is eating
+459 709 has taken a fork
+466 709 is eating
+461 1805 has taken a fork
+466 1805 is eating
+461 426 is sleeping
+461 1650 is sleeping
+461 412 is sleeping
+461 413 has taken a fork
+466 413 is eating
+465 843 has taken a fork
+466 843 is eating
+461 445 has taken a fork
+466 445 is eating
+459 690 is sleeping
+461 396 is sleeping
+459 622 is sleeping
+466 373 has taken a fork
+466 373 is eating
+466 371 has taken a fork
+466 188 is sleeping
+466 50 is sleeping
+466 950 is sleeping
+466 233 has taken a fork
+467 239 has taken a fork
+467 239 is eating
+467 1098 is sleeping
+467 408 is sleeping
+467 187 has taken a fork
+467 791 has taken a fork
+467 409 has taken a fork
+467 409 is eating
+467 407 has taken a fork
+462 476 is sleeping
+467 67 has taken a fork
+467 67 is eating
+461 1060 is sleeping
+467 260 is sleeping
+466 777 has taken a fork
+467 96 is sleeping
+465 841 has taken a fork
+467 1387 has taken a fork
+467 1387 is eating
+466 306 is sleeping
+467 1075 has taken a fork
+467 120 is sleeping
+467 119 has taken a fork
+467 119 is eating
+466 307 has taken a fork
+467 307 is eating
+467 237 has taken a fork
+467 365 has taken a fork
+466 305 has taken a fork
+467 193 has taken a fork
+467 193 is eating
+467 791 is eating
+467 1270 is sleeping
+467 1654 is sleeping
+467 349 has taken a fork
+467 349 is eating
+461 406 is sleeping
+467 980 is sleeping
+467 800 is sleeping
+461 1670 is sleeping
+468 823 has taken a fork
+468 823 is eating
+467 1074 is sleeping
+467 1075 is eating
+468 44 is sleeping
+468 43 has taken a fork
+468 43 is eating
+467 364 is sleeping
+467 192 is sleeping
+468 329 has taken a fork
+468 329 is eating
+467 305 is eating
+468 836 is sleeping
+467 350 is sleeping
+467 351 has taken a fork
+468 351 is eating
+467 1073 has taken a fork
+468 1073 is eating
+467 1653 has taken a fork
+468 610 is sleeping
+466 235 has taken a fork
+468 235 is eating
+467 777 is eating
+468 1226 is sleeping
+468 15 has taken a fork
+468 15 is eating
+468 993 has taken a fork
+461 458 is sleeping
+468 111 has taken a fork
+468 111 is eating
+468 832 is sleeping
+467 97 has taken a fork
+468 391 has taken a fork
+468 391 is eating
+467 259 has taken a fork
+468 108 is sleeping
+467 841 is eating
+468 46 is sleeping
+468 154 is sleeping
+467 233 is eating
+467 95 has taken a fork
+467 1010 is sleeping
+469 11 has taken a fork
+469 103 has taken a fork
+469 103 is eating
+466 372 is sleeping
+461 385 has taken a fork
+469 385 is eating
+468 482 is sleeping
+468 497 has taken a fork
+467 191 has taken a fork
+469 191 is eating
+468 1057 has taken a fork
+469 1057 is eating
+468 1653 is eating
+465 589 is eating
+469 995 has taken a fork
+469 995 is eating
+466 238 is sleeping
+468 926 is sleeping
+467 17 has taken a fork
+468 925 has taken a fork
+469 925 is eating
+468 993 is eating
+468 992 is sleeping
+468 113 has taken a fork
+469 113 is eating
+468 45 has taken a fork
+469 45 is eating
+468 392 is sleeping
+468 393 has taken a fork
+467 237 is eating
+468 327 has taken a fork
+469 327 is eating
+468 259 is eating
+468 837 has taken a fork
+468 47 has taken a fork
+468 153 has taken a fork
+469 153 is eating
+468 12 is sleeping
+468 13 has taken a fork
+469 13 is eating
+468 609 has taken a fork
+470 609 is eating
+467 365 is eating
+469 875 has taken a fork
+470 875 is eating
+469 873 has taken a fork
+470 873 is eating
+470 639 has taken a fork
+470 639 is eating
+462 503 is eating
+466 778 is sleeping
+468 328 is sleeping
+470 936 is sleeping
+469 11 is eating
+470 1242 is sleeping
+469 359 has taken a fork
+470 359 is eating
+467 69 has taken a fork
+470 69 is eating
+469 206 is sleeping
+470 137 has taken a fork
+471 137 is eating
+469 207 has taken a fork
+471 207 is eating
+467 49 has taken a fork
+467 1269 has taken a fork
+471 1269 is eating
+469 996 is sleeping
+469 997 has taken a fork
+471 706 is sleeping
+462 428 is sleeping
+468 1225 has taken a fork
+471 1225 is eating
+468 1056 is sleeping
+469 17 is eating
+471 243 has taken a fork
+471 243 is eating
+466 371 is eating
+469 1008 is sleeping
+469 1009 has taken a fork
+471 1009 is eating
+468 155 has taken a fork
+471 155 is eating
+467 1655 has taken a fork
+471 1100 is sleeping
+467 949 has taken a fork
+471 949 is eating
+468 822 is sleeping
+469 837 is eating
+468 991 has taken a fork
+471 991 is eating
+468 107 has taken a fork
+471 107 is eating
+468 95 is eating
+471 139 has taken a fork
+471 139 is eating
+468 835 has taken a fork
+471 835 is eating
+470 638 is sleeping
+460 472 is sleeping
+467 496 is sleeping
+469 658 is sleeping
+470 40 is sleeping
+466 790 is sleeping
+461 402 is sleeping
+470 937 has taken a fork
+472 937 is eating
+469 102 is sleeping
+470 1241 has taken a fork
+472 1241 is eating
+467 407 is eating
+468 611 has taken a fork
+472 611 is eating
+471 927 has taken a fork
+472 927 is eating
+471 929 has taken a fork
+472 929 is eating
+471 1252 is sleeping
+467 141 has taken a fork
+472 141 is eating
+471 1251 has taken a fork
+467 189 has taken a fork
+472 189 is eating
+471 707 has taken a fork
+470 138 is sleeping
+471 245 has taken a fork
+472 245 is eating
+471 244 is sleeping
+467 16 is sleeping
+469 1007 has taken a fork
+472 1007 is eating
+471 543 has taken a fork
+472 543 is eating
+456 955 has taken a fork
+472 955 is eating
+468 498 is sleeping
+468 833 has taken a fork
+472 833 is eating
+468 481 has taken a fork
+472 481 is eating
+471 705 has taken a fork
+471 997 is eating
+467 951 has taken a fork
+469 393 is eating
+471 1655 is eating
+471 1099 has taken a fork
+472 1099 is eating
+468 818 is sleeping
+467 1385 has taken a fork
+472 1385 is eating
+468 109 has taken a fork
+469 101 has taken a fork
+472 101 is eating
+467 140 is sleeping
+462 33 has taken a fork
+472 33 is eating
+468 112 is sleeping
+469 874 is sleeping
+470 935 has taken a fork
+473 935 is eating
+467 979 has taken a fork
+473 979 is eating
+461 1134 is sleeping
+467 801 has taken a fork
+473 801 is eating
+470 1243 has taken a fork
+473 1243 is eating
+470 41 has taken a fork
+473 41 is eating
+461 311 is eating
+471 49 is eating
+471 928 is sleeping
+469 497 is eating
+472 1251 is eating
+467 789 has taken a fork
+473 789 is eating
+469 205 has taken a fork
+473 205 is eating
+467 363 has taken a fork
+473 363 is eating
+468 1227 has taken a fork
+473 1227 is eating
+471 1253 has taken a fork
+473 1253 is eating
+460 568 is sleeping
+459 1169 is eating
+469 657 has taken a fork
+473 657 is eating
+460 1325 has taken a fork
+473 1325 is eating
+467 1386 is sleeping
+461 397 has taken a fork
+473 397 is eating
+472 951 is eating
+467 187 is eating
+465 842 is sleeping
+469 357 has taken a fork
+473 357 is eating
+472 28 is sleeping
+472 29 has taken a fork
+473 29 is eating
+472 27 has taken a fork
+473 27 is eating
+467 981 has taken a fork
+473 981 is eating
+467 799 has taken a fork
+473 799 is eating
+461 567 is eating
+468 1055 has taken a fork
+473 1055 is eating
+472 707 is eating
+471 544 is sleeping
+466 234 is sleeping
+468 97 is eating
+472 705 is eating
+467 121 has taken a fork
+473 121 is eating
+472 109 is eating
+469 358 is sleeping
+470 39 has taken a fork
+473 39 is eating
+461 389 has taken a fork
+473 389 is eating
+467 68 is sleeping
+469 47 is eating
+474 36 is sleeping
+474 37 has taken a fork
+474 37 is eating
+474 35 has taken a fork
+474 35 is eating
+474 1209 has taken a fork
+474 1209 is eating
+474 1208 is sleeping
+474 314 is sleeping
+474 313 has taken a fork
+474 313 is eating
+474 688 is sleeping
+474 689 has taken a fork
+474 689 is eating
+474 315 has taken a fork
+475 315 is eating
+475 1715 has taken a fork
+475 1715 is eating
+474 1714 is sleeping
+475 1713 has taken a fork
+475 1713 is eating
+475 1406 is sleeping
+475 1405 has taken a fork
+475 1405 is eating
+475 214 is sleeping
+475 215 has taken a fork
+476 215 is eating
+476 508 is sleeping
+476 1158 is sleeping
+476 1159 has taken a fork
+476 1159 is eating
+476 1442 is sleeping
+476 1443 has taken a fork
+476 1443 is eating
+476 1203 has taken a fork
+476 1203 is eating
+476 1204 is sleeping
+478 1904 is sleeping
+478 1903 has taken a fork
+478 1903 is eating
+478 1905 has taken a fork
+478 1905 is eating
+478 1018 is sleeping
+478 1019 has taken a fork
+478 126 is sleeping
+478 1019 is eating
+478 125 has taken a fork
+478 125 is eating
+478 1017 has taken a fork
+478 1017 is eating
+478 127 has taken a fork
+478 127 is eating
+478 742 is sleeping
+479 1894 is sleeping
+479 1893 has taken a fork
+479 1893 is eating
+479 648 is sleeping
+479 649 has taken a fork
+479 649 is eating
+479 647 has taken a fork
+479 647 is eating
+480 74 is sleeping
+480 75 has taken a fork
+480 75 is eating
+480 73 has taken a fork
+480 73 

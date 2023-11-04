@@ -8,7 +8,7 @@ tests	=					$(parrent_dir)/testing
 incs	=					-I $(incl) -I ../murmurlibc -I $(tests)/incs
 
 wflags	=				-Wall -Wextra -Werror
-CFLAGS =				-D BUFFER_SIZE=65535 -std=c99 -g $(incs) $(wflags)
+CFLAGS =				-D BUFFER_SIZE=65535 -std=c99 -g $(incs) $(wflags) -fsanitize=thread
 
 os =					${shell uname -s}
 
@@ -56,7 +56,7 @@ bonus:		$(depend) $(B_OBJ)
 	$(CC) $(CFLAGS) $(B_OBJ) -o $(BNAME) $(libr)
 
 $(NAME):	$(murmurc) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(libr) -fsanitize=thread
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(libr)
 
 r_murmurc:
 	make -C ../murmurlibc -j$(NPROCS)
@@ -86,6 +86,6 @@ endif
 
 re:						fclean
 	$(MAKE) all
-	$(MAKE) bonus
+	# $(MAKE) bonus
 
 .PHONY:					re fclean clean all murmurc

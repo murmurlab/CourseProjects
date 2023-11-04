@@ -50,23 +50,34 @@
 */
 typedef void	t_if;
 
-typedef struct s_controller
+typedef struct s_cntl
 {
-	int						consts[5];
-	pthread_t				*p_threads;
-	pthread_mutex_t			*f_mutexes;
-	volatile int			p_count;
-	pthread_mutex_t			count_mutex;
-	pthread_mutex_t			tlast_mutex;
-	pthread_mutex_t			tmain_mutex;
-	__darwin_suseconds_t	*p_lap_eat;
-	char					*p_stats;
-	_Bool					flag1;
-}	t_controller;
+	int																consts[5];
+	pthread_t														*threat;
+	pthread_mutex_t													*f_mut;
+	volatile int													p_count;
+	pthread_mutex_t													dead_f;
+	pthread_mutex_t													ct_mut;
+	pthread_mutex_t													last_mut;
+	pthread_mutex_t													main_mut;
+	struct timeval													*lap_eat;
+	struct timeval	print;
+	struct timeval													start;
+	char															*p_stats;
+	_Bool															flag1;
+}	t_cntl;
+
+/**
+ *  @struct t_order s_order
+ *  @brief Filter structure 
+ *	@memberof s_order::seq
+ *	@var s_order::seq 
+ */
 typedef struct s_order
 {
-	int				sequence;
-	t_controller	*controller;
+	int				idx;
+	int				seq;
+	t_cntl			*cntl;
 }	t_order;
 
 #endif
