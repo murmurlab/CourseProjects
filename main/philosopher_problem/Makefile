@@ -8,7 +8,8 @@ tests	=					$(parrent_dir)/testing
 incs	=					-I $(incl) -I ../murmurlibc -I $(tests)/incs
 
 wflags	=				-Wall -Wextra -Werror
-CFLAGS =				-D BUFFER_SIZE=65535 -std=c99 -g $(incs) $(wflags) -fsanitize=thread
+sanitize =				-fsanitize=thread
+CFLAGS =				-D BUFFER_SIZE=65535 -std=c99 -g $(incs) $(wflags) #$(sanitize)
 
 os =					${shell uname -s}
 
@@ -23,8 +24,8 @@ endif
 src_dir = $(parrent_dir)/srcs
 b_src_dir = $(parrent_dir)/srcs
 
-S_SRC =					$(src_dir)/shared.c \
-						$(tests)/testing.c
+S_SRC =					# $(src_dir)/shared.c \
+						# $(tests)/testing.c
 
 B_SRC =					$(b_src_dir)/checker.c \
 						$(S_SRC)

@@ -52,19 +52,18 @@ typedef void	t_if;
 
 typedef struct s_cntl
 {
-	int																consts[5];
-	pthread_t														*threat;
-	pthread_mutex_t													*f_mut;
-	volatile int													p_count;
-	pthread_mutex_t													dead_f;
-	pthread_mutex_t													ct_mut;
-	pthread_mutex_t													last_mut;
-	pthread_mutex_t													main_mut;
-	struct timeval													*lap_eat;
+	int				consts[5];
+	pthread_t		*threat;
+	pthread_mutex_t	*f_mut;
+	volatile int	p_count;
+	pthread_mutex_t	ct_mut;
+	pthread_mutex_t	last_mut;
+	pthread_mutex_t	main_mut;
+	pthread_mutex_t	*lap_mtx;
+	struct timeval	*lap_eat;
+	struct timeval	start;
 	struct timeval	print;
-	struct timeval													start;
-	char															*p_stats;
-	_Bool															flag1;
+	_Bool			stop;
 }	t_cntl;
 
 /**
@@ -79,5 +78,16 @@ typedef struct s_order
 	int				seq;
 	t_cntl			*cntl;
 }	t_order;
+
+void	ext(t_order *self);
+void	loop(t_cntl *cntl);
+void	*philo(t_order *self);
+int		monitoring_sh(t_order *restrict self, int status);
+void	delta_time(int usec);
+int		eat(t_order *restrict self);
+long	diff(t_order *restrict self, int flama_of_eat);
+int		idx(int index, int len);
+int		p_loop(t_order *restrict self);
+void	init_table(t_cntl *restrict cntl);
 
 #endif
