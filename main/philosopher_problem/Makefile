@@ -8,8 +8,8 @@ tests	=					$(parrent_dir)/testing
 incs	=					-I $(incl) -I ../murmurlibc -I $(tests)/incs
 
 wflags	=				-Wall -Wextra -Werror
-sanitize =				-fsanitize=thread
-CFLAGS =				-D BUFFER_SIZE=65535 -std=c99 -g $(incs) $(wflags) #$(sanitize)
+sanitize =				#-fsanitize=thread #-fsanitize=address
+CFLAGS =				-D BUFFER_SIZE=65535 -std=c99 -g $(incs) $(wflags) $(sanitize)
 
 os =					${shell uname -s}
 
@@ -31,6 +31,11 @@ B_SRC =					$(b_src_dir)/checker.c \
 						$(S_SRC)
 
 SRC =					$(src_dir)/program.c \
+						$(src_dir)/utils.c \
+						$(src_dir)/utils2.c \
+						$(src_dir)/utils3.c \
+						$(src_dir)/utils4.c \
+						$(src_dir)/utils5.c \
 						$(S_SRC)
 
 OBJ =					$(SRC:.c=.o)

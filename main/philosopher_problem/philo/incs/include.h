@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   include.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
+/*   Updated: 2023/11/13 18:14:19 by ahbasara         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef INCLUDE_H
 # define INCLUDE_H
 # if defined(__linux__)
@@ -37,7 +49,7 @@
 # include "stdio.h"
 # include "unistd.h"
 # include "stdlib.h"
-# include "time.h"
+# include "sys/time.h"
 # include "pthread.h"
 
 // # include "testing.h"
@@ -48,23 +60,29 @@
 ** pthread_mutex_t			count_mutex; // odd
 ** pthread_mutex_t			tlast_mutex; // even
 */
-typedef void	t_if;
+typedef void			t_if;
+typedef struct timeval	t_time;
+struct					s_order;
 
 typedef struct s_cntl
 {
-	int				consts[5];
-	pthread_t		*threat;
-	pthread_mutex_t	*f_mut;
-	volatile int	p_count;
-	pthread_mutex_t	ct_mut;
-	pthread_mutex_t	last_mut;
-	pthread_mutex_t	main_mut;
-	pthread_mutex_t	*lap_mtx;
-	struct timeval	*lap_eat;
-	struct timeval	start;
-	struct timeval	print;
-	_Bool			stop;
-}	t_cntl;
+	int									*finishes;
+	pthread_mutex_t						*finishes_mutexes;
+	int									consts[5];
+	pthread_t							*threat;
+	pthread_mutex_t						*f_mut;
+	volatile int						p_count;
+	pthread_mutex_t						ct_mut;
+	pthread_mutex_t						last_mut;
+	pthread_mutex_t						main_mut;
+	pthread_mutex_t						print_mut;
+	pthread_mutex_t						*lap_mtx;
+	struct timeval						*lap_eat;
+	struct timeval						start;
+	struct timeval						print;
+	_Bool								stop;
+	void								(*monitoring_funs[4])(struct s_order *restrict);
+}										t_cntl;
 
 /**
  *  @struct t_order s_order
@@ -76,16 +94,34 @@ typedef struct s_order
 {
 	int				idx;
 	int				seq;
+	int				eat_ct;
 	t_cntl			*cntl;
 }	t_order;
 
+void	unlock(t_order *self);
+void	md(t_cntl *cntl, t_time *time, int *ct);
+int		run2(t_cntl *cntl, int *ct, int *diff, t_time *time);
+void	run(t_cntl *cntl, int *ct, int *diff, t_time *time);
+void	last_philo(t_order *self);
+void	init_some2(t_cntl *cntl, t_order **tmp);
+void	init_some1(t_cntl *cntl);
+void	finish(t_order *self);
+void	set_time_of_firs_eat_time_of_philosophers(t_order *self);
+int		odd(t_order *restrict self);
+int		even(t_order *restrict self);
+long	diff_(t_order *restrict self);
+void	ft_usleep(int time);
+void	monitoring_sh_1(t_order *restrict self);
+void	monitoring_sh_2(t_order *restrict self);
+void	monitoring_sh_3(t_order *restrict self);
+void	monitoring_sh_4(t_order *restrict self);
 void	ext(t_order *self);
-void	loop(t_cntl *cntl);
+void		loop(t_cntl *cntl);
 void	*philo(t_order *self);
 int		monitoring_sh(t_order *restrict self, int status);
 void	delta_time(int usec);
 int		eat(t_order *restrict self);
-long	diff(t_order *restrict self, int flama_of_eat);
+long	diff(t_order *restrict self);
 int		idx(int index, int len);
 int		p_loop(t_order *restrict self);
 void	init_table(t_cntl *restrict cntl);
