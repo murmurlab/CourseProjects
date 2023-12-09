@@ -1,0 +1,12 @@
+{
+	"files.associations": {
+		"*.c": "c",
+		"__mutex_base": "c",
+		"fcntl.h": "c",
+		"readline.h": "c",
+		"algorithm": "c",
+		"string.h": "c",
+		"types.h": "c"
+	},
+	"functionHeaderExtension.headerFilePath": "/Users/ahbasara/Downloads/ms/sh/incs/include.h"
+}
