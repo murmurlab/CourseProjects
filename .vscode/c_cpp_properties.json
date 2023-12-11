@@ -4,7 +4,7 @@
             "name": "all",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/main/philosopher_problem/philo/incs",
+                "${workspaceFolder}/main/murmursh-copyxd/sh/incs",
                 "${workspaceFolder}/main/murmurlibc"
             ],
             "defines": [

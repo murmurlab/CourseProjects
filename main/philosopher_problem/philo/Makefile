@@ -2,14 +2,14 @@ CC =					clang
 
 libs	=					libs
 libr	=					# -L../murmurlibc -lmurmurc
-parrent_dir	=				philo
+parrent_dir	=				.
 incl	=					$(parrent_dir)/incs
 tests	=					$(parrent_dir)/testing
-incs	=					-I $(incl) -I ../murmurlibc -I $(tests)/incs
+incs	=					-I $(incl) -I $(tests)/incs
 
 wflags	=				-Wall -Wextra -Werror
 sanitize =				#-fsanitize=thread #-fsanitize=address
-CFLAGS =				-D BUFFER_SIZE=65535 -std=c99 -g $(incs) $(wflags) $(sanitize)
+CFLAGS =				-g $(incs) $(wflags) $(sanitize)
 
 os =					${shell uname -s}
 
@@ -40,11 +40,11 @@ SRC =					$(src_dir)/program.c \
 
 OBJ =					$(SRC:.c=.o)
 B_OBJ =					$(B_SRC:.c=.o)
-NAME =					program
+NAME =					philo
 BNAME =					checker
 MAKEFLAGS +=			-j$(NPROCS)
-murmurc				=	../murmurlibc/libmurmurc.a
-depend				=	r_murmurc
+# murmurc				=	../murmurlibc/libmurmurc.a
+depend				=	# r_murmurc
 # $(src_dir)%.o: $(src_dir)%.c
 # 	gcc -c $< -o $@ > /dev/null
 
@@ -87,7 +87,6 @@ ifeq "$(os)" "Darwin"
 else ifeq ($(os),Linux)
 # 	make -C $(libs)/minilibx-linux clean
 endif
-	make -C ../murmurlibc clean &
 	rm -f $(NAME) $(BNAME) & wait
 
 re:						fclean

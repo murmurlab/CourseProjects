@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/11/13 18:14:19 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/11/13 18:16:07 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@
 // ◦timestamp_in_ms X is thinking
 // ◦timestamp_in_ms X died
 
-# include "string.h"
 # include "stdio.h"
 # include "unistd.h"
 # include "stdlib.h"
@@ -81,7 +80,8 @@ typedef struct s_cntl
 	struct timeval						start;
 	struct timeval						print;
 	_Bool								stop;
-	void								(*monitoring_funs[4])(struct s_order *restrict);
+	void								(*monitoring_funs[4])(struct \
+										s_order *restrict);
 }										t_cntl;
 
 /**
@@ -116,7 +116,7 @@ void	monitoring_sh_2(t_order *restrict self);
 void	monitoring_sh_3(t_order *restrict self);
 void	monitoring_sh_4(t_order *restrict self);
 void	ext(t_order *self);
-void		loop(t_cntl *cntl);
+void	loop(t_cntl *cntl);
 void	*philo(t_order *self);
 int		monitoring_sh(t_order *restrict self, int status);
 void	delta_time(int usec);

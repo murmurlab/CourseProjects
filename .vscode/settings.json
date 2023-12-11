@@ -38,7 +38,10 @@
         "iterator": "c",
         "_pthread_types.h": "c",
         "typeinfo": "c",
-        "signal.h": "c"
+        "signal.h": "c",
+        "__locale": "c",
+        "ios": "c",
+        "__string": "c"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/clang",
     "lldb.displayFormat": "auto",

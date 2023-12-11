@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/12/07 19:25:08 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/12/11 15:47:10 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int		qsignal;
 
-int		set(t_main *data, char const * name, char const * value)
+int		set(t_main *data, char const *name, char const *value)
 {
 	char const	**a;
 	t_list	*find;
@@ -161,9 +161,7 @@ size_t	var_name_len(char *start)
 	_ = 0;
 	while (ft_var(start[_]))
 		_++;
-	if (_ > 0)
-		return (_);
-	return (0);
+	return (_);
 }
 
 size_t	len_literal(t_main *data)
@@ -171,6 +169,8 @@ size_t	len_literal(t_main *data)
 	size_t	len;
 	size_t	_;
 	size_t	size;
+	char	*var_name;
+	char	*var_value;
 
 	_ = data->_;
 	len = 0;
@@ -180,14 +180,24 @@ size_t	len_literal(t_main *data)
 		{
 			_++;
 			size = var_name_len(data->line + _);
-			ft_substr(data->line + _, 0, size);
-			len += ft_strlen(get_ref(data, ));
+			// printf("%d\n", size);
+			var_name = ft_substr(data->line + _, 0, size);
+			if (var_name && var_name[0])
+			{
+				var_value = get_ref(data, var_name);
+				if (var_value)
+					len += ft_strlen(var_value);
+				_ += size;
+			}
+			else
+				len++;
+			free(var_name);
 		}
 		else
 		{
 			len++;
+			_++;
 		}
-		_++;
 		// printf("ch: %c\n", data->line[data->_]);
 	}
 	return (len);
@@ -197,35 +207,55 @@ char	*expander_exp(t_main *data)
 {
 	size_t	i;
 	char	*ret;
-	size_t	stock;
-	char	*tmp;
-	
+	size_t	size;
+	char	*var_value;
+	char	*var_name;
+
 	i = 0;
-	// printf("char ile girildi: %c\n", data->line[data->_]);
+	size = 1;
 	data->_++;
-	ret = malloc(sizeof(char) * len_literal(data));
+	ret = calloc(sizeof(char), len_literal(data) + 1);
+	if (!ret)
+		return (NULL);
 	while (data->line[data->_] != '"')
 	{
 		if (data->line[data->_] == '$')
 		{
-			tmp = get_ref(data, var_name_len(data));
-			while (*tmp)
-				ret[i++] = *tmp++;
+			data->_++;
+			size = var_name_len(data->line + data->_);
+			var_name = ft_substr(data->line + data->_, 0, size);
+			if (var_name && var_name[0])
+			{
+				var_value = get_ref(data, var_name);
+				if (var_value)
+					while (*var_value)
+						ret[i++] = *var_value++;
+				data->_ += size;
+			}
+			else
+			{
+				ret[i++] = data->line[data->_ - 1];
+				// ret[i] = data->line[data->_];
+			}
+			free(var_name);
 		}
 		else
-			ret[i++] = data->line[data->_];
-		data->_++;
+			ret[i++] = data->line[data->_++];
 	}
-	printf("result: %s\n", ret);
-	data->flags[0] = 0;
-	return (0);
+	printf("result: %s i: %zu\n", ret, i);
+	return (ret);
 }
 
 int	parser(t_main *data)
 {
 	while (data->line[data->_] != 0)
 	{
-		if (data->line[data->_] == '"' && !data->flags[0])
+		if (data->line[data->_] == '"' && !data->flags[5])
+		{
+			expander_exp(data)
+			data->cmds = 
+		}
+		if (data->line[data->_] == '\'' && !data->flags[0])
 			expander_exp(data);
 		while (data->line[data->_] == '|')
 		{
@@ -270,9 +300,7 @@ int	main(void)
 	printf("ENV: %s\n", cy = get(&data, "PATH"));
 	free(cy);
 	set(&data, strdup("PATH"), get(&data, "PATH"));
-	printf("\n1\n");
 	set(&data, strdup("PATH"), get(&data, "PATH"));
-	printf("\n2\n");
 	// printf("a: %s\n", (((char **)data.vars->content)[1]));
 	// printf("a: %s\n", get(&data, "array"));
 
@@ -389,3 +417,30 @@ int	main(void)
  * 	pause();
  * }
  */
+
+// 🙂
+// int smile()
+// {
+// 	return(1);
+// }
+// 🤔
+// int think()
+// {
+// 	while (1)
+// 	{}
+// }
+// 😡
+// int angry()
+// {
+// 	return(-1);
+// }
+// 😴
+// void sleep()
+// {
+// 	pause();
+// }
+// 😐
+// char indecisive()
+// {
+// 	return (0);
+// }

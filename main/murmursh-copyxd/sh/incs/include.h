@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/12/06 21:56:28 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/12/11 15:16:44 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@
 #  define YELLOW "\x1B[33m"
 #  define BLUE "\x1B[34m"
 #  define RESET "\x1B[0m"
-
 #  define POSTFIX "$ "
 #  define SHELL_NAME "minishell"
 #  define PROMT SHELL_NAME POSTFIX
@@ -102,16 +101,17 @@ typedef	struct s_cmd
 {
 	char			*cmd;
 	char			**args;
-	int				in;
-	int				out;
+	int				*in;
+	int				*out;
 }		t_cmd;
 
 /**
- * 0	"
- * 1	$
- * 2	is cmd
- * 3	in infile
- * 4	in outfile
+ * 0	heredoc
+ * 1	truncate
+ * 2	infile
+ * 3	append
+ * 4	command exist
+ * 5	any
  */
 typedef	struct s_main
 {
