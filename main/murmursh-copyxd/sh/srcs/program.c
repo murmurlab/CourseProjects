@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/12/13 09:28:37 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/12/13 10:22:01 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,6 +259,16 @@ size_t	len_all(t_main *data, size_t offset)
 	}
 	printf("len: %zu\n", total);
 	return (total);
+}
+
+char	*get_var(t_main *data, char *var_name, size_t len)
+{
+	const char	*name = ft_substr(var_name, 0, len);
+	char		*tmp;
+
+	if (name && name[0])
+		tmp = get_ref(data, name);
+	return (free(name), tmp);
 }
 
 int		cpy_var(t_main *data, t_exp *exp)
