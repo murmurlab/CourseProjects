@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/12/11 15:16:44 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/12/13 02:52:42 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,15 @@ int	sh_exit();
  *	@var s_order::seq 
  */
 
+typedef struct s_exp
+{
+	size_t	i;
+	char	*ret;
+	size_t	size;
+	char	*var_value;
+	char	*var_name;
+}		t_exp;
+
 typedef struct s_com
 {
 	char *name;
@@ -105,6 +114,7 @@ typedef	struct s_cmd
 	int				*out;
 }		t_cmd;
 
+struct s_main;
 /**
  * 0	heredoc
  * 1	truncate
@@ -117,6 +127,7 @@ typedef	struct s_main
 {
 	char			flags[INT8_MAX];
 	void			(*coid)(int);
+	char			increases[INT8_MAX];
 	int				_;
 	char			*line;
 	t_com			*coms;

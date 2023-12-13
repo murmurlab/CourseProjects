@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/12/11 15:47:10 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/12/13 04:17:30 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,35 +123,30 @@ int	exe(t_com *coms, char *cmd)
 // 	strlen
 // }
 
-int	expander_str(t_main *data)
-{
-
-	while (data->line[data->_] != '\'')
-	{
-		
-	}
-	data->flags[0] = 0;
-	return (0);
-}
-
-int	expander_var(t_main *data)
-{
-	char	*ret;
-
-	
-	while (data->line[data->_] != ' ')
-	{
-		
-	}
-	data->flags[0] = 0;
-	return (0);
-}
-
-int	ft_var(int c)
+int	is_var(int c)
 {
 	return (((c >= 'a' && c <= 'z')
 			|| (c >= 'A' && c <= 'Z')) || (c >= '0' && c <= '9')
 			|| (c == '?') || (c == '_'));
+}
+
+/**
+ * @brief	('$' != c) && ('<' != c) &&
+ * 			('>' != c) && ('\\\\'' != c) &&
+ *			('"' != c) && ('|' != c) && (' ' != c)
+ * @param c 
+ * @return int 
+ */
+int	is_word(int c)
+{
+	return (('$' != c) && ('<' != c) && ('>' != c) && ('\'' != c) && \
+			('"' != c) && ('|' != c) && (' ' != c) && ('\0' != c));
+}
+
+int	is_text(int c)
+{
+	return (('$' != c) && ('<' != c) && ('>' != c) && \
+			('|' != c) && (' ' != c) && ('\0' != c));
 }
 
 size_t	var_name_len(char *start)
@@ -159,108 +154,191 @@ size_t	var_name_len(char *start)
 	int		_;
 
 	_ = 0;
-	while (ft_var(start[_]))
+	while (is_var(start[_]))
 		_++;
 	return (_);
 }
 
-size_t	len_literal(t_main *data)
+size_t	*len_literal(t_main *data, size_t offset)
 {
 	size_t	len;
-	size_t	_;
-	size_t	size;
-	char	*var_name;
-	char	*var_value;
+	t_exp	exp;
 
-	_ = data->_;
+	exp.i = offset;
 	len = 0;
-	while (data->line[_] != '"')
+	while (data->line[exp.i] != '"' && data->line[exp.i])
 	{
-		if (data->line[_] == '$')
+		if (data->line[exp.i] == '$')
 		{
-			_++;
-			size = var_name_len(data->line + _);
-			// printf("%d\n", size);
-			var_name = ft_substr(data->line + _, 0, size);
-			if (var_name && var_name[0])
+			exp.i++;
+			exp.size = var_name_len(data->line + exp.i);
+			exp.var_name = ft_substr(data->line + exp.i, 0, exp.size);
+			if (exp.var_name && exp.var_name[0])
 			{
-				var_value = get_ref(data, var_name);
-				if (var_value)
-					len += ft_strlen(var_value);
-				_ += size;
+				exp.var_value = get_ref(data, exp.var_name);
+				if (exp.var_value)
+					len += ft_strlen(exp.var_value);
+				exp.i += exp.size;
 			}
 			else
 				len++;
-			free(var_name);
+			free(exp.var_name);
 		}
 		else
-		{
-			len++;
-			_++;
-		}
-		// printf("ch: %c\n", data->line[data->_]);
+			(void)(len++, exp.i++ + 1);
 	}
+	printf("len literal: %zu\n", len);
+	return ((size_t [2]){len, exp.i});
+}
+
+size_t	len_string(t_main *data, size_t offset)
+{
+	size_t	len;
+	size_t	_;
+
+	len = 0;
+	_ = offset;
+	while (data->line[_] != '\'' && data->line[_])
+		(void)(len++, _++);
+	printf("len string: %zu\n", len);
 	return (len);
+}
+
+size_t	len_word(t_main *data, size_t offset)
+{
+	size_t	len;
+	size_t	_;
+
+	len = 0;
+	_ = offset;
+	while (is_word(data->line[_]))
+	{
+		_++;
+		len++;
+	}
+	printf("len normal: %zu\n", len);
+	return (len);
+}
+
+size_t	len_all(t_main *data, size_t offset)
+{
+	size_t	total;
+	size_t	len;
+	int		quote;
+	size_t	index;
+	size_t	*bakcup;
+	size_t	left;
+
+	len = 0;
+	total = 0;
+	quote = 0;
+	index = offset;
+	while (is_text(data->line[index]))
+	{
+		quote = data->increases[data->line[index]];
+		printf("to: %c quote: %d index: %zu\n", data->line[index], quote, index);
+		if (data->line[index] == '\'')
+			len = len_string(data, index + (quote / 2));
+		if (data->line[index] == '"')
+		{
+			bakcup = len_literal(data, index + (quote / 2));
+		}
+		if (is_word(data->line[index]))
+			len = len_word(data, index + (quote / 2));
+		if (!bakcup[1])
+			left = 0;
+		else
+			left = (bakcup[1] - 2);
+		index += len + quote + left;
+		total += len + bakcup[0];
+		len = 0;
+		bakcup[0] = 0;
+		bakcup[1] = 0;
+	}
+	printf("len: %zu\n", total);
+	return (total);
+}
+
+int		cpy_var(t_main *data, t_exp *exp)
+{
+	data->_++;
+	exp->size = var_name_len(data->line + data->_);
+	exp->var_name = ft_substr(data->line + data->_, 0, exp->size);
+	if (!exp->var_name)
+		return (1);
+	if (exp->var_name && exp->var_name[0])
+	{
+		exp->var_value = get_ref(data, exp->var_name);
+		if (exp->var_value)
+			while (*exp->var_value)
+				exp->ret[exp->i++] = *exp->var_value++;
+		data->_ += exp->size;
+	}
+	else
+		exp->ret[exp->i++] = data->line[data->_ - 1];
+	free(exp->var_name);
+	return (0);
 }
 
 char	*expander_exp(t_main *data)
 {
-	size_t	i;
-	char	*ret;
-	size_t	size;
-	char	*var_value;
-	char	*var_name;
+	t_exp	exp;
 
-	i = 0;
-	size = 1;
+	exp.i = 0;
+	exp.size = 1;
 	data->_++;
-	ret = calloc(sizeof(char), len_literal(data) + 1);
-	if (!ret)
+	printf("len: %zu data_: %d\n", len_literal(data, data->_)[0], data->_);
+	exp.ret = calloc(sizeof(char), len_literal(data, data->_)[0] + 1);
+	if (!exp.ret)
 		return (NULL);
-	while (data->line[data->_] != '"')
+	while (data->line[data->_] != '"' && data->line[data->_])
 	{
 		if (data->line[data->_] == '$')
 		{
-			data->_++;
-			size = var_name_len(data->line + data->_);
-			var_name = ft_substr(data->line + data->_, 0, size);
-			if (var_name && var_name[0])
-			{
-				var_value = get_ref(data, var_name);
-				if (var_value)
-					while (*var_value)
-						ret[i++] = *var_value++;
-				data->_ += size;
-			}
-			else
-			{
-				ret[i++] = data->line[data->_ - 1];
-				// ret[i] = data->line[data->_];
-			}
-			free(var_name);
+			if (cpy_var(data, &exp))
+				return (NULL);
 		}
 		else
-			ret[i++] = data->line[data->_++];
+			exp.ret[exp.i++] = data->line[data->_++];
 	}
-	printf("result: %s i: %zu\n", ret, i);
-	return (ret);
+	printf("result: %s i: %zu\n", exp.ret, exp.i);
+	return (exp.ret);
 }
+
+// int	set_value(t_main *data, char *str)
+// {
+// 		if (!data->flags[5])
+// 			{
+// 				// data->cmds = ;
+// 			}
+// }
 
 int	parser(t_main *data)
 {
+	static char	*a;
+
 	while (data->line[data->_] != 0)
 	{
-		if (data->line[data->_] == '"' && !data->flags[5])
-		{
-			expander_exp(data)
-			data->cmds = 
-		}
-		if (data->line[data->_] == '\'' && !data->flags[0])
-			expander_exp(data);
-		while (data->line[data->_] == '|')
-		{
-			// if ()
-		}		
+		// if (data->line[data->_] == '"')
+		// {
+		// 	printf("1: [%c]\n", data->line[data->_]);
+		// 	expander_exp(data);
+		// 	printf("2: [%c]\n", data->line[data->_]);
+		// }
+		// else if (data->line[data->_] == '\'')
+		// {
+		// 	data->_++;
+		// 	printf("1.5: %zu\n", len_string(data, 1));
+		// 	exit(0);
+		// }
+		// else if (is_word(data->line[data->_]))
+		// {
+		// 	printf("1.5: %zu\n", len(data, 0));
+		// 	exit(0);
+		// }
+		len_all(data, 0);
+		break ;
+		// 1$a'$a'""1$a""$a''$a $a
 		data->_++;
 	}
 	
@@ -310,6 +388,11 @@ int	main(void)
 	// write(1, "\033[A", 3);
 	ft_memset(data.flags, 0, INT8_MAX);
 	// tekte tanimla
+	// data.fun = malloc(sizeof(size_t (*)(t_main *data, size_t offset)) * 3);
+	ft_bzero(data.increases, INT8_MAX);
+	data.increases['"'] = (char)2;
+	data.increases['\''] = (char)2;
+	data.increases[0] = (char)0;
 	data.cmds = NULL;
 	data.coms = (t_com []){
 		(t_com){"echo", 0, 1},
