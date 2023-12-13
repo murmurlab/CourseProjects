@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/12/13 04:17:30 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/12/13 09:28:37 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,9 +163,11 @@ size_t	*len_literal(t_main *data, size_t offset)
 {
 	size_t	len;
 	t_exp	exp;
+	size_t	*ret;
 
 	exp.i = offset;
 	len = 0;
+	ret = malloc(sizeof(size_t) * 2);
 	while (data->line[exp.i] != '"' && data->line[exp.i])
 	{
 		if (data->line[exp.i] == '$')
@@ -185,10 +187,12 @@ size_t	*len_literal(t_main *data, size_t offset)
 			free(exp.var_name);
 		}
 		else
-			(void)(len++, exp.i++ + 1);
+			(void)(len++, exp.i++);
 	}
-	printf("len literal: %zu\n", len);
-	return ((size_t [2]){len, exp.i});
+	printf("len literal: %zu sizereal: %zu\n", len, exp.i - offset);
+	ret[0] = len;
+	ret[1] = exp.i - offset;
+	return (ret);
 }
 
 size_t	len_string(t_main *data, size_t offset)
@@ -233,6 +237,9 @@ size_t	len_all(t_main *data, size_t offset)
 	total = 0;
 	quote = 0;
 	index = offset;
+	bakcup = malloc(sizeof(size_t) * 2);
+	bakcup[0] = 0;
+	bakcup[1] = 0;
 	while (is_text(data->line[index]))
 	{
 		quote = data->increases[data->line[index]];
@@ -240,15 +247,10 @@ size_t	len_all(t_main *data, size_t offset)
 		if (data->line[index] == '\'')
 			len = len_string(data, index + (quote / 2));
 		if (data->line[index] == '"')
-		{
 			bakcup = len_literal(data, index + (quote / 2));
-		}
 		if (is_word(data->line[index]))
 			len = len_word(data, index + (quote / 2));
-		if (!bakcup[1])
-			left = 0;
-		else
-			left = (bakcup[1] - 2);
+		left = bakcup[1]; // 
 		index += len + quote + left;
 		total += len + bakcup[0];
 		len = 0;
@@ -339,6 +341,8 @@ int	parser(t_main *data)
 		len_all(data, 0);
 		break ;
 		// 1$a'$a'""1$a""$a''$a $a
+		// 123123'123'1"12"1
+		// 123123'123'1"12"1
 		data->_++;
 	}
 	
