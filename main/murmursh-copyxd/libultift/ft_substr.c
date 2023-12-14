@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin   <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 12:11:10 by marvin            #+#    #+#             */
-/*   Updated: 2023/10/30 14:30:06 by marvin           ###   ########.fr       */
+/*   Updated: 2023/12/13 23:01:41 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	i;
 
 	i = 0;
+	if (!s)
+		return (NULL);
 	if (start >= ft_strlen(s))
 		return (ft_strdup(""));
 	if (len > ft_strlen(s + start))

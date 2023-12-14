@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/12/13 02:52:42 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/12/13 22:44:38 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@
 ** #  define S 115
 ** #  define D 100
 */
+
+#  define RED "\x1B[31m"
+#  define GREEN "\x1B[32m"
+#  define YELLOW "\x1B[33m"
+#  define BLUE "\x1B[34m"
+#  define RESET "\x1B[0m"
+#  define POSTFIX "$ "
+#  define SHELL_NAME "minishell"
+#  define PROMT SHELL_NAME POSTFIX
+
+#  define CMD_COUNT 8
+
 # elif defined(__APPLE__)
 /* OSX. --------------------------------------------------- */
 /*
@@ -52,6 +64,8 @@
 
 # endif
 
+# define INT8_MAX 127
+
 # include "libft.h"
 
 # include <string.h>
@@ -63,7 +77,7 @@
 // # include <readline/history.h>
 # include <fcntl.h>
 // # include <sys/wait.h>
-// # include <signal.h>
+# include <signal.h>
 // # include <sys/ioctl.h>
 // # include <termios.h>
 // # include <errno.h>

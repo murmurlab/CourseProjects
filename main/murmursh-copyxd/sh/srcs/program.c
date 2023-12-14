@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/12/13 10:22:01 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/12/14 15:28:30 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,7 +250,7 @@ size_t	len_all(t_main *data, size_t offset)
 			bakcup = len_literal(data, index + (quote / 2));
 		if (is_word(data->line[index]))
 			len = len_word(data, index + (quote / 2));
-		left = bakcup[1]; // 
+		left = bakcup[1];
 		index += len + quote + left;
 		total += len + bakcup[0];
 		len = 0;
@@ -261,38 +261,70 @@ size_t	len_all(t_main *data, size_t offset)
 	return (total);
 }
 
-char	*get_var(t_main *data, char *var_name, size_t len)
+/**
+ * @brief get_var(data, after_dollar, var_name_len(after_dollar))
+ * 
+ * @param data 
+ * @param after_dollar 
+ * @param len 
+ * @return char* 
+ */
+char	*get_var_ref(t_main *data, char *var_name, size_t len)
 {
 	const char	*name = ft_substr(var_name, 0, len);
 	char		*tmp;
 
 	if (name && name[0])
+	{
 		tmp = get_ref(data, name);
-	return (free(name), tmp);
+		return (free((void *)name), tmp);
+	}
+	else if (name)
+		return (free((void *)name), NULL);
+	return (NULL);
 }
 
-int		cpy_var(t_main *data, t_exp *exp)
+int		cpy_var(t_main *data, t_exp *exp, size_t offset)
 {
 	data->_++;
-	exp->size = var_name_len(data->line + data->_);
-	exp->var_name = ft_substr(data->line + data->_, 0, exp->size);
-	if (!exp->var_name)
-		return (1);
-	if (exp->var_name && exp->var_name[0])
-	{
-		exp->var_value = get_ref(data, exp->var_name);
-		if (exp->var_value)
-			while (*exp->var_value)
-				exp->ret[exp->i++] = *exp->var_value++;
-		data->_ += exp->size;
-	}
-	else
+	exp->var_value = get_var_ref(data, (data->line + data->_), \
+								exp->size = var_name_len(data->line + data->_));
+	if (exp->var_value)
+		while (*exp->var_value)
+			exp->ret[exp->i++] = *exp->var_value++;
+	data->_ += exp->size;
+	if (!exp->var_value)
 		exp->ret[exp->i++] = data->line[data->_ - 1];
 	free(exp->var_name);
 	return (0);
 }
 
-char	*expander_exp(t_main *data)
+char	*expander_exp(t_main *data, size_t offset)
+{
+	t_exp	exp;
+	size_t	_;
+
+	exp.i = 0;
+	_ = offset + 1;
+	printf("len: %zu data_: %zu\n", len_literal(data, _)[0], _);
+	exp.ret = calloc(sizeof(char), len_literal(data, _)[0] + 1);
+	if (!exp.ret)
+		return (NULL);
+	while (data->line[_] != '"' && data->line[_])
+	{
+		if (data->line[_] == '$')
+		{
+			if (cpy_var(data, &exp))
+				return (NULL);
+		}
+		else
+			exp.ret[exp.i++] = data->line[_++];
+	}
+	printf("result: [%s] i: %zu\n", exp.ret, exp.i);
+	return (exp.ret);
+}
+
+char	*expander_exp2(t_main *data)
 {
 	t_exp	exp;
 
@@ -313,8 +345,14 @@ char	*expander_exp(t_main *data)
 		else
 			exp.ret[exp.i++] = data->line[data->_++];
 	}
+	printf("log11111111111111111111111111111111\n");
 	printf("result: %s i: %zu\n", exp.ret, exp.i);
 	return (exp.ret);
+}
+
+char	*join_all(t_main *data, size_t offset)
+{
+	// 
 }
 
 // int	set_value(t_main *data, char *str)
@@ -324,6 +362,7 @@ char	*expander_exp(t_main *data)
 // 				// data->cmds = ;
 // 			}
 // }
+
 
 int	parser(t_main *data)
 {
@@ -348,9 +387,11 @@ int	parser(t_main *data)
 		// 	printf("1.5: %zu\n", len(data, 0));
 		// 	exit(0);
 		// }
+		expander_exp(data, data->_);
 		len_all(data, 0);
+		// expander_exp2(data);
 		break ;
-		// 1$a'$a'""1$a""$a''$a $a
+		// 1$a'$a'""1""$a''$a $a
 		// 123123'123'1"12"1
 		// 123123'123'1"12"1
 		data->_++;

@@ -41,7 +41,8 @@
         "signal.h": "c",
         "__locale": "c",
         "ios": "c",
-        "__string": "c"
+        "__string": "c",
+        "string.h": "c"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/clang",
     "lldb.displayFormat": "auto",

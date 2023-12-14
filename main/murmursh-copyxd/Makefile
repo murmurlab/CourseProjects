@@ -2,7 +2,7 @@ CC =					clang
 
 # rl		=					-L /goinfre/$(shell whoami)/homebrew/Cellar/readline/8.2.7/lib -lreadline
 # rlI		=					-I /goinfre/$(shell whoami)/homebrew/Cellar/readline/8.2.7/include
-rl		=					-L lib/lib/readline/lib -lreadline
+rl		=					-L lib/lib/readline/lib -lreadline -ltinfo
 rlI		=					-I lib/lib/readline/include
 
 libs	=					libs
@@ -15,7 +15,7 @@ incs	=					-I $(incl) -I ./libultift -I $(tests)/incs $(rlI)
 
 wflags	=				# -Wall -Wextra -Werror
 sanitize =				#-fsanitize=thread #-fsanitize=address
-CFLAGS =				-D BUFFER_SIZE=65535 -std=c99 -g $(incs) $(wflags)
+CFLAGS =				-D BUFFER_SIZE=65535 -g $(incs) $(wflags) # -std=c99
 
 os =					${shell uname -s}
 
