@@ -8,6 +8,7 @@
 #  define A 97
 #  define S 115
 #  define D 100 */
+
 # elif defined(__APPLE__)
 	/* OSX. --------------------------------------------------- */
 /* #  include "./apple.h"
@@ -16,10 +17,16 @@
 #  define S 1
 #  define D 2 */
 
-# ifndef TEST
-#  define TEST 0
 # endif
 
+# define RED "\x1B[31m"
+# define GREEN "\x1B[32m"
+# define YELLOW "\x1B[33m"
+# define BLUE "\x1B[34m"
+# define RESET "\x1B[0m"
+
+# ifndef TEST
+#  define TEST 0
 # endif
 
 # include "include.h"

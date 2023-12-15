@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/12/15 03:12:35 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/12/16 00:54:52 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ size_t	*len_literal(t_main *data, size_t offset)
 		else
 			(void)(len++, exp.i++);
 	}
-	printf("len literal: %zu sizereal: %zu\n", len, exp.i - offset);
+	// printf("len literal: %zu sizereal: %zu\n", len, exp.i - offset);
 	ret[0] = len;
 	ret[1] = exp.i - offset;
 	return (ret);
@@ -205,7 +205,7 @@ size_t	len_string(t_main *data, size_t offset)
 	_ = offset;
 	while (data->line[_] != '\'' && data->line[_])
 		(void)(len++, _++);
-	printf("len string: %zu\n", len);
+	// printf("len string: %zu\n", len);
 	return (len);
 }
 
@@ -221,7 +221,7 @@ size_t	len_word(t_main *data, size_t offset)
 		_++;
 		len++;
 	}
-	printf("len normal: %zu\n", len);
+	// printf("len normal: %zu\n", len);
 	return (len);
 }
 
@@ -364,7 +364,6 @@ char	*join_all(t_main *data, size_t offset)
 	size_t			_str;
 	size_t			_new;
 
-	
 	_str = offset;
 	while (is_text(data->line[_str]))
 	{
@@ -411,10 +410,6 @@ int	parser(t_main *data)
 			run_test();
 		join_all(data, data->_);
 		break ;
-		// 1$a'$a'""1""$a''$a $a
-		// 123123'123'1"12"1
-		// 123123'123'1"12"1
-		// "a$a99-$a"
 		data->_++;
 	}
 	

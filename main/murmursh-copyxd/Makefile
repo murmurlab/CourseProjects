@@ -27,9 +27,11 @@ tests	=					$(parrent_dir)/testing
 incs	=					-I $(incl) -I ./libultift -I $(tests)/incs $(rlI)
 							
 
-sanitize =				-fsanitize=address #-fsanitize=thread 
-CFLAGS =				-D BUFFER_SIZE=65535 -D TEST=0 	-g $(incs) $(wflags)
-
+sanitize =				-fsanitize=address #-fsanitize=thread
+test:=
+vars :=					-D BUFFER_SIZE=65535 \
+						-D TEST=$(test)
+CFLAGS :=				$(vars) -g $(incs) $(wflags)
 
 src_dir = $(parrent_dir)/srcs
 b_src_dir = $(parrent_dir)/srcs
@@ -57,6 +59,10 @@ depend				=	r_murmurc r_rl
 all:	$(depend) #bonus
 	$(MAKE) $(NAME)
 	@echo "===================================program======================================\n"
+
+# t:
+# 	$(MAKE) clean
+# 	$(MAKE) all
 
 b: bonus
 
