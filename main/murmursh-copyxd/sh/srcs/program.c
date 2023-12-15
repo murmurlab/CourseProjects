@@ -6,11 +6,12 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/12/14 15:28:30 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/12/15 03:12:35 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include.h"
+#include "testing.h"
 #include <stdarg.h>
 
 int		qsignal;
@@ -139,13 +140,13 @@ int	is_var(int c)
  */
 int	is_word(int c)
 {
-	return (('$' != c) && ('<' != c) && ('>' != c) && ('\'' != c) && \
+	return (('<' != c) && ('>' != c) && ('\'' != c) && \
 			('"' != c) && ('|' != c) && (' ' != c) && ('\0' != c));
 }
 
 int	is_text(int c)
 {
-	return (('$' != c) && ('<' != c) && ('>' != c) && \
+	return (('<' != c) && ('>' != c) && \
 			('|' != c) && (' ' != c) && ('\0' != c));
 }
 
@@ -215,7 +216,7 @@ size_t	len_word(t_main *data, size_t offset)
 
 	len = 0;
 	_ = offset;
-	while (is_word(data->line[_]))
+	while (is_word(data->line[_]) && !((data->line[_] == '$') && is_var(data->line[_ + 1])))
 	{
 		_++;
 		len++;
@@ -231,8 +232,9 @@ size_t	len_all(t_main *data, size_t offset)
 	int		quote;
 	size_t	index;
 	size_t	*bakcup;
-	size_t	left;
+	// size_t	left;
 
+	// left = var_name_len(data->line);
 	len = 0;
 	total = 0;
 	quote = 0;
@@ -240,23 +242,25 @@ size_t	len_all(t_main *data, size_t offset)
 	bakcup = malloc(sizeof(size_t) * 2);
 	bakcup[0] = 0;
 	bakcup[1] = 0;
-	while (is_text(data->line[index]))
+	while (is_text(data->line[index]) && !((data->line[index] == '$') && is_var(data->line[index + 1])))
 	{
 		quote = data->increases[data->line[index]];
-		printf("to: %c quote: %d index: %zu\n", data->line[index], quote, index);
 		if (data->line[index] == '\'')
 			len = len_string(data, index + (quote / 2));
-		if (data->line[index] == '"')
+		if (data->line[index] == '"') // else
+		{
+			free(bakcup);
 			bakcup = len_literal(data, index + (quote / 2));
-		if (is_word(data->line[index]))
+		}
+		if (is_word(data->line[index]) && !((data->line[index] == '$') && is_var(data->line[index + 1]))) // else
 			len = len_word(data, index + (quote / 2));
-		left = bakcup[1];
-		index += len + quote + left;
+		index += len + (size_t)quote + bakcup[1];
 		total += len + bakcup[0];
 		len = 0;
 		bakcup[0] = 0;
 		bakcup[1] = 0;
 	}
+	free(bakcup);
 	printf("len: %zu\n", total);
 	return (total);
 }
@@ -286,16 +290,17 @@ char	*get_var_ref(t_main *data, char *var_name, size_t len)
 
 int		cpy_var(t_main *data, t_exp *exp, size_t offset)
 {
-	data->_++;
-	exp->var_value = get_var_ref(data, (data->line + data->_), \
-								exp->size = var_name_len(data->line + data->_));
+	size_t _;
+
+	_ = offset;
+	exp->var_value = get_var_ref(data, (data->line + _), \
+								exp->size = var_name_len(data->line + _));
 	if (exp->var_value)
 		while (*exp->var_value)
 			exp->ret[exp->i++] = *exp->var_value++;
-	data->_ += exp->size;
+	_ += exp->size;
 	if (!exp->var_value)
-		exp->ret[exp->i++] = data->line[data->_ - 1];
-	free(exp->var_name);
+		exp->ret[exp->i++] = data->line[_ - 1]; // "$"
 	return (0);
 }
 
@@ -314,45 +319,58 @@ char	*expander_exp(t_main *data, size_t offset)
 	{
 		if (data->line[_] == '$')
 		{
-			if (cpy_var(data, &exp))
+			if (cpy_var(data, &exp, _ + 1))
 				return (NULL);
+			_ += exp.size + 1;
 		}
 		else
 			exp.ret[exp.i++] = data->line[_++];
 	}
 	printf("result: [%s] i: %zu\n", exp.ret, exp.i);
 	return (exp.ret);
+	// 
 }
 
-char	*expander_exp2(t_main *data)
-{
-	t_exp	exp;
+// char	*expander_exp2(t_main *data)
+// {
+// 	t_exp	exp;
 
-	exp.i = 0;
-	exp.size = 1;
-	data->_++;
-	printf("len: %zu data_: %d\n", len_literal(data, data->_)[0], data->_);
-	exp.ret = calloc(sizeof(char), len_literal(data, data->_)[0] + 1);
-	if (!exp.ret)
-		return (NULL);
-	while (data->line[data->_] != '"' && data->line[data->_])
-	{
-		if (data->line[data->_] == '$')
-		{
-			if (cpy_var(data, &exp))
-				return (NULL);
-		}
-		else
-			exp.ret[exp.i++] = data->line[data->_++];
-	}
-	printf("log11111111111111111111111111111111\n");
-	printf("result: %s i: %zu\n", exp.ret, exp.i);
-	return (exp.ret);
-}
+// 	exp.i = 0;
+// 	exp.size = 1;
+// 	data->_++;
+// 	printf("len: %zu data_: %d\n", len_literal(data, data->_)[0], data->_);
+// 	exp.ret = calloc(sizeof(char), len_literal(data, data->_)[0] + 1);
+// 	if (!exp.ret)
+// 		return (NULL);
+// 	while (data->line[data->_] != '"' && data->line[data->_])
+// 	{
+// 		if (data->line[data->_] == '$')
+// 		{
+// 			if (cpy_var(data, &exp))
+// 				return (NULL);
+// 		}
+// 		else
+// 			exp.ret[exp.i++] = data->line[data->_++];
+// 	}
+// 	printf("log11111111111111111111111111111111\n");
+// 	printf("result: %s i: %zu\n", exp.ret, exp.i);
+// 	return (exp.ret);
+// }
 
 char	*join_all(t_main *data, size_t offset)
 {
-	// 
+	const size_t	end_len = len_all(data, 0);
+	char const		*end_string = malloc(end_len * sizeof(char));
+	size_t			_str;
+	size_t			_new;
+
+	
+	_str = offset;
+	while (is_text(data->line[_str]))
+	{
+		return (9);
+	}
+	
 }
 
 // int	set_value(t_main *data, char *str)
@@ -387,13 +405,16 @@ int	parser(t_main *data)
 		// 	printf("1.5: %zu\n", len(data, 0));
 		// 	exit(0);
 		// }
-		expander_exp(data, data->_);
-		len_all(data, 0);
+		// expander_exp(data, data->_);
 		// expander_exp2(data);
+		if (TEST)
+			run_test();
+		join_all(data, data->_);
 		break ;
 		// 1$a'$a'""1""$a''$a $a
 		// 123123'123'1"12"1
 		// 123123'123'1"12"1
+		// "a$a99-$a"
 		data->_++;
 	}
 	

@@ -15,8 +15,15 @@
 #  define A 0
 #  define S 1
 #  define D 2 */
+
+# ifndef TEST
+#  define TEST 0
+# endif
+
 # endif
 
 # include "include.h"
+
+void run_test();
 
 #endif

@@ -48,5 +48,6 @@
     "lldb.displayFormat": "auto",
     "lldb.showDisassembly": "auto",
     "lldb.dereferencePointers": true,
-    "lldb.consoleMode": "evaluate"
+    "lldb.consoleMode": "evaluate",
+    "functionHeaderExtension.headerFilePath": "/Users/ahbasara/sources/repos/projects/main/murmursh-copyxd/sh/incs/include.h"
 }

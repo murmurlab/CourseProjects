@@ -5,6 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/main/murmursh-copyxd/sh/incs",
+                "${workspaceFolder}/main/murmursh-copyxd/sh/testing/incs",
                 "${workspaceFolder}/main/murmurlibc"
             ],
             "defines": [

@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/12/13 22:44:38 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/12/15 02:22:21 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@
 // # include <sys/types.h>
 // # include <dirent.h>
 
-// # include "testing.h"
+# include "testing.h"
 
 typedef void			t_if;
 typedef void			covid;
@@ -152,6 +152,9 @@ typedef	struct s_main
 
 
 /* FUNCTIONS */
+int	is_var(int c);
+int	is_text(int c);
+size_t	var_name_len(char *start);
 int	check(t_list *node, void *cmp);
 int		set(t_main *data, char const * name, char const * value);
 int	parser();

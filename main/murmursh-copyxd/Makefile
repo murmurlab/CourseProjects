@@ -1,8 +1,22 @@
+wflags	=				# -Wall -Wextra -Werror
+os =					${shell uname -s}
+
+ifeq '$(os)' 'Darwin'
+	ltinfo =
+	wflags += -std=c99
+# 	mlxLinkFlags =		-framework OpenGL -framework AppKit -L$(libs)/minilibx_opengl_20191021 -lmlx
+# 	incs +=				-I $(libs)/minilibx_opengl_20191021
+else ifeq '$(os)' 'Linux'
+	ltinfo =			-ltinfo
+# 	mlxLinkFlags =		-L minilibx-linux -L$(libs)/minilibx-linux -lmlx -lXext -lX11
+# 	incs +=				-I $(libs)/minilibx-linux
+endif
+
 CC =					clang
 
 # rl		=					-L /goinfre/$(shell whoami)/homebrew/Cellar/readline/8.2.7/lib -lreadline
 # rlI		=					-I /goinfre/$(shell whoami)/homebrew/Cellar/readline/8.2.7/include
-rl		=					-L lib/lib/readline/lib -lreadline -ltinfo
+rl		=					-L lib/lib/readline/lib -lreadline $(ltinfo)
 rlI		=					-I lib/lib/readline/include
 
 libs	=					libs
@@ -13,25 +27,14 @@ tests	=					$(parrent_dir)/testing
 incs	=					-I $(incl) -I ./libultift -I $(tests)/incs $(rlI)
 							
 
-wflags	=				# -Wall -Wextra -Werror
-sanitize =				#-fsanitize=thread #-fsanitize=address
-CFLAGS =				-D BUFFER_SIZE=65535 -g $(incs) $(wflags) # -std=c99
+sanitize =				-fsanitize=address #-fsanitize=thread 
+CFLAGS =				-D BUFFER_SIZE=65535 -D TEST=0 	-g $(incs) $(wflags)
 
-os =					${shell uname -s}
-
-ifeq '$(os)' 'Darwin'
-# 	mlxLinkFlags =		-framework OpenGL -framework AppKit -L$(libs)/minilibx_opengl_20191021 -lmlx
-# 	incs +=				-I $(libs)/minilibx_opengl_20191021
-else ifeq '$(os)' 'Linux'
-# 	mlxLinkFlags =		-L minilibx-linux -L$(libs)/minilibx-linux -lmlx -lXext -lX11
-# 	incs +=				-I $(libs)/minilibx-linux
-endif
 
 src_dir = $(parrent_dir)/srcs
 b_src_dir = $(parrent_dir)/srcs
 
-S_SRC =					# $(src_dir)/shared.c \
-						# $(tests)/testing.c
+S_SRC =					$(tests)/testing.c
 
 B_SRC =					$(b_src_dir)/checker.c \
 						$(S_SRC)
@@ -65,7 +68,7 @@ bonus:		$(depend) $(B_OBJ)
 	$(CC) $(CFLAGS) $(B_OBJ) -o $(BNAME) $(libr)
 
 $(NAME):	$(murmurc) $(lrl) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(libr) -o $(NAME)
+	$(CC) $(CFLAGS) $(sanitize) $(OBJ) $(libr) -o $(NAME)
 
 r_murmurc:
 	make -C ./libultift -j$(NPROCS)
