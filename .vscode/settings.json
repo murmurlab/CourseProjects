@@ -42,7 +42,8 @@
         "__locale": "c",
         "ios": "c",
         "__string": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "libft.h": "c"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/clang",
     "lldb.displayFormat": "auto",

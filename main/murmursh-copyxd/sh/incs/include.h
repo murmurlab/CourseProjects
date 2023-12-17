@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/12/16 00:11:13 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/12/17 03:33:42 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,23 +94,32 @@ int	sh_exit();
  *	@var s_order::seq 
  */
 
-typedef struct s_exp
+typedef struct	s_exp
 {
 	size_t	i;
 	char	*ret;
+	size_t	*duo;
 	size_t	size;
 	char	*var_value;
 	char	*var_name;
 }		t_exp;
 
-typedef struct s_com
+typedef	struct	s_all
+{
+	int		quote;
+	size_t	len;
+	size_t	index;
+	size_t	*ptr; // [0]-> line, [1]-> expanded
+}		t_all;
+
+typedef struct	s_com
 {
 	char *name;
 	int (*func)();
 	int num;
 }		t_com;
 
-typedef	struct s_cmd
+typedef	struct	s_cmd
 {
 	char			*cmd;
 	char			**args;
@@ -118,7 +127,7 @@ typedef	struct s_cmd
 	int				*out;
 }		t_cmd;
 
-struct s_main;
+struct	s_main;
 /**
  * 0	heredoc
  * 1	truncate
@@ -127,7 +136,7 @@ struct s_main;
  * 4	command exist
  * 5	any
  */
-typedef	struct s_main
+typedef	struct	s_main
 {
 	char			flags[INT8_MAX];
 	void			(*coid)(int);
@@ -142,6 +151,8 @@ typedef	struct s_main
 
 
 /* FUNCTIONS */
+size_t	*expander_exp(t_main *data, char *dst, size_t offset);
+char	*get_var_ref(t_main *data, char *var_name, size_t len);
 size_t	len_all(t_main *data, size_t offset);
 int	is_var(int c);
 int	is_text(int c);

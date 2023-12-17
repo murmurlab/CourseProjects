@@ -25,6 +25,8 @@
 # define BLUE "\x1B[34m"
 # define RESET "\x1B[0m"
 
+# define VAR "0000"
+
 # ifndef TEST
 #  define TEST 0
 # endif

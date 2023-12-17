@@ -28,7 +28,7 @@ incs	=					-I $(incl) -I ./libultift -I $(tests)/incs $(rlI)
 							
 
 sanitize =				-fsanitize=address #-fsanitize=thread
-test:=
+test:=					0
 vars :=					-D BUFFER_SIZE=65535 \
 						-D TEST=$(test)
 CFLAGS :=				$(vars) -g $(incs) $(wflags)

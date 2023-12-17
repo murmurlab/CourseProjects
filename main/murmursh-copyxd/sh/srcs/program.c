@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/12/16 00:54:52 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/12/17 03:54:12 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,38 @@
 #include <stdarg.h>
 
 int		qsignal;
+
+char	*ft_strcpy(char *dest, char *src)
+{
+	unsigned int i;
+
+	i = 0;
+	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = src[i];
+	return (dest);
+}
+
+char	*ft_strncpy(char *dest, char *src, unsigned int n)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (src[i] != '\0' && i < n)
+	{
+		dest[i] = src[i];
+		++i;
+	}
+	while (i < n)
+	{
+		dest[i] = '\0';
+		i++;
+	}
+	return (dest);
+}
 
 int		set(t_main *data, char const *name, char const *value)
 {
@@ -162,38 +194,33 @@ size_t	var_name_len(char *start)
 
 size_t	*len_literal(t_main *data, size_t offset)
 {
-	size_t	len;
 	t_exp	exp;
-	size_t	*ret;
 
-	exp.i = offset;
-	len = 0;
-	ret = malloc(sizeof(size_t) * 2);
-	while (data->line[exp.i] != '"' && data->line[exp.i])
+	exp.duo = malloc(sizeof(size_t) * 2);
+	exp.duo[1] = offset;
+	exp.duo[0] = 0;
+	while (data->line[exp.duo[1]] != '"' && data->line[exp.duo[1]])
 	{
-		if (data->line[exp.i] == '$')
+		if (data->line[exp.duo[1]] == '$')
 		{
-			exp.i++;
-			exp.size = var_name_len(data->line + exp.i);
-			exp.var_name = ft_substr(data->line + exp.i, 0, exp.size);
-			if (exp.var_name && exp.var_name[0])
+			exp.duo[1]++;
+			exp.var_value = get_var_ref(data, data->line + exp.duo[1], exp.size = \
+										var_name_len(data->line + exp.duo[1]));
+			if (exp.size)
 			{
-				exp.var_value = get_ref(data, exp.var_name);
 				if (exp.var_value)
-					len += ft_strlen(exp.var_value);
-				exp.i += exp.size;
+					exp.duo[0] += ft_strlen(exp.var_value);
+				exp.duo[1] += exp.size;
 			}
 			else
-				len++;
-			free(exp.var_name);
+				exp.duo[0]++;
 		}
 		else
-			(void)(len++, exp.i++);
+			(void)(exp.duo[0]++, exp.duo[1]++);
 	}
-	// printf("len literal: %zu sizereal: %zu\n", len, exp.i - offset);
-	ret[0] = len;
-	ret[1] = exp.i - offset;
-	return (ret);
+	// printf("len literal: %zu sizereal: %zu\n", exp.duo[0], exp.duo[1] - offset);
+	exp.duo[1] -= offset;
+	return (exp.duo);
 }
 
 size_t	len_string(t_main *data, size_t offset)
@@ -227,40 +254,32 @@ size_t	len_word(t_main *data, size_t offset)
 
 size_t	len_all(t_main *data, size_t offset)
 {
+	t_all	exp;
 	size_t	total;
-	size_t	len;
-	int		quote;
-	size_t	index;
-	size_t	*bakcup;
-	// size_t	left;
 
-	// left = var_name_len(data->line);
-	len = 0;
+	exp.len = 0;
 	total = 0;
-	quote = 0;
-	index = offset;
-	bakcup = malloc(sizeof(size_t) * 2);
-	bakcup[0] = 0;
-	bakcup[1] = 0;
-	while (is_text(data->line[index]) && !((data->line[index] == '$') && is_var(data->line[index + 1])))
+	exp.quote = 0;
+	exp.index = offset;
+	exp.ptr = malloc(sizeof(size_t) * 2);
+	ft_bzero(exp.ptr, sizeof(size_t) * 2);
+	while (is_text(data->line[exp.index]) && !((data->line[exp.index] == '$') \
+										&& is_var(data->line[exp.index + 1])))
 	{
-		quote = data->increases[data->line[index]];
-		if (data->line[index] == '\'')
-			len = len_string(data, index + (quote / 2));
-		if (data->line[index] == '"') // else
-		{
-			free(bakcup);
-			bakcup = len_literal(data, index + (quote / 2));
-		}
-		if (is_word(data->line[index]) && !((data->line[index] == '$') && is_var(data->line[index + 1]))) // else
-			len = len_word(data, index + (quote / 2));
-		index += len + (size_t)quote + bakcup[1];
-		total += len + bakcup[0];
-		len = 0;
-		bakcup[0] = 0;
-		bakcup[1] = 0;
+		exp.quote = data->increases[data->line[exp.index]];
+		if (data->line[exp.index] == '\'')
+			exp.len = len_string(data, exp.index + (exp.quote / 2));
+		else if (data->line[exp.index] == '"' && (free(exp.ptr), 1))
+			exp.ptr = len_literal(data, exp.index + (exp.quote / 2));
+		else if (is_word(data->line[exp.index]) && !((data->line[exp.index] == \
+									'$') && is_var(data->line[exp.index + 1])))
+			exp.len = len_word(data, exp.index + (exp.quote / 2));
+		exp.index += exp.len + (size_t)exp.quote + exp.ptr[1];
+		total += exp.len + exp.ptr[0];
+		exp.len = 0;
+		ft_bzero(exp.ptr, sizeof(size_t) * 2);
 	}
-	free(bakcup);
+	free(exp.ptr);
 	printf("len: %zu\n", total);
 	return (total);
 }
@@ -291,85 +310,92 @@ char	*get_var_ref(t_main *data, char *var_name, size_t len)
 int		cpy_var(t_main *data, t_exp *exp, size_t offset)
 {
 	size_t _;
-
 	_ = offset;
-	exp->var_value = get_var_ref(data, (data->line + _), \
-								exp->size = var_name_len(data->line + _));
-	if (exp->var_value)
-		while (*exp->var_value)
-			exp->ret[exp->i++] = *exp->var_value++;
-	_ += exp->size;
-	if (!exp->var_value)
-		exp->ret[exp->i++] = data->line[_ - 1]; // "$"
+	char		*tmp;
+	const char	*name = ft_substr(data->line + _, 0, exp->size = var_name_len(data->line + _));
+
+	if (name && name[0])
+	{
+		tmp = get_ref(data, name);
+		if (tmp)
+			while (*tmp)
+				exp->ret[exp->duo[1]++] = *tmp++;
+		_ += exp->size;
+		return (free((void *)0), 0);
+	}
+	else if (name)
+	{
+		exp->ret[exp->duo[1]++] = data->line[_ - 1]; // "$"
+		return (free((void *)0), 0);
+	}
 	return (0);
 }
 
-char	*expander_exp(t_main *data, size_t offset)
+size_t	*expander_exp(t_main *data, char *dst, size_t offset)
 {
 	t_exp	exp;
-	size_t	_;
 
-	exp.i = 0;
-	_ = offset + 1;
-	printf("len: %zu data_: %zu\n", len_literal(data, _)[0], _);
-	exp.ret = calloc(sizeof(char), len_literal(data, _)[0] + 1);
-	if (!exp.ret)
-		return (NULL);
-	while (data->line[_] != '"' && data->line[_])
+	exp.duo = malloc(sizeof(size_t) * 2);
+	exp.duo[0] = offset + 1;
+	exp.duo[1] = 0;
+	// printf("len: %i data_: %zu\n", len_literal(data, _)[0], _);
+	exp.ret = dst;
+	while (data->line[exp.duo[0]] != '"' && data->line[exp.duo[0]])
 	{
-		if (data->line[_] == '$')
+		if (data->line[exp.duo[0]] == '$')
 		{
-			if (cpy_var(data, &exp, _ + 1))
+			if (cpy_var(data, &exp, exp.duo[0] + 1))
 				return (NULL);
-			_ += exp.size + 1;
+			exp.duo[0] += exp.size + 1;
 		}
 		else
-			exp.ret[exp.i++] = data->line[_++];
+			exp.ret[exp.duo[1]++] = data->line[exp.duo[0]++];
 	}
-	printf("result: [%s] i: %zu\n", exp.ret, exp.i);
-	return (exp.ret);
-	// 
+	// printf("result: [%zu] i: %zu\n", exp.duo[0], exp.duo[1]);
+	return (exp.duo);
 }
-
-// char	*expander_exp2(t_main *data)
-// {
-// 	t_exp	exp;
-
-// 	exp.i = 0;
-// 	exp.size = 1;
-// 	data->_++;
-// 	printf("len: %zu data_: %d\n", len_literal(data, data->_)[0], data->_);
-// 	exp.ret = calloc(sizeof(char), len_literal(data, data->_)[0] + 1);
-// 	if (!exp.ret)
-// 		return (NULL);
-// 	while (data->line[data->_] != '"' && data->line[data->_])
-// 	{
-// 		if (data->line[data->_] == '$')
-// 		{
-// 			if (cpy_var(data, &exp))
-// 				return (NULL);
-// 		}
-// 		else
-// 			exp.ret[exp.i++] = data->line[data->_++];
-// 	}
-// 	printf("log11111111111111111111111111111111\n");
-// 	printf("result: %s i: %zu\n", exp.ret, exp.i);
-// 	return (exp.ret);
-// }
 
 char	*join_all(t_main *data, size_t offset)
 {
-	const size_t	end_len = len_all(data, 0);
-	char const		*end_string = malloc(end_len * sizeof(char));
-	size_t			_str;
-	size_t			_new;
+	const size_t	all_len = len_all(data, 0);
+	char const		*buffer = malloc((all_len * sizeof(char)) + sizeof(char));
+	t_all			exp;
 
-	_str = offset;
-	while (is_text(data->line[_str]))
+	exp.index = offset;
+	exp.len = 0;
+	exp.quote = 0;
+	((char *)buffer)[all_len] = 0;
+	// exp.ptr = malloc(sizeof(size_t) * 2);
+	// ft_bzero(exp.ptr, sizeof(size_t) * 2);
+	while (is_text(data->line[exp.index]) && !((data->line[exp.index] == '$') && \
+			is_var(data->line[exp.index + 1])))
 	{
-		return (9);
+		exp.quote = data->increases[data->line[exp.index]];
+		if (data->line[exp.index] == '\'')
+		{
+			// len = len_string(data, exp.index + (exp.quote / 2));
+			
+		}
+		else if (data->line[exp.index] == '"') // else
+		{
+			exp.ptr = expander_exp(data, buffer + exp.len, exp.index);
+			exp.len += exp.ptr[1];
+			exp.index += exp.ptr[0];
+			free(exp.ptr);
+			// exp.index++;
+		}
+		else if (is_word(data->line[exp.index]) && !((data->line[exp.index] == '$') && is_var(data->line[exp.index + 1]))) // else
+		{
+			exp.len = len_word(data, exp.index + (exp.quote / 2));
+			ft_memcpy((char *)buffer, (data->line + exp.index), exp.len);
+		}
+		exp.index += exp.len + (size_t)exp.quote;
+		// total += len + bakcup[0];
+		// exp.len = 0;
+		// return (NULL);
 	}
-	
+	printf("%s: %s\n", __func__, (char *)buffer);
+	return ((char *)buffer);
 }
 
 // int	set_value(t_main *data, char *str)
