@@ -26,6 +26,7 @@
 # define RESET "\x1B[0m"
 
 # define VAR "0000"
+# define VAR_LEN 4
 
 # ifndef TEST
 #  define TEST 0

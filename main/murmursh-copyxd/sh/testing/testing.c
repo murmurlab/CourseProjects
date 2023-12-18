@@ -2,7 +2,11 @@
 
 void run_test()
 {
-    printf("===========================TEST================================\n");
+    printf(BLUE"\n\n===================murminette====================\n");
+    printf(BLUE"=================================================\n"RESET);
+    printf(BLUE"=====================len_all=====================\n"RESET);
+    printf(BLUE"=================================================\n"RESET);
+
     char    *str = "$$";
     size_t  tmp;
     size_t  _;
@@ -33,25 +37,39 @@ void run_test()
         {"\"a$\"a$a=$a99\"$-$'$'$''$\"\"$\"$\"$-$-$$-$$=11$$\"", (void *)3}, // 18
         {(void *)0, (void *)0}
     };
-    char    *expand_tests[][2] = {
-        {"\"$a\"", VAR},
-        {"\"$a1\"", ""},
-        {"\"$-\"", "$-"},
-        {"\"$\"", "$"},
-        {"\"$$\"", "$$"},
-        {"\"1$a\"", "1"VAR},
-        {"\"-$\"", "-$"},
-        {"\"a$\"", "a$"},
+    char    *expand_tests[][4] = {
+        // "a$a=$a99"$-$'$'$''$""$"$"$-$-$$-$$=11$$
+
+        {"\"a$a=$a99\"$-$'$'$''$\"\"$\"$\"$-$-$$-$$=11$$", "a0000=", (void *)10, (void *)6},
+        {"\"ast\"", "ast", (void *)5, (void *)(3)},
+        {"\"\"", "", (void *)2, (void *)(0)},
+        {"\"$a\"", VAR, (void *)4, (void *)(0 + VAR_LEN)},
+        {"\"$a1\"", "", (void *)5, (void *)0},
+        {"\"$-\"", "$-", (void *)4, (void *)2},
+        {"\"$\"", "$", (void *)3, (void *)1},
+        {"\"$$\"", "$$", (void *)4, (void *)2},
+        {"\"1$a\"", "1"VAR, (void *)5, (void *)(1 + VAR_LEN)},
+        {"\"-$\"", "-$", (void *)4, (void *)2},
+        {"\"a$\"", "a$", (void *)4, (void *)2},
         
-        {"\"$$$\"", "$$$"}, //len test
-        {"\"$a-\"", VAR"-"},
-        {"\"$$a\"", "$"VAR},
-        {"\"$a-$\"", VAR"-$"},
-        {"\"$a-$$\"", VAR"-$$"},
-        {"\"-$-$-$\"", "-$-$-$"},
-        {"\"-$a$a99\"", "-"VAR},
-        {"\"-$a$a$a\"", "-"VAR VAR VAR},
-        {"\"$a-$a\"", VAR"-"VAR},
+        {"\"$$$\"", "$$$", (void *)5, (void *)3}, //len test
+        {"\"$a-\"", VAR"-", (void *)5, (void *)(VAR_LEN + 1)},
+        {"\"$$a\"", "$"VAR, (void *)5, (void *)(1 + VAR_LEN)},
+        {"\"$a-$\"", VAR"-$", (void *)6, (void *)(VAR_LEN + 2)},
+        {"\"$a-$$\"", VAR"-$$", (void *)7, (void *)(VAR_LEN + 3)},
+        {"\"-$-$-$\"", "-$-$-$", (void *)8, (void *)6},
+        {"\"-$a$a99\"", "-"VAR, (void *)9, (void *)(1 + VAR_LEN)},
+        {"\"-$a$a$a\"", "-"VAR VAR VAR, (void *)9, (void *)(1 + (VAR_LEN * 3))},
+        {"\"$a-$a\"", VAR"-"VAR, (void *)7, (void *)(VAR_LEN + 1 + VAR_LEN)},
+        // {"a$\"a$a=$a99\"$-$'$'$''$\"\"$\"$\"$-$-$$-$$=11$$", "a$a0000=$-$$$$$$$$-$-$$-$$=11$$", (void *)42, (void *)30}, // 14
+
+        {(void *)0, (void *)0}
+    };
+    char    *mix[][4] = {
+        {"a$", "a$a0000=$-$$$$$$$-$-$$-$$=11$$", (void *)42, (void *)30}, // 14
+        {"a$\"a$a=$a99\"$-$'$'$''$\"\"$\"$\"$-$-$$-$$=11$$", "a$a0000=$-$$$$$$$-$-$$-$$=11$$", (void *)42, (void *)30}, // 14
+        {"a$\"a$a=$a99\"$-$'$'$''$\"\"$\"$\"$-$-$$-$$=11$$", "a$a0000=$-$$$$$$$-$-$$-$$=11$$", (void *)42, (void *)30}, // 14
+        {"a$\"a$a=$a99\"$-$'$'$''$\"\"$\"$\"$-$-$$-$$=11$$", "a$a0000=$-$$$$$$$-$-$$-$$=11$$", (void *)42, (void *)30}, // 14
 
         {(void *)0, (void *)0}
     };
@@ -82,33 +100,135 @@ void run_test()
         }
         i++;
     }
-    printf(RED"\n\n=============================================\n"RESET);
-    printf(RED"=================================================\n"RESET);
+    printf(BLUE"\n\n=================================================\n"RESET);
+    printf(BLUE"==================dquote expand==================\n"RESET);
+    printf(BLUE"=================================================\n"RESET);
     // ===============================expand_test===============================
     i = 0;
     size_t  *sonuc;
     char    *buffer;
+    char     err = 0;
     while (expand_tests[i][0])
     {
         data->line = expand_tests[i][0];
-        printf("line: %s\n", data->line);
+        printf("[=====================TEST %d=====================]\n", i);
+        printf("    line: %s\n", data->line);
         buffer = calloc(strlen(expand_tests[i][0]), 4);
         sonuc = expander_exp(data, buffer, 0);
-        printf("sonuc: %s\n", buffer);
-        if (!strcmp(expand_tests[i][1], buffer))
-            printf("=================TEST %d=%s================\n", i, result[0]);
+        // printf("sonuc: %s\n", buffer);
+        if (strcmp(expand_tests[i][1], buffer))
+        {
+            err |= 0b00000001;
+            printf("⋁⋁⋁⋁⋁⋁⋁⋁--------------str-%s---------------------\n", result[1]);
+            printf(YELLOW"expected %s\n"RESET, expand_tests[i][1]);
+            printf(YELLOW"result %s\n"RESET, buffer);
+        }
         else
         {
-            ft_lstadd_back(&root, ft_lstnew((void *)(size_t)i));
-            printf(YELLOW"expected %s\n"RESET, expand_tests[i][1]);
-            printf("^^^^^^^^=========TEST %d=%s================\n", i, result[1]);
+            printf("----------------------str-%s---------------------\n", result[0]);
+            printf(GREEN"expected %s\n"RESET, expand_tests[i][1]);
+            printf(GREEN"result %s\n"RESET, buffer);
         }
+
+        if (sonuc[0] != (size_t)expand_tests[i][2])
+        {
+            err |= 0b00000010;
+            printf("⋁⋁⋁⋁⋁⋁⋁⋁----------len normal-%s------------------\n", result[1]);
+            printf(YELLOW"expected %zu\n"RESET, (size_t)expand_tests[i][2]);
+            printf(YELLOW"result %zu\n"RESET, sonuc[0]);
+        }
+        else
+        {
+            printf("-------------------len normal-%s-----------------\n", result[0]);
+            printf(GREEN"expected %zu\n"RESET, (size_t)expand_tests[i][2]);
+            printf(GREEN"result %zu\n"RESET, sonuc[0]);
+        }
+
+        if (sonuc[1] != (size_t)expand_tests[i][3])
+        {
+            err |= 0b00000100;
+            printf("⋁⋁⋁⋁⋁⋁⋁⋁--------len expanded-%s------------------\n", result[1]);
+            printf(YELLOW"expected %zu\n"RESET, (size_t)expand_tests[i][3]);
+            printf(YELLOW"result %zu\n"RESET, sonuc[1]);
+        }
+        else
+        {
+            printf("-----------------len expanded-%s-----------------\n", result[0]);
+            printf(GREEN"expected %zu\n"RESET, (size_t)expand_tests[i][3]);
+            printf(GREEN"result %zu\n"RESET, sonuc[1]);
+        }
+        printf("[===================TEST %d=%s==================]\n\n\n\n", i, result[0 || err]);
+
         free(sonuc);
         free(buffer);
         i++;
+        err = 0;
     }
+
+    printf(BLUE"==================================================\n"RESET);
+    printf(BLUE"=====================Join ALL=====================\n"RESET);
+    printf(BLUE"==================================================\n\n\n"RESET);
+
+    i = 0;
+    while (mix[i][0])
+    {
+        data->line = mix[i][0];
+        printf("[=====================TEST %d=====================]\n", i);
+        printf("    line: %s\n", data->line);
+        buffer = calloc(strlen(mix[i][0]), 4);
+        buffer = join_all(data, 0);
+        // printf("sonuc: %s\n", buffer);
+        if (strcmp(mix[i][1], buffer))
+        {
+            err |= 0b00000001;
+            printf("⋁⋁⋁⋁⋁⋁⋁⋁--------------str-%s---------------------\n", result[1]);
+            printf(YELLOW"expected %s\n"RESET, mix[i][1]);
+            printf(YELLOW"result %s\n"RESET, buffer);
+        }
+        else
+        {
+            printf("----------------------str-%s---------------------\n", result[0]);
+            printf(GREEN"expected %s\n"RESET, mix[i][1]);
+            printf(GREEN"result %s\n"RESET, buffer);
+        }
+
+        // if (sonuc[0] != (size_t)expand_tests[i][2])
+        // {
+        //     err |= 0b00000010;
+        //     printf("⋁⋁⋁⋁⋁⋁⋁⋁----------len normal-%s------------------\n", result[1]);
+        //     printf(YELLOW"expected %zu\n"RESET, (size_t)expand_tests[i][2]);
+        //     printf(YELLOW"result %zu\n"RESET, sonuc[0]);
+        // }
+        // else
+        // {
+        //     printf("-------------------len normal-%s-----------------\n", result[0]);
+        //     printf(GREEN"expected %zu\n"RESET, (size_t)expand_tests[i][2]);
+        //     printf(GREEN"result %zu\n"RESET, sonuc[0]);
+        // }
+
+        // if (sonuc[1] != (size_t)expand_tests[i][3])
+        // {
+        //     err |= 0b00000100;
+        //     printf("⋁⋁⋁⋁⋁⋁⋁⋁--------len expanded-%s------------------\n", result[1]);
+        //     printf(YELLOW"expected %zu\n"RESET, (size_t)expand_tests[i][3]);
+        //     printf(YELLOW"result %zu\n"RESET, sonuc[1]);
+        // }
+        // else
+        // {
+        //     printf("-----------------len expanded-%s-----------------\n", result[0]);
+        //     printf(GREEN"expected %zu\n"RESET, (size_t)expand_tests[i][3]);
+        //     printf(GREEN"result %zu\n"RESET, sonuc[1]);
+        // }
+        printf("[===================TEST %d=%s==================]\n\n\n\n", i, result[0 || err]);
+
+        // free(sonuc);
+        free(buffer);
+        i++;
+        err = 0;
+    }
+
     tm = root;
-    printf(BLUE"\n\n=============================================\n"RESET);
+    printf(BLUE"=============================================\n"RESET);
     printf(BLUE"==================SUMMARY====================\n"RESET);
     // print error tests.
     while (root)

@@ -152,6 +152,7 @@ typedef	struct	s_main
 
 
 /* FUNCTIONS */
+char	*join_all(t_main *data, size_t offset);
 size_t	*expander_exp(t_main *data, char *dst, size_t offset);
 char	*get_var_ref(t_main *data, char *var_name, size_t len);
 size_t	len_all(t_main *data, size_t offset);

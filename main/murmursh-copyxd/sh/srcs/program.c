@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/12/18 17:08:08 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/12/19 01:40:09 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,19 +268,19 @@ size_t	len_all(t_main *data, size_t offset)
 	{
 		exp.quote = data->increases[data->line[exp.index]];
 		if (data->line[exp.index] == '\'')
-			exp.len = len_string(data, exp.index + (exp.quote / 2));
+			exp.len = len_string(data, exp.index + 1);
 		else if (data->line[exp.index] == '"' && (free(exp.ptr), 1))
-			exp.ptr = len_literal(data, exp.index + (exp.quote / 2));
+			exp.ptr = len_literal(data, exp.index + 1);
 		else if (is_word(data->line[exp.index]) && !((data->line[exp.index] == \
 									'$') && is_var(data->line[exp.index + 1])))
-			exp.len = len_word(data, exp.index + (exp.quote / 2));
+			exp.len = len_word(data, exp.index);
 		exp.index += exp.len + (size_t)exp.quote + exp.ptr[1];
 		total += exp.len + exp.ptr[0];
 		exp.len = 0;
 		ft_bzero(exp.ptr, sizeof(size_t) * 2);
 	}
 	free(exp.ptr);
-	printf("len: %zu\n", total);
+	// printf("len: %zu\n", total);
 	return (total);
 }
 
@@ -335,30 +335,32 @@ size_t	*expander_exp(t_main *data, char *dst, size_t offset)
 {
 	t_exp	exp;
 
+	offset++;
 	exp.duo = malloc(sizeof(size_t) * 2);
-	exp.duo[0] = offset + 1;
+	exp.duo[0] = 0;
 	exp.duo[1] = 0;
 	// printf("len: %i data_: %zu\n", len_literal(data, _)[0], _);
 	exp.ret = dst;
-	while (data->line[exp.duo[0]] != '"' && data->line[exp.duo[0]])
+	while (data->line[offset + exp.duo[0]] != '"' && data->line[offset + exp.duo[0]])
 	{
-		if (data->line[exp.duo[0]] == '$')
+		if (data->line[offset + exp.duo[0]] == '$')
 		{
-			if (cpy_var(data, &exp, exp.duo[0] + 1))
+			if (cpy_var(data, &exp, offset + exp.duo[0] + 1))
 				return (NULL);
 			exp.duo[0] += exp.size + 1;
 		}
 		else
-			exp.ret[exp.duo[1]++] = data->line[exp.duo[0]++];
+			exp.ret[exp.duo[1]++] = data->line[offset + exp.duo[0]++];
 	}
-	// printf("result: [%zu] i: %zu\n", exp.duo[0], exp.duo[1]);
+	exp.duo[0] += 2;
+	// printf("0: [%zu] 1: %zu\n", exp.duo[0], exp.duo[1]);
 	return (exp.duo);
 }
 
 char	*join_all(t_main *data, size_t offset)
 {
 	const size_t	all_len = len_all(data, 0);
-	char const		*buffer = malloc((all_len * sizeof(char)) + sizeof(char));
+	char const		*buffer = calloc((all_len * sizeof(char)) + sizeof(char), 1);
 	t_all			exp;
 	
 	exp.buff_index = 0;
@@ -366,20 +368,23 @@ char	*join_all(t_main *data, size_t offset)
 	exp.len = 0;
 	exp.quote = 0;
 	((char *)buffer)[all_len] = 0;
-	// exp.ptr = malloc(sizeof(size_t) * 2);
-	// ft_bzero(exp.ptr, sizeof(size_t) * 2);
 	while (is_text(data->line[exp.index]) && !((data->line[exp.index] == '$') && \
 			is_var(data->line[exp.index + 1])))
 	{
-		exp.quote = data->increases[data->line[exp.index]];
+		// getchar();
+		// printf("iter %zu\n", exp.index);
 		if (data->line[exp.index] == '\'')
 		{
-			exp.len = len_string(data, exp.index + 1);
-			ft_memcpy((char *)buffer + exp.buff_index, (data->line + exp.index + 1), exp.len);
+			exp.quote = data->increases[data->line[exp.index]];
+			exp.len = len_string(data, exp.index + 1) + 2;
+			// printf("len_string: %zu, %s, [ %s ]\n", exp.len, &data->line[exp.index], buffer);
+			ft_memcpy((char *)buffer + exp.buff_index, (data->line + exp.index + 1), exp.len - 2);
 		}
 		else if (data->line[exp.index] == '"') // else
 		{
+			// printf("once: %s\n", buffer);
 			exp.ptr = expander_exp(data, (char *)buffer + exp.buff_index, exp.index);
+			// printf("expander_exp: %zu, %zu, %s, [ %s ]\n", exp.ptr[0], exp.ptr[1], &data->line[exp.index], buffer);
 			exp.buff_index += exp.ptr[1];
 			exp.index += exp.ptr[0];
 			free(exp.ptr);
@@ -387,16 +392,18 @@ char	*join_all(t_main *data, size_t offset)
 		}
 		else if (is_word(data->line[exp.index]) && !((data->line[exp.index] == '$') && is_var(data->line[exp.index + 1]))) // else
 		{
-			exp.len = len_word(data, exp.index + 1);
+			exp.len = len_word(data, exp.index);
+			// printf("len_word: %zu, %s, [ %s ]\n", exp.len, &data->line[exp.index], buffer);
 			ft_memcpy((char *)buffer + exp.buff_index, (data->line + exp.index), exp.len);
 		}
-		exp.index += exp.len + (size_t)exp.quote;
-		exp.buff_index += exp.len;
+		exp.index += exp.len;
+		exp.buff_index += exp.len - exp.quote;
+		exp.quote = 0;
 		// total += len + bakcup[0];
 		exp.len = 0;
 		// return (NULL);
 	}
-	printf("%s: %s\n", __func__, (char *)buffer);
+	// printf("%s: %s\n", __func__, (char *)buffer);
 	return ((char *)buffer);
 }
 
