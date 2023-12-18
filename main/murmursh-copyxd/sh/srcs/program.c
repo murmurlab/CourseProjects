@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/12/17 03:54:12 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/12/18 17:08:08 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,12 +321,12 @@ int		cpy_var(t_main *data, t_exp *exp, size_t offset)
 			while (*tmp)
 				exp->ret[exp->duo[1]++] = *tmp++;
 		_ += exp->size;
-		return (free((void *)0), 0);
+		return (free((void *)name), 0);
 	}
 	else if (name)
 	{
 		exp->ret[exp->duo[1]++] = data->line[_ - 1]; // "$"
-		return (free((void *)0), 0);
+		return (free((void *)name), 0);
 	}
 	return (0);
 }
@@ -360,7 +360,8 @@ char	*join_all(t_main *data, size_t offset)
 	const size_t	all_len = len_all(data, 0);
 	char const		*buffer = malloc((all_len * sizeof(char)) + sizeof(char));
 	t_all			exp;
-
+	
+	exp.buff_index = 0;
 	exp.index = offset;
 	exp.len = 0;
 	exp.quote = 0;
@@ -373,25 +374,26 @@ char	*join_all(t_main *data, size_t offset)
 		exp.quote = data->increases[data->line[exp.index]];
 		if (data->line[exp.index] == '\'')
 		{
-			// len = len_string(data, exp.index + (exp.quote / 2));
-			
+			exp.len = len_string(data, exp.index + 1);
+			ft_memcpy((char *)buffer + exp.buff_index, (data->line + exp.index + 1), exp.len);
 		}
 		else if (data->line[exp.index] == '"') // else
 		{
-			exp.ptr = expander_exp(data, buffer + exp.len, exp.index);
-			exp.len += exp.ptr[1];
+			exp.ptr = expander_exp(data, (char *)buffer + exp.buff_index, exp.index);
+			exp.buff_index += exp.ptr[1];
 			exp.index += exp.ptr[0];
 			free(exp.ptr);
 			// exp.index++;
 		}
 		else if (is_word(data->line[exp.index]) && !((data->line[exp.index] == '$') && is_var(data->line[exp.index + 1]))) // else
 		{
-			exp.len = len_word(data, exp.index + (exp.quote / 2));
-			ft_memcpy((char *)buffer, (data->line + exp.index), exp.len);
+			exp.len = len_word(data, exp.index + 1);
+			ft_memcpy((char *)buffer + exp.buff_index, (data->line + exp.index), exp.len);
 		}
 		exp.index += exp.len + (size_t)exp.quote;
+		exp.buff_index += exp.len;
 		// total += len + bakcup[0];
-		// exp.len = 0;
+		exp.len = 0;
 		// return (NULL);
 	}
 	printf("%s: %s\n", __func__, (char *)buffer);

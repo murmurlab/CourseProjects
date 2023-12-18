@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/12/17 03:33:42 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/12/18 16:52:15 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef	struct	s_all
 	size_t	len;
 	size_t	index;
 	size_t	*ptr; // [0]-> line, [1]-> expanded
+	size_t	buff_index;
 }		t_all;
 
 typedef struct	s_com

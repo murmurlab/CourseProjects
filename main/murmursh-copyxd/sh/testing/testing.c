@@ -43,7 +43,7 @@ void run_test()
         {"\"-$\"", "-$"},
         {"\"a$\"", "a$"},
         
-        {"\"$$$\"", "$$$"},
+        {"\"$$$\"", "$$$"}, //len test
         {"\"$a-\"", VAR"-"},
         {"\"$$a\"", "$"VAR},
         {"\"$a-$\"", VAR"-$"},
@@ -103,6 +103,7 @@ void run_test()
             printf(YELLOW"expected %s\n"RESET, expand_tests[i][1]);
             printf("^^^^^^^^=========TEST %d=%s================\n", i, result[1]);
         }
+        free(sonuc);
         free(buffer);
         i++;
     }
