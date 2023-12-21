@@ -33,6 +33,7 @@
 # endif
 
 # include "include.h"
+# include "valgrind/memcheck.h"
 
 void run_test();
 

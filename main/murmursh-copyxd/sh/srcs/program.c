@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/12/19 03:44:52 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/12/21 19:04:00 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -360,54 +360,44 @@ size_t	*expander_exp(t_main *data, char *dst, size_t offset)
 	return (exp.duo);
 }
 
-char	*join_all(t_main *data, size_t offset)
+t_turn	join_all(t_main *data, size_t offset)
 {
-	const size_t	all_len = len_all(data, 0);
-	char const		*buffer = calloc((all_len * sizeof(char)) + sizeof(char), 1);
 	t_all			exp;
-	
-	exp.buff_index = 0;
-	exp.index = offset;
+	t_turn			turn;
+
+	turn.buffer = calloc((len_all(data, 0) * sizeof(char)) + sizeof(char), 1);
+	turn.ptr = turn.buffer;
+	turn.index = offset;
 	exp.len = 0;
 	exp.quote = 0;
-	((char *)buffer)[all_len] = 0;
-	while (is_text(data->line[exp.index]) && !((data->line[exp.index] == '$') && \
-			is_var(data->line[exp.index + 1])))
+	while (is_text(data->line[turn.index]) && !((data->line[turn.index] == '$') && \
+			is_var(data->line[turn.index + 1])))
 	{
-		// getchar();
-		// printf("iter %zu\n", exp.index);
-		if (data->line[exp.index] == '\'')
+		if (data->line[turn.index] == '\'')
 		{
-			exp.quote = data->increases[data->line[exp.index]];
-			exp.len = len_string(data, exp.index + 1) + 2;
-			// printf("len_string: %zu, %s, [ %s ]\n", exp.len, &data->line[exp.index], buffer);
-			ft_memcpy((char *)buffer + exp.buff_index, (data->line + exp.index + 1), exp.len - 2);
+			exp.quote = data->increases[data->line[turn.index]];
+			exp.len = len_string(data, turn.index + 1) + 2;
+			ft_memcpy(turn.ptr, (data->line + turn.index + 1), exp.len - 2);
 		}
-		else if (data->line[exp.index] == '"') // else
+		else if (data->line[turn.index] == '"') // else
 		{
-			// printf("once: %s\n", buffer);
-			exp.ptr = expander_exp(data, (char *)buffer + exp.buff_index, exp.index);
-			// printf("expander_exp: %zu, %zu, %s, [ %s ]\n", exp.ptr[0], exp.ptr[1], &data->line[exp.index], buffer);
-			exp.buff_index += exp.ptr[1];
-			exp.index += exp.ptr[0];
+			exp.ptr = expander_exp(data, turn.ptr, turn.index);
+			turn.ptr += exp.ptr[1];
+			turn.index += exp.ptr[0];
 			free(exp.ptr);
-			// exp.index++;
 		}
-		else if (is_word(data->line[exp.index]) && !((data->line[exp.index] == '$') && is_var(data->line[exp.index + 1]))) // else
+		else if (is_word(data->line[turn.index]) && !((data->line[turn.index] == '$') && is_var(data->line[turn.index + 1]))) // else
 		{
-			exp.len = len_word(data, exp.index);
-			// printf("len_word: %zu, %s, [ %s ]\n", exp.len, &data->line[exp.index], buffer);
-			ft_memcpy((char *)buffer + exp.buff_index, (data->line + exp.index), exp.len);
+			exp.len = len_word(data, turn.index);
+			ft_memcpy(turn.ptr, (data->line + turn.index), exp.len);
 		}
-		exp.index += exp.len;
-		exp.buff_index += exp.len - exp.quote;
+		turn.index += exp.len;
+		turn.ptr += exp.len - exp.quote;
 		exp.quote = 0;
-		// total += len + bakcup[0];
 		exp.len = 0;
-		// return (NULL);
 	}
-	// printf("%s: %s\n", __func__, (char *)buffer);
-	return ((char *)buffer);
+	// printf("%s: %s\n", __func__, turn.buffer);
+	return (turn);
 }
 
 // int	set_value(t_main *data, char *str)
@@ -446,7 +436,7 @@ int	parser(t_main *data)
 		// expander_exp2(data);
 		if (TEST)
 			run_test();
-		join_all(data, data->_);
+		// join_all(data, data->_);
 		break ;
 		data->_++;
 	}
@@ -478,16 +468,16 @@ int	main(void)
 	data.vars = NULL;
 
 	char *cy;
-	set(&data, strdup("nnnnn"), strdup("313131"));
-	set(&data, strdup("array"), strdup("value"));
-	set(&data, strdup("nnnnn"), strdup("tttt"));
-	set(&data, strdup("nnnnn"), strdup("cccc"));
-	set(&data, strdup("nnnnn"), strdup("rrrrr"));
-	set(&data, strdup("a"), strdup("0000"));
-	printf("ENV: %s\n", cy = get(&data, "PATH"));
-	free(cy);
-	set(&data, strdup("PATH"), get(&data, "PATH"));
-	set(&data, strdup("PATH"), get(&data, "PATH"));
+	char *xy;
+	// set(&data, strdup("nnnnn"), strdup("313131"));
+	// set(&data, strdup("array"), strdup("value"));
+	// set(&data, strdup("nnnnn"), strdup("tttt"));
+	// set(&data, strdup("nnnnn"), strdup("cccc"));
+	// set(&data, strdup("nnnnn"), strdup("rrrrr"));
+	set(&data, xy = strdup("a"), strdup("0000"));
+	// printf("ENV: %s\n", cy = get(&data, "PATH"));
+	// set(&data, strdup("PATH"), get(&data, "PATH"));
+	// set(&data, strdup("PATH"), get(&data, "PATH"));
 	// printf("a: %s\n", (((char **)data.vars->content)[1]));
 	// printf("a: %s\n", get(&data, "array"));
 
@@ -558,10 +548,15 @@ int	main(void)
 			if (data.line[0] != 0)
 			{
 				data._ = 0;
+				
 				parser(&data);
+				// system("valgrind --leak-check=full /Users/ahbasara/sources/repos/projects/main/murmursh-copyxd/program");
 				// exe(data.coms, data.line);
 			}
+			free(xy);
 			free(data.line);
+
+			exit(0);
 		}
 		else
 		{

@@ -1,0 +1,34 @@
+{
+   readline_suppression
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:readline
+   fun:*rl_*
+   fun:*History_*
+   fun:*history_*
+   fun:*add_history
+   fun:rl_initialize
+   fun:rl_cleanup_after_signal
+   fun:rl_free_line_state
+   fun:rl_discard_undo_list
+   fun:rl_getc
+   fun:rl_redisplay
+   fun:rl_reset_terminal
+   fun:replace_history_entry
+   fun:remove_history
+   fun:clear_history
+   fun:using_history
+   fun:rl_initialize
+   fun:history_search_*
+   fun:stifle_history
+   fun:read_history
+   fun:write_history
+   fun:append_history
+   fun:history_get
+   fun:history_get_string
+   fun:history_expand
+   fun:history_inhibit_expansion
+   fun:__getdelim
+   fun:__getline
+   fun:get_history_event
+}

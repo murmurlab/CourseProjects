@@ -81,10 +81,11 @@ void run_test()
 // my $a''0000'''0000'  '0000' $ 0000   '$'  ''"$a"./program$_-=$$0000$$$$-$a40000 0000a$aav0000$$ $a"$a"''31
 // sh $a''0000'''0000'  '0000' $ 0000   '$'  ''"$a"./program$_-=$$0000$$$$-$a40000 0000a$aav0000$$ $a"$a"''31 oldu
 
+//    $a''0000'''0000'
+
 //    '"  $ $ $a "''$'""''"'"99"'""$_""'$_'-=$$"'$a'"$''$$$-$'a'4"'$a $'a"a'$a''a'"v$'a$'av$"$' ''$'a'"'$'a"'"''"31"
 // my "  $ $ $a "$'99'./program'./program'-=$$$a$''$$$-$'a'4$a $aa'0000''a'v$a$av$$' ''$'a'$a'31
 // sh "  $ $ $a "$'99'./program'./program'-=$$$a$''$$$-$'a'4$a $aa'0000''a'v$a$av$$' ''$'a'$a'31
-
     {"'$a'\"''$a''\"\"'$a'\"\"  '$a' $ $a \"\"  '$'  \"\"''\"'\"$a\"'\"$_\"'$_'-=$$\"$a\"$''$$$-$'a'4\"$a $a\"a'$a''a'\"v$a$av$\"$' ''$'a'\"$a\"'\"''\"31", \
      "$a''0000'''0000'  '0000' $ 0000   '$'  ''\"$a\"./program$_-=$$0000$$$$-$a40000 0000a$aav0000$$ $a\"$a\"''31"},
     {"'\"  $ $ $a \"''$'\"\"''\"'\"99\"'\"\"$_\"\"'$_'-=$$\"'$a'\"$''$$$-$'a'4\"'$a $'a\"a'$a''a'\"v$'a$'av$\"$' ''$'a'\"'$'a\"'\"''\"31\"", \
@@ -194,8 +195,8 @@ void run_test()
         data->line = mix[i][0];
         printf("[=====================TEST %d=====================]\n", i);
         printf("    line: %s\n", data->line);
-        buffer = calloc(strlen(mix[i][0]), 4);
-        buffer = join_all(data, 0);
+        // buffer = calloc(strlen(mix[i][0]), 4);
+        buffer = join_all(data, 0).buffer;
         // printf("sonuc: %s\n", buffer);
         if (strcmp(mix[i][1], buffer))
         {
@@ -264,15 +265,13 @@ void run_test()
     {
         tm2 = tm;
         tm = tm->next;
-        // free(tm2);
+        free(tm2);
     }
-    
+    free(data);
     // make leak for fsanitize=address
     // tm = 0;
     // tm2 = 0;
     
     printf(BLUE"=============================================\n"RESET);
     printf(BLUE"=============================================\n"RESET);
-    
-	exit(0);
 }

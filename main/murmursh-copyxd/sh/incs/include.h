@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/12/18 16:52:15 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/12/21 19:03:49 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@
 # include <stdlib.h>
 // # include <sys/stat.h>
 # include "readline/readline.h"
-// # include <readline/history.h>
+# include <readline/history.h>
 # include <fcntl.h>
 // # include <sys/wait.h>
 # include <signal.h>
@@ -113,6 +113,13 @@ typedef	struct	s_all
 	size_t	buff_index;
 }		t_all;
 
+typedef struct	s_turn
+{
+	char	*buffer;
+	char	*ptr;
+	int		index;
+}		t_turn;
+
 typedef struct	s_com
 {
 	char *name;
@@ -128,7 +135,6 @@ typedef	struct	s_cmd
 	int				*out;
 }		t_cmd;
 
-struct	s_main;
 /**
  * 0	heredoc
  * 1	truncate
@@ -152,7 +158,7 @@ typedef	struct	s_main
 
 
 /* FUNCTIONS */
-char	*join_all(t_main *data, size_t offset);
+t_turn	join_all(t_main *data, size_t offset);
 size_t	*expander_exp(t_main *data, char *dst, size_t offset);
 char	*get_var_ref(t_main *data, char *var_name, size_t len);
 size_t	len_all(t_main *data, size_t offset);
