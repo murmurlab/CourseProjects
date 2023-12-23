@@ -33,7 +33,35 @@
 # endif
 
 # include "include.h"
-# include "valgrind/memcheck.h"
+
+struct s_tests;
+
+typedef struct s_test
+{
+	size_t			test_number;
+	t_list			*fails;
+	t_list			*success;
+	void			(*ko_msg)(struct s_tests *test);
+	void			(*ok_msg)(struct s_tests *test);
+
+	struct s_tests	*tests;
+	void			*my_data;
+}				t_test;
+
+struct s_try;
+
+typedef struct s_tests
+{
+	char			*name;
+	int				(*test_fun)(t_test *test);
+	struct s_try	*trys;
+}				t_tests;
+
+typedef struct s_try
+{
+	void	*try;
+	void	*expected;
+}				t_try;
 
 void run_test();
 

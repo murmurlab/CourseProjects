@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/12/21 19:03:49 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/12/22 01:41:10 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ typedef	struct	s_main
 {
 	char			flags[INT8_MAX];
 	void			(*coid)(int);
+	// void			(*check_operation)();
 	char			increases[INT8_MAX];
 	int				_;
 	char			*line;

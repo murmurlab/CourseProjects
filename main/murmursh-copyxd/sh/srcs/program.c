@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/12/21 19:04:00 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/12/23 03:47:26 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -408,38 +408,41 @@ t_turn	join_all(t_main *data, size_t offset)
 // 			}
 // }
 
+void	check_operation(t_main *data)
+{
+	if (data->line[data->_] == '>' && data->line[data->_ + 1] == '>')
+		return ;
+	if (data->line[data->_] == '<' && data->line[data->_ + 1] == '<')
+		return ;
+	if (data->line[data->_] == '<')
+		return ;
+	if (data->line[data->_] == '>')
+		return ;
+	if (data->line[data->_] == '|')
+		return ;
+	if (data->line[data->_] == '$')
+		return ;
+	if (data->line[data->_] == '\'')
+		return ;
+	if (data->line[data->_] == '"')
+		return ;
+}
 
-int	parser(t_main *data)
+int		parser(t_main *data)
 {
 	static char	*a;
+	t_turn		turn;
+	
 
-	while (data->line[data->_] != 0)
-	{
-		// if (data->line[data->_] == '"')
-		// {
-		// 	printf("1: [%c]\n", data->line[data->_]);
-		// 	expander_exp(data);
-		// 	printf("2: [%c]\n", data->line[data->_]);
-		// }
-		// else if (data->line[data->_] == '\'')
-		// {
-		// 	data->_++;
-		// 	printf("1.5: %zu\n", len_string(data, 1));
-		// 	exit(0);
-		// }
-		// else if (is_word(data->line[data->_]))
-		// {
-		// 	printf("1.5: %zu\n", len(data, 0));
-		// 	exit(0);
-		// }
-		// expander_exp(data, data->_);
-		// expander_exp2(data);
-		if (TEST)
-			run_test();
-		// join_all(data, data->_);
-		break ;
-		data->_++;
-	}
+	if (TEST)
+		run_test();
+	// while (data->line[data->_] != 0)
+	// {
+		
+	// 	check_operation()
+	// 	break ;
+	// 	data->_++;
+	// }
 	
 	return (0);
 }
@@ -467,14 +470,7 @@ int	main(void)
 	// printf("%s\n", getenv("PATH"));
 	data.vars = NULL;
 
-	char *cy;
-	char *xy;
-	// set(&data, strdup("nnnnn"), strdup("313131"));
-	// set(&data, strdup("array"), strdup("value"));
-	// set(&data, strdup("nnnnn"), strdup("tttt"));
-	// set(&data, strdup("nnnnn"), strdup("cccc"));
-	// set(&data, strdup("nnnnn"), strdup("rrrrr"));
-	set(&data, xy = strdup("a"), strdup("0000"));
+	set(&data, strdup("a"), strdup("0000"));
 	// printf("ENV: %s\n", cy = get(&data, "PATH"));
 	// set(&data, strdup("PATH"), get(&data, "PATH"));
 	// set(&data, strdup("PATH"), get(&data, "PATH"));
@@ -553,7 +549,6 @@ int	main(void)
 				// system("valgrind --leak-check=full /Users/ahbasara/sources/repos/projects/main/murmursh-copyxd/program");
 				// exe(data.coms, data.line);
 			}
-			free(xy);
 			free(data.line);
 
 			exit(0);
