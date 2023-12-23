@@ -41,8 +41,8 @@ typedef struct s_test
 	size_t			test_number;
 	t_list			*fails;
 	t_list			*success;
-	void			(*ko_msg)(struct s_tests *test);
-	void			(*ok_msg)(struct s_tests *test);
+	void			(*ko_msg)(struct s_test *test);
+	void			(*ok_msg)(struct s_test *test);
 
 	struct s_tests	*tests;
 	void			*my_data;
@@ -53,7 +53,7 @@ struct s_try;
 typedef struct s_tests
 {
 	char			*name;
-	int				(*test_fun)(t_test *test);
+	int				(*test_fun)(struct s_test *test);
 	struct s_try	*trys;
 }				t_tests;
 
@@ -64,5 +64,6 @@ typedef struct s_try
 }				t_try;
 
 void run_test();
+void	tester(int test_num, t_test *test);
 
 #endif
