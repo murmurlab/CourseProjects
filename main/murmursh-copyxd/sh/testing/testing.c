@@ -1,35 +1,65 @@
 #include "testing.h"
 
-void	my_err_msg(t_test *test)
+void	complex_len_test_ko(t_test *test)
 {
 	char    *result[2] = {GREEN"[OK]"RESET, RED"[KO]"RESET};
-	printf(YELLOW"expected %zu\n"RESET, (size_t)(test->tests->trys->expected));
+	printf(YELLOW"expected %zu\n"RESET, (size_t)(test->current_test->trys->expected));
 	printf("^^^^^^^^=========TEST %zu=%s================\n", test->test_number, result[1]);
 }
 
-void	my_ok_msg(t_test *test)
+void	complex_len_test_ok(t_test *test)
 {
 	char    *result[2] = {GREEN"[OK]"RESET, RED"[KO]"RESET};
-	printf("============================================\n");
-    printf("try         [ %s ]\n", test->tests[test->test_number].trys->try);
-    printf("expected    [ %zu ]\n", (size_t)test->tests[test->test_number].trys->expected);
+	printf("=============== %s ================\n", test->current_test->name);
+    printf("try         [ %s ]\n", test->current_test->trys->try);
+    printf("expected    [ %zu ]\n", (size_t)test->current_test->trys->expected);
 	printf("=================TEST %zu=%s================\n\n\n", test->test_number, result[0]);
 }
 
-int		my_test(t_test *test)
+int		complex_len_test(t_test *test)
 {
+    printf("log %p\n", 0);
 	// len_all(test->my_data, 0xffffffff) offset degis
-	((t_main *)(test->my_data))->line = test->tests[test->test_number].trys->try;
+	((t_main *)(test->my_data))->line = test->current_test->trys->try;
     size_t  neverdin = len_all(test->my_data, 0);
-	if (neverdin == (size_t)test->tests[test->test_number].trys->expected)
+	if (neverdin == (size_t)test->current_test->trys->expected)
 		return (1);
 	return (0);
 }
 
-void	complex_len_test()
+void	expand_test_ko(t_test *test)
 {
-	t_test	test;
+	char    *result[2] = {GREEN"[OK]"RESET, RED"[KO]"RESET};
+	printf(YELLOW"expected %zu\n"RESET, (size_t)(test->current_test->trys->expected));
+	printf("^^^^^^^^=========TEST %zu=%s================\n", test->test_number, result[1]);
+}
 
+void	expand_test_ok(t_test *test)
+{
+	char    *result[2] = {GREEN"[OK]"RESET, RED"[KO]"RESET};
+	printf("=============== %s ================\n", test->current_test->name);
+    printf("try         [ %s ]\n", test->current_test->trys->try);
+    printf("expected    [ %zu ]\n", (size_t)test->current_test->trys->expected);
+	printf("=================TEST %zu=%s================\n\n\n", test->test_number, result[0]);
+}
+
+int     expand_test(t_test *test)
+{
+    char    *buffer;
+    size_t  *sonuc;
+    
+    printf("log %p\n", 0xffff);
+    ((t_main *)(test->my_data))->line = test->current_test->trys->try;
+    buffer = calloc(strlen(test->current_test->trys->try), 2);
+    sonuc = expander_exp(test->my_data, buffer, 0);
+    if (strcmp(((void **)test->current_test->trys->expected)[0], buffer))
+        return (0);
+    return (1);
+}
+
+void	all_tests()
+{
+    // init minishell dependends
 	t_main *data = malloc(sizeof(t_main));
 	ft_bzero(data->increases, INT8_MAX);
 	data->increases['"'] = (char)2;
@@ -38,30 +68,19 @@ void	complex_len_test()
 	data->vars = NULL;
 	set(data, strdup("a"), strdup("0000"));
 
-	// test.test_num = 0;
+
+    // create test struct
+	t_test	test;
 	test.my_data = data;
-	test.fails = NULL;
-	test.success = NULL;
-	test.ko_msg = my_err_msg;
-	test.ok_msg = my_ok_msg;
-	test.tests = malloc(20 * sizeof(t_tests));
-
-	// t_try	trys[] = {
-	// 	{
-	// 		.try = "",
-	// 		.expected = "",
-	// 	},
-	// 	{
-	// 		.try = "",
-	// 		.expected = "",
-	// 	},
-	// } index kayiyo 1 tane aradan cikardinmi. index kayarsa kodun degismesi
-	// gerekir. test caselerinin sayisina bagli olmamalidir kod.
-
+    
 	t_try	*trys[] =
 	{
 		(t_try [])
 		{
+            {
+                .try = &(t_fun){complex_len_test, complex_len_test_ko, complex_len_test_ok},
+                .expected = "complex len test",
+            },
 			{
 				.try = "$$",
 				.expected = (void *)2,
@@ -145,6 +164,10 @@ void	complex_len_test()
 		},
 		(t_try [])
 		{
+            {
+                .try = &(t_fun){expand_test, expand_test_ko, expand_test_ok},
+                .expected = "dquote test",
+            },
 			{
                 .try = "\"a$a=$a99\"$-$'$'$''$\"\"$\"$\"$-$-$$-$$=11$$",
                 .expected = &(void *[3]){
@@ -306,40 +329,88 @@ void	complex_len_test()
                 }
             },
             {(void *)0, (void *)0}
-		}
+		},
+        NULL,
 	};
 
-    size_t i;
-	for (i = 0; (size_t)trys[0][i].try; i++)
-	{
-		test.tests[i].test_fun = &my_test;
-		test.tests[i].name = "bilmemne testi";
-		test.tests[i].trys = &trys[0][i];
-	}
-    for (i = 0; (size_t)trys[0][i].try; i++)
+    // initialize test
+    init_test(&test, trys);
+
+    // call each tests in test groups
+    for (size_t j = 0; (size_t)trys[j]; j++)
     {
-        tester(i, &test);
+        for (size_t i = 0; (size_t)trys[j][i + 1].try; i++)
+            tester(j, i + 1, &test);
     }
+
+	// t_try	trys[] = {
+	// 	{
+	// 		.try = "",
+	// 		.expected = "",
+	// 	},
+	// 	{
+	// 		.try = "",
+	// 		.expected = "",
+	// 	},
+	// } index kayiyo 1 tane aradan cikardinmi. index kayarsa kodun degismesi
+	// gerekir. test caselerinin sayisina bagli olmamalidir kod.
+    
 }
 
-void	tester(int test_num, t_test *test)
+void    init_test(t_test *test, t_try *trys[])
+{
+    size_t x;
+    size_t y;
+
+    for (x = 0; trys[x]; x++)
+        ;
+	test->tests = malloc(x * sizeof(void *));
+    for (x = 0; trys[x]; x++)
+    {
+        for (y = 0; (size_t)trys[x][y + 1].try; y++)
+            ;
+        test->tests[x] = malloc(y * sizeof(t_tests));
+    }
+
+    for (size_t j = 0; (size_t)trys[j]; j++)
+    {
+        for (size_t i = 0; (size_t)trys[j][i + 1].try; i++)
+        {
+            test->tests[j][i].test_fun = ((t_fun *)trys[j][0].try)->test_fun;
+            test->tests[j][i].ko_msg = ((t_fun *)trys[j][0].try)->ko_msg;
+            test->tests[j][i].ok_msg = ((t_fun *)trys[j][0].try)->ok_msg;
+            test->tests[j][i].name = trys[j][0].expected;
+            test->tests[j][i].trys = trys[j] + i;
+            printf("log ||||||| %s > %p [ %p | %p ]\n", (trys[j][0].expected), test->tests[j][i].test_fun, &complex_len_test, &expand_test);
+        }
+    }
+
+	test->fails = NULL;
+	test->success = NULL;
+}
+
+void	tester(int test_group_num, int test_number, t_test *test)
 {
 	int		result;
 
-	test->test_number = test_num;
-	result = test->tests[test_num].test_fun(test);
+	test->test_number = test_number;
+	test->test_group_num = test_group_num;
+    test->current_test = test->tests[test_group_num] + test_number;
+    (void)test->current_test->test_fun(test);
+    printf("calistirici %d, %d\n", test_number, test_group_num);
+	result = test->current_test->test_fun(test);
 	if (result)
-		test->ok_msg(test);
+        test->current_test->ok_msg(test);
 	else
 	{
-		ft_lstadd_back(&test->fails, ft_lstnew((void *)(size_t)(test->test_number)));
-		test->ko_msg(test);
+		ft_lstadd_back(&test->fails, ft_lstnew((void *)(size_t)(test_number)));
+		test->current_test->ko_msg(test);
 	}
 }
 
 void	run_test()
 {
-	complex_len_test();
+	all_tests();
 	return ;
 	// printf(BLUE"\n\n===================murminette====================\n");
 	// printf(BLUE"=================================================\n"RESET);
