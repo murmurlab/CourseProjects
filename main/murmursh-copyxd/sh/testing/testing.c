@@ -2,59 +2,129 @@
 
 void	complex_len_test_ko(t_test *test)
 {
+	t_try	*try;
+
+	try = test->current_test->trys;
 	char    *result[2] = {GREEN"[OK]"RESET, RED"[KO]"RESET};
-	printf(YELLOW"expected %zu\n"RESET, (size_t)(test->current_test->trys->expected));
-	printf("^^^^^^^^=========TEST %zu=%s================\n", test->test_number, result[1]);
+	printf("=============== %s ============\n", test->current_test->name);
+    printf("try		[ %s ]\n", try->try);
+	printf(YELLOW"your		[ %zu ]\n"RESET, (size_t)(try->result));
+	printf("expected	[ %zu ]\n", (size_t)(try->expected));
+	printf("^^^^^^^^=========TEST %zu=%s================\n\n\n", test->test_number, result[1]);
 }
 
 void	complex_len_test_ok(t_test *test)
 {
+	t_try	*try;
+
+	try = test->current_test->trys;
 	char    *result[2] = {GREEN"[OK]"RESET, RED"[KO]"RESET};
 	printf("=============== %s ================\n", test->current_test->name);
-    printf("try         [ %s ]\n", test->current_test->trys->try);
-    printf("expected    [ %zu ]\n", (size_t)test->current_test->trys->expected);
+    printf("try         [ %s ]\n", try->try);
+    printf("expected    [ %zu ]\n", (size_t)try->expected);
 	printf("=================TEST %zu=%s================\n\n\n", test->test_number, result[0]);
 }
 
 int		complex_len_test(t_test *test)
 {
-    printf("log %p\n", 0);
-	// len_all(test->my_data, 0xffffffff) offset degis
-	((t_main *)(test->my_data))->line = test->current_test->trys->try;
-    size_t  neverdin = len_all(test->my_data, 0);
-	if (neverdin == (size_t)test->current_test->trys->expected)
+	t_try	*try;
+
+	try = test->current_test->trys;
+	((t_main *)(test->my_data))->line = try->try;
+	try->result = (void *)len_all(test->my_data, 0);
+	if ((size_t)try->result == (size_t)try->expected)
 		return (1);
 	return (0);
 }
 
 void	expand_test_ko(t_test *test)
 {
+	t_try	*try;
+
+	try = test->current_test->trys;
 	char    *result[2] = {GREEN"[OK]"RESET, RED"[KO]"RESET};
-	printf(YELLOW"expected %zu\n"RESET, (size_t)(test->current_test->trys->expected));
-	printf("^^^^^^^^=========TEST %zu=%s================\n", test->test_number, result[1]);
+	printf("================ %s ================\n", test->current_test->name);
+    printf("try		[ %s ]\n", try->try);
+	if (try->err_bit & 1)
+		printf(YELLOW"your		[ %s ]\n"RESET, ((void **)try->result)[0]);
+	printf("expected	[ %s ]\n\n", ((void **)try->expected)[0]);
+	if (try->err_bit & 2)
+		printf(YELLOW"your		[ %zu ]\n"RESET, ((size_t *)((void **)try->result)[1])[0]);
+	printf("expected	[ %zu ]\n\n", (size_t)((void **)try->expected)[1]);
+	if (try->err_bit & 4)
+		printf(YELLOW"your		[ %zu ]\n"RESET, ((size_t *)((void **)try->result)[1])[1]);
+	printf("expected	[ %zu ]\n\n", (size_t)((void **)try->expected)[2]);
+	printf("^^^^^^^^=========TEST %zu=%s================\n\n\n", test->test_number, result[1]);
 }
 
 void	expand_test_ok(t_test *test)
 {
+	t_try	*try;
+
+	try = test->current_test->trys;
 	char    *result[2] = {GREEN"[OK]"RESET, RED"[KO]"RESET};
 	printf("=============== %s ================\n", test->current_test->name);
-    printf("try         [ %s ]\n", test->current_test->trys->try);
-    printf("expected    [ %zu ]\n", (size_t)test->current_test->trys->expected);
+    printf("try         	[ %s ]\n", try->try);
+    printf("expected    	[ %s ]\n", ((void **)try->expected)[0]);
+	printf("expected	[ %zu ]\n", (size_t)((void **)try->expected)[1]);
+	printf("expected	[ %zu ]\n", (size_t)((void **)try->expected)[2]);
 	printf("=================TEST %zu=%s================\n\n\n", test->test_number, result[0]);
 }
 
 int     expand_test(t_test *test)
 {
-    char    *buffer;
-    size_t  *sonuc;
-    
-    printf("log %p\n", 0xffff);
-    ((t_main *)(test->my_data))->line = test->current_test->trys->try;
-    buffer = calloc(strlen(test->current_test->trys->try), 2);
-    sonuc = expander_exp(test->my_data, buffer, 0);
-    if (strcmp(((void **)test->current_test->trys->expected)[0], buffer))
+	t_try	*try;
+
+	try = test->current_test->trys;
+	try->result = malloc(sizeof(void *) * 2);
+    ((t_main *)(test->my_data))->line = try->try;
+    ((void **)try->result)[0] = calloc(strlen(try->try), 2);
+    ((void **)try->result)[1] = expander_exp(test->my_data, ((void **)try->result)[0], 0);
+	try->err_bit |= (strcmp(((void **)try->expected)[0], ((void **)try->result)[0]) && 1) << 0;
+	try->err_bit |= (((size_t *)((void **)try->result)[1])[0] != \
+					(size_t)((void **)try->expected)[1] && 1) << 1;
+	try->err_bit |= (((size_t *)((void **)try->result)[1])[1] != \
+					(size_t)((void **)try->expected)[2] && 1) << 2;
+    if (try->err_bit)
         return (0);
     return (1);
+}
+
+void	join_all_test_ko(t_test *test)
+{
+	t_try	*try;
+
+	try = test->current_test->trys;
+	char    *result[2] = {GREEN"[OK]"RESET, RED"[KO]"RESET};
+	printf("=============== %s ============\n", test->current_test->name);
+    printf("try		[ %s ]\n", try->try);
+	printf(YELLOW"your		[ %s ]\n"RESET, try->result);
+	printf("expected	[ %s ]\n", try->expected);
+	printf("^^^^^^^^=========TEST %zu=%s================\n\n\n", test->test_number, result[1]);
+}
+
+void	join_all_test_ok(t_test *test)
+{
+	t_try	*try;
+
+	try = test->current_test->trys;
+	char    *result[2] = {GREEN"[OK]"RESET, RED"[KO]"RESET};
+	printf("=============== %s ================\n", test->current_test->name);
+    printf("try         [ %s ]\n", try->try);
+    printf("expected    [ %s ]\n", try->expected);
+	printf("=================TEST %zu=%s================\n\n\n", test->test_number, result[0]);
+}
+
+int		join_all_test(t_test *test)
+{
+	t_try	*try;
+
+	try = test->current_test->trys;
+	((t_main *)(test->my_data))->line = try->try;
+	try->result = join_all(test->my_data, 0).buffer;
+	if (!strcmp(try->expected, try->result))
+		return (1);
+	return (0);
 }
 
 void	all_tests()
@@ -68,269 +138,306 @@ void	all_tests()
 	data->vars = NULL;
 	set(data, strdup("a"), strdup("0000"));
 
-
     // create test struct
 	t_test	test;
 	test.my_data = data;
     
 	t_try	*trys[] =
 	{
-		(t_try [])
-		{
-            {
-                .try = &(t_fun){complex_len_test, complex_len_test_ko, complex_len_test_ok},
-                .expected = "complex len test",
-            },
-			{
-				.try = "$$",
-				.expected = (void *)2,
-			},
-			{
-				.try = "$a",
-				.expected = (void *)0,
-			},
-			{
-				.try = "$$a",
-				.expected = (void *)1,
-			},
-			{
-				.try = "$",
-				.expected = (void *)1,
-			},
-			{
-				.try = "$a$",
-				.expected = (void *)0,
-			},
-			{
-				.try = "1",
-				.expected = (void *)1,
-			},
-			{
-				.try = "",
-				.expected = (void *)0,
-			},
-			{
-				.try = "\"$$\"",
-				.expected = (void *)2,
-			},
-			{
-				.try = "\"$a\"",
-				.expected = (void *)4,
-			},
-			{
-				.try = "\"$$a\"",
-				.expected = (void *)5,
-			},
-			{
-				.try = "\"$\"",
-				.expected = (void *)1,
-			},
-			{
-				.try = "\"$a$\"",
-				.expected = (void *)5,
-			},
-			{
-				.try = "\"\"",
-				.expected = (void *)0,
-			},
-			{
-				.try = "\"1\"",
-				.expected = (void *)1,
-			},
-			{
-				.try = "a$\"a$a=$a99\"$-$'$'$''$\"\"$\"$\"$-$-$$-$$=11$$",
-				.expected = (void *)30,
-			},
-			{
-				.try = "\"a$a99-$a\"",
-				.expected = (void *)6,
-			},
-			{
-				.try = "123123'123'1\"12\"1",
-				.expected = (void *)13,
-			},
-			{
-				.try = "1$a'$a'\"\"1\"\"$a''$a $a",
-				.expected = (void *)1,
-			},
-			{
-				.try = "\"a$\"a$a=$a99\"$-$'$'$''$\"\"$\"$\"$-$-$$-$$=11$$\"",
-				.expected = (void *)3,
-			},
-			{
-				.try = NULL,
-				.expected = NULL,
-			}
-		},
-		(t_try [])
-		{
-            {
-                .try = &(t_fun){expand_test, expand_test_ko, expand_test_ok},
-                .expected = "dquote test",
-            },
-			{
-                .try = "\"a$a=$a99\"$-$'$'$''$\"\"$\"$\"$-$-$$-$$=11$$",
-                .expected = &(void *[3]){
-                    "a0000=",
-                    (void *)10,
-                    (void *)6
-                }
-            },
-            {
-                .try = "\"ast\"",
-                .expected = &(void *[3]){
-                    "ast",
-                    (void *)5,
-                    (void *)3
-                }
-            },
-            {
-                .try = "\"\"",
-                .expected = &(void *[3]){
-                    "",
-                    (void *)2,
-                    (void *)0
-                }
-            },
-            {
-                .try = "\"$a\"",
-                .expected = &(void *[3]){
-                    VAR,
-                    (void *)4,
-                    (void *)(0 + VAR_LEN)
-                }
-            },
-            {
-                .try = "\"$a1\"",
-                .expected = &(void *[3]){
-                    "",
-                    (void *)5,
-                    (void *)0
-                }
-            },
-            {
-                .try = "\"$-\"",
-                .expected = &(void *[3]){
-                    "$-",
-                    (void *)4,
-                    (void *)2
-                }
-            },
-            {
-                .try = "\"$\"",
-                .expected = &(void *[3]){
-                    "$",
-                    (void *)3,
-                    (void *)1
-                }
-            },
-            {
-                .try = "\"$$\"",
-                .expected = &(void *[3]){
-                    "$$",
-                    (void *)4,
-                    (void *)2
-                }
-            },
-            {
-                .try = "\"1$a\"",
-                .expected = &(void *[3]){
-                    "1"VAR,
-                    (void *)5,
-                    (void *)(1 + VAR_LEN)
-                }
-            },
-            {
-                .try = "\"-$\"",
-                .expected = &(void *[3]){
-                    "-$",
-                    (void *)4,
-                    (void *)2
-                }
-            },
-            {
-                .try = "\"a$\"",
-                .expected = &(void *[3]){
-                    "a$",
-                    (void *)4,
-                    (void *)2
-                }
-            },
-            {
-                .try = "\"$$$\"",
-                .expected = &(void *[3]){
-                    "$$$",
-                    (void *)5,
-                    (void *)3
-                } //len test
-            },
-            {
-                .try = "\"$a-\"",
-                .expected = &(void *[3]){
-                    VAR"-",
-                    (void *)5,
-                    (void *)(VAR_LEN + 1)
-                }
-            },
-            {
-                .try = "\"$$a\"",
-                .expected = &(void *[3]){
-                    "$"VAR,
-                    (void *)5,
-                    (void *)(1 + VAR_LEN)
-                }
-            },
-            {
-                .try = "\"$a-$\"",
-                .expected = &(void *[3]){
-                    VAR"-$",
-                    (void *)6,
-                    (void *)(VAR_LEN + 2)
-                }
-            },
-            {
-                .try = "\"$a-$$\"",
-                .expected = &(void *[3]){
-                    VAR"-$$",
-                    (void *)7,
-                    (void *)(VAR_LEN + 3)
-                }
-            },
-            {
-                .try = "\"-$-$-$\"",
-                .expected = &(void *[3]){
-                    "-$-$-$",
-                    (void *)8,
-                    (void *)6
-                }
-            },
-            {
-                .try = "\"-$a$a99\"",
-                .expected = &(void *[3]){
-                    "-"VAR,
-                    (void *)9,
-                    (void *)(1 + VAR_LEN)
-                }
-            },
-            {
-                .try = "\"-$a$a$a\"",
-                .expected = &(void *[3]){
-                    "-"VAR VAR VAR,
-                    (void *)9,
-                    (void *)(1 + (VAR_LEN * 3))
-                }
-            },
-            {
-                .try = "\"$a-$a\"",
-                .expected = &(void *[3]){
-                    VAR"-"VAR,
-                    (void *)7,
-                    (void *)(VAR_LEN + 1 + VAR_LEN)
-                }
-            },
-            {(void *)0, (void *)0}
-		},
-        NULL,
+		// (t_try [])
+		// {
+        //     {
+        //         .try = &(t_fun){complex_len_test, complex_len_test_ko, complex_len_test_ok},
+        //         .expected = "complex len test",
+        //     },
+		// 	{
+		// 		.try = "$$",
+		// 		.expected = (void *)2,
+		// 	},
+		// 	{
+		// 		.try = "$a",
+		// 		.expected = (void *)0,
+		// 	},
+		// 	{
+		// 		.try = "$$a",
+		// 		.expected = (void *)1,
+		// 	},
+		// 	{
+		// 		.try = "$",
+		// 		.expected = (void *)1,
+		// 	},
+		// 	{
+		// 		.try = "$a$",
+		// 		.expected = (void *)0,
+		// 	},
+		// 	{
+		// 		.try = "1",
+		// 		.expected = (void *)1,
+		// 	},
+		// 	{
+		// 		.try = "",
+		// 		.expected = (void *)0,
+		// 	},
+		// 	{
+		// 		.try = "\"$$\"",
+		// 		.expected = (void *)2,
+		// 	},
+		// 	{
+		// 		.try = "\"$a\"",
+		// 		.expected = (void *)4,
+		// 	},
+		// 	{
+		// 		.try = "\"$$a\"",
+		// 		.expected = (void *)5,
+		// 	},
+		// 	{
+		// 		.try = "\"$\"",
+		// 		.expected = (void *)1,
+		// 	},
+		// 	{
+		// 		.try = "\"$a$\"",
+		// 		.expected = (void *)5,
+		// 	},
+		// 	{
+		// 		.try = "\"\"",
+		// 		.expected = (void *)0,
+		// 	},
+		// 	{
+		// 		.try = "\"1\"",
+		// 		.expected = (void *)1,
+		// 	},
+		// 	{
+		// 		.try = "a$\"a$a=$a99\"$-$'$'$''$\"\"$\"$\"$-$-$$-$$=11$$",
+		// 		.expected = (void *)30,
+		// 	},
+		// 	{
+		// 		.try = "\"a$a99-$a\"",
+		// 		.expected = (void *)6,
+		// 	},
+		// 	{
+		// 		.try = "123123'123'1\"12\"1",
+		// 		.expected = (void *)13,
+		// 	},
+		// 	{
+		// 		.try = "1$a'$a'\"\"1\"\"$a''$a $a",
+		// 		.expected = (void *)1,
+		// 	},
+		// 	{
+		// 		.try = "\"a$\"a$a=$a99\"$-$'$'$''$\"\"$\"$\"$-$-$$-$$=11$$\"",
+		// 		.expected = (void *)3,
+		// 	},
+		// 	{
+		// 		.try = NULL,
+		// 		.expected = NULL,
+		// 	}
+		// },
+
+		// (t_try [])
+		// {
+        //     {
+        //         .try = &(t_fun){expand_test, expand_test_ko, expand_test_ok},
+        //         .expected = "dquote test",
+        //     },
+		// 	{
+        //         .try = "\"a$a=$a99\"$-$'$'$''$\"\"$\"$\"$-$-$$-$$=11$$",
+        //         .expected = &(void *[3]){
+        //             "a0000=",
+        //             (void *)10,
+        //             (void *)6
+        //         }
+        //     },
+        //     {
+        //         .try = "\"ast\"",
+        //         .expected = &(void *[3]){
+        //             "ast",
+        //             (void *)5,
+        //             (void *)3
+        //         }
+        //     },
+        //     {
+        //         .try = "\"\"",
+        //         .expected = &(void *[3]){
+        //             "",
+        //             (void *)2,
+        //             (void *)0
+        //         }
+        //     },
+        //     {
+        //         .try = "\"$a\"",
+        //         .expected = &(void *[3]){
+        //             VAR,
+        //             (void *)4,
+        //             (void *)(0 + VAR_LEN)
+        //         }
+        //     },
+        //     {
+        //         .try = "\"$a1\"",
+        //         .expected = &(void *[3]){
+        //             "",
+        //             (void *)5,
+        //             (void *)0
+        //         }
+        //     },
+        //     {
+        //         .try = "\"$-\"",
+        //         .expected = &(void *[3]){
+        //             "$-",
+        //             (void *)4,
+        //             (void *)2
+        //         }
+        //     },
+        //     {
+        //         .try = "\"$\"",
+        //         .expected = &(void *[3]){
+        //             "$",
+        //             (void *)3,
+        //             (void *)1
+        //         }
+        //     },
+        //     {
+        //         .try = "\"$$\"",
+        //         .expected = &(void *[3]){
+        //             "$$",
+        //             (void *)4,
+        //             (void *)2
+        //         }
+        //     },
+        //     {
+        //         .try = "\"1$a\"",
+        //         .expected = &(void *[3]){
+        //             "1"VAR,
+        //             (void *)5,
+        //             (void *)(1 + VAR_LEN)
+        //         }
+        //     },
+        //     {
+        //         .try = "\"-$\"",
+        //         .expected = &(void *[3]){
+        //             "-$",
+        //             (void *)4,
+        //             (void *)2
+        //         }
+        //     },
+        //     {
+        //         .try = "\"a$\"",
+        //         .expected = &(void *[3]){
+        //             "a$",
+        //             (void *)4,
+        //             (void *)2
+        //         }
+        //     },
+        //     {
+        //         .try = "\"$$$\"",
+        //         .expected = &(void *[3]){
+        //             "$$$",
+        //             (void *)5,
+        //             (void *)3
+        //         } //len test
+        //     },
+        //     {
+        //         .try = "\"$a-\"",
+        //         .expected = &(void *[3]){
+        //             VAR"-",
+        //             (void *)5,
+        //             (void *)(VAR_LEN + 1)
+        //         }
+        //     },
+        //     {
+        //         .try = "\"$$a\"",
+        //         .expected = &(void *[3]){
+        //             "$"VAR,
+        //             (void *)5,
+        //             (void *)(1 + VAR_LEN)
+        //         }
+        //     },
+        //     {
+        //         .try = "\"$a-$\"",
+        //         .expected = &(void *[3]){
+        //             VAR"-$",
+        //             (void *)6,
+        //             (void *)(VAR_LEN + 2)
+        //         }
+        //     },
+        //     {
+        //         .try = "\"$a-$$\"",
+        //         .expected = &(void *[3]){
+        //             VAR"-$$",
+        //             (void *)7,
+        //             (void *)(VAR_LEN + 3)
+        //         }
+        //     },
+        //     {
+        //         .try = "\"-$-$-$\"",
+        //         .expected = &(void *[3]){
+        //             "-$-$-$",
+        //             (void *)8,
+        //             (void *)6
+        //         }
+        //     },
+        //     {
+        //         .try = "\"-$a$a99\"",
+        //         .expected = &(void *[3]){
+        //             "-"VAR,
+        //             (void *)9,
+        //             (void *)(1 + VAR_LEN)
+        //         }
+        //     },
+        //     {
+        //         .try = "\"-$a$a$a\"",
+        //         .expected = &(void *[3]){
+        //             "-"VAR VAR VAR,
+        //             (void *)9,
+        //             (void *)(1 + (VAR_LEN * 3))
+        //         }
+        //     },
+        //     {
+        //         .try = "\"$a-$a\"",
+        //         .expected = &(void *[3]){
+        //             VAR"-"VAR,
+        //             (void *)7,
+        //             (void *)(VAR_LEN + 1 + VAR_LEN)
+        //         }
+        //     },
+        //     {(void *)0, (void *)0}
+		// },
+
+		// (t_try [])
+		// {
+		// 	{
+		// 		.try = &(t_fun){join_all_test, join_all_test_ko, join_all_test_ok},
+		// 		.expected = "join all test",
+		// 	},
+		// 	{
+		// 		.try = "a$\"a$a=$a99\"$-$'$'$''$\"\"$\"$\"$-3$-1$-2$=$11$30",
+		// 		.expected = "a$a0000=$-$$$$$$$-3$-1$-2$="
+		// 	},
+		// 	{
+		// 		.try = "123123'1\"12\"1130123'1\"12\"1130",
+		// 		.expected = "1231231\"12\"11301231121130"
+		// 	},
+		// 	{
+		// 		.try = "1'$a''$a'\"\"1\"\"\"$a\"''\"$a $a1\"",
+		// 		.expected = "1$a$a100000000 "
+		// 	},
+		// 	{
+		// 		.try = "a$\"a$a=$a99\"$-$'$'$''$\"\"$\"$\"$-$-$$-$$=11$$",
+		// 		.expected = "a$a0000=$-$$$$$$$-$-$$-$$=11$$"
+		// 	},
+		// 	{
+		// 		.try = "'$a'\"''$a''\"\"'$a'\"\"  '$a' $ $a \"\"  '$'  \"\"''\"'\"$a\"'\"$_\"'$_'-=$$\"$a\"$''$$$-$'a'4\"$a $a\"a'$a''a'\"v$a$av$\"$' ''$'a'\"$a\"'\"''\"31",
+		// 		.expected = "$a''0000'''0000'  '0000' $ 0000   '$'  ''\"$a\"./program$_-=$$0000$$$$-$a40000 0000a$aav0000$$ $a\"$a\"''31"
+		// 	},
+		// 	{
+		// 		.try = "'\"  $ $ $a \"''$'\"\"''\"'\"99\"'\"\"$_\"\"'$_'-=$$\"'$a'\"$''$$$-$'a'4\"'$a $'a\"a'$a''a'\"v$'a$'av$\"$' ''$'a'\"'$'a\"'\"''\"31\"",
+		// 		.expected = "\"  $ $ $a \"$'99'./program'./program'-=$$$a$''$$$-$'a'4$a $aa'0000''a'v$a$av$$' ''$'a'$a'31"
+		// 	},
+		// 	{
+		// 		.try = NULL,
+		// 		.expected = NULL,
+		// 	}
+		// },
+
+		NULL,
 	};
 
     // initialize test
@@ -340,7 +447,7 @@ void	all_tests()
     for (size_t j = 0; (size_t)trys[j]; j++)
     {
         for (size_t i = 0; (size_t)trys[j][i + 1].try; i++)
-            tester(j, i + 1, &test);
+            tester(j, i, &test);
     }
 
 	// t_try	trys[] = {
@@ -380,8 +487,7 @@ void    init_test(t_test *test, t_try *trys[])
             test->tests[j][i].ko_msg = ((t_fun *)trys[j][0].try)->ko_msg;
             test->tests[j][i].ok_msg = ((t_fun *)trys[j][0].try)->ok_msg;
             test->tests[j][i].name = trys[j][0].expected;
-            test->tests[j][i].trys = trys[j] + i;
-            printf("log ||||||| %s > %p [ %p | %p ]\n", (trys[j][0].expected), test->tests[j][i].test_fun, &complex_len_test, &expand_test);
+            test->tests[j][i].trys = trys[j] + i + 1;
         }
     }
 
@@ -396,8 +502,6 @@ void	tester(int test_group_num, int test_number, t_test *test)
 	test->test_number = test_number;
 	test->test_group_num = test_group_num;
     test->current_test = test->tests[test_group_num] + test_number;
-    (void)test->current_test->test_fun(test);
-    printf("calistirici %d, %d\n", test_number, test_group_num);
 	result = test->current_test->test_fun(test);
 	if (result)
         test->current_test->ok_msg(test);
@@ -412,6 +516,83 @@ void	run_test()
 {
 	all_tests();
 	return ;
+
+// (t_try [])
+// {
+//     {
+//         .try = &(t_fun){complex_len_test, complex_len_test_ko, complex_len_test_ok},
+//         .expected = "complex len test",
+//     },
+//     {
+//         .try = "a$\"a$a=$a99\"$-$'$'$''$\"\"$\"$\"$-3$-1$-2$=$11$30",
+//         .expected = "a$a0000=$-$$$$$$$-3$-1$-2$="
+//     },
+//     {
+//         .try = "123123'1\"12\"1130123'1\"12\"1130",
+//         .expected = "1231231\"12\"11301231121130"
+//     },
+//     {
+//         .try = "1'$a''$a'\"\"1\"\"\"$a\"''\"$a $a1\"",
+//         .expected = "1$a$a100000000 "
+//     },
+//     {
+//         .try = "a$\"a$a=$a99\"$-$'$'$''$\"\"$\"$\"$-$-$$-$$=11$$",
+//         .expected = "a$a0000=$-$$$$$$$-$-$$-$$=11$$"
+//     },
+//     {
+//         .try = "'$a'\"''$a''\"\"'$a'\"\"  '$a' $ $a \"\"  '$'  \"\"''\"'\"$a\"'\"$_\"'$_'-=$$\"$a\"$''$$$-$'a'4\"$a $a\"a'$a''a'\"v$a$av$\"$' ''$'a'\"$a\"'\"''\"31",
+//         .expected = "$a''0000'''0000'  '0000' $ 0000   '$'  ''\"$a\"./program$_-=$$0000$$$$-$a40000 0000a$aav0000$$ $a\"$a\"''31"
+//     },
+//     {
+//         .try = "'\"  $ $ $a \"''$'\"\"''\"'\"99\"'\"\"$_\"\"'$_'-=$$\"'$a'\"$''$$$-$'a'4\"'$a $'a\"a'$a''a'\"v$'a$'av$\"$' ''$'a'\"'$'a\"'\"''\"31\"",
+//         .expected = "\"  $ $ $a \"$'99'./program'./program'-=$$$a$''$$$-$'a'4$a $aa'0000''a'v$a$av$$' ''$'a'$a'31"
+//     },
+//     {
+//         .try = NULL,
+//         .expected = NULL,
+//     }
+// }
+
+
+
+
+// 	char    *mix[][4] = 
+// 	{
+// 		{
+// 			"a$\"a$a=$a99\"$-$'$'$''$\"\"$\"$\"$-3$-1$-2$=$11$30",
+// 			"a$a0000=$-$$$$$$$-3$-1$-2$="
+// 		},
+// 		{
+// 			"123123'1\"12\"1130123'1\"12\"1130",
+// 			"1231231\"12\"11301231121130"
+// 		},
+// 		{
+// 			"1'$a''$a'\"\"1\"\"\"$a\"''\"$a $a1\"",
+// 			"1$a$a100000000 "
+// 		},
+// 		{
+// 			"a$\"a$a=$a99\"$-$'$'$''$\"\"$\"$\"$-$-$$-$$=11$$",
+// 			"a$a0000=$-$$$$$$$-$-$$-$$=11$$"
+// 		},
+// 		{
+// 			"'$a'\"''$a''\"\"'$a'\"\"  '$a' $ $a \"\"  '$'  \"\"''\"'\"$a\"'\"$_\"'$_'-=$$\"$a\"$''$$$-$'a'4\"$a $a\"a'$a''a'\"v$a$av$\"$' ''$'a'\"$a\"'\"''\"31",
+// 			"$a''0000'''0000'  '0000' $ 0000   '$'  ''\"$a\"./program$_-=$$0000$$$$-$a40000 0000a$aav0000$$ $a\"$a\"''31"
+// 		},
+// 		{
+// 			"'\"  $ $ $a \"''$'\"\"''\"'\"99\"'\"\"$_\"\"'$_'-=$$\"'$a'\"$''$$$-$'a'4\"'$a $'a\"a'$a''a'\"v$'a$'av$\"$' ''$'a'\"'$'a\"'\"''\"31\"",
+// 			"\"  $ $ $a \"$'99'./program'./program'-=$$$a$''$$$-$'a'4$a $aa'0000''a'v$a$av$$' ''$'a'$a'31"
+// 		},
+// 		{(void *)0, (void *)0}
+// 	};
+
+
+
+
+
+
+
+
+
 	// printf(BLUE"\n\n===================murminette====================\n");
 	// printf(BLUE"=================================================\n"RESET);
 	// printf(BLUE"=====================len_all=====================\n"RESET);

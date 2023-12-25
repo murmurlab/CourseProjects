@@ -68,6 +68,8 @@ typedef struct s_try
 {
 	void	*try;
 	void	*expected;
+	void	*result;
+	size_t	err_bit;
 }				t_try;
 
 
