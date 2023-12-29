@@ -141,9 +141,9 @@ int		check_cmd(char *cmd)
 	// split yerine : replace \0 sonra strjoine cmd + path ver
 }
 
-void	child(t_main *data, pid_t mypid)
+void	child(t_main *data)
 {
-	printf("%s%d\n", "mypid: ", mypid);
+	printf("%s%d\n", "mypid: ", getpid());
 }
 
 void	exe_cute_cat(t_main *data)
@@ -153,20 +153,23 @@ void	exe_cute_cat(t_main *data)
 	int		fd[2];
 
 	pipe(fd);
-	pids = malloc(sizeof(pid_t) * data->cmd_ct);
-	_ = -1;
-	
-	while (++_ < data->cmd_ct)
+	pids = malloc((size_t)(sizeof(pid_t) * data->cmd_ct));
+	printf("%d rrr\n", data->cmd_ct);
+	_ = 0;
+	pids[_] = 1;
+	printf("a\n");
+	while (pids[_] != 0 && _ < data->cmd_ct)
 	{
-		if (pids[_] != 0)
-			pids[_] = fork();
+		pids[_] = fork();
+		_++;
 	}
-	if (pids[_] > 0)
-		child(data, pids[_]);
+	if (pids[_] == 0);
+		// child(data);
 	else
 	{
 
 	}
+	exit(0);
 // 	bash  defines the following built-in commands: :, ., [, alias, bg, bind, break, builtin, case, cd, command, compgen, complete, continue, declare, dirs, disown, echo, enable, eval, exec, exit, ex‐pts, hash, help, history, if, jobs, kill, let, local, logout, popd, printf, pushd, pwd, read, readonly, return, set, shift, shopt, source,  suspend,  te
 // st,  times,  trap,  type,mask, unalias, unset, until, wait, while.
 	
