@@ -155,13 +155,14 @@ void	exe_cute_cat(t_main *data)
 	pipe(fd);
 	pids = malloc(sizeof(pid_t) * data->cmd_ct);
 	_ = -1;
+	
 	while (++_ < data->cmd_ct)
 	{
 		if (pids[_] != 0)
 			pids[_] = fork();
 	}
 	if (pids[_] > 0)
-		child(data, pids[_]);			
+		child(data, pids[_]);
 	else
 	{
 

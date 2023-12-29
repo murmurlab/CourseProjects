@@ -7,7 +7,7 @@ void	complex_len_test_ko(t_test *test)
 	try = test->current_test->trys;
 	char    *result[2] = {GREEN"[OK]"RESET, RED"[KO]"RESET};
 	printf("=============== %s ============\n", test->current_test->name);
-    printf("try		[ %s ]\n", try->try);
+    printf("try		[ %s ]\n", (char *)try->try);
 	printf(YELLOW"your		[ %zu ]\n"RESET, (size_t)(try->result));
 	printf("expected	[ %zu ]\n", (size_t)(try->expected));
 	printf("^^^^^^^^=========TEST %zu=%s================\n\n\n", test->test_number, result[1]);
@@ -20,7 +20,7 @@ void	complex_len_test_ok(t_test *test)
 	try = test->current_test->trys;
 	char    *result[2] = {GREEN"[OK]"RESET, RED"[KO]"RESET};
 	printf("=============== %s ================\n", test->current_test->name);
-    printf("try         [ %s ]\n", try->try);
+    printf("try         [ %s ]\n", (char *)try->try);
     printf("expected    [ %zu ]\n", (size_t)try->expected);
 	printf("=================TEST %zu=%s================\n\n\n", test->test_number, result[0]);
 }
@@ -44,10 +44,10 @@ void	expand_test_ko(t_test *test)
 	try = test->current_test->trys;
 	char    *result[2] = {GREEN"[OK]"RESET, RED"[KO]"RESET};
 	printf("================ %s ================\n", test->current_test->name);
-    printf("try		[ %s ]\n", try->try);
+    printf("try		[ %s ]\n", (char *)try->try);
 	if (try->err_bit & 1)
-		printf(YELLOW"your		[ %s ]\n"RESET, ((void **)try->result)[0]);
-	printf("expected	[ %s ]\n\n", ((void **)try->expected)[0]);
+		printf(YELLOW"your		[ %s ]\n"RESET, (char *)((void **)try->result)[0]);
+	printf("expected	[ %s ]\n\n", (char *)((void **)try->expected)[0]);
 	if (try->err_bit & 2)
 		printf(YELLOW"your		[ %zu ]\n"RESET, ((size_t *)((void **)try->result)[1])[0]);
 	printf("expected	[ %zu ]\n\n", (size_t)((void **)try->expected)[1]);
@@ -64,8 +64,8 @@ void	expand_test_ok(t_test *test)
 	try = test->current_test->trys;
 	char    *result[2] = {GREEN"[OK]"RESET, RED"[KO]"RESET};
 	printf("=============== %s ================\n", test->current_test->name);
-    printf("try         	[ %s ]\n", try->try);
-    printf("expected    	[ %s ]\n", ((void **)try->expected)[0]);
+    printf("try         	[ %s ]\n", (char *)try->try);
+    printf("expected    	[ %s ]\n", (char *)((void **)try->expected)[0]);
 	printf("expected	[ %zu ]\n", (size_t)((void **)try->expected)[1]);
 	printf("expected	[ %zu ]\n", (size_t)((void **)try->expected)[2]);
 	printf("=================TEST %zu=%s================\n\n\n", test->test_number, result[0]);
@@ -97,9 +97,9 @@ void	join_all_test_ko(t_test *test)
 	try = test->current_test->trys;
 	char    *result[2] = {GREEN"[OK]"RESET, RED"[KO]"RESET};
 	printf("=============== %s ============\n", test->current_test->name);
-    printf("try		[ %s ]\n", try->try);
-	printf(YELLOW"your		[ %s ]\n"RESET, try->result);
-	printf("expected	[ %s ]\n", try->expected);
+    printf("try		[ %s ]\n", (char *)try->try);
+	printf(YELLOW"your		[ %s ]\n"RESET, (char *)try->result);
+	printf("expected	[ %s ]\n", (char *)try->expected);
 	printf("^^^^^^^^=========TEST %zu=%s================\n\n\n", test->test_number, result[1]);
 }
 
@@ -110,8 +110,8 @@ void	join_all_test_ok(t_test *test)
 	try = test->current_test->trys;
 	char    *result[2] = {GREEN"[OK]"RESET, RED"[KO]"RESET};
 	printf("=============== %s ================\n", test->current_test->name);
-    printf("try         [ %s ]\n", try->try);
-    printf("expected    [ %s ]\n", try->expected);
+    printf("try         [ %s ]\n", (char *)try->try);
+    printf("expected    [ %s ]\n", (char *)try->expected);
 	printf("=================TEST %zu=%s================\n\n\n", test->test_number, result[0]);
 }
 

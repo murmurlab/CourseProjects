@@ -16,8 +16,8 @@ CC =						gcc
 
 # rl		=					-L /goinfre/$(shell whoami)/homebrew/Cellar/readline/8.2.7/lib -lreadline
 # rlI		=					-I /goinfre/$(shell whoami)/homebrew/Cellar/readline/8.2.7/include
-rl		=					-L lib/lib/readline/lib -lreadline $(ltinfo)
-rlI		=					-I lib/lib/readline/include
+rl		=					-L lib/readline/lib -lreadline $(ltinfo)
+rlI		=					-I lib/readline/include
 
 libs	=					libs
 libr	=					$(rl) -L./libultift -lft
@@ -51,7 +51,7 @@ NAME =					program
 BNAME =					checker
 MAKEFLAGS +=			-j$(NPROCS)
 murmurc				=	./libultift/libft.a
-lrl				=	./lib/lib/readline/lib/libreadline.a
+lrl				=	./lib/readline/lib/libreadline.a
 depend				=	r_murmurc r_rl
 # $(src_dir)%.o: $(src_dir)%.c
 # 	gcc -c $< -o $@ > /dev/null
@@ -101,8 +101,8 @@ ifeq "$(os)" "Darwin"
 else ifeq ($(os),Linux)
 # 	make -C $(libs)/minilibx-linux clean
 endif
-	make -C ./libultift clean &
-	make -C ./lib fclean &
+	# make -C ./libultift clean &
+	# make -C ./lib fclean &
 	rm -f $(NAME) $(BNAME) & wait
 
 re:						fclean
