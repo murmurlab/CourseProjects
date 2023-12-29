@@ -127,9 +127,8 @@ int		join_all_test(t_test *test)
 	return (0);
 }
 
-void	all_tests()
+void	*get_my_data(void)
 {
-    // init minishell dependends
 	t_main *data = malloc(sizeof(t_main));
 	ft_bzero(data->increases, INT8_MAX);
 	data->increases['"'] = (char)2;
@@ -137,11 +136,45 @@ void	all_tests()
 	data->increases[0] = (char)0;
 	data->vars = NULL;
 	set(data, strdup("a"), strdup("0000"));
+	data->cmds = (t_cmd []){
+		{
+			"ls",
+			(char *[]){"-la", "-s", NULL},
+			0,
+		},
+		{
+			"grep",
+			(char *[]){"\\-rw-r--r--", NULL},
+			0,
+		},
+		{
+			"cut",
+			(char *[]){"-b", "57-", NULL},
+			0,
+		},
+		{
+			"cat",
+			(char *[]){NULL},
+			0,
+		},
+		{
+			"wc",
+			(char *[]){"-l", NULL},
+			0,
+		},
+	};
+	data->cmd_ct = 5;
+	return (data);
+}
 
+void	all_tests()
+{
     // create test struct
 	t_test	test;
-	test.my_data = data;
-    
+	test.my_data = get_my_data();
+
+	exe_cute_cat();
+
 	t_try	*trys[] =
 	{
 		// (t_try [])
@@ -444,22 +477,13 @@ void	all_tests()
     init_test(&test, trys);
 
     // call each tests in test groups
-    for (size_t j = 0; (size_t)trys[j]; j++)
-    {
-        for (size_t i = 0; (size_t)trys[j][i + 1].try; i++)
-            tester(j, i, &test);
-    }
+    // for (size_t j = 0; (size_t)trys[j]; j++)
+    // {
+    //     for (size_t i = 0; (size_t)trys[j][i + 1].try; i++)
+    //         tester(j, i, &test);
+    // }
 
-	// t_try	trys[] = {
-	// 	{
-	// 		.try = "",
-	// 		.expected = "",
-	// 	},
-	// 	{
-	// 		.try = "",
-	// 		.expected = "",
-	// 	},
-	// } index kayiyo 1 tane aradan cikardinmi. index kayarsa kodun degismesi
+	// index kayiyo 1 tane aradan cikardinmi. index kayarsa kodun degismesi
 	// gerekir. test caselerinin sayisina bagli olmamalidir kod.
     
 }

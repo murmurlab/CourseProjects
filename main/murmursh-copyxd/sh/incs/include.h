@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/12/22 01:41:10 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/12/27 03:43:03 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ typedef	struct	s_main
 	char			*line;
 	t_com			*coms;
 	t_cmd			*cmds;
+	size_t			cmd_ct;
 	t_list			*vars;
 	int				data;
 }		t_main;
@@ -171,5 +172,6 @@ int		set(t_main *data, char const * name, char const * value);
 int	parser();
 char*	get();
 t_list	*lst_filter();
+void	exe_cute_cat();
 
 #endif

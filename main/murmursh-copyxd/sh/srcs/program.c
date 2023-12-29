@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/12/23 03:47:26 by ahbasara         ###   ########.fr       */
+/*   Updated: 2023/12/28 23:40:42 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,47 @@ int	sh_exit(t_com *coms)
 int	sh_cd(t_com *coms, char *dir)
 {
 	return (0);
+}
+
+int		check_cmd(char *cmd)
+{
+	char	*path;
+	char	*dirs;
+
+	path = getenv("PATH");
+	// dirs = ft_split(path, ':')
+	// split yerine : replace \0 sonra strjoine cmd + path ver
+}
+
+void	child(t_main *data, pid_t mypid)
+{
+	printf("%s%d\n", "mypid: ", mypid);
+}
+
+void	exe_cute_cat(t_main *data)
+{
+	size_t	_;
+	pid_t		*pids;
+	int		fd[2];
+
+	pipe(fd);
+	pids = malloc(sizeof(pid_t) * data->cmd_ct);
+	_ = -1;
+	while (++_ < data->cmd_ct)
+	{
+		if (pids[_] != 0)
+			pids[_] = fork();
+	}
+	if (pids[_] > 0)
+		child(data, pids[_]);			
+	else
+	{
+
+	}
+// 	bash  defines the following built-in commands: :, ., [, alias, bg, bind, break, builtin, case, cd, command, compgen, complete, continue, declare, dirs, disown, echo, enable, eval, exec, exit, ex‐pts, hash, help, history, if, jobs, kill, let, local, logout, popd, printf, pushd, pwd, read, readonly, return, set, shift, shopt, source,  suspend,  te
+// st,  times,  trap,  type,mask, unalias, unset, until, wait, while.
+	
+	printf("r\n");
 }
 
 int	exe(t_com *coms, char *cmd)
