@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/02 02:14:18 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/01 02:57:03 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,16 @@ char	*ft_strcpy(char *dest, char *src)
 	unsigned int i;
 
 	i = 0;
-	while (src[i] != '\0')
+	WHILE (SRC[I] != '\0')
 	{
-		dest[i] = src[i];
-		i++;
+		DEST[I] = SRC[I];
+		I++;
 	}
-	dest[i] = src[i];
-	return (dest);
+	DEST[I] = SRC[I];
+	RETURN (DEST);
 }
 
-char	*ft_strncpy(char *dest, char *src, unsigned int n)
+CHAR	*FT_STRNCPY(CH n)
 {
 	unsigned int	i;
 
@@ -102,18 +102,6 @@ char	*ft_strncpy(char *dest, char *src, unsigned int n)
 	return (dest);
 }
 
-void	e(int err)
-{
-	write(2, "shell: ", 7);
-	write(2, strerror(EACCES), ft_strlen(strerror(EACCES)));
-	write(2, "\n", 1);
-}
-
-void	e2(char *s)
-{
-	write(2, s, ft_strlen(s));
-}
-
 int		set(t_main *data, char const *name, char const *value)
 {
 	char const	**a;
@@ -129,6 +117,7 @@ int		set(t_main *data, char const *name, char const *value)
 	}
 	else
 	{
+		free((char *)name);
 		free(((char **)find->content)[1]);
 		((char const **)find->content)[1] = value;
 	}
@@ -193,74 +182,30 @@ int	sh_exit(t_com *coms)
 
 int	sh_cd(t_com *coms, char *dir)
 {
-	char	*buff;
-
-	buff = malloc(1024);
-	chdir(dir);
-	getcwd(buff, 1024);
-	set(coms->data, "PWD", buff);
 	return (0);
 }
 
 void	resolve(char *string)
 {
 	struct stat sb;
-	char		*loc;
 
 	if(ft_strchr(string, '/'))
 	{
-		if (!access(string, F_OK))
+		if (access(string, F_OK))
 		{
 			stat(string, &sb);
 			if (S_ISREG(sb.st_mode)) {
-				access(string, X_OK);
-				if (errno == EACCES)
-					e(EACCES);
+               /* Handle regular file */
 			}
 			if (S_ISDIR(sb.st_mode)) {
-				printf("%s: is a directory\n", string);
+               /* Handle directory */
 			}
 		}
 		else
 		{
-			printf("%s: No such file or directory\n", string);
+			/* No such file or directory */
 		}
 	}
-	else
-	{
-		loc = check_cmd(string);
-		if (!loc)
-		{
-			if (errno == EPERM || errno == EACCES)
-				e(EACCES);
-			else
-				e2("command not found\n");
-		}
-	}
-}
-
-int	find_exe(char *string)
-{
-	struct stat sb;
-
-	perror("hata basmak;");
-	stat(string, &sb);
-	if (!errno)
-	{
-		if (S_ISREG(sb.st_mode))
-		{
-			access(string, X_OK);
-			return (0);
-		}
-		else if (S_ISDIR(sb.st_mode))
-		{
-			printf("%s: is a directory\n", string);
-			return (1);
-		}
-	}
-	else
-		return (2);
-	return (0);
 }
 
 /**
@@ -283,6 +228,7 @@ char	*check_cmd(char *cmd)
 		return (NULL);
 	printf(": %s\n", path);
 	_ = 0;
+	// printf(": %d\n", access("///usr///bin////ls", F_OK));
 	while ("")
 	{
 		if (path[_] == ':' || !path[_])
@@ -295,7 +241,7 @@ char	*check_cmd(char *cmd)
 									&(t_merge){cmd, ft_strlen(cmd)}, NULL
 								});
 			printf("; %s\n", tmp);
-			if (!find_exe(tmp))
+			if (!access(tmp, F_OK))
 				break ;
 			free(tmp);
 			tmp = NULL;
@@ -308,6 +254,9 @@ char	*check_cmd(char *cmd)
 			_++;
 	}
 	return (tmp);
+	// dirs = ft_split(path, ':');
+	// ft_strjoin()
+	// split yerine : replace \0 sonra strjoine cmd + path ver
 }
 
 void	child(t_main *data, void *exec_data)
@@ -326,18 +275,6 @@ void	child(t_main *data, void *exec_data)
 	exit(0);
 }
 
-void	check_all(t_main *data)
-{
-	size_t	_;
-
-	_ = 0;
-	while (data->cmd_ct > _)
-	{
-		resolve(data->cmds[_++].cmd);
-	}
-	
-}
-
 void	exe_cute_cat(t_main *data)
 {
 	struct
@@ -347,7 +284,6 @@ void	exe_cute_cat(t_main *data)
 		int			fd[2];
 	}				execd;
 	pipe(execd.fd);
-	check_all(data);
 	execd.pids = malloc(sizeof(pid_t) * data->cmd_ct);
 	execd._ = 0;
 	execd.pids[execd._] = 1;
@@ -729,14 +665,14 @@ int	main(void)
 	data.increases[0] = (char)0;
 	data.cmds = NULL;
 	data.coms = (t_com []){
-		(t_com){"echo", 0, NULL},
-		(t_com){"cd", 0, &data},
-		(t_com){"pwd", 0, NULL},
-		(t_com){"export", 0, NULL},
-		(t_com){"unset", 0, NULL},
-		(t_com){"env", 0, NULL},
-		(t_com){"exit", sh_exit, NULL},
-		(t_com){"x", sh_exit, NULL}
+		(t_com){"echo", 0, 1},
+		(t_com){"cd", 0, 1},
+		(t_com){"pwd", 0, 1},
+		(t_com){"export", 0, 1},
+		(t_com){"unset", 0, 1},
+		(t_com){"env", 0, 1},
+		(t_com){"exit", sh_exit, 1},
+		(t_com){"x", sh_exit, 1}
 	};
 	chdir("/");
 	// printf("prog started %s\n", getcwd(NULL, 0));

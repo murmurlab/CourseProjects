@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2023/12/27 03:43:03 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/02 00:21:21 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,15 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
-// # include <sys/stat.h>
+# include <sys/stat.h>
 # include "readline/readline.h"
 # include <readline/history.h>
 # include <fcntl.h>
-// # include <sys/wait.h>
+# include <sys/wait.h>
 # include <signal.h>
 // # include <sys/ioctl.h>
 // # include <termios.h>
-// # include <errno.h>
+# include <errno.h>
 // # include <sys/types.h>
 // # include <dirent.h>
 
@@ -124,15 +124,16 @@ typedef struct	s_com
 {
 	char *name;
 	int (*func)();
-	int num;
+	void	*data;
 }		t_com;
 
 typedef	struct	s_cmd
 {
 	char			*cmd;
+	char			*path;
 	char			**args;
-	int				*in;
-	int				*out;
+	int				in;
+	int				out;
 }		t_cmd;
 
 /**
@@ -158,20 +159,29 @@ typedef	struct	s_main
 	int				data;
 }		t_main;
 
+typedef	struct	s_merge
+{
+	char		*str;
+	size_t		len;
+}				t_merge;
 
 /* FUNCTIONS */
 t_turn	join_all(t_main *data, size_t offset);
 size_t	*expander_exp(t_main *data, char *dst, size_t offset);
 char	*get_var_ref(t_main *data, char *var_name, size_t len);
 size_t	len_all(t_main *data, size_t offset);
-int	is_var(int c);
-int	is_text(int c);
+int		is_var(int c);
+int		is_text(int c);
 size_t	var_name_len(char *start);
-int	check(t_list *node, void *cmp);
+int		check(t_list *node, void *cmp);
 int		set(t_main *data, char const * name, char const * value);
-int	parser();
+int		parser();
 char*	get();
 t_list	*lst_filter();
 void	exe_cute_cat();
+char	*check_cmd(char *cmd);
+char	*ft_strsjoin(t_merge *strs[]);
+char	*ft_strcpy(char *dest, char *src);
+void	resolve(char *string);
 
 #endif

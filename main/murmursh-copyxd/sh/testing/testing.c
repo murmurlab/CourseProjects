@@ -138,29 +138,34 @@ void	*get_my_data(void)
 	set(data, strdup("a"), strdup("0000"));
 	data->cmds = (t_cmd []){
 		{
-			"ls",
-			(char *[]){"-la", "-s", NULL},
-			0,
+			.cmd = "ls",
+			.args = (char *[]){"-la", "-s", NULL},
+			.in = 0, .out = 1,
+			.path = NULL
 		},
 		{
-			"grep",
-			(char *[]){"\\-rw-r--r--", NULL},
-			0,
+			.cmd = "grep",
+			.args = (char *[]){"\\-rw-r--r--", NULL},
+			.in = 0, .out = 1,
+			.path = NULL
 		},
 		{
-			"cut",
-			(char *[]){"-b", "57-", NULL},
-			0,
+			.cmd = "cut",
+			.args = (char *[]){"-b", "57-", NULL},
+			.in = 0, .out = 1,
+			.path = NULL
 		},
 		{
-			"cat",
-			(char *[]){NULL},
-			0,
+			.cmd = "cat",
+			.args = (char *[]){NULL},
+			.in = 0, .out = 1,
+			.path = NULL
 		},
 		{
-			"wc",
-			(char *[]){"-l", NULL},
-			0,
+			.cmd = "wc",
+			.args = (char *[]){"-l", NULL},
+			.in = 0, .out = 1,
+			.path = NULL
 		},
 	};
 	data->cmd_ct = 5;
@@ -173,7 +178,25 @@ void	all_tests()
 	t_test	test;
 	test.my_data = get_my_data();
 
-	exe_cute_cat();
+	// exe_cute_cat(test.my_data);
+	// char const * const s = "/home/mehmetap/sources/repos/projects/main/murmursh-copyxd/ls";
+	// char const * const s2 = "/home/mehmetap/sources/repos/projects/main/murmursh-copyxd/";
+	// execve(s, (char *const []){"ls", s2, "-p", NULL}, NULL);
+	char *buf = malloc(300);
+	chdir("/home/mehmetap/sources/repos/projects/main/murmursh-copyxd");
+	getcwd(buf, 300);
+	printf("%s\n", buf);
+	struct stat sb;
+	perror("hata: ");
+	// ERANGE
+	// printf("astast %s\n", strerror(1));
+	// stat("aa/ahmet", &sb);
+	access("/home/mehmetap/sources/repos/projects/main/murmursh-copyxd/Makefile", X_OK);
+	printf("%d\n", errno);
+	perror("hata: ");
+	// resolve("./program");
+	// printf("res: %s\n", check_cmd("ls"));
+	// printf("; %s\n", );
 
 	t_try	*trys[] =
 	{
