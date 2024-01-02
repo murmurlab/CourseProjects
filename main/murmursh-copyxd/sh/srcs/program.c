@@ -214,17 +214,18 @@ void	resolve_path(char *string)
 			if (errno == EACCES)
 				e(EACCES);
 		}
-		if (S_ISDIR(sb.st_mode)) {
+		else if (S_ISDIR(sb.st_mode)) {
 			printf("%s: is a directory\n", string);
 		}
 	}
 	else
 	{
+		printf("log\n");
 		printf("%s: No such file or directory\n", string);
 	}
 }
 
-void	resolve_cmd(char *string)
+char	*resolve_cmd(char *string)
 {
 	char		*loc;
 
@@ -234,16 +235,38 @@ void	resolve_cmd(char *string)
 		if (errno == EPERM || errno == EACCES)
 			e(EACCES);
 		else
-			e2("command not found\n");
+		{
+			e2("command not found: ");
+			e2(string);
+			e2("\n");
+		}
 	}
+	return (loc);
+}
 
+void	set_path(t_main *data)
+{
+	size_t		_;
+
+	_ = 0;
+	while (data->cmd_ct > _)
+	{
+		if (!ft_strchr(data->cmds[_].cmd, '/'))
+			data->cmds[_].cmd = resolve_cmd(data->cmds[_].cmd);
+		else
+		{
+			resolve_path(data->cmds[_].cmd);
+			if (errno)
+				data->cmds[_].cmd = NULL;
+		}
+		_++;
+	}
 }
 
 int	find_exe(char *string)
 {
 	struct stat sb;
 
-	perror("hata basmak;");
 	stat(string, &sb);
 	if (!errno)
 	{
@@ -281,7 +304,7 @@ char	*check_cmd(char *cmd)
 	path = (getenv("PATH"));
 	if (!path)
 		return (NULL);
-	printf(": %s\n", path);
+	// printf(": %s\n", path);
 	_ = 0;
 	while ("")
 	{
@@ -294,7 +317,7 @@ char	*check_cmd(char *cmd)
 									&(t_merge){"/", 1},
 									&(t_merge){cmd, ft_strlen(cmd)}, NULL
 								});
-			printf("; %s\n", tmp);
+			// printf("; %s\n", tmp);
 			if (!find_exe(tmp))
 				break ;
 			free(tmp);
@@ -325,17 +348,17 @@ void	child(t_main *data, void *exec_data)
 	exit(0);
 }
 
-void	check_all(t_main *data)
-{
-	size_t	_;
+// void	check_all(t_main *data)
+// {
+// 	size_t	_;
 
-	_ = 0;
-	while (data->cmd_ct > _)
-	{
-		resolve(data->cmds[_++].cmd);
-	}
+// 	_ = 0;
+// 	while (data->cmd_ct > _++)
+// 	{
+// 		set_path(data);
+// 	}
 	
-}
+// }
 
 void	exe_cute_cat(t_main *data)
 {
@@ -346,7 +369,7 @@ void	exe_cute_cat(t_main *data)
 		int			fd[2];
 	}				execd;
 	pipe(execd.fd);
-	check_all(data);
+	set_path(data);
 	execd.pids = malloc(sizeof(pid_t) * data->cmd_ct);
 	execd._ = 0;
 	execd.pids[execd._] = 1;

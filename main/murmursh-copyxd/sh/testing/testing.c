@@ -136,38 +136,7 @@ void	*get_my_data(void)
 	data->increases[0] = (char)0;
 	data->vars = NULL;
 	set(data, strdup("a"), strdup("0000"));
-	data->cmds = (t_cmd []){
-		{
-			.cmd = "ls",
-			.args = (char *[]){"-la", "-s", NULL},
-			.in = 0, .out = 1,
-			.path = NULL
-		},
-		{
-			.cmd = "grep",
-			.args = (char *[]){"\\-rw-r--r--", NULL},
-			.in = 0, .out = 1,
-			.path = NULL
-		},
-		{
-			.cmd = "cut",
-			.args = (char *[]){"-b", "57-", NULL},
-			.in = 0, .out = 1,
-			.path = NULL
-		},
-		{
-			.cmd = "cat",
-			.args = (char *[]){NULL},
-			.in = 0, .out = 1,
-			.path = NULL
-		},
-		{
-			.cmd = "wc",
-			.args = (char *[]){"-l", NULL},
-			.in = 0, .out = 1,
-			.path = NULL
-		},
-	};
+	
 	data->cmd_ct = 5;
 	return (data);
 }
@@ -177,23 +146,60 @@ void	all_tests()
     // create test struct
 	t_test	test;
 	test.my_data = get_my_data();
+	((t_main *)test.my_data)->cmds = (t_cmd []){
+		{
+			.cmd = "/usr/bin/ls",
+			.args = (char *[]){"-la", "-s", NULL},
+			.in = 0, .out = 1,
+			// .path = NULL
+		},
+		{
+			.cmd = "grep",
+			.args = (char *[]){"\\-rw-r--r--", NULL},
+			.in = 0, .out = 1,
+			// .path = NULL
+		},
+		{
+			.cmd = "cut",
+			.args = (char *[]){"-b", "57-", NULL},
+			.in = 0, .out = 1,
+			// .path = NULL
+		},
+		{
+			.cmd = "/usr/bin/cat",
+			.args = (char *[]){NULL},
+			.in = 0, .out = 1,
+			// .path = NULL
+		},
+		{
+			.cmd = "wc",
+			.args = (char *[]){"-l", NULL},
+			.in = 0, .out = 1,
+			// .path = NULL
+		},
+	};
 
+	set_path(test.my_data);
+	for (size_t i = 0; i < ((t_main *)test.my_data)->cmd_ct; i++)
+	{
+		printf("path: %s\n", ((t_main *)test.my_data)->cmds[i].cmd);
+	}
 	// exe_cute_cat(test.my_data);
-	// char const * const s = "/home/mehmetap/sources/repos/projects/main/murmursh-copyxd/ls";
-	// char const * const s2 = "/home/mehmetap/sources/repos/projects/main/murmursh-copyxd/";
-	// execve(s, (char *const []){"ls", s2, "-p", NULL}, NULL);
-	char *buf = malloc(300);
-	chdir("/home/mehmetap/sources/repos/projects/main/murmursh-copyxd");
-	getcwd(buf, 300);
-	printf("%s\n", buf);
-	struct stat sb;
-	perror("hata: ");
+	// char const * const s = "/mnt/c/Users/Administrator/sources/repos/projects/main/murmursh-copyxd/ls";
+	// char const * const s2 = "/mnt/c/Users/Administrator/sources/repos/projects/main/murmursh-copyxd";
+	// execve(s, (char *const []){s , s2, "-p", NULL}, NULL);
+	// char *buf = malloc(300);
+	// chdir("/home/mehmetap/sources/repos/projects/main/murmursh-copyxd");
+	// getcwd(buf, 300);
+	// printf("%s\n", buf);
+	// struct stat sb;
+	// perror("hata: ");
 	// ERANGE
 	// printf("astast %s\n", strerror(1));
 	// stat("aa/ahmet", &sb);
-	access("/home/mehmetap/sources/repos/projects/main/murmursh-copyxd/Makefile", X_OK);
-	printf("%d\n", errno);
-	perror("hata: ");
+	// access("/home/mehmetap/sources/repos/projects/main/murmursh-copyxd/Makefile", X_OK);
+	// printf("%d\n", errno);
+	// perror("hata: ");
 	// resolve("./program");
 	// printf("res: %s\n", check_cmd("ls"));
 	// printf("; %s\n", );

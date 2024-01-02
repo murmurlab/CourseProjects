@@ -130,7 +130,6 @@ typedef struct	s_com
 typedef	struct	s_cmd
 {
 	char			*cmd;
-	char			*path;
 	char			**args;
 	int				in;
 	int				out;
@@ -183,5 +182,6 @@ char	*check_cmd(char *cmd);
 char	*ft_strsjoin(t_merge *strs[]);
 char	*ft_strcpy(char *dest, char *src);
 void	resolve(char *string);
+void	set_path(t_main *data);
 
 #endif
