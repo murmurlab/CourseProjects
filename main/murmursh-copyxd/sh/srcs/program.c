@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/02 02:14:18 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/02 23:23:13 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,41 +202,41 @@ int	sh_cd(t_com *coms, char *dir)
 	return (0);
 }
 
-void	resolve(char *string)
+void	resolve_path(char *string)
 {
 	struct stat sb;
-	char		*loc;
 
-	if(ft_strchr(string, '/'))
+	if (!access(string, F_OK))
 	{
-		if (!access(string, F_OK))
-		{
-			stat(string, &sb);
-			if (S_ISREG(sb.st_mode)) {
-				access(string, X_OK);
-				if (errno == EACCES)
-					e(EACCES);
-			}
-			if (S_ISDIR(sb.st_mode)) {
-				printf("%s: is a directory\n", string);
-			}
+		stat(string, &sb);
+		if (S_ISREG(sb.st_mode)) {
+			access(string, X_OK);
+			if (errno == EACCES)
+				e(EACCES);
 		}
-		else
-		{
-			printf("%s: No such file or directory\n", string);
+		if (S_ISDIR(sb.st_mode)) {
+			printf("%s: is a directory\n", string);
 		}
 	}
 	else
 	{
-		loc = check_cmd(string);
-		if (!loc)
-		{
-			if (errno == EPERM || errno == EACCES)
-				e(EACCES);
-			else
-				e2("command not found\n");
-		}
+		printf("%s: No such file or directory\n", string);
 	}
+}
+
+void	resolve_cmd(char *string)
+{
+	char		*loc;
+
+	loc = check_cmd(string);
+	if (!loc)
+	{
+		if (errno == EPERM || errno == EACCES)
+			e(EACCES);
+		else
+			e2("command not found\n");
+	}
+
 }
 
 int	find_exe(char *string)
@@ -307,8 +307,7 @@ char	*check_cmd(char *cmd)
 		if (path[_])
 			_++;
 	}
-	return (tmp);
-}
+	return (tmp);}
 
 void	child(t_main *data, void *exec_data)
 {
