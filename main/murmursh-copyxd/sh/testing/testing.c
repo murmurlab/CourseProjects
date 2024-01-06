@@ -137,7 +137,7 @@ void	*get_my_data(void)
 	data->vars = NULL;
 	set(data, strdup("a"), strdup("0000"));
 	
-	data->cmd_ct = 5;
+	data->cmd_ct = 3;
 	return (data);
 }
 
@@ -148,43 +148,44 @@ void	all_tests()
 	test.my_data = get_my_data();
 	((t_main *)test.my_data)->cmds = (t_cmd []){
 		{
-			.cmd = "/usr/bin/ls",
-			.args = (char *[]){"-la", "-s", NULL},
+			.cmd = ft_strdup("/usr/bin/ls"),
+			.args = (char *[]){"", "-la", "-s", "/home/mehmetap/sources/repos/projects/main/murmursh-copyxd", NULL},
 			.in = 0, .out = 1,
 			// .path = NULL
 		},
 		{
-			.cmd = "grep",
-			.args = (char *[]){"\\-rw-r--r--", NULL},
+			.cmd = ft_strdup("grep"),
+			.args = (char *[]){"", "\\-rw-r--r--", NULL},
 			.in = 0, .out = 1,
 			// .path = NULL
 		},
 		{
-			.cmd = "cut",
-			.args = (char *[]){"-b", "57-", NULL},
-			.in = 0, .out = 1,
-			// .path = NULL
-		},
-		{
-			.cmd = "/usr/bin/cat",
+			.cmd = ft_strdup("/usr/bin/cat"),
 			.args = (char *[]){NULL},
 			.in = 0, .out = 1,
 			// .path = NULL
 		},
 		{
-			.cmd = "wc",
-			.args = (char *[]){"-l", NULL},
+			.cmd = ft_strdup("cut"),
+			.args = (char *[]){"", "-b", "57-", NULL},
+			.in = 0, .out = 1,
+			// .path = NULL
+		},
+		{
+			.cmd = ft_strdup("wc"),
+			.args = (char *[]){"", "-l", NULL},
 			.in = 0, .out = 1,
 			// .path = NULL
 		},
 	};
 
 	set_path(test.my_data);
-	for (size_t i = 0; i < ((t_main *)test.my_data)->cmd_ct; i++)
-	{
-		printf("path: %s\n", ((t_main *)test.my_data)->cmds[i].cmd);
-	}
-	// exe_cute_cat(test.my_data);
+	// for (size_t i = 0; i < ((t_main *)test.my_data)->cmd_ct; i++)
+	// {
+	// 	printf("path: %s\n", ((t_main *)test.my_data)->cmds[i].cmd);
+	// }
+	exe_cute_cat(test.my_data);
+
 	// char const * const s = "/mnt/c/Users/Administrator/sources/repos/projects/main/murmursh-copyxd/ls";
 	// char const * const s2 = "/mnt/c/Users/Administrator/sources/repos/projects/main/murmursh-copyxd";
 	// execve(s, (char *const []){s , s2, "-p", NULL}, NULL);

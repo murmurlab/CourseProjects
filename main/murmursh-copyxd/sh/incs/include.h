@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/02 00:21:21 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/04 01:01:09 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,22 @@
 
 # endif
 
-# define RED "\x1B[31m"
-# define GREEN "\x1B[32m"
-# define YELLOW "\x1B[33m"
-# define BLUE "\x1B[34m"
-# define RESET "\x1B[0m"
-# define POSTFIX "$ "
-# define SHELL_NAME "minishell"
+# define RED			"\x1B[31m"
+# define GREEN			"\x1B[32m"
+# define YELLOW			"\x1B[33m"
+# define BLUE			"\x1B[34m"
+# define RESET			"\x1B[0m"
+# define POSTFIX		"$ "
+# define SHELL_NAME 	"minishell"
 # define PROMT SHELL_NAME POSTFIX
 
-# define CMD_COUNT 8
+# define IS_A_DIR_MSG	": Is a directory"
 
-# define INT8_MAX 127
+# define IS_A_DIR		333
+
+# define CMD_COUNT		8
+
+# define INT8_MAX		127
 
 # include "libft.h"
 
@@ -178,10 +182,11 @@ int		parser();
 char*	get();
 t_list	*lst_filter();
 void	exe_cute_cat();
-char	*check_cmd(char *cmd);
+char	*check_cmd(char *cmd, char *path);
 char	*ft_strsjoin(t_merge *strs[]);
 char	*ft_strcpy(char *dest, char *src);
 void	resolve(char *string);
 void	set_path(t_main *data);
+int		err(int e, char *str);
 
 #endif

@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+ /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   program.c                                          :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/02 23:23:13 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/06 02:32:32 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,44 +202,36 @@ int	sh_cd(t_com *coms, char *dir)
 	return (0);
 }
 
-void	resolve_path(char *string)
+int	err(int e, char *str)
 {
-	struct stat sb;
-
-	if (!access(string, F_OK))
+	errno = e;
+	if (e == IS_A_DIR)
 	{
-		stat(string, &sb);
-		if (S_ISREG(sb.st_mode)) {
-			access(string, X_OK);
-			if (errno == EACCES)
-				e(EACCES);
-		}
-		else if (S_ISDIR(sb.st_mode)) {
-			printf("%s: is a directory\n", string);
-		}
+		e2(str);
+		e2(IS_A_DIR_MSG);
 	}
+	else if (e == ENOENT)
+		perror(str);
+	else if (e == EACCES)
+		perror(str);
+	else if (e == EPERM)
+		perror(str);
 	else
-	{
-		printf("log\n");
-		printf("%s: No such file or directory\n", string);
-	}
+		perror(str);
 }
 
 char	*resolve_cmd(char *string)
 {
 	char		*loc;
+	char		*path;
 
-	loc = check_cmd(string);
+	path = (getenv("PATH"));
+	loc = check_cmd(string, path);
 	if (!loc)
 	{
-		if (errno == EPERM || errno == EACCES)
-			e(EACCES);
-		else
-		{
-			e2("command not found: ");
-			e2(string);
-			e2("\n");
-		}
+		e2("command not found: ");
+		e2(string);
+		e2("\n");
 	}
 	return (loc);
 }
@@ -247,43 +239,34 @@ char	*resolve_cmd(char *string)
 void	set_path(t_main *data)
 {
 	size_t		_;
+	void		*tmp;
+	struct stat sb;
 
 	_ = 0;
 	while (data->cmd_ct > _)
 	{
 		if (!ft_strchr(data->cmds[_].cmd, '/'))
+		{
+			tmp = data->cmds[_].cmd;
+			errno = 0;
 			data->cmds[_].cmd = resolve_cmd(data->cmds[_].cmd);
+			free(tmp);
+		}
 		else
 		{
-			resolve_path(data->cmds[_].cmd);
+			stat(data->cmds[_].cmd, &sb);
 			if (errno)
+				err(errno, data->cmds[_].cmd);
+			if (S_ISDIR(sb.st_mode))
+				err(IS_A_DIR, data->cmds[_].cmd);
+			if (access(data->cmds[_].cmd, X_OK))
+			{
+				free(data->cmds[_].cmd);
 				data->cmds[_].cmd = NULL;
+			}
 		}
 		_++;
 	}
-}
-
-int	find_exe(char *string)
-{
-	struct stat sb;
-
-	stat(string, &sb);
-	if (!errno)
-	{
-		if (S_ISREG(sb.st_mode))
-		{
-			access(string, X_OK);
-			return (0);
-		}
-		else if (S_ISDIR(sb.st_mode))
-		{
-			printf("%s: is a directory\n", string);
-			return (1);
-		}
-	}
-	else
-		return (2);
-	return (0);
 }
 
 /**
@@ -293,18 +276,14 @@ int	find_exe(char *string)
  * if (!path[_])
  * 		break ;
  */
-char	*check_cmd(char *cmd)
+char	*check_cmd(char *cmd, char *path)
 {
-	char	*path;
-	char	**dirs;
-	char	*tmp;
-	size_t	_;
-	size_t	_2;
+	char		*tmp;
+	size_t		_;
+	struct stat sb;
 
-	path = (getenv("PATH"));
 	if (!path)
 		return (NULL);
-	// printf(": %s\n", path);
 	_ = 0;
 	while ("")
 	{
@@ -317,9 +296,18 @@ char	*check_cmd(char *cmd)
 									&(t_merge){"/", 1},
 									&(t_merge){cmd, ft_strlen(cmd)}, NULL
 								});
-			// printf("; %s\n", tmp);
-			if (!find_exe(tmp))
-				break ;
+			errno = 0;
+			stat(tmp, &sb);
+			if (!errno)
+			{
+				if (S_ISREG(sb.st_mode))
+				{
+					if (!access(tmp, X_OK))
+						break ;
+					else
+						err(EPERM, cmd);
+				}
+			}
 			free(tmp);
 			tmp = NULL;
 			if (!path[_])
@@ -330,35 +318,66 @@ char	*check_cmd(char *cmd)
 		if (path[_])
 			_++;
 	}
-	return (tmp);}
+	return (tmp);
+}
+
+void	close_pipes(t_main *data, void *exec_data)
+{
+	size_t											_;
+	struct {size_t _; pid_t *pids; int fd[5][2];}	*execd;
+
+	execd = exec_data;
+	_ = 1;
+	if (execd->_ != 0) // not first
+		close(execd->fd[0][1]);
+	else if ((execd->_ != (data->cmd_ct - 1)) && (data->cmd_ct != 1)) // not last
+		close(execd->fd[data->cmd_ct - 2][0]);
+	while (_ < execd->_)
+	{
+		close(execd->fd[_ - 1][0]);
+		close(execd->fd[_][1]);
+		_++;
+	}
+	_++;
+	while (_ < data->cmd_ct - 1)
+	{
+		close(execd->fd[_ - 1][0]);
+		close(execd->fd[_][1]);
+		_++;
+	}	
+}
 
 void	child(t_main *data, void *exec_data)
 {
-	struct {size_t _; pid_t *pids; int fd[];} *execd = exec_data;
+	struct {size_t _; pid_t *pids; int fd[5][2];} *execd = exec_data;
 	// dup2(1, data->cmds[execd->_].out);
 	// dup2(0, data->cmds[execd->_].in);
+	printf("%d ", execd->_);
 	if (execd->_ != 0) // not first
-		dup2(0, execd->fd[0]);
+	{
+		dup2(execd->fd[execd->_ - 1][0], STDIN_FILENO);
+	}
 	if ((execd->_ != (data->cmd_ct - 1)) && (data->cmd_ct != 1)) // not last
-		dup2(1, execd->fd[1]);
+	{
+		dup2(execd->fd[execd->_][1], STDOUT_FILENO);
+	}
+	close_pipes(data, exec_data);
 	if (execd->_)
-		waitpid(execd->pids[execd->_ - 1], NULL, 0);
-	// execve()
-	printf("%s%d parent: %d\n", "mypid: ", getpid(), getppid());
-	exit(0);
+	{
+		// dprintf(2,"%s%d [%d, %d], %d is waiting\n", "mypid: ", getpid(), (execd->_ != (data->cmd_ct - 1)), (data->cmd_ct != 1), execd->pids[execd->_ - 1]);
+		// exit(1);
+	}
+	else
+	{
+		// dprintf(2,"%s%d [%d, %d], none is waiting\n", "mypid: ", getpid(), (execd->_ != (data->cmd_ct - 1)), (data->cmd_ct != 1));
+		// sleep(1);
+		// printf("0 end\n");
+	}
+	// free all;
+	execve(data->cmds[execd->_].cmd, data->cmds[execd->_].args, NULL);
+	// printf("\n");
+	exit(1);
 }
-
-// void	check_all(t_main *data)
-// {
-// 	size_t	_;
-
-// 	_ = 0;
-// 	while (data->cmd_ct > _++)
-// 	{
-// 		set_path(data);
-// 	}
-	
-// }
 
 void	exe_cute_cat(t_main *data)
 {
@@ -366,13 +385,17 @@ void	exe_cute_cat(t_main *data)
 	{
 		size_t		_;
 		pid_t		*pids;
-		int			fd[2];
+		int			fd[4][2];
 	}				execd;
-	pipe(execd.fd);
+	pipe(execd.fd[0]);
+	pipe(execd.fd[1]);
+	pipe(execd.fd[2]);
+	pipe(execd.fd[3]);
 	set_path(data);
 	execd.pids = malloc(sizeof(pid_t) * data->cmd_ct);
 	execd._ = 0;
 	execd.pids[execd._] = 1;
+	// close pipes unutma
 	while (execd._ < data->cmd_ct)
 	{
 		execd.pids[execd._] = fork();
@@ -388,8 +411,13 @@ void	exe_cute_cat(t_main *data)
 	}
 // 	bash  defines the following built-in commands: :, ., [, alias, bg, bind, break, builtin, case, cd, command, compgen, complete, continue, declare, dirs, disown, echo, enable, eval, exec, exit, ex‐pts, hash, help, history, if, jobs, kill, let, local, logout, popd, printf, pushd, pwd, read, readonly, return, set, shift, shopt, source,  suspend,  te
 // st,  times,  trap,  type,mask, unalias, unset, until, wait, while.
-	
-	printf("r\n");
+	// sleep(1);
+	printf("main wait pid %d\n", execd.pids[execd._ - 1]);
+	wait4(0, NULL, 0, NULL);
+	wait4(0, NULL, 0, NULL);
+	wait4(0, NULL, 0, NULL);
+	wait4(0, NULL, 0, NULL);
+	wait4(0, NULL, 0, NULL);
 }
 
 int	exe(t_com *coms, char *cmd)
