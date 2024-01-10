@@ -12,7 +12,7 @@ else ifeq '$(os)' 'Linux'
 # 	incs +=				-I $(libs)/minilibx-linux
 endif
 
-CC =						gcc
+CC =						clang
 
 # rl		=					-L /goinfre/$(shell whoami)/homebrew/Cellar/readline/8.2.7/lib -lreadline
 # rlI		=					-I /goinfre/$(shell whoami)/homebrew/Cellar/readline/8.2.7/include
@@ -43,6 +43,7 @@ B_SRC =					$(b_src_dir)/checker.c \
 
 SRC =					$(src_dir)/program.c \
 						$(src_dir)/utils.c \
+						$(src_dir)/test.c \
 						$(S_SRC)
 
 OBJ =					$(SRC:.c=.o)

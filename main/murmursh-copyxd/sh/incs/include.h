@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/04 01:01:09 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/10 19:04:57 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,11 @@
 // # include <sys/types.h>
 // # include <dirent.h>
 
-# include "testing.h"
+# ifndef TEST
+#  define TEST 0
+# endif
+
+void	run_test();
 
 typedef void			t_if;
 typedef void			covid;
@@ -101,7 +105,7 @@ int	sh_exit();
 typedef struct	s_exp
 {
 	size_t	i;
-	char	*ret;
+	char	*ret; //
 	size_t	*duo;
 	size_t	size;
 	char	*var_value;
@@ -119,10 +123,22 @@ typedef	struct	s_all
 
 typedef struct	s_turn
 {
-	char	*buffer;
-	char	*ptr;
-	int		index;
+	char	*buffer; // result
+	int		index; // jump index
 }		t_turn;
+
+typedef struct s_join
+{
+	int						merge_flag; // for merge
+	int						is_multi_word; // for ambiguous redirect
+	t_list					*nodes; // seperated strings
+	int						index; // line index
+	size_t					len; // pass len
+	char					*var; // val dollar
+	char					**split; // dollar splitted
+	char					*tmp; // join tmp
+	size_t					arr_size; // split len
+}		t_join;
 
 typedef struct	s_com
 {
@@ -168,6 +184,13 @@ typedef	struct	s_merge
 	size_t		len;
 }				t_merge;
 
+typedef struct
+{
+	size_t		_;
+	pid_t		*pids;
+	int			fd[4][2];
+}				t_execd;
+
 /* FUNCTIONS */
 t_turn	join_all(t_main *data, size_t offset);
 size_t	*expander_exp(t_main *data, char *dst, size_t offset);
@@ -188,5 +211,6 @@ char	*ft_strcpy(char *dest, char *src);
 void	resolve(char *string);
 void	set_path(t_main *data);
 int		err(int e, char *str);
+t_list	*join_all2(t_main *data, size_t offset);
 
 #endif
