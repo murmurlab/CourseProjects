@@ -1,4 +1,4 @@
-#include "testing.h"
+#include "include.h"
 
 t_list	*ll_nod(t_list *node, int index);
 
@@ -173,7 +173,8 @@ int		join_all2_test(t_test *test)
 	// "33xxxx"
 	try = test->current_test->trys;
 	((t_main *)(test->my_data))->line = try->try;
-	try->result = join_all2(test->my_data, 0);
+	// printf("%d\n", join_all2(test->my_data, 0).index);
+	try->result = join_all2(test->my_data, 0).nodes;
 	res = try->result;
 	exp = try->expected;
 	for (size_t i = 0; exp[i] ; i++)
@@ -204,13 +205,37 @@ void	*get_my_data(void)
 	return (data);
 }
 
-void	run_test()
+# define SIMPLEX(res)	(res & 1 << 0)
+# define DUPLEX(res)	(res & 1 << 1)
+
+void	print_tlist(t_list *head)
+{
+	printf(">  [\n");
+	a:
+	printf(">  node: %s\n", (char *)head->content);
+	head = head->next;
+	if (head)
+		goto a;
+	printf(">  ]\n");
+}
+
+void	test_main()
 {
 	// printf("%s: %s\n", __func__, turn.buffer);
+
+	// test for syntax_check(): duplex and simplex must be 0 when it should be.
+	// test for join_all2(): must give correct out.
 
     // create test struct
 	t_test	test;
 	test.my_data = get_my_data();
+
+	// printf("> %s\n", ((t_main *)test.my_data)->line = "$ast '' >>'\"'");
+	// int res;
+	// printf("> %i\n", SIMPLEX(res = syntax_check(test.my_data)));
+	// printf("> %i\n", DUPLEX(res));
+	// exit(0);
+
 
     // join_all(test.my_data, ,)
 

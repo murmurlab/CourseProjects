@@ -24,7 +24,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/main/murmursh-copyxd/sh/incs",
-                "${workspaceFolder}/main/murmurlibc"
+                "${workspaceFolder}/main/murmurlibc",
+                "${workspaceFolder}/main/murmursh-copyxd/libultift"
             ],
             "defines": [
                 "_DEBUG",

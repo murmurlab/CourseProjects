@@ -353,11 +353,31 @@ void	close_pipes(t_main *data, t_execd *execd)
 	}
 }
 
+char	**lsttoarr(t_list *lst)
+{
+	size_t		_;
+	char		**arr;
+
+	_ = 0;
+	arr = malloc(sizeof(char *) * ft_lstsize(lst));
+	while (lst)
+	{
+		arr[_] = lst->content;
+		_++;
+		lst = lst->next;
+	}
+	return (arr);
+}
+
 void	child(t_main *data, t_execd *execd)
 {
 	// dup2(1, data->cmds[execd->_].out);
 	// dup2(0, data->cmds[execd->_].in);
 	printf("%zu ", execd->_);
+	/**
+	 * must valid last given in/out-prompt (<, >, >>, <<);
+	 * 
+	 */
 	if (execd->_ != 0) // not first
 	{
 		dup2(execd->fd[execd->_ - 1][0], STDIN_FILENO);
@@ -379,7 +399,8 @@ void	child(t_main *data, t_execd *execd)
 		// printf("0 end\n");
 	}
 	// free all;
-	execve(data->cmds[execd->_].cmd, data->cmds[execd->_].args, NULL);
+	
+	execve(data->cmds[execd->_].cmd, lsttoarr(data->cmds[execd->_].args), NULL);
 	// printf("\n");
 	exit(1);
 }
@@ -823,7 +844,7 @@ void		set_merge_flag(t_join *st, int val)
 		st->merge_flag = 1;
 }
 
-t_list		*join_all2(t_main *data, size_t offset)
+t_turn2		join_all2(t_main *data, size_t offset)
 {
 	t_join		linker;
 	t_turn		res;
@@ -880,7 +901,7 @@ t_list		*join_all2(t_main *data, size_t offset)
 		linker.index += linker.len;
 		linker.len = 0;
 	}
-	return (linker.nodes);
+	return ((t_turn2){.nodes = linker.nodes, .index = linker.index});
 }
 
 // int	set_value(t_main *data, char *str)
@@ -891,42 +912,214 @@ t_list		*join_all2(t_main *data, size_t offset)
 // 			}
 // }
 
-void	check_operation(t_main *data)
+void		add_cmd(t_main *shell)
 {
-	if (data->line[data->_] == '>' && data->line[data->_ + 1] == '>')
+	
+}
+
+/**
+ * data.setval[0] = set_cmd;
+ * data.setval[1] = set_arg;
+ * data.setval[2] = set_in;
+ * data.setval[3] = set_out;
+*/
+int	check_operation(t_main *data, int *oflags)
+{
+	if (data->line[data->_] == '<' && data->line[data->_ + 1] != '<')
+		return (data->_++, *oflags = O_TRUNC | O_WRONLY | O_CREAT, 2);
+	else if (data->line[data->_] == '>' && data->line[data->_ + 1] != '>')
+		return (data->_++, *oflags = O_TRUNC | O_WRONLY | O_CREAT, 3);
+	else if (data->line[data->_] == '<' && data->line[data->_ + 1] == '<')
+		return (data->_ += 2, *oflags = O_APPEND | O_WRONLY | O_CREAT, 2);
+	else if (data->line[data->_] == '>' && data->line[data->_ + 1] == '>')
+		return (data->_ += 2, *oflags = O_APPEND | O_WRONLY | O_CREAT, 3);
+	else if ('|' == data->line[data->_])
+		return (data->_++, data->current++, 0);
+	else if ('\0' != data->line[data->_])
+		return (data->has_cmd);
+	return (7);
+}
+
+void	set_cmd(t_main *shell, char *string, int oflag)
+{
+	(void)oflag;
+	shell->cmds[shell->current].cmd = string;
+	shell->to_be = 1;
+	shell->has_cmd = 1;
+}
+
+void	set_arg(t_main *shell, char *string, int oflag)
+{
+	(void)oflag;
+	ft_lstadd_back(&shell->cmds[shell->current].args, ft_lstnew(string));
+}
+
+void	set_in(t_main *shell, char *string, int oflag)
+{
+	const int fd = open(string, oflag);
+
+	shell->_++;
+	if (fd < 0)
 		return ;
-	if (data->line[data->_] == '<' && data->line[data->_ + 1] == '<')
+	// already each files 'string' will open then the tlist is unnecessared
+	// ft_lstadd_front(&shell->cmds->ins, ft_lstnew((void *)fd));
+	shell->cmds[shell->current].in = fd;
+	shell->to_be = shell->has_cmd;
+}
+
+void	set_out(t_main *shell, char *string, int oflag)
+{
+	const int fd = open(string, oflag);
+
+	shell->_++;
+	if (fd < 0)
 		return ;
-	if (data->line[data->_] == '<')
-		return ;
-	if (data->line[data->_] == '>')
-		return ;
-	if (data->line[data->_] == '|')
-		return ;
-	if (data->line[data->_] == '$')
-		return ;
-	if (data->line[data->_] == '\'')
-		return ;
-	if (data->line[data->_] == '"')
-		return ;
+	// already each files 'string' will open then the tlist is unnecessared
+	// ft_lstadd_front(&shell->cmds->outs, ft_lstnew((void *)fd));
+	shell->cmds[shell->current].out = fd;
+	shell->to_be = shell->has_cmd;
+}
+
+int		syntax_check(t_main *shell)
+{
+	size_t		_;
+	t_syntax	syntax;
+
+	syntax.duplex = 0;
+	syntax.simplex = 0;
+	_ = 0;
+	while (shell->line[_])
+	{
+		if (shell->line[_] == '\'')
+		{
+			if (syntax.duplex == 1)
+			{
+				syntax.duplex = 0;
+				if (syntax.simplex)
+					syntax.simplex = 0;
+			}
+			else if (syntax.duplex == 0)
+				syntax.duplex = 1;
+		}
+		else if (shell->line[_] == '"')
+		{
+			if (syntax.duplex == 2)
+			{
+				syntax.duplex = 0;
+				if (syntax.simplex)
+					syntax.simplex = 0;
+			}
+			else if (syntax.duplex == 0)
+				syntax.duplex = 2;
+		}
+		if (syntax.duplex)
+		{
+			(_)++;
+			continue ;
+		}
+		if ((shell->line[_] == '>' && shell->line[_ + 1] != '>') || \
+				(shell->line[_] == '<' && shell->line[_ + 1] != '<'))
+		{
+			if (!syntax.simplex)
+				syntax.simplex = 1;
+			else if (syntax.simplex == 3)
+				syntax.simplex = 1;
+			else
+				break ;
+			++_;
+		}
+		else if ((shell->line[_] == '>' && shell->line[_ + 1] == '>') || \
+				(shell->line[_] == '<' && shell->line[_ + 1] == '<'))
+		{
+			if (!syntax.simplex)
+				syntax.simplex = 2;
+			else if (syntax.simplex == 3)
+				syntax.simplex = 2;
+			else
+				break ;
+			_ += 2;
+		}
+		else if (shell->line[_] == '|')
+		{
+			shell->cmd_ct++;
+			if (!syntax.simplex)
+				syntax.simplex = 3;
+			else
+				break ;
+			++(_);
+		}
+		else
+			syntax.simplex = (++_, 0);
+	}
+	return ((syntax.duplex << 0 ) | (syntax.simplex << 16));
+}
+
+void	print_syntax_err(int errs)
+{
+	if (errs & 0xffff0000)
+		printf("shell says: syntax error near unexpected token after "
+				"`|', `>', `<', `>>', `<<'\n");
+	if (errs & 0x0000ffff)
+		printf("shell says: unexpected EOF while looking for matching "
+				"`'', `\"'\n");
 }
 
 int		parser(t_main *data)
 {
-	static char	*a;
-	t_turn		turn;
-	
+	MURMURTEST;
 
-	if (TEST)
-		run_test();
-	// while (data->line[data->_] != 0)
-	// {
+	t_turn2		res;
+	t_list		*list;
+	int			oflags;
+
+	oflags = __O_CLOEXEC;
+	data->has_cmd = 0;
+	printf("line: %s\n", data->line);
+	data->syntax_err = syntax_check(data);
+	if (data->syntax_err)
+		return (print_syntax_err(data->syntax_err), -1);
+	data->cmds = calloc((data->cmd_ct + 1), sizeof(t_cmd));
+	printf("> cmds size:%zu\n", data->cmd_ct);
+	while (1)
+	{
+		while (' ' == data->line[data->_])
+			data->_++;
+		data->to_be = check_operation(data, &oflags);
+		while (' ' == data->line[data->_])
+			data->_++;
+		printf("> op:%i\n", data->to_be);
+		if (data->to_be == 7)
+			break ;
+		list = (res = join_all2(data, data->_)).nodes;
+
+		void	print_tlist(t_list *head);
+		printf("> get-strings: %ic\n", res.index);
+		print_tlist(list);
+		while (list)
+		{
+			(data->set_val[data->to_be])(data, list->content, oflags);
+			list = list->next;
+		}
+		oflags = __O_CLOEXEC;
+		data->_ += res.index - data->_;
+		printf("> cursor moved: %s\n", data->line + data->_);
+	}
+
+	printf("\n");
+	for (size_t i = 0; i < (data)->cmd_ct + 1; i++)
+	{
+		t_list		*nod;
+		nod = data->cmds[i].args;
+		printf("> path: %s\n", (data)->cmds[i].cmd);
+		for (size_t i = 0; NULL != nod; i++)
+		{
+			printf(">  arg[%zu]: %s\n", i, (char *)nod->content);
+			nod = nod->next;
+		}
 		
-	// 	check_operation()
-	// 	break ;
-	// 	data->_++;
-	// }
-	
+	}
+
+	// if pipe then data.current++;
 	return (0);
 }
 
@@ -964,7 +1157,9 @@ int	main(void)
 	
 	// ioctl(STDIN_FILENO, TIOCSTI, "minishell$ ``");
 	// write(1, "\033[A", 3);
-	ft_memset(data.flags, 0, INT8_MAX);
+
+	// ft_memset(data.flags, 0, INT8_MAX);
+
 	// tekte tanimla
 	// data.fun = malloc(sizeof(size_t (*)(t_main *data, size_t offset)) * 3);
 	ft_bzero(data.increases, INT8_MAX);
@@ -983,7 +1178,12 @@ int	main(void)
 		(t_com){"exit", sh_exit, NULL},
 		(t_com){"x", sh_exit, NULL}
 	};
-	chdir("/");
+	data.cmd_ct = 0;
+	data.set_val[0] = set_cmd;
+	data.set_val[1] = set_arg;
+	data.set_val[2] = set_in;
+	data.set_val[3] = set_out;
+	chdir("/home/mehmetap/sources/repos/projects/main/murmursh-copyxd");
 	// printf("prog started %s\n", getcwd(NULL, 0));
 	// data.coid = 1;
 	signal(SIGINT, ctrl_c);

@@ -19,6 +19,14 @@
 
 # endif
 
+# ifndef TEST
+#  define TEST 0
+# endif
+
+
+void	test_main();
+# define MURMURTEST if(TEST){test_main();}
+
 # define RED "\x1B[31m"
 # define GREEN "\x1B[32m"
 # define YELLOW "\x1B[33m"
@@ -84,7 +92,6 @@ typedef struct s_fun
 }				t_fun;
 
 void    init_test(t_test *test, t_try *trys[]);
-void	run_test();
 void	tester(int test_group_num, int test_num, t_test *test);
 
 #endif

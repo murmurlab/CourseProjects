@@ -1,2 +1,0 @@
-valgrind: Unknown option: --ignore-fn=readline
-valgrind: Use --help for more information or consult the user manual.

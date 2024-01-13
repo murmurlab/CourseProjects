@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/10 19:04:57 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/13 18:03:29 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define BLUE			"\x1B[34m"
 # define RESET			"\x1B[0m"
 # define POSTFIX		"$ "
-# define SHELL_NAME 	"minishell"
+# define SHELL_NAME 	""
 # define PROMT SHELL_NAME POSTFIX
 
 # define IS_A_DIR_MSG	": Is a directory"
@@ -78,11 +78,7 @@
 // # include <sys/types.h>
 // # include <dirent.h>
 
-# ifndef TEST
-#  define TEST 0
-# endif
-
-void	run_test();
+# include "testing.h"
 
 typedef void			t_if;
 typedef void			covid;
@@ -127,6 +123,12 @@ typedef struct	s_turn
 	int		index; // jump index
 }		t_turn;
 
+typedef struct	s_turn2
+{
+	t_list	*nodes; // seperated strings
+	int		index; // jump index
+}		t_turn2;
+
 typedef struct s_join
 {
 	int						merge_flag; // for merge
@@ -140,6 +142,22 @@ typedef struct s_join
 	size_t					arr_size; // split len
 }		t_join;
 
+/**
+ * 0000 0001 '
+ * 0000 0010 "
+ * 0000 0100 |
+ * 0000 1000 >
+ * 0001 0000 <
+ * 0010 0000 <<
+ * 0100 0000 >>
+ * 1000 0000 
+ */
+typedef struct	s_syntax
+{
+	char		duplex;
+	char		simplex;
+}		t_syntax;
+
 typedef struct	s_com
 {
 	char *name;
@@ -150,11 +168,19 @@ typedef struct	s_com
 typedef	struct	s_cmd
 {
 	char			*cmd;
-	char			**args;
+	t_list			*args;
+	// t_list			*ins;
+	// t_list			*outs;
 	int				in;
 	int				out;
 }		t_cmd;
 
+/**
+ * data.setval[0] = set_cmd;
+ * data.setval[1] = set_arg;
+ * data.setval[2] = set_in;
+ * data.setval[3] = set_out;
+*/
 /**
  * 0	heredoc
  * 1	truncate
@@ -163,19 +189,29 @@ typedef	struct	s_cmd
  * 4	command exist
  * 5	any
  */
+
 typedef	struct	s_main
 {
-	char			flags[INT8_MAX];
+	int				has_cmd;
+	int				to_be;
+	// t_list			*nodes;
+	// t_list			*node;
+	char			*cwd;
+	// char			flags[INT8_MAX];
 	void			(*coid)(int);
 	// void			(*check_operation)();
 	char			increases[INT8_MAX];
+	void			*fun_ptr_void[4];
+	void			(*set_val[4])(struct s_main *shell, char *string, int oflags);
+	size_t			current;
 	int				_;
 	char			*line;
+	int				syntax_err;
 	t_com			*coms;
 	t_cmd			*cmds;
 	size_t			cmd_ct;
 	t_list			*vars;
-	int				data;
+	// int				data;
 }		t_main;
 
 typedef	struct	s_merge
@@ -192,25 +228,26 @@ typedef struct
 }				t_execd;
 
 /* FUNCTIONS */
-t_turn	join_all(t_main *data, size_t offset);
-size_t	*expander_exp(t_main *data, char *dst, size_t offset);
-char	*get_var_ref(t_main *data, char *var_name, size_t len);
-size_t	len_all(t_main *data, size_t offset);
-int		is_var(int c);
-int		is_text(int c);
-size_t	var_name_len(char *start);
-int		check(t_list *node, void *cmp);
-int		set(t_main *data, char const * name, char const * value);
-int		parser();
-char*	get();
-t_list	*lst_filter();
-void	exe_cute_cat();
-char	*check_cmd(char *cmd, char *path);
-char	*ft_strsjoin(t_merge *strs[]);
-char	*ft_strcpy(char *dest, char *src);
-void	resolve(char *string);
-void	set_path(t_main *data);
-int		err(int e, char *str);
-t_list	*join_all2(t_main *data, size_t offset);
+t_turn		join_all(t_main *data, size_t offset);
+size_t		*expander_exp(t_main *data, char *dst, size_t offset);
+char		*get_var_ref(t_main *data, char *var_name, size_t len);
+size_t		len_all(t_main *data, size_t offset);
+int			is_var(int c);
+int			is_text(int c);
+size_t		var_name_len(char *start);
+int			check(t_list *node, void *cmp);
+int			set(t_main *data, char const * name, char const * value);
+int			parser();
+char*		get();
+t_list		*lst_filter();
+void		exe_cute_cat();
+char		*check_cmd(char *cmd, char *path);
+char		*ft_strsjoin(t_merge *strs[]);
+char		*ft_strcpy(char *dest, char *src);
+void		resolve(char *string);
+void		set_path(t_main *data);
+int			err(int e, char *str);
+t_turn2 	join_all2(t_main *data, size_t offset);
+int			syntax_check(t_main *shell);
 
 #endif
