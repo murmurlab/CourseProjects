@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/13 18:03:29 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/13 21:17:37 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ typedef	struct	s_main
 	char			increases[INT8_MAX];
 	void			*fun_ptr_void[4];
 	void			(*set_val[4])(struct s_main *shell, char *string, int oflags);
+	int				ex_stat;
 	size_t			current;
 	int				_;
 	char			*line;
@@ -224,7 +225,7 @@ typedef struct
 {
 	size_t		_;
 	pid_t		*pids;
-	int			fd[4][2];
+	int			**fd;
 }				t_execd;
 
 /* FUNCTIONS */

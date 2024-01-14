@@ -359,14 +359,40 @@ char	**lsttoarr(t_list *lst)
 	char		**arr;
 
 	_ = 0;
-	arr = malloc(sizeof(char *) * ft_lstsize(lst));
+	arr = malloc(sizeof(char *) * (ft_lstsize(lst) + 1));
 	while (lst)
 	{
 		arr[_] = lst->content;
 		_++;
 		lst = lst->next;
 	}
+	arr[_] = NULL;
 	return (arr);
+}
+
+void	set_io(t_main *shell, t_execd *execd)
+{
+	if (!shell->cmds[execd->_].in)
+	{
+		if (execd->_ != 0) // not first
+			dup2(execd->fd[execd->_ - 1][0], STDIN_FILENO);
+	}
+	else
+	{
+		close(execd->fd[execd->_ - 1][0]);
+		dup2(shell->cmds[execd->_].in, STDIN_FILENO);
+	}
+	if (!shell->cmds[execd->_].out)
+	{
+		if ((execd->_ != (shell->cmd_ct - 1)) && (shell->cmd_ct != 1)) // not last
+			dup2(execd->fd[execd->_][1], STDOUT_FILENO);	
+	}
+	else
+	{
+		close(execd->fd[execd->_][1]);
+		dup2(shell->cmds[execd->_].out, STDOUT_FILENO);
+	}
+	close_pipes(shell, execd);
 }
 
 void	child(t_main *data, t_execd *execd)
@@ -378,15 +404,7 @@ void	child(t_main *data, t_execd *execd)
 	 * must valid last given in/out-prompt (<, >, >>, <<);
 	 * 
 	 */
-	if (execd->_ != 0) // not first
-	{
-		dup2(execd->fd[execd->_ - 1][0], STDIN_FILENO);
-	}
-	if ((execd->_ != (data->cmd_ct - 1)) && (data->cmd_ct != 1)) // not last
-	{
-		dup2(execd->fd[execd->_][1], STDOUT_FILENO);
-	}
-	close_pipes(data, execd);
+	set_io(data, execd);
 	if (execd->_)
 	{
 		// dprintf(2,"%s%d [%d, %d], %d is waiting\n", "mypid: ", getpid(), (execd->_), (data->cmd_ct), execd->pids[execd->_ - 1]);
@@ -405,13 +423,45 @@ void	child(t_main *data, t_execd *execd)
 	exit(1);
 }
 
+void	open_pipes(t_main *shell, t_execd *execd)
+{
+	size_t		_;
+
+	_ = 0;
+	execd->fd = malloc(sizeof(int *) * shell->cmd_ct - 1);
+	while (_ < shell->cmd_ct - 1)
+	{
+		execd->fd[_] = malloc(sizeof(int) * 2);
+		pipe(execd->fd[_]);
+	}
+	
+}
+
+void	close_all_pipes_for_main(t_main *shell, t_execd *execd)
+{
+	size_t		_;
+
+	_ = 0;
+	while (_ < shell->cmd_ct - 1)
+	{
+		close(execd->fd[_][0]);
+		close(execd->fd[_][1]);
+	}
+}
+
+void	wait_all(t_main *shell)
+{
+	size_t		_;
+
+	_ = 0;
+	while (_ < shell->cmd_ct)
+		wait4(0, &shell->ex_stat, 0, NULL);
+}
+
 void	exe_cute_cat(t_main *data)
 {
 	t_execd	execd;
-	pipe(execd.fd[0]);
-	pipe(execd.fd[1]);
-	pipe(execd.fd[2]);
-	pipe(execd.fd[3]);
+	open_pipes(data, &execd);
 	set_path(data);
 	execd.pids = malloc(sizeof(pid_t) * data->cmd_ct);
 	execd._ = 0;
@@ -433,19 +483,8 @@ void	exe_cute_cat(t_main *data)
 // st,  times,  trap,  type,mask, unalias, unset, until, wait, while.
 	// sleep(1);
 	printf("main wait pid %d\n", execd.pids[execd._ - 1]);
-	close(execd.fd[0][0]);
-	close(execd.fd[0][1]);
-	close(execd.fd[1][0]);
-	close(execd.fd[1][1]);
-	close(execd.fd[2][0]);
-	close(execd.fd[2][1]);
-	close(execd.fd[3][0]);
-	close(execd.fd[3][1]);
-	wait4(0, NULL, 0, NULL);
-	wait4(0, NULL, 0, NULL);
-	wait4(0, NULL, 0, NULL);
-	wait4(0, NULL, 0, NULL);
-	wait4(0, NULL, 0, NULL);
+	close_all_pipes_for_main(data, &execd);
+	wait_all(data);
 }
 
 int	exe(t_com *coms, char *cmd)
@@ -912,11 +951,6 @@ t_turn2		join_all2(t_main *data, size_t offset)
 // 			}
 // }
 
-void		add_cmd(t_main *shell)
-{
-	
-}
-
 /**
  * data.setval[0] = set_cmd;
  * data.setval[1] = set_arg;
@@ -942,14 +976,18 @@ int	check_operation(t_main *data, int *oflags)
 
 void	set_cmd(t_main *shell, char *string, int oflag)
 {
+	// printf("> set cmd\n");
 	(void)oflag;
 	shell->cmds[shell->current].cmd = string;
+	ft_lstadd_back(&shell->cmds[shell->current].args, ft_lstnew(ft_strdup(string)));
+	// printf("> set arg 0 on setting cmd: %s\n", shell->cmds[shell->current].args->content);
 	shell->to_be = 1;
 	shell->has_cmd = 1;
 }
 
 void	set_arg(t_main *shell, char *string, int oflag)
 {
+	// printf("> new arg\n");
 	(void)oflag;
 	ft_lstadd_back(&shell->cmds[shell->current].args, ft_lstnew(string));
 }
@@ -1051,6 +1089,7 @@ int		syntax_check(t_main *shell)
 		else
 			syntax.simplex = (++_, 0);
 	}
+	++shell->cmd_ct;
 	return ((syntax.duplex << 0 ) | (syntax.simplex << 16));
 }
 
@@ -1078,7 +1117,7 @@ int		parser(t_main *data)
 	data->syntax_err = syntax_check(data);
 	if (data->syntax_err)
 		return (print_syntax_err(data->syntax_err), -1);
-	data->cmds = calloc((data->cmd_ct + 1), sizeof(t_cmd));
+	data->cmds = calloc((data->cmd_ct), sizeof(t_cmd));
 	printf("> cmds size:%zu\n", data->cmd_ct);
 	while (1)
 	{
@@ -1087,14 +1126,14 @@ int		parser(t_main *data)
 		data->to_be = check_operation(data, &oflags);
 		while (' ' == data->line[data->_])
 			data->_++;
-		printf("> op:%i\n", data->to_be);
+		// printf("> op:%i\n", data->to_be);
 		if (data->to_be == 7)
 			break ;
 		list = (res = join_all2(data, data->_)).nodes;
 
 		void	print_tlist(t_list *head);
-		printf("> get-strings: %ic\n", res.index);
-		print_tlist(list);
+		// printf("> get-strings: %ic\n", res.index);
+		// print_tlist(list);
 		while (list)
 		{
 			(data->set_val[data->to_be])(data, list->content, oflags);
@@ -1102,24 +1141,21 @@ int		parser(t_main *data)
 		}
 		oflags = __O_CLOEXEC;
 		data->_ += res.index - data->_;
-		printf("> cursor moved: %s\n", data->line + data->_);
+		// printf("> cursor moved: %s\n", data->line + data->_);
 	}
 
 	printf("\n");
-	for (size_t i = 0; i < (data)->cmd_ct + 1; i++)
+	set_path(data);
+	for (size_t i = 0; i < (data)->cmd_ct; i++)
 	{
-		t_list		*nod;
-		nod = data->cmds[i].args;
+		// printf("! %s\n", (data)->cmds[0].args->content);
 		printf("> path: %s\n", (data)->cmds[i].cmd);
-		for (size_t i = 0; NULL != nod; i++)
-		{
-			printf(">  arg[%zu]: %s\n", i, (char *)nod->content);
-			nod = nod->next;
-		}
-		
+		for (size_t i = 0; i < data->cmd_ct; i++)
+			printf(">  arg[%zu]: %s\n", i, (char *)data->cmds[i].args->content);
+		printf("> in: %i\n", data->cmds[i].in);
+		printf("> out: %i\n", data->cmds[i].out);
 	}
-
-	// if pipe then data.current++;
+	exe_cute_cat(data);
 	return (0);
 }
 
@@ -1138,7 +1174,6 @@ void	f2(t_list *node)
 int	main(void)
 {
 	int			fd;
-	int			p[2][2];
 	pid_t		pid;
 	char		**args;
 	t_main		data;
@@ -1194,8 +1229,6 @@ int	main(void)
 	// args[2] = 0;
 			// getchar();
 	fd = open("program.c", O_RDONLY);
-	pipe(p[0]);
-	pipe(p[1]);
 	// read(0, data.line, 99999);
 	// printf("00000000000\n");
 	//printf("%s", GREEN PROMT RESET);
