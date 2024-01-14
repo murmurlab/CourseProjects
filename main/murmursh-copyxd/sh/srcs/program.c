@@ -323,22 +323,23 @@ char	*check_cmd(char *cmd, char *path)
 
 void	close_pipes(t_main *data, t_execd *execd)
 {
-	size_t											_;
+	size_t													_;
 
 	_ = 1;
 	if (execd->_ != 0) // not first
 		close(execd->fd[0][1]);
 	else if ((execd->_ != (data->cmd_ct - 1)) && (data->cmd_ct != 1)) // not last
-		close(execd->fd[data->cmd_ct - 2][0]);
-	if (execd->_ == 0)
+		close(execd->fd[data->cmd_ct - 2][0]); // close last pipe read
+	if (execd->_ == 0 && data->cmd_ct != 1 && data->cmd_ct != 2)
 	{
-		// dprintf(2, "closed end of read %d. pipes, end of write %d. pipes in %d. process\n", _ - 1, _, execd->_);
+		dprintf(2, "ff closed end of read %d. pipes, end of write %d. pipes in %d. process\n", _ - 1, _, execd->_);
+		
 		close(execd->fd[_ - 1][0]);
 		close(execd->fd[_][1]);
 	}
 	while (_ < execd->_)
 	{
-		// dprintf(2, "closed end of read %d. pipes, end of write %d. pipes in %d. process\n", _ - 1, _, execd->_);
+		dprintf(2, "ss closed end of read %d. pipes, end of write %d. pipes in %d. process\n", _ - 1, _, execd->_);
 		close(execd->fd[_ - 1][0]);
 		close(execd->fd[_][1]);
 		_++;
@@ -346,7 +347,7 @@ void	close_pipes(t_main *data, t_execd *execd)
 	_++;
 	while (_ < data->cmd_ct - 1)
 	{
-		// dprintf(2, "closed end of read %d. pipes, end of write %d. pipes in %d. process\n", _ - 1, _, execd->_);
+		dprintf(2, "tt closed end of read %d. pipes, end of write %d. pipes in %d. process\n", _ - 1, _, execd->_);
 		close(execd->fd[_ - 1][0]);
 		close(execd->fd[_][1]);
 		_++;
@@ -379,7 +380,8 @@ void	set_io(t_main *shell, t_execd *execd)
 	}
 	else
 	{
-		close(execd->fd[execd->_ - 1][0]);
+		if (execd->_ != 0) // not first
+			close(execd->fd[execd->_ - 1][0]);
 		dup2(shell->cmds[execd->_].in, STDIN_FILENO);
 	}
 	if (!shell->cmds[execd->_].out)
@@ -389,17 +391,18 @@ void	set_io(t_main *shell, t_execd *execd)
 	}
 	else
 	{
-		close(execd->fd[execd->_][1]);
+		if ((execd->_ != (shell->cmd_ct - 1)) && (shell->cmd_ct != 1))
+			close(execd->fd[execd->_][1]);
 		dup2(shell->cmds[execd->_].out, STDOUT_FILENO);
 	}
 	close_pipes(shell, execd);
+	dprintf(2, "> setted io\n");
 }
 
 void	child(t_main *data, t_execd *execd)
 {
 	// dup2(1, data->cmds[execd->_].out);
 	// dup2(0, data->cmds[execd->_].in);
-	printf("%zu ", execd->_);
 	/**
 	 * must valid last given in/out-prompt (<, >, >>, <<);
 	 * 
@@ -417,7 +420,7 @@ void	child(t_main *data, t_execd *execd)
 		// printf("0 end\n");
 	}
 	// free all;
-	
+	dprintf(2, "> run process %zu\n", execd->_);
 	execve(data->cmds[execd->_].cmd, lsttoarr(data->cmds[execd->_].args), NULL);
 	// printf("\n");
 	exit(1);
@@ -432,7 +435,7 @@ void	open_pipes(t_main *shell, t_execd *execd)
 	while (_ < shell->cmd_ct - 1)
 	{
 		execd->fd[_] = malloc(sizeof(int) * 2);
-		pipe(execd->fd[_]);
+		pipe(execd->fd[_++]);
 	}
 	
 }
@@ -445,7 +448,7 @@ void	close_all_pipes_for_main(t_main *shell, t_execd *execd)
 	while (_ < shell->cmd_ct - 1)
 	{
 		close(execd->fd[_][0]);
-		close(execd->fd[_][1]);
+		close(execd->fd[_++][1]);
 	}
 }
 
@@ -454,37 +457,44 @@ void	wait_all(t_main *shell)
 	size_t		_;
 
 	_ = 0;
-	while (_ < shell->cmd_ct)
+	while (_++ < shell->cmd_ct)
+	{
 		wait4(0, &shell->ex_stat, 0, NULL);
+		printf("> one process ended\n");
+	}
 }
 
 void	exe_cute_cat(t_main *data)
 {
 	t_execd	execd;
 	open_pipes(data, &execd);
-	set_path(data);
+	// set_path(data);
 	execd.pids = malloc(sizeof(pid_t) * data->cmd_ct);
 	execd._ = 0;
 	execd.pids[execd._] = 1;
 	while (execd._ < data->cmd_ct)
 	{
+		printf("> one forked!\n");
 		execd.pids[execd._] = fork();
 		if (execd.pids[execd._] == 0)
-			break ;
+		{
+			child(data, &execd);
+			exit(-1);
+		}
 		execd._++;
 	}
-	if (execd.pids[execd._] == 0 && execd._ != data->cmd_ct)
-		child(data, &execd);
-	else
-	{
+	// if (execd.pids[execd._] == 0 /* && execd._ != data->cmd_ct */)
+	// {
+	// 	printf("girmek %zu\n", execd._);
+	// }
+	// else
+	// {
 		
-	}
-// 	bash  defines the following built-in commands: :, ., [, alias, bg, bind, break, builtin, case, cd, command, compgen, complete, continue, declare, dirs, disown, echo, enable, eval, exec, exit, ex‐pts, hash, help, history, if, jobs, kill, let, local, logout, popd, printf, pushd, pwd, read, readonly, return, set, shift, shopt, source,  suspend,  te
-// st,  times,  trap,  type,mask, unalias, unset, until, wait, while.
-	// sleep(1);
-	printf("main wait pid %d\n", execd.pids[execd._ - 1]);
+	// }
+	printf("main wait pid %d\n", execd.pids[--execd._]);
 	close_all_pipes_for_main(data, &execd);
 	wait_all(data);
+	printf("> main wait end.\n");
 }
 
 int	exe(t_com *coms, char *cmd)
@@ -960,11 +970,11 @@ t_turn2		join_all2(t_main *data, size_t offset)
 int	check_operation(t_main *data, int *oflags)
 {
 	if (data->line[data->_] == '<' && data->line[data->_ + 1] != '<')
-		return (data->_++, *oflags = O_TRUNC | O_WRONLY | O_CREAT, 2);
+		return (data->_++, *oflags = O_RDONLY, 2);
 	else if (data->line[data->_] == '>' && data->line[data->_ + 1] != '>')
 		return (data->_++, *oflags = O_TRUNC | O_WRONLY | O_CREAT, 3);
 	else if (data->line[data->_] == '<' && data->line[data->_ + 1] == '<')
-		return (data->_ += 2, *oflags = O_APPEND | O_WRONLY | O_CREAT, 2);
+		return (data->_ += 2,/*  pipe[data.heredoc], */ 2);
 	else if (data->line[data->_] == '>' && data->line[data->_ + 1] == '>')
 		return (data->_ += 2, *oflags = O_APPEND | O_WRONLY | O_CREAT, 3);
 	else if ('|' == data->line[data->_])
@@ -994,7 +1004,7 @@ void	set_arg(t_main *shell, char *string, int oflag)
 
 void	set_in(t_main *shell, char *string, int oflag)
 {
-	const int fd = open(string, oflag);
+	const int fd = open(string, oflag, 0644);
 
 	shell->_++;
 	if (fd < 0)
@@ -1007,7 +1017,7 @@ void	set_in(t_main *shell, char *string, int oflag)
 
 void	set_out(t_main *shell, char *string, int oflag)
 {
-	const int fd = open(string, oflag);
+	const int fd = open(string, oflag, 0644);
 
 	shell->_++;
 	if (fd < 0)
@@ -1148,10 +1158,14 @@ int		parser(t_main *data)
 	set_path(data);
 	for (size_t i = 0; i < (data)->cmd_ct; i++)
 	{
+		t_list		*arg = (data)->cmds[i].args;
 		// printf("! %s\n", (data)->cmds[0].args->content);
 		printf("> path: %s\n", (data)->cmds[i].cmd);
-		for (size_t i = 0; i < data->cmd_ct; i++)
-			printf(">  arg[%zu]: %s\n", i, (char *)data->cmds[i].args->content);
+		for (size_t i = 0; arg; i++)
+		{
+			printf(">  arg[%zu]: %s\n", i, (char *)arg->content);
+			arg = arg->next;
+		}
 		printf("> in: %i\n", data->cmds[i].in);
 		printf("> out: %i\n", data->cmds[i].out);
 	}
