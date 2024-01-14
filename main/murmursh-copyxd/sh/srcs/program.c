@@ -464,6 +464,15 @@ void	wait_all(t_main *shell)
 	}
 }
 
+void	reset(t_main *shell)
+{
+	shell->cmd_ct = 0;
+	shell->current = 0;
+	shell->has_cmd = 0;
+	shell->_ = 0;
+	shell->cmds = NULL;
+}
+
 void	exe_cute_cat(t_main *data)
 {
 	t_execd	execd;
@@ -495,6 +504,7 @@ void	exe_cute_cat(t_main *data)
 	close_all_pipes_for_main(data, &execd);
 	wait_all(data);
 	printf("> main wait end.\n");
+	reset(data);
 }
 
 int	exe(t_com *coms, char *cmd)
@@ -1275,14 +1285,12 @@ int	main(void)
 			if (data.line[0] != 0)
 			{
 				data._ = 0;
-				
+
 				parser(&data);
 				// system("valgrind --leak-check=full /Users/ahbasara/sources/repos/projects/main/murmursh-copyxd/program");
 				// exe(data.coms, data.line);
 			}
 			free(data.line);
-
-			exit(0);
 		}
 		else
 		{
@@ -1308,52 +1316,11 @@ int	main(void)
 		free(data.vars);
 		data.vars = var;
 	}
-	
-	// if (fork())
-	// {
-
-	// }
-	// else
-	// {
-		
-	// }
 }
 
-/**2.
- *  in pipe 
- * out ft_değisken
-*/
-// <file grep | cat >"ft_$out"
 /**
  * void	__attribute__((destructor))after_main()
  * {
  * 	pause();
  * }
  */
-
-// 🙂
-// int smile()
-// {
-// 	return(1);
-// }
-// 🤔
-// int think()
-// {
-// 	while (1)
-// 	{}
-// }
-// 😡
-// int angry()
-// {
-// 	return(-1);
-// }
-// 😴
-// void sleep()
-// {
-// 	pause();
-// }
-// 😐
-// char indecisive()
-// {
-// 	return (0);
-// }
