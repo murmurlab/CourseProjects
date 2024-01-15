@@ -180,24 +180,29 @@ covid	ctrl_c(int sig)
 	rl_redisplay();
 }
 
-int	sh_exit(t_com *coms)
+int	sh_exit(t_main *shell, t_execd *execd)
 {
 	// rl_on_new_line();
 	// rl_replace_line("goodbye👋\n", 12);
 	// \033[A\033[;9H 
 	printf("exit\n");
 	// rl_redisplay();
-	exit(0);
+	if (shell->cmds[execd->_].args->content)
+		exit(ft_atoi(shell->cmds[execd->_].args->content));
+	exit(shell->ex_stat);
 }
 
-int	sh_cd(t_com *coms, char *dir)
+int	sh_cd(t_main *shell, t_execd *execd)
 {
-	char	*buff;
+	t_com const * const	self = \
+			shell->coms + shell->cmds[execd->_].builtin_offset;
+	char				*buff;
 
 	buff = malloc(1024);
-	chdir(dir);
+	if (shell->cmds[execd->_].args->content)
+		chdir(shell->cmds[execd->_].args->content);
 	getcwd(buff, 1024);
-	set(coms->data, "PWD", buff);
+	set(shell, "PWD", buff);
 	return (0);
 }
 
@@ -236,36 +241,56 @@ char	*resolve_cmd(char *string)
 	return (loc);
 }
 
-void	set_path(t_main *data)
+void	search_builtins(t_main *shell, int cmd_off)
+{
+	int																	o__o;
+	
+	o__o = 01;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	while (o__o < 0x8)
+	{
+		if (strcmp(shell->cmds[cmd_off].cmd, shell->coms[o__o].name))
+		{
+			shell->cmds[cmd_off].builtin_offset = o__o;;
+			return ;
+		}
+		(++o__o);
+	}
+	shell->cmds[cmd_off].builtin_offset = 0b00000000000000000000000000000000;;
+	return ;
+}
+
+void	set_path(t_main *shell)
 {
 	size_t		_;
 	void		*var;
 	struct stat sb;
 
-	_ = 0;
-	while (data->cmd_ct > _)
+	_ = -1;
+	while (++_ < shell->cmd_ct)
 	{
-		if (!ft_strchr(data->cmds[_].cmd, '/'))
+		if (!ft_strchr(shell->cmds[_].cmd, '/'))
 		{
-			var = data->cmds[_].cmd;
+			search_builtins(shell, _);
+			if (shell->cmds[_].builtin_offset)
+				continue ;
+			var = shell->cmds[_].cmd;
 			errno = 0;
-			data->cmds[_].cmd = resolve_cmd(data->cmds[_].cmd);
+			shell->cmds[_].cmd = resolve_cmd(shell->cmds[_].cmd);
 			free(var);
 		}
 		else
 		{
-			stat(data->cmds[_].cmd, &sb);
+			stat(shell->cmds[_].cmd, &sb);
 			if (errno)
-				err(errno, data->cmds[_].cmd);
+				err(errno, shell->cmds[_].cmd);
 			if (S_ISDIR(sb.st_mode))
-				err(IS_A_DIR, data->cmds[_].cmd);
-			if (access(data->cmds[_].cmd, X_OK))
+				err(IS_A_DIR, shell->cmds[_].cmd);
+			if (access(shell->cmds[_].cmd, X_OK))
 			{
-				free(data->cmds[_].cmd);
-				data->cmds[_].cmd = NULL;
+				free(shell->cmds[_].cmd);
+				shell->cmds[_].cmd = NULL;
 			}
 		}
-		_++;
 	}
 }
 
@@ -399,29 +424,39 @@ void	set_io(t_main *shell, t_execd *execd)
 	dprintf(2, "> setted io\n");
 }
 
-void	child(t_main *data, t_execd *execd)
+void	launch_program(t_main *shell, t_execd * execd)
 {
-	// dup2(1, data->cmds[execd->_].out);
-	// dup2(0, data->cmds[execd->_].in);
+	execve(shell->cmds[execd->_].cmd, lsttoarr(shell->cmds[execd->_].args), NULL);
+}
+
+void	launch_builtin(t_main *shell, t_execd * execd)
+{
+
+}
+
+void	child(t_main *shell, t_execd *execd)
+{
+	// dup2(1, shell->cmds[execd->_].out);
+	// dup2(0, shell->cmds[execd->_].in);
 	/**
 	 * must valid last given in/out-prompt (<, >, >>, <<);
 	 * 
 	 */
-	set_io(data, execd);
+	set_io(shell, execd);
 	if (execd->_)
 	{
-		// dprintf(2,"%s%d [%d, %d], %d is waiting\n", "mypid: ", getpid(), (execd->_), (data->cmd_ct), execd->pids[execd->_ - 1]);
+		// dprintf(2,"%s%d [%d, %d], %d is waiting\n", "mypid: ", getpid(), (execd->_), (shell->cmd_ct), execd->pids[execd->_ - 1]);
 		// exit(1);
 	}
 	else
 	{
-		// dprintf(2,"%s%d [%d, %d], none is waiting\n", "mypid: ", getpid(), (execd->_), (data->cmd_ct));
+		// dprintf(2,"%s%d [%d, %d], none is waiting\n", "mypid: ", getpid(), (execd->_), (shell->cmd_ct));
 		// sleep(1);
 		// printf("0 end\n");
 	}
 	// free all;
-	dprintf(2, "> run process %zu\n", execd->_);
-	execve(data->cmds[execd->_].cmd, lsttoarr(data->cmds[execd->_].args), NULL);
+	dprintf(2, "> launch_command %zu\n", execd->_);
+	shell->coms[(shell->cmds[execd->_].builtin_offset)].func(shell, execd);
 	// printf("\n");
 	exit(1);
 }
@@ -1228,14 +1263,14 @@ int	main(void)
 	data.increases[0] = (char)0;
 	data.cmds = NULL;
 	data.coms = (t_com []){
-		(t_com){"echo", 0, NULL},
-		(t_com){"cd", 0, &data},
-		(t_com){"pwd", 0, NULL},
-		(t_com){"export", 0, NULL},
-		(t_com){"unset", 0, NULL},
-		(t_com){"env", 0, NULL},
-		(t_com){"exit", sh_exit, NULL},
-		(t_com){"x", sh_exit, NULL}
+		{"default", launch_program, NULL},
+		{"echo", 0, NULL},
+		{"cd", 0, &data},
+		{"pwd", 0, NULL},
+		{"export", 0, NULL},
+		{"unset", 0, NULL},
+		{"env", 0, NULL},
+		{"exit", sh_exit, NULL},
 	};
 	data.cmd_ct = 0;
 	data.set_val[0] = set_cmd;

@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/13 21:17:37 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/15 05:38:54 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ typedef struct s_join
  * 0000 0100 |
  * 0000 1000 >
  * 0001 0000 <
- * 0010 0000 <<
+ * 0010 0000 <<0
  * 0100 0000 >>
  * 1000 0000 
  */
@@ -171,6 +171,8 @@ typedef	struct	s_cmd
 	t_list			*args;
 	// t_list			*ins;
 	// t_list			*outs;
+	int				builtin_offset;
+	// void			(*launch)(t_main *shell, t_execd * execd);
 	int				in;
 	int				out;
 }		t_cmd;
