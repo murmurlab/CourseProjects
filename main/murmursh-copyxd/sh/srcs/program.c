@@ -180,7 +180,7 @@ covid	ctrl_c(int sig)
 	rl_redisplay();
 }
 
-int	sh_exit(t_main *shell, t_execd *execd)
+void	sh_exit(t_main *shell, t_execd *execd)
 {
 	// rl_on_new_line();
 	// rl_replace_line("goodbye👋\n", 12);
@@ -192,7 +192,7 @@ int	sh_exit(t_main *shell, t_execd *execd)
 	exit(shell->ex_stat);
 }
 
-int	sh_cd(t_main *shell, t_execd *execd)
+void	sh_cd(t_main *shell, t_execd *execd)
 {
 	t_com const * const	self = \
 			shell->coms + shell->cmds[execd->_].builtin_offset;
@@ -203,7 +203,6 @@ int	sh_cd(t_main *shell, t_execd *execd)
 		chdir(shell->cmds[execd->_].args->content);
 	getcwd(buff, 1024);
 	set(shell, "PWD", buff);
-	return (0);
 }
 
 int	err(int e, char *str)
@@ -551,7 +550,7 @@ int	exe(t_com *coms, char *cmd)
 	{
 		if (!strcmp(cmd, coms[_].name))
 		{
-			(free(cmd), coms[_].func(coms));
+			// (free(cmd), coms[_].func(coms));
 			return (0);
 		}
 		_++;
@@ -835,9 +834,6 @@ t_turn	join_all(t_main *data, size_t offset)
 	return (turn);
 }
 
-int			is_non_special(char c)
-{
-}
 // int	is_text(int c)
 // {
 // 	return (('<' != c) && ('>' != c) && \
@@ -1166,7 +1162,7 @@ int		parser(t_main *data)
 	t_list		*list;
 	int			oflags;
 
-	oflags = __O_CLOEXEC;
+	oflags = O_CLOEXEC;
 	data->has_cmd = 0;
 	printf("line: %s\n", data->line);
 	data->syntax_err = syntax_check(data);
@@ -1194,7 +1190,7 @@ int		parser(t_main *data)
 			(data->set_val[data->to_be])(data, list->content, oflags);
 			list = list->next;
 		}
-		oflags = __O_CLOEXEC;
+		oflags = O_CLOEXEC;
 		data->_ += res.index - data->_;
 		// printf("> cursor moved: %s\n", data->line + data->_);
 	}
@@ -1335,7 +1331,7 @@ int	main(void)
 				printf("\033[A");
 				printf(GREEN PROMT RESET);
 				fflush(stdout);
-				sh_exit(&data.coms[6]);
+				// sh_exit(&data.coms[6]);
 			}
 			qsignal = 0;
 			printf("\n");

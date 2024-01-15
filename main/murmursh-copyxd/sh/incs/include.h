@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/15 05:38:54 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/15 20:41:56 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 ** #  define S 115
 ** #  define D 100
 */
+#  define O_CLOEXEC __O_CLOEXEC
 
 # elif defined(__APPLE__)
 /* OSX. --------------------------------------------------- */
@@ -83,13 +84,13 @@
 typedef void			t_if;
 typedef void			covid;
 
-int	sh_echo();
-int	sh_cd();
-int	sh_pwd();
-int	sh_export();
-int	sh_unset();
-int	sh_env();
-int	sh_exit();
+void	sh_echo();
+void	sh_cd();
+void	sh_pwd();
+void	sh_export();
+void	sh_unset();
+void	sh_env();
+void	sh_exit();
 
 /**
  *  @struct t_order s_order
@@ -158,10 +159,13 @@ typedef struct	s_syntax
 	char		simplex;
 }		t_syntax;
 
+struct	s_main;
+struct	s_execd;
+
 typedef struct	s_com
 {
 	char *name;
-	int (*func)();
+	void (*func)(struct s_main *, struct s_execd *);
 	void	*data;
 }		t_com;
 
@@ -223,7 +227,7 @@ typedef	struct	s_merge
 	size_t		len;
 }				t_merge;
 
-typedef struct
+typedef struct s_execd
 {
 	size_t		_;
 	pid_t		*pids;
