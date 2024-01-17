@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/17 20:33:38 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/18 00:18:28 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,8 +203,8 @@ void	coix(int sig)
 covid	ctrl_c(int sig)
 {
 	rl_replace_line("", 0);
-	rl_on_new_line();
 	printf("\n");
+	rl_on_new_line();
 	rl_redisplay();
 }
 
@@ -233,17 +233,57 @@ void	sh_pwd(t_main *shell, t_execd *execd)
 
 void	sh_export(t_main *shell, t_execd *execd)
 {
+	if (shell->cmds[execd->_].args->next)
+		set(shell, shell->cmds[execd->_].args->next->content);
+}
 
+t_list	*lst_filter_prev(t_list *nod, int f(t_list *node_iterate, void *data_compare), void *data)
+{
+	t_list		*prev;
+	
+	prev = nod;
+	while (nod)
+	{
+        if (f(nod, data))
+            return (prev);
+		prev = nod;
+		nod = nod->next;
+	}
+	return (NULL);
+}
+
+void	del(void *_)
+{
+	free(_);
 }
 
 void	sh_unset(t_main *shell, t_execd *execd)
 {
+	// char	*discriminant;
+	t_list	*find;
+	t_list	*backup;
 
+	// *(discriminant = ft_strchr(duplex, '=')) = '\0';
+	// *discriminant = '=';
+
+	if (shell->cmds[execd->_].args->next)
+		find = lst_filter_prev(shell->vars, check, shell->cmds[execd->_].args->next->content);
+	if (find == shell->vars)
+	{
+		shell->vars = find->next;
+		ft_lstdelone(find, del);
+	}
+	else
+	{
+		backup = find->next;
+		find->next = find->next->next;
+		ft_lstdelone(backup, del);
+	}
 }
 
 void	sh_env(t_main *shell, t_execd *execd)
 {
-
+	ft_lstiter(shell->vars, (void (*)(void *))f);
 }
 
 void	sh_echo(t_main *shell, t_execd *execd)
@@ -510,14 +550,14 @@ void	set_io(t_main *shell, t_execd *execd)
 void	list2env(t_main *shell)
 {
 	t_list const	*var = shell->vars;
-	extern char		**environ;
 	size_t			_;
 
 	_ = 0;
-	environ = malloc(ft_lstsize(shell->vars));
+	shell->env = malloc(sizeof(void *) * (ft_lstsize(shell->vars) + 1));
 	while (var)
 	{
-		environ[_] = var->content;
+		shell->env[_] = var->content;
+		printf("%s\n", shell->env[_]);
 		_++;
 		var = var->next;
 	}
@@ -525,14 +565,9 @@ void	list2env(t_main *shell)
 }
 
 void	launch_program(t_main *shell, t_execd * execd)
-{ 
-	
-	execve(shell->cmds[execd->_].cmd, lsttoarr(shell->cmds[execd->_].args), NULL);
-}
-
-void	launch_builtin(t_main *shell, t_execd * execd)
 {
-
+	list2env(shell);
+	execve(shell->cmds[execd->_].cmd, lsttoarr(shell->cmds[execd->_].args), shell->env);
 }
 
 void	child(t_main *shell, t_execd *execd)
@@ -1313,7 +1348,7 @@ int		parser(t_main *data)
 
 void	f(t_list *node)
 {
-	printf("var %s\n", (char *)node);
+	printf("%s\n", (char *)node);
 }
 
 void	f2(t_list *node)
@@ -1412,6 +1447,7 @@ int	main(void)
 
 		// rl_already_prompted = 1;
 		data.line = readline(GREEN PROMT RESET);
+		add_history(data.line);
 		if (data.line)
 		{
 			if (data.line[0] != 0)
@@ -1430,9 +1466,9 @@ int	main(void)
 			if (1)
 			{
 				printf("\033[A");
-				printf(GREEN PROMT RESET);
+				printf(GREEN "" RESET);
 				fflush(stdout);
-				// sh_exit(&data.coms[6]);
+				exit(0);
 			}
 			g_qsignal = 0;
 			printf("\n");
