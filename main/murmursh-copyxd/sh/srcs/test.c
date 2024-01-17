@@ -197,10 +197,10 @@ void	*get_my_data(void)
 	// data->increases['$'] = (char)1;
 	data->increases[0] = (char)0;
 	data->vars = NULL;
-	set(data, strdup("a"), strdup("0000"));
-	set(data, strdup("b"), strdup("11 11"));
-	set(data, strdup("c"), strdup("22 22 22"));
-	set(data, strdup("d"), strdup("33 33"));
+	set(data, strdup("a=0000"));
+	set(data, strdup("b=11 11"));
+	set(data, strdup("c=22 22 22"));
+	set(data, strdup("d=33 33"));
 	
 	data->cmd_ct = 5;
 	return (data);

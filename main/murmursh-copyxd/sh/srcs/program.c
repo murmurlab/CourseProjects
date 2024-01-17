@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/17 12:55:21 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/17 20:33:38 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,30 +113,58 @@ void	e2(char *s)
 	write(2, s, ft_strlen(s));
 }
 
-int		set(t_main *data, char const *name, char const *value)
+/**
+ * ast=0
+ * ast0
+ */
+int		strccmp(const char *s1, const char *s2, char ch)
 {
-	char const	**a;
-	t_list	*find;
+	size_t			i;
+	unsigned char	*one;
+	unsigned char	*two;
+	char			diff;
 
-	find = lst_filter(data->vars, check, name);
-	if (!find)
+	i = 0;
+	one = (unsigned char *)s1;
+	two = (unsigned char *)s2;
+	while (one[i] || two[i])
 	{
-		a = malloc(2 * sizeof(char *));
-		a[0] = name;
-		a[1] = value;
-		ft_lstadd_back(&data->vars, ft_lstnew(a));
-	}
-	else
-	{
-		free(((char **)find->content)[1]);
-		((char const **)find->content)[1] = value;
+		if (one[i] != two[i])
+		{
+			diff = (one[i] - two[i]);
+			if (diff == ch || diff == -ch)
+				return (i);
+			return (0);
+		}
+		i++;
 	}
 	return (0);
 }
 
+int		set(t_main *shell, char *duplex)
+{
+	t_list	*find;
+	char	*discriminant;
+
+	*(discriminant = ft_strchr(duplex, '=')) = '\0';
+	find = lst_filter(shell->vars, check, (char *)duplex);
+	*discriminant = '=';
+	if (!find)
+	{
+		ft_lstadd_back(&shell->vars, ft_lstnew((char *)duplex));
+		return (0);
+	}
+	else
+	{
+		free(find->content);
+		find->content = (char *)duplex;
+	}
+	return (1);
+}
+
 int	check(t_list *node, void *cmp)
 {
-	if (!strcmp(((char **)(node->content))[0], (char const *)cmp))
+	if (strccmp(node->content, cmp, '='))
 		return (1);
 	return (0);
 }
@@ -145,19 +173,19 @@ char	*get(t_main *data, char const *var)
 {
 	t_list	*find;
 
-	find = lst_filter(data->vars, check, var);
+	find = lst_filter(data->vars, check, (char *)var);
 	if (find)
-		return (strdup(((char **)find->content)[1]));
-	return (strdup(getenv(var)));
+		return (strdup(find->content));
+	return (NULL);
 }
 
 char	*get_ref(t_main *data, char const *var)
 {
 	t_list	*find;
 
-	find = lst_filter(data->vars, check, var);
+	find = lst_filter(data->vars, check, (char *)var);
 	if (find)
-		return (((char **)find->content)[1]);
+		return (find->content);
 	return (NULL);
 }
 
@@ -256,7 +284,7 @@ void	sh_cd(t_main *shell, t_execd *execd)
 	if (shell->cmds[execd->_].args->next)
 		chdir(shell->cmds[execd->_].args->next->content);
 	else
-		chdir(getenv("HOME"));
+		chdir(get_ref(shell, "HOME"));
 }
 
 int	err(int e, char *str)
@@ -278,12 +306,12 @@ int	err(int e, char *str)
 	return (0);
 }
 
-char	*resolve_cmd(char *string)
+char	*resolve_cmd(t_main *shell, char *string)
 {
 	char		*loc;
 	char		*path;
 
-	path = (getenv("PATH"));
+	path = (get_ref(shell ,"PATH"));
 	loc = check_cmd(string, path);
 	if (!loc)
 	{
@@ -328,7 +356,7 @@ void	set_path(t_main *shell)
 				continue ;
 			var = shell->cmds[_].cmd;
 			errno = 0;
-			shell->cmds[_].cmd = resolve_cmd(shell->cmds[_].cmd);
+			shell->cmds[_].cmd = resolve_cmd(shell, shell->cmds[_].cmd);
 			free(var);
 		}
 		else
@@ -478,8 +506,27 @@ void	set_io(t_main *shell, t_execd *execd)
 	dprintf(2, "> setted io\n");
 }
 
-void	launch_program(t_main *shell, t_execd * execd)
+// in fork here, so mallocable
+void	list2env(t_main *shell)
 {
+	t_list const	*var = shell->vars;
+	extern char		**environ;
+	size_t			_;
+
+	_ = 0;
+	environ = malloc(ft_lstsize(shell->vars));
+	while (var)
+	{
+		environ[_] = var->content;
+		_++;
+		var = var->next;
+	}
+	
+}
+
+void	launch_program(t_main *shell, t_execd * execd)
+{ 
+	
 	execve(shell->cmds[execd->_].cmd, lsttoarr(shell->cmds[execd->_].args), NULL);
 }
 
@@ -766,14 +813,7 @@ size_t	len_all(t_main *data, size_t offset)
 	return (total);
 }
 
-/**
- * @brief get_var(data, after_dollar, var_name_len(after_dollar))
- * 
- * @param data 
- * @param after_dollar 
- * @param len 
- * @return char* 
- */
+
 char	*get_var_ref(t_main *data, char *var_name, size_t len)
 {
 	const char	*name = ft_substr(var_name, 0, len);
@@ -1273,27 +1313,21 @@ int		parser(t_main *data)
 
 void	f(t_list *node)
 {
-	printf("var %s: %s\n", ((char **)(node))[0], ((char **)node)[1]);
+	printf("var %s\n", (char *)node);
 }
 
 void	f2(t_list *node)
 {
-	free(((char **)(node))[0]);
-	free(((char **)(node))[1]);
 	free(node);
 }
 
-void	dup_env(t_main *shell, char **env)
+void	env2list(t_main *shell)
 {
 	size_t		_;
-	char		*discriminator;
 
-	while (env[_])
-	{
-		*(discriminator = ft_strchr(env[_], '=')) = 0;
-		set(shell, env[_], discriminator);
-		_++;
-	}
+	_ = -1;
+	while (shell->env[++_])
+		set(shell, shell->env[_]);
 }
 
 int	main(void)
@@ -1301,14 +1335,15 @@ int	main(void)
 	extern char **environ;
 	t_main		data;
 
+	data.env = environ;
 	data.vars = NULL;
-	set(&data, strdup("a"), strdup("0000"));
+	set(&data, strdup("a=0000"));
 	// printf("ENV: %s\n", cy = get(&data, "PATH"));
 	// set(&data, strdup("PATH"), get(&data, "PATH"));
 	// set(&data, strdup("PATH"), get(&data, "PATH"));
 	// printf("a: %s\n", (((char **)data.vars->content)[1]));
 	// printf("a: %s\n", get(&data, "array"));
-	// dup_env(&data, environ);
+	env2list(&data);
 	ft_lstiter(data.vars, (void (*)(void *))f);
 	
 	// ioctl(STDIN_FILENO, TIOCSTI, "minishell$ ``");

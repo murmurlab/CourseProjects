@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/16 18:38:49 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/17 20:32:54 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,7 @@ typedef	struct	s_main
 	// t_list			*nodes;
 	// t_list			*node;
 	char			*prev_cwd;
+	char			**env;
 	// char			*cwd;
 	// char			flags[INT8_MAX];
 	void			(*coid)(int);
@@ -250,7 +251,7 @@ int			is_var(int c);
 int			is_text(int c);
 size_t		var_name_len(char *start);
 int			check(t_list *node, void *cmp);
-int			set(t_main *data, char const * name, char const * value);
+int			set(t_main *data, char *duplex);
 int			parser();
 char*		get();
 t_list		*lst_filter();
@@ -263,5 +264,6 @@ void		set_path(t_main *data);
 int			err(int e, char *str);
 t_turn2 	join_all2(t_main *data, size_t offset);
 int			syntax_check(t_main *shell);
+t_list		*lst_filter(t_list *nod, int f(t_list *node_iterate, void *data_compare), void *data);
 
 #endif
