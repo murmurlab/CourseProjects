@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/15 20:41:56 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/16 18:38:49 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@
 
 # endif
 
+#include "stdarg.h"
+
 # define RED			"\x1B[31m"
 # define GREEN			"\x1B[32m"
 # define YELLOW			"\x1B[33m"
@@ -60,6 +62,10 @@
 # define CMD_COUNT		8
 
 # define INT8_MAX		127
+
+# define KB				1024
+# define MB				KB * 1024
+# define GB				MB * 1024
 
 # include "libft.h"
 
@@ -202,7 +208,8 @@ typedef	struct	s_main
 	int				to_be;
 	// t_list			*nodes;
 	// t_list			*node;
-	char			*cwd;
+	char			*prev_cwd;
+	// char			*cwd;
 	// char			flags[INT8_MAX];
 	void			(*coid)(int);
 	// void			(*check_operation)();

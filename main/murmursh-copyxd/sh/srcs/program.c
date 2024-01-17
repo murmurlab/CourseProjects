@@ -1,4 +1,4 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   program.c                                          :+:      :+:    :+:   */
@@ -6,14 +6,14 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/06 02:32:32 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/17 12:55:21 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include.h"
 #include <stdarg.h>
 
-int		qsignal;
+int		g_qsignal;
 
 // char	*mod_strcpy(char *dest, char *src)
 // {
@@ -158,7 +158,7 @@ char	*get_ref(t_main *data, char const *var)
 	find = lst_filter(data->vars, check, var);
 	if (find)
 		return (((char **)find->content)[1]);
-	return (getenv(var));
+	return (NULL);
 }
 
 void	coix(int sig)
@@ -169,7 +169,7 @@ void	coix(int sig)
 	// rl_replace_line("", 1);
 	printf("\033[K");
 	rl_redisplay();
-	qsignal = 1;
+	g_qsignal = 1;
 }
 
 covid	ctrl_c(int sig)
@@ -187,22 +187,76 @@ void	sh_exit(t_main *shell, t_execd *execd)
 	// \033[A\033[;9H 
 	printf("exit\n");
 	// rl_redisplay();
-	if (shell->cmds[execd->_].args->content)
-		exit(ft_atoi(shell->cmds[execd->_].args->content));
+	if (shell->cmds[execd->_].args->next)
+		exit(ft_atoi(shell->cmds[execd->_].args->next->content));
 	exit(shell->ex_stat);
+}
+
+void	sh_pwd(t_main *shell, t_execd *execd)
+{
+	size_t const		size = MB * 32;
+	char				*buff;
+
+	buff = malloc(size);
+	getcwd(buff, size);
+	printf("%s\n", buff);
+	free(buff);
+}
+
+void	sh_export(t_main *shell, t_execd *execd)
+{
+
+}
+
+void	sh_unset(t_main *shell, t_execd *execd)
+{
+
+}
+
+void	sh_env(t_main *shell, t_execd *execd)
+{
+
+}
+
+void	sh_echo(t_main *shell, t_execd *execd)
+{
+	t_list const	*arg = shell->cmds[execd->_].args->next;
+	int				n_flag = !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!0;
+
+	if (arg)
+	{
+		if (((char *)arg->content)[0] == '-' && ((char *)arg->content)[1] == 'n')
+		{
+			arg = arg->next;
+			n_flag = 1;
+		}
+		if (arg)
+		{
+			while (!0)
+			{
+				printf("%s", arg->content);
+				arg = arg->next;
+				if (!arg)
+					break ;
+				printf(" ");
+			}
+		}
+	}
+	// shell->cmds[execd->_].args->content
+	if (((((((((((((((((((((((((((((((((!n_flag)))))))))))))))))))))))))))))))))
+		printf("\n");
 }
 
 void	sh_cd(t_main *shell, t_execd *execd)
 {
 	t_com const * const	self = \
 			shell->coms + shell->cmds[execd->_].builtin_offset;
-	char				*buff;
 
-	buff = malloc(1024);
-	if (shell->cmds[execd->_].args->content)
-		chdir(shell->cmds[execd->_].args->content);
-	getcwd(buff, 1024);
-	set(shell, "PWD", buff);
+	// printf("> log4 %s\n", shell->cmds[execd->_].args->next->content);
+	if (shell->cmds[execd->_].args->next)
+		chdir(shell->cmds[execd->_].args->next->content);
+	else
+		chdir(getenv("HOME"));
 }
 
 int	err(int e, char *str)
@@ -247,7 +301,7 @@ void	search_builtins(t_main *shell, int cmd_off)
 	o__o = 01;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	while (o__o < 0x8)
 	{
-		if (strcmp(shell->cmds[cmd_off].cmd, shell->coms[o__o].name))
+		if (!strcmp(shell->cmds[cmd_off].cmd, shell->coms[o__o].name))
 		{
 			shell->cmds[cmd_off].builtin_offset = o__o;;
 			return ;
@@ -320,6 +374,7 @@ char	*check_cmd(char *cmd, char *path)
 									&(t_merge){"/", 1},
 									&(t_merge){cmd, ft_strlen(cmd)}, NULL
 								});
+			// dprintf(2, "> %s\n", var);
 			errno = 0;
 			stat(var, &sb);
 			if (!errno)
@@ -356,14 +411,14 @@ void	close_pipes(t_main *data, t_execd *execd)
 		close(execd->fd[data->cmd_ct - 2][0]); // close last pipe read
 	if (execd->_ == 0 && data->cmd_ct != 1 && data->cmd_ct != 2)
 	{
-		dprintf(2, "ff closed end of read %d. pipes, end of write %d. pipes in %d. process\n", _ - 1, _, execd->_);
+		dprintf(2, "ff closed end of read %lu. pipes, end of write %zu. pipes in %zu. process\n", _ - 1, _, execd->_);
 		
 		close(execd->fd[_ - 1][0]);
 		close(execd->fd[_][1]);
 	}
 	while (_ < execd->_)
 	{
-		dprintf(2, "ss closed end of read %d. pipes, end of write %d. pipes in %d. process\n", _ - 1, _, execd->_);
+		dprintf(2, "ss closed end of read %lu. pipes, end of write %zu. pipes in %zu. process\n", _ - 1, _, execd->_);
 		close(execd->fd[_ - 1][0]);
 		close(execd->fd[_][1]);
 		_++;
@@ -371,7 +426,7 @@ void	close_pipes(t_main *data, t_execd *execd)
 	_++;
 	while (_ < data->cmd_ct - 1)
 	{
-		dprintf(2, "tt closed end of read %d. pipes, end of write %d. pipes in %d. process\n", _ - 1, _, execd->_);
+		dprintf(2, "tt closed end of read %lu. pipes, end of write %zu. pipes in %zu. process\n", _ - 1, _, execd->_);
 		close(execd->fd[_ - 1][0]);
 		close(execd->fd[_][1]);
 		_++;
@@ -507,38 +562,38 @@ void	reset(t_main *shell)
 	shell->cmds = NULL;
 }
 
-void	exe_cute_cat(t_main *data)
+void	exe_cute_cat(t_main *shell)
 {
 	t_execd	execd;
-	open_pipes(data, &execd);
-	// set_path(data);
-	execd.pids = malloc(sizeof(pid_t) * data->cmd_ct);
+	open_pipes(shell, &execd);
+	// set_path(shell);
+	execd.pids = malloc(sizeof(pid_t) * shell->cmd_ct);
 	execd._ = 0;
 	execd.pids[execd._] = 1;
-	while (execd._ < data->cmd_ct)
+	if ((shell->cmd_ct == 1) && shell->cmds[0].builtin_offset)
+		shell->coms[shell->cmds[0].builtin_offset].func(shell, &execd);
+	else
 	{
-		printf("> one forked!\n");
-		execd.pids[execd._] = fork();
-		if (execd.pids[execd._] == 0)
+		while (execd._ < shell->cmd_ct)
 		{
-			child(data, &execd);
-			exit(-1);
+			printf("> one forked!\n");
+			execd.pids[execd._] = fork();
+			if (execd.pids[execd._] == 0)
+			{
+				child(shell, &execd);
+				exit(-1);
+			}
+			execd._++;
 		}
-		execd._++;
+		--execd._;
+		printf("main wait pid %d\n", execd.pids[execd._]);
+		close_all_pipes_for_main(shell, &execd);
+		wait_all(shell);
+		printf("> main wait end.\n");
 	}
-	// if (execd.pids[execd._] == 0 /* && execd._ != data->cmd_ct */)
-	// {
-	// 	printf("girmek %zu\n", execd._);
-	// }
-	// else
-	// {
-		
-	// }
-	printf("main wait pid %d\n", execd.pids[--execd._]);
-	close_all_pipes_for_main(data, &execd);
-	wait_all(data);
-	printf("> main wait end.\n");
-	reset(data);
+	// printf("> log1 %i\n", shell->cmds[0].builtin_offset);
+	// printf("> log2\n");
+	reset(shell);
 }
 
 int	exe(t_com *coms, char *cmd)
@@ -788,7 +843,7 @@ t_turn	join_all(t_main *data, size_t offset)
 	t_turn			turn;
 	char			*ptr;
 
-	turn.buffer = calloc((len_all(data, 0) * sizeof(char)) + sizeof(char), 1);
+	turn.buffer = calloc((len_all(data, offset) * sizeof(char)) + sizeof(char), 1);
 	// dollar.duo = malloc(sizeof(size_t) * 2);
 	// dollar.duo[0] = 0;
 	// dollar.duo[1] = 0;
@@ -1027,7 +1082,7 @@ int	check_operation(t_main *data, int *oflags)
 
 void	set_cmd(t_main *shell, char *string, int oflag)
 {
-	// printf("> set cmd\n");
+	printf("> set cmd\n");
 	(void)oflag;
 	shell->cmds[shell->current].cmd = string;
 	ft_lstadd_back(&shell->cmds[shell->current].args, ft_lstnew(ft_strdup(string)));
@@ -1038,7 +1093,7 @@ void	set_cmd(t_main *shell, char *string, int oflag)
 
 void	set_arg(t_main *shell, char *string, int oflag)
 {
-	// printf("> new arg\n");
+	printf("> new arg %s\n", string);
 	(void)oflag;
 	ft_lstadd_back(&shell->cmds[shell->current].args, ft_lstnew(string));
 }
@@ -1177,7 +1232,7 @@ int		parser(t_main *data)
 		data->to_be = check_operation(data, &oflags);
 		while (' ' == data->line[data->_])
 			data->_++;
-		// printf("> op:%i\n", data->to_be);
+		printf("> op:%i\n", data->to_be);
 		if (data->to_be == 7)
 			break ;
 		list = (res = join_all2(data, data->_)).nodes;
@@ -1187,12 +1242,14 @@ int		parser(t_main *data)
 		// print_tlist(list);
 		while (list)
 		{
+			// printf("> log5 %s\n", list->content);
+			// printf("> log6 %d\n", data->to_be);
 			(data->set_val[data->to_be])(data, list->content, oflags);
 			list = list->next;
 		}
 		oflags = O_CLOEXEC;
 		data->_ += res.index - data->_;
-		// printf("> cursor moved: %s\n", data->line + data->_);
+		printf("> cursor moved: %s\n", data->line + data->_);
 	}
 
 	printf("\n");
@@ -1226,23 +1283,32 @@ void	f2(t_list *node)
 	free(node);
 }
 
+void	dup_env(t_main *shell, char **env)
+{
+	size_t		_;
+	char		*discriminator;
+
+	while (env[_])
+	{
+		*(discriminator = ft_strchr(env[_], '=')) = 0;
+		set(shell, env[_], discriminator);
+		_++;
+	}
+}
+
 int	main(void)
 {
-	int			fd;
-	pid_t		pid;
-	char		**args;
+	extern char **environ;
 	t_main		data;
 
-	// printf("%s\n", getenv("PATH"));
 	data.vars = NULL;
-
 	set(&data, strdup("a"), strdup("0000"));
 	// printf("ENV: %s\n", cy = get(&data, "PATH"));
 	// set(&data, strdup("PATH"), get(&data, "PATH"));
 	// set(&data, strdup("PATH"), get(&data, "PATH"));
 	// printf("a: %s\n", (((char **)data.vars->content)[1]));
 	// printf("a: %s\n", get(&data, "array"));
-
+	// dup_env(&data, environ);
 	ft_lstiter(data.vars, (void (*)(void *))f);
 	
 	// ioctl(STDIN_FILENO, TIOCSTI, "minishell$ ``");
@@ -1260,15 +1326,16 @@ int	main(void)
 	data.cmds = NULL;
 	data.coms = (t_com []){
 		{"default", launch_program, NULL},
-		{"echo", 0, NULL},
-		{"cd", 0, &data},
-		{"pwd", 0, NULL},
-		{"export", 0, NULL},
-		{"unset", 0, NULL},
-		{"env", 0, NULL},
+		{"echo", sh_echo, NULL},
+		{"cd", sh_cd, NULL},
+		{"pwd", sh_pwd, NULL},
+		{"export", sh_export, NULL},
+		{"unset", sh_unset, NULL},
+		{"env", sh_env, NULL},
 		{"exit", sh_exit, NULL},
 	};
 	data.cmd_ct = 0;
+	data.current = 0;
 	data.set_val[0] = set_cmd;
 	data.set_val[1] = set_arg;
 	data.set_val[2] = set_in;
@@ -1283,7 +1350,6 @@ int	main(void)
 	// args[1] = strdup("-la");
 	// args[2] = 0;
 			// getchar();
-	fd = open("program.c", O_RDONLY);
 	// read(0, data.line, 99999);
 	// printf("00000000000\n");
 	//printf("%s", GREEN PROMT RESET);
@@ -1333,7 +1399,7 @@ int	main(void)
 				fflush(stdout);
 				// sh_exit(&data.coms[6]);
 			}
-			qsignal = 0;
+			g_qsignal = 0;
 			printf("\n");
 		}
 		// rl_on_new_line();

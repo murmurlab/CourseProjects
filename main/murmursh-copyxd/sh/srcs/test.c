@@ -1,4 +1,5 @@
 #include "include.h"
+#include <testing.h>
 
 t_list	*ll_nod(t_list *node, int index);
 
@@ -229,7 +230,8 @@ void	test_main()
     // create test struct
 	t_test	test;
 	test.my_data = get_my_data();
-
+	printf("# %s\n", getenv("PATH"));
+	exit(0);
 	// printf("> %s\n", ((t_main *)test.my_data)->line = "$ast '' >>'\"'");
 	// int res;
 	// printf("> %i\n", SIMPLEX(res = syntax_check(test.my_data)));
@@ -654,5 +656,5 @@ void	test_main()
 	
 	// index kayiyo 1 tane aradan cikardinmi. index kayarsa kodun degismesi
 	// gerekir. test caselerinin sayisina bagli olmamalidir kod.
-    
+    exit(0);
 }
