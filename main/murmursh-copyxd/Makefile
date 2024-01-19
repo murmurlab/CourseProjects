@@ -48,7 +48,7 @@ SRC =					$(src_dir)/program.c \
 
 OBJ =					$(SRC:.c=.o)
 B_OBJ =					$(B_SRC:.c=.o)
-NAME =					program
+NAME =					minishell
 BNAME =					checker
 MAKEFLAGS +=			-j$(NPROCS)
 murmurc				=	./libultift/libft.a

@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/19 02:51:25 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/19 13:24:08 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,22 +238,75 @@ void	sh_pwd(t_main *shell, t_execd *execd)
 	free(buff);
 }
 
+void	f3(t_list *node)
+{
+	printf("declare -x %s\n", (char *)node);
+}
+
+// Bash --posix: [a-zA-Z_][0-9a-zA-Z_]*
+
+int		is_valid_identifier(char *id)
+{
+	size_t		_;
+
+	_ = 0;
+	while (((id[_] >= 'a') && (id[_] <= 'z')) || \
+			((id[_] >= 'A') && (id[_] <= 'Z')) || (id[_] == '_'))
+		_++;
+	return (id[_]);
+}
+
+int		is_valid_value(char *id)
+{
+	size_t		_;
+
+	_ = 0;
+	while (((id[_] >= 'a') && (id[_] <= 'z')) || \
+			((id[_] >= 'A') && (id[_] <= 'Z')) || \
+			((id[_] >= '0') && (id[_] <= '9')) || (id[_] == '_'))
+		_++;
+	return (id[_]);
+}
+
 void	sh_export(t_main *shell, t_execd *execd)
 {
 	t_list		*arg;
 	char		*tmp;
+	int			err;
+	char		*to_set;
 	
+	err = 0;
 	arg = shell->cmds[execd->_].args->next;
-	while (arg)
+	if (arg)
 	{
-		tmp = ft_strchr(arg->content, '=');
-		if (tmp && (tmp != arg->content) && !ft_strchr(tmp + 1, '='))
-			set(shell, arg->content);
-		else
-			printf("shell says: a variable without `=' was found or bad variable.\n");
-		arg = arg->next;
+		while (arg)
+		{
+			tmp = ft_strchr(arg->content, '=');
+			if (tmp)
+			{
+				if (tmp == arg->content || is_valid_value(tmp + 1))
+					err = 1;
+				*tmp = '\0';
+			}
+			if (!err && !is_valid_identifier(arg->content))
+			{
+				if (tmp)
+				{
+					*tmp = '=';
+					to_set = arg->content;
+				}
+				else
+					to_set = ft_strjoin(arg->content, "=");
+				set(shell, to_set);
+			}
+			else
+				printf("export: `%s': not a valid identifier\n", arg->content);
+			arg = arg->next;
+			err = 0x0;
+		}
 	}
-	
+	else
+		ft_lstiter(shell->vars, (void (*)(void *))f3);
 }
 
 t_list	*lst_filter_prev(t_list *nod, int f(t_list *node_iterate, void *data_compare), void *data)
