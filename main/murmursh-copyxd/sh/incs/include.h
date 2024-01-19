@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/17 20:57:39 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/19 02:31:48 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@
 # include <sys/wait.h>
 # include <signal.h>
 // # include <sys/ioctl.h>
-// # include <termios.h>
+# include <termios.h>
 # include <errno.h>
 // # include <sys/types.h>
 // # include <dirent.h>
@@ -216,7 +216,7 @@ typedef	struct	s_main
 	// void			(*check_operation)();
 	char			increases[INT8_MAX];
 	void			*fun_ptr_void[4];
-	void			(*set_val[4])(struct s_main *shell, char *string, int oflags);
+	void			(*set_val[6])(struct s_main *shell, char *string, int oflags);
 	int				ex_stat;
 	size_t			current;
 	int				_;

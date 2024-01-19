@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/18 00:18:28 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/19 02:51:25 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,13 +169,20 @@ int	check(t_list *node, void *cmp)
 	return (0);
 }
 
+// int	check2(t_list *node, void *cmp)
+// {
+// 	if (strccmp(node->content, cmp, '='))
+// 		return (1);
+// 	return (0);
+// }
+
 char	*get(t_main *data, char const *var)
 {
 	t_list	*find;
 
 	find = lst_filter(data->vars, check, (char *)var);
 	if (find)
-		return (strdup(find->content));
+		return (strdup(ft_strchr(find->content, '=') + 1));
 	return (NULL);
 }
 
@@ -185,7 +192,7 @@ char	*get_ref(t_main *data, char const *var)
 
 	find = lst_filter(data->vars, check, (char *)var);
 	if (find)
-		return (find->content);
+		return (ft_strchr(find->content, '=') + 1);
 	return (NULL);
 }
 
@@ -233,8 +240,20 @@ void	sh_pwd(t_main *shell, t_execd *execd)
 
 void	sh_export(t_main *shell, t_execd *execd)
 {
-	if (shell->cmds[execd->_].args->next)
-		set(shell, shell->cmds[execd->_].args->next->content);
+	t_list		*arg;
+	char		*tmp;
+	
+	arg = shell->cmds[execd->_].args->next;
+	while (arg)
+	{
+		tmp = ft_strchr(arg->content, '=');
+		if (tmp && (tmp != arg->content) && !ft_strchr(tmp + 1, '='))
+			set(shell, arg->content);
+		else
+			printf("shell says: a variable without `=' was found or bad variable.\n");
+		arg = arg->next;
+	}
+	
 }
 
 t_list	*lst_filter_prev(t_list *nod, int f(t_list *node_iterate, void *data_compare), void *data)
@@ -262,22 +281,30 @@ void	sh_unset(t_main *shell, t_execd *execd)
 	// char	*discriminant;
 	t_list	*find;
 	t_list	*backup;
-
+	t_list	*arg;
 	// *(discriminant = ft_strchr(duplex, '=')) = '\0';
 	// *discriminant = '=';
-
-	if (shell->cmds[execd->_].args->next)
-		find = lst_filter_prev(shell->vars, check, shell->cmds[execd->_].args->next->content);
-	if (find == shell->vars)
+	arg = shell->cmds[execd->_].args->next;
+	while (arg)
 	{
-		shell->vars = find->next;
-		ft_lstdelone(find, del);
-	}
-	else
-	{
-		backup = find->next;
-		find->next = find->next->next;
-		ft_lstdelone(backup, del);
+		find = lst_filter_prev(shell->vars, check, arg->content);
+		if (!find)
+		{
+			arg = arg->next;
+			continue ;
+		}
+		if (find == shell->vars)
+		{
+			shell->vars = find->next;
+			ft_lstdelone(find, del);
+		}
+		else
+		{
+			backup = find->next;
+			find->next = find->next->next;
+			ft_lstdelone(backup, del);
+		}
+		arg = arg->next;
 	}
 }
 
@@ -387,8 +414,12 @@ void	set_path(t_main *shell)
 	struct stat sb;
 
 	_ = -1;
+	if (!shell->cmds[0].args)
+		return ;
 	while (++_ < shell->cmd_ct)
 	{
+	// printf("> log111 %zu \n", _);
+			// printf("> log222 %s \n", shell->cmds[_].cmd);
 		if (!ft_strchr(shell->cmds[_].cmd, '/'))
 		{
 			search_builtins(shell, _);
@@ -479,14 +510,13 @@ void	close_pipes(t_main *data, t_execd *execd)
 		close(execd->fd[data->cmd_ct - 2][0]); // close last pipe read
 	if (execd->_ == 0 && data->cmd_ct != 1 && data->cmd_ct != 2)
 	{
-		dprintf(2, "ff closed end of read %lu. pipes, end of write %zu. pipes in %zu. process\n", _ - 1, _, execd->_);
-		
+		// dprintf(2, "ff closed end of read %lu. pipes, end of write %zu. pipes in %zu. process\n", _ - 1, _, execd->_);		
 		close(execd->fd[_ - 1][0]);
 		close(execd->fd[_][1]);
 	}
 	while (_ < execd->_)
 	{
-		dprintf(2, "ss closed end of read %lu. pipes, end of write %zu. pipes in %zu. process\n", _ - 1, _, execd->_);
+		// dprintf(2, "ss closed end of read %lu. pipes, end of write %zu. pipes in %zu. process\n", _ - 1, _, execd->_);
 		close(execd->fd[_ - 1][0]);
 		close(execd->fd[_][1]);
 		_++;
@@ -494,7 +524,7 @@ void	close_pipes(t_main *data, t_execd *execd)
 	_++;
 	while (_ < data->cmd_ct - 1)
 	{
-		dprintf(2, "tt closed end of read %lu. pipes, end of write %zu. pipes in %zu. process\n", _ - 1, _, execd->_);
+		// dprintf(2, "tt closed end of read %lu. pipes, end of write %zu. pipes in %zu. process\n", _ - 1, _, execd->_);
 		close(execd->fd[_ - 1][0]);
 		close(execd->fd[_][1]);
 		_++;
@@ -543,7 +573,7 @@ void	set_io(t_main *shell, t_execd *execd)
 		dup2(shell->cmds[execd->_].out, STDOUT_FILENO);
 	}
 	close_pipes(shell, execd);
-	dprintf(2, "> setted io\n");
+	// dprintf(2, "> setted io\n");
 }
 
 // in fork here, so mallocable
@@ -557,7 +587,7 @@ void	list2env(t_main *shell)
 	while (var)
 	{
 		shell->env[_] = var->content;
-		printf("%s\n", shell->env[_]);
+		// printf("%s\n", shell->env[_]);
 		_++;
 		var = var->next;
 	}
@@ -566,8 +596,11 @@ void	list2env(t_main *shell)
 
 void	launch_program(t_main *shell, t_execd * execd)
 {
+	int		err;
+
 	list2env(shell);
-	execve(shell->cmds[execd->_].cmd, lsttoarr(shell->cmds[execd->_].args), shell->env);
+	err = execve(shell->cmds[execd->_].cmd, lsttoarr(shell->cmds[execd->_].args), shell->env);
+	printf("> err exec: %d\n", err);
 }
 
 void	child(t_main *shell, t_execd *execd)
@@ -591,7 +624,7 @@ void	child(t_main *shell, t_execd *execd)
 		// printf("0 end\n");
 	}
 	// free all;
-	dprintf(2, "> launch_command %zu\n", execd->_);
+	// dprintf(2, "> launch_command %zu\n", execd->_);
 	shell->coms[(shell->cmds[execd->_].builtin_offset)].func(shell, execd);
 	// printf("\n");
 	exit(1);
@@ -631,8 +664,9 @@ void	wait_all(t_main *shell)
 	while (_++ < shell->cmd_ct)
 	{
 		wait4(0, &shell->ex_stat, 0, NULL);
-		printf("> one process ended\n");
+		// printf("> one process ended\n");
 	}
+	shell->ex_stat = WEXITSTATUS(shell->ex_stat);
 }
 
 void	reset(t_main *shell)
@@ -646,7 +680,9 @@ void	reset(t_main *shell)
 
 void	exe_cute_cat(t_main *shell)
 {
-	t_execd	execd;
+	t_execd		execd;
+	char		*tmp;
+	
 	open_pipes(shell, &execd);
 	// set_path(shell);
 	execd.pids = malloc(sizeof(pid_t) * shell->cmd_ct);
@@ -658,7 +694,7 @@ void	exe_cute_cat(t_main *shell)
 	{
 		while (execd._ < shell->cmd_ct)
 		{
-			printf("> one forked!\n");
+			// printf("> one forked!\n");
 			execd.pids[execd._] = fork();
 			if (execd.pids[execd._] == 0)
 			{
@@ -668,11 +704,18 @@ void	exe_cute_cat(t_main *shell)
 			execd._++;
 		}
 		--execd._;
-		printf("main wait pid %d\n", execd.pids[execd._]);
+		// printf("main wait pid %d\n", execd.pids[execd._]);
 		close_all_pipes_for_main(shell, &execd);
 		wait_all(shell);
-		printf("> main wait end.\n");
+		// printf("> main wait end.\n");
 	}
+	tmp = ft_itoa(shell->ex_stat);
+	set(shell, ft_strsjoin((t_merge *[]){ \
+									&(t_merge){"?", ft_strlen("?")},
+									&(t_merge){"=", 1},
+									&(t_merge){tmp, ft_strlen(tmp)}, NULL
+								}));
+
 	// printf("> log1 %i\n", shell->cmds[0].builtin_offset);
 	// printf("> log2\n");
 	reset(shell);
@@ -1085,21 +1128,24 @@ t_turn2		join_all2(t_main *data, size_t offset)
 		{
 			linker.var = get_var_ref(data, data->line + linker.index + 1, linker.len = var_name_len(data->line + linker.index + 1));
 			linker.len++;
-			linker.split = ft_split(linker.var, ' ');
-			linker.arr_size = arr2size(linker.split);
-			if (linker.var && !start_with(linker.var, ' ') && linker.merge_flag)
+			if (linker.var)
 			{
-				linker.tmp = ft_strjoin(ft_lstlast(linker.nodes)->content, linker.split[0]);
-				free(ft_lstlast(linker.nodes)->content);
-				free(linker.split[0]);
-				ft_lstlast(linker.nodes)->content = linker.tmp;
-				arr2tolst(linker.split + 1, &linker.nodes);
-				set_merge_flag(&linker, end_with(linker.split[linker.arr_size - 1], ' '));
+				linker.split = ft_split(linker.var, ' ');
+				linker.arr_size = arr2size(linker.split);
+				if (linker.var && !start_with(linker.var, ' ') && linker.merge_flag)
+				{
+					linker.tmp = ft_strjoin(ft_lstlast(linker.nodes)->content, linker.split[0]);
+					free(ft_lstlast(linker.nodes)->content);
+					free(linker.split[0]);
+					ft_lstlast(linker.nodes)->content = linker.tmp;
+					arr2tolst(linker.split + 1, &linker.nodes);
+					set_merge_flag(&linker, end_with(linker.split[linker.arr_size - 1], ' '));
+				}
+				else
+					set_merge_flag(&linker, end_with(linker.split[arr2tolst( \
+							linker.split, &linker.nodes) - 1], ' '));
+				free(linker.split);
 			}
-			else
-				set_merge_flag(&linker, end_with(linker.split[arr2tolst( \
-						linker.split, &linker.nodes) - 1], ' '));
-			free(linker.split);
 		}
 		else
 		{
@@ -1141,15 +1187,15 @@ t_turn2		join_all2(t_main *data, size_t offset)
 int	check_operation(t_main *data, int *oflags)
 {
 	if (data->line[data->_] == '<' && data->line[data->_ + 1] != '<')
-		return (data->_++, *oflags = O_RDONLY, 2);
+		return (data->_++, *oflags |= O_RDONLY, 2);
 	else if (data->line[data->_] == '>' && data->line[data->_ + 1] != '>')
-		return (data->_++, *oflags = O_TRUNC | O_WRONLY | O_CREAT, 3);
+		return (data->_++, *oflags |= O_TRUNC | O_WRONLY | O_CREAT, 3);
 	else if (data->line[data->_] == '<' && data->line[data->_ + 1] == '<')
-		return (data->_ += 2,/*  pipe[data.heredoc], */ 2);
+		return (data->_ += 2,/*  pipe[data.heredoc], */ 4);
 	else if (data->line[data->_] == '>' && data->line[data->_ + 1] == '>')
-		return (data->_ += 2, *oflags = O_APPEND | O_WRONLY | O_CREAT, 3);
+		return (data->_ += 2, *oflags |= O_APPEND | O_WRONLY | O_CREAT, 3);
 	else if ('|' == data->line[data->_])
-		return (data->_++, data->current++, 0);
+		return (data->has_cmd = 0,data->_++, data->current++, 0);
 	else if ('\0' != data->line[data->_])
 		return (data->has_cmd);
 	return (7);
@@ -1157,7 +1203,7 @@ int	check_operation(t_main *data, int *oflags)
 
 void	set_cmd(t_main *shell, char *string, int oflag)
 {
-	printf("> set cmd\n");
+	// printf("> set cmd\n");
 	(void)oflag;
 	shell->cmds[shell->current].cmd = string;
 	ft_lstadd_back(&shell->cmds[shell->current].args, ft_lstnew(ft_strdup(string)));
@@ -1168,20 +1214,48 @@ void	set_cmd(t_main *shell, char *string, int oflag)
 
 void	set_arg(t_main *shell, char *string, int oflag)
 {
-	printf("> new arg %s\n", string);
+	// printf("> new arg %s\n", string);
 	(void)oflag;
 	ft_lstadd_back(&shell->cmds[shell->current].args, ft_lstnew(string));
 }
 
+void	prompt_heredoc(t_main *shell, char *label, int pipe[2])
+{
+	char		*buff;
+
+	buff = NULL;
+	buff = readline("> ");
+	while (buff && strcmp(label, buff))
+	{
+		write(pipe[1], buff, strlen(buff));	
+		write(pipe[1], "\n", 1);	
+		free(buff);
+		buff = readline("> ");
+	}
+	free(buff);
+	write(pipe[1], "", 1);
+	close(pipe[1]);
+}
+
+void	set_heredoc(t_main *shell, char *string, int oflag)
+{
+	int fd[2];
+
+	pipe(fd);
+	if (fd[0] < 0 || fd[1] < 0)
+		return ;
+	prompt_heredoc(shell, string, fd);
+	shell->cmds[shell->current].in = fd[0];
+	shell->to_be = shell->has_cmd;
+}
+
 void	set_in(t_main *shell, char *string, int oflag)
 {
+
 	const int fd = open(string, oflag, 0644);
 
-	shell->_++;
 	if (fd < 0)
 		return ;
-	// already each files 'string' will open then the tlist is unnecessared
-	// ft_lstadd_front(&shell->cmds->ins, ft_lstnew((void *)fd));
 	shell->cmds[shell->current].in = fd;
 	shell->to_be = shell->has_cmd;
 }
@@ -1190,13 +1264,14 @@ void	set_out(t_main *shell, char *string, int oflag)
 {
 	const int fd = open(string, oflag, 0644);
 
-	shell->_++;
 	if (fd < 0)
 		return ;
-	// already each files 'string' will open then the tlist is unnecessared
-	// ft_lstadd_front(&shell->cmds->outs, ft_lstnew((void *)fd));
 	shell->cmds[shell->current].out = fd;
 	shell->to_be = shell->has_cmd;
+}
+
+void	none(t_main *shell, char *string, int oflag)
+{
 }
 
 int		syntax_check(t_main *shell)
@@ -1294,12 +1369,12 @@ int		parser(t_main *data)
 
 	oflags = O_CLOEXEC;
 	data->has_cmd = 0;
-	printf("line: %s\n", data->line);
+	// printf("line: %s\n", data->line);
 	data->syntax_err = syntax_check(data);
 	if (data->syntax_err)
 		return (print_syntax_err(data->syntax_err), -1);
 	data->cmds = calloc((data->cmd_ct), sizeof(t_cmd));
-	printf("> cmds size:%zu\n", data->cmd_ct);
+	// printf("> cmds size:%zu\n", data->cmd_ct);
 	while (1)
 	{
 		while (' ' == data->line[data->_])
@@ -1307,11 +1382,12 @@ int		parser(t_main *data)
 		data->to_be = check_operation(data, &oflags);
 		while (' ' == data->line[data->_])
 			data->_++;
-		printf("> op:%i\n", data->to_be);
+		// printf("> op:%i\n", data->to_be);
+		// printf("> line: %s\n", data->line + data->_);
 		if (data->to_be == 7)
 			break ;
 		list = (res = join_all2(data, data->_)).nodes;
-
+		// printf("> joinall2: %p\n", list);
 		void	print_tlist(t_list *head);
 		// printf("> get-strings: %ic\n", res.index);
 		// print_tlist(list);
@@ -1324,23 +1400,23 @@ int		parser(t_main *data)
 		}
 		oflags = O_CLOEXEC;
 		data->_ += res.index - data->_;
-		printf("> cursor moved: %s\n", data->line + data->_);
+		// printf("> cursor moved: %s\n", data->line + data->_);
 	}
 
-	printf("\n");
+	// printf("\n");
 	set_path(data);
 	for (size_t i = 0; i < (data)->cmd_ct; i++)
 	{
 		t_list		*arg = (data)->cmds[i].args;
 		// printf("! %s\n", (data)->cmds[0].args->content);
-		printf("> path: %s\n", (data)->cmds[i].cmd);
+		// printf("> path: %s\n", (data)->cmds[i].cmd);
 		for (size_t i = 0; arg; i++)
 		{
-			printf(">  arg[%zu]: %s\n", i, (char *)arg->content);
+			// printf(">  arg[%zu]: %s\n", i, (char *)arg->content);
 			arg = arg->next;
 		}
-		printf("> in: %i\n", data->cmds[i].in);
-		printf("> out: %i\n", data->cmds[i].out);
+		// printf("> in: %i\n", data->cmds[i].in);
+		// printf("> out: %i\n", data->cmds[i].out);
 	}
 	exe_cute_cat(data);
 	return (0);
@@ -1362,24 +1438,44 @@ void	env2list(t_main *shell)
 
 	_ = -1;
 	while (shell->env[++_])
-		set(shell, shell->env[_]);
+		set(shell, ft_strdup(shell->env[_]));
 }
 
 int	main(void)
 {
-	extern char **environ;
-	t_main		data;
+	extern char 	**environ;
+	t_main			data;
+	struct termios	term1;
+
+	if (tcgetattr(STDIN_FILENO, &term1) != 0)
+		perror("tcgetattr() error");
+	else
+	{
+		printf("the original characters is x'%lx'\n",
+			term1.c_lflag);
+		term1.c_cc[VQUIT] = _POSIX_VDISABLE;
+		term1.c_lflag |= ECHOE;
+
+		if (tcsetattr(STDIN_FILENO, TCSANOW, &term1) != 0)
+			perror("tcsetattr() error");
+		if (tcgetattr(STDIN_FILENO, &term1) != 0)
+			perror("tcgetattr() error");
+		else
+			printf("the changed characters is x'%lx'\n",
+				term1.c_lflag);
+	}
 
 	data.env = environ;
 	data.vars = NULL;
 	set(&data, strdup("a=0000"));
+	set(&data, strdup("?=0"));
 	// printf("ENV: %s\n", cy = get(&data, "PATH"));
 	// set(&data, strdup("PATH"), get(&data, "PATH"));
 	// set(&data, strdup("PATH"), get(&data, "PATH"));
 	// printf("a: %s\n", (((char **)data.vars->content)[1]));
 	// printf("a: %s\n", get(&data, "array"));
 	env2list(&data);
-	ft_lstiter(data.vars, (void (*)(void *))f);
+	// ft_lstiter(data.vars, (void (*)(void *))f);
 	
 	// ioctl(STDIN_FILENO, TIOCSTI, "minishell$ ``");
 	// write(1, "\033[A", 3);
@@ -1410,11 +1506,14 @@ int	main(void)
 	data.set_val[1] = set_arg;
 	data.set_val[2] = set_in;
 	data.set_val[3] = set_out;
+	data.set_val[4] = set_heredoc;
+	data.set_val[5] = none;
 	chdir("/home/mehmetap/sources/repos/projects/main/murmursh-copyxd");
 	// printf("prog started %s\n", getcwd(NULL, 0));
 	// data.coid = 1;
 	signal(SIGINT, ctrl_c);
-	signal(SIGQUIT, coix);
+	// signal(SIGQUIT, coix);
+	// signal(SIGTSTP, coix);
 	// args = malloc(3 * sizeof(char *));
 	// args[0] = strdup("/bin/ls");
 	// args[1] = strdup("-la");
