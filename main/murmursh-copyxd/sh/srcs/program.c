@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/19 13:24:08 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/20 09:42:29 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,7 @@ covid	ctrl_c(int sig)
 	rl_redisplay();
 }
 
-void	sh_exit(t_main *shell, t_execd *execd)
+int		sh_exit(t_main *shell, t_execd *execd)
 {
 	// rl_on_new_line();
 	// rl_replace_line("goodbye👋\n", 12);
@@ -227,15 +227,20 @@ void	sh_exit(t_main *shell, t_execd *execd)
 	exit(shell->ex_stat);
 }
 
-void	sh_pwd(t_main *shell, t_execd *execd)
+int		sh_pwd(t_main *shell, t_execd *execd)
 {
 	size_t const		size = MB * 32;
 	char				*buff;
 
 	buff = malloc(size);
-	getcwd(buff, size);
-	printf("%s\n", buff);
-	free(buff);
+	if (getcwd(buff, size))
+	{
+		printf("%s\n", buff);
+		free(buff);
+	}
+	else
+		return (perror("shell says: pwd: "), 1);
+	return (0);
 }
 
 void	f3(t_list *node)
@@ -268,14 +273,17 @@ int		is_valid_value(char *id)
 	return (id[_]);
 }
 
-void	sh_export(t_main *shell, t_execd *execd)
+int		sh_export(t_main *shell, t_execd *execd)
 {
 	t_list		*arg;
 	char		*tmp;
 	int			err;
+	int			gerr;
 	char		*to_set;
+	char		validate;
 	
 	err = 0;
+	gerr = 0;
 	arg = shell->cmds[execd->_].args->next;
 	if (arg)
 	{
@@ -285,20 +293,19 @@ void	sh_export(t_main *shell, t_execd *execd)
 			if (tmp)
 			{
 				if (tmp == arg->content || is_valid_value(tmp + 1))
-					err = 1;
+					gerr = (err = 1);
 				*tmp = '\0';
 			}
-			if (!err && !is_valid_identifier(arg->content))
+			validate = is_valid_identifier(arg->content);
+			if (tmp)
 			{
-				if (tmp)
-				{
-					*tmp = '=';
-					to_set = arg->content;
-				}
-				else
-					to_set = ft_strjoin(arg->content, "=");
-				set(shell, to_set);
+				*tmp = '=';
+				to_set = arg->content;
 			}
+			else
+				to_set = ft_strjoin(arg->content, "=");
+			if (!err && !validate)
+				set(shell, to_set);
 			else
 				printf("export: `%s': not a valid identifier\n", arg->content);
 			arg = arg->next;
@@ -307,6 +314,7 @@ void	sh_export(t_main *shell, t_execd *execd)
 	}
 	else
 		ft_lstiter(shell->vars, (void (*)(void *))f3);
+	return (gerr);
 }
 
 t_list	*lst_filter_prev(t_list *nod, int f(t_list *node_iterate, void *data_compare), void *data)
@@ -329,18 +337,22 @@ void	del(void *_)
 	free(_);
 }
 
-void	sh_unset(t_main *shell, t_execd *execd)
+int		sh_unset(t_main *shell, t_execd *execd)
 {
 	// char	*discriminant;
 	t_list	*find;
 	t_list	*backup;
 	t_list	*arg;
+	int		gerr;
 	// *(discriminant = ft_strchr(duplex, '=')) = '\0';
 	// *discriminant = '=';
 	arg = shell->cmds[execd->_].args->next;
+	gerr = 0;
 	while (arg)
 	{
 		find = lst_filter_prev(shell->vars, check, arg->content);
+		if (is_valid_identifier(arg->content))
+			gerr = (printf("export: `%s': not a valid identifier\n", arg->content), 1);
 		if (!find)
 		{
 			arg = arg->next;
@@ -359,14 +371,15 @@ void	sh_unset(t_main *shell, t_execd *execd)
 		}
 		arg = arg->next;
 	}
+	return (gerr);
 }
 
-void	sh_env(t_main *shell, t_execd *execd)
+int		sh_env(t_main *shell, t_execd *execd)
 {
 	ft_lstiter(shell->vars, (void (*)(void *))f);
 }
 
-void	sh_echo(t_main *shell, t_execd *execd)
+int		sh_echo(t_main *shell, t_execd *execd)
 {
 	t_list const	*arg = shell->cmds[execd->_].args->next;
 	int				n_flag = !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!0;
@@ -393,18 +406,30 @@ void	sh_echo(t_main *shell, t_execd *execd)
 	// shell->cmds[execd->_].args->content
 	if (((((((((((((((((((((((((((((((((!n_flag)))))))))))))))))))))))))))))))))
 		printf("\n");
+	return (0);
 }
 
-void	sh_cd(t_main *shell, t_execd *execd)
+int		sh_cd(t_main *shell, t_execd *execd)
 {
+	int					err;
 	t_com const * const	self = \
 			shell->coms + shell->cmds[execd->_].builtin_offset;
 
 	// printf("> log4 %s\n", shell->cmds[execd->_].args->next->content);
 	if (shell->cmds[execd->_].args->next)
-		chdir(shell->cmds[execd->_].args->next->content);
+	{
+		err = chdir(shell->cmds[execd->_].args->next->content);
+		if (err)
+			perror("shell says: cd: ");
+		return (err);
+	}
 	else
-		chdir(get_ref(shell, "HOME"));
+	{
+		err = chdir(get_ref(shell, "HOME"));
+		if (err)
+			perror("shell says: cd");
+		return (err);
+	}
 }
 
 int	err(int e, char *str)
@@ -439,6 +464,7 @@ char	*resolve_cmd(t_main *shell, char *string)
 		e2(string);
 		e2("\n");
 	}
+	shell->ex_stat = 127;
 	return (loc);
 }
 
@@ -647,13 +673,15 @@ void	list2env(t_main *shell)
 	
 }
 
-void	launch_program(t_main *shell, t_execd * execd)
+int		launch_program(t_main *shell, t_execd * execd)
 {
 	int		err;
 
 	list2env(shell);
 	err = execve(shell->cmds[execd->_].cmd, lsttoarr(shell->cmds[execd->_].args), shell->env);
-	printf("> err exec: %d\n", err);
+	// if (shell->cmds[execd->_].args)
+	// 	printf("command not found: %s\n", "a");
+	return (err);
 }
 
 void	child(t_main *shell, t_execd *execd)
@@ -678,9 +706,10 @@ void	child(t_main *shell, t_execd *execd)
 	}
 	// free all;
 	// dprintf(2, "> launch_command %zu\n", execd->_);
-	shell->coms[(shell->cmds[execd->_].builtin_offset)].func(shell, execd);
+	// shell->coms[(shell->cmds[execd->_].builtin_offset)].func(shell, execd);
 	// printf("\n");
-	exit(1);
+	exit(shell->coms[(shell->cmds[execd->_].builtin_offset)] \
+			.func(shell, execd));
 }
 
 void	open_pipes(t_main *shell, t_execd *execd)
@@ -742,18 +771,19 @@ void	exe_cute_cat(t_main *shell)
 	execd._ = 0;
 	execd.pids[execd._] = 1;
 	if ((shell->cmd_ct == 1) && shell->cmds[0].builtin_offset)
-		shell->coms[shell->cmds[0].builtin_offset].func(shell, &execd);
-	else
+	{
+		set_io(shell, &execd);
+		shell->ex_stat = shell->coms[shell->cmds[0].builtin_offset].func(shell, &execd);
+
+	}
+	else if (shell->cmds[0].cmd && !shell->cmds[0].builtin_offset)
 	{
 		while (execd._ < shell->cmd_ct)
 		{
 			// printf("> one forked!\n");
 			execd.pids[execd._] = fork();
 			if (execd.pids[execd._] == 0)
-			{
 				child(shell, &execd);
-				exit(-1);
-			}
 			execd._++;
 		}
 		--execd._;
@@ -819,13 +849,13 @@ int	is_var(int c)
 int	is_word(int c)
 {
 	return (('<' != c) && ('>' != c) && ('\'' != c) && \
-			('"' != c) && ('|' != c) && (' ' != c) && ('\0' != c));
+			('"' != c) && ('|' != c) && (' ' != c) && ('\t' != c) && ('\0' != c));
 }
 
 int	is_text(int c)
 {
 	return (('<' != c) && ('>' != c) && \
-			('|' != c) && (' ' != c) && ('\0' != c));
+			('|' != c) && (' ' != c) && ('\t' != c) && ('\0' != c));
 }
 
 size_t	var_name_len(char *start)
@@ -1185,14 +1215,14 @@ t_turn2		join_all2(t_main *data, size_t offset)
 			{
 				linker.split = ft_split(linker.var, ' ');
 				linker.arr_size = arr2size(linker.split);
-				if (linker.var && !start_with(linker.var, ' ') && linker.merge_flag)
+				if (linker.var && !start_with(linker.var, ' ') && !start_with(linker.var, '\t') && linker.merge_flag)
 				{
 					linker.tmp = ft_strjoin(ft_lstlast(linker.nodes)->content, linker.split[0]);
 					free(ft_lstlast(linker.nodes)->content);
 					free(linker.split[0]);
 					ft_lstlast(linker.nodes)->content = linker.tmp;
 					arr2tolst(linker.split + 1, &linker.nodes);
-					set_merge_flag(&linker, end_with(linker.split[linker.arr_size - 1], ' '));
+					set_merge_flag(&linker, end_with(linker.split[linker.arr_size - 1], ' ') || end_with(linker.split[linker.arr_size - 1], '\t'));
 				}
 				else
 					set_merge_flag(&linker, end_with(linker.split[arr2tolst( \

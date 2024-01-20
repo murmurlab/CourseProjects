@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/19 22:11:17 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/20 08:43:40 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 # define YELLOW			"\x1B[33m"
 # define BLUE			"\x1B[34m"
 # define RESET			"\x1B[0m"
-# define POSTFIX		"[1.0.0-a.0] murmursh $ "
+# define POSTFIX		"MURMURSH [1.0.0-a.1]; "
 # define SHELL_NAME 	""
 # define PROMT SHELL_NAME POSTFIX
 
@@ -90,13 +90,13 @@
 typedef void			t_if;
 typedef void			covid;
 
-void	sh_echo();
-void	sh_cd();
-void	sh_pwd();
-void	sh_export();
-void	sh_unset();
-void	sh_env();
-void	sh_exit();
+int		sh_echo();
+int		sh_cd();
+int		sh_pwd();
+int		sh_export();
+int		sh_unset();
+int		sh_env();
+int		sh_exit();
 
 /**
  *  @struct t_order s_order
@@ -170,8 +170,8 @@ struct	s_execd;
 
 typedef struct	s_com
 {
-	char *name;
-	void (*func)(struct s_main *, struct s_execd *);
+	char	*name;
+	int		(*func)(struct s_main *, struct s_execd *);
 	void	*data;
 }		t_com;
 
