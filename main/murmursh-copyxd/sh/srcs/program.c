@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/20 10:55:27 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/20 22:16:57 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,10 +209,16 @@ void	coix(int sig)
 
 covid	ctrl_c(int sig)
 {
-	rl_replace_line("", 0);
-	printf("\n");
-	rl_on_new_line();
-	rl_redisplay();
+	if (!g_qsignal)
+	{
+		printf("\n");
+		rl_replace_line("", 0); // set the current input to given string
+		rl_on_new_line(); // set the current line to promt + input
+		rl_redisplay(); // set the start of cursor to end		
+	}
+	else
+		printf("\n");
+	// printf(GREEN PROMT RESET);
 }
 
 int		sh_exit(t_main *shell, t_execd *execd)
@@ -307,7 +313,7 @@ int		sh_export(t_main *shell, t_execd *execd)
 			if (!err && !validate)
 				set(shell, to_set);
 			else
-				printf("export: `%s': not a valid identifier\n", arg->content);
+				printf("export: `%s': not a valid identifier\n", (char *)arg->content);
 			arg = arg->next;
 			err = 0x0;
 		}
@@ -352,7 +358,7 @@ int		sh_unset(t_main *shell, t_execd *execd)
 	{
 		find = lst_filter_prev(shell->vars, check, arg->content);
 		if (is_valid_identifier(arg->content))
-			gerr = (printf("export: `%s': not a valid identifier\n", arg->content), 1);
+			gerr = (printf("export: `%s': not a valid identifier\n", (char *)arg->content), 1);
 		if (!find)
 		{
 			arg = arg->next;
@@ -396,7 +402,7 @@ int		sh_echo(t_main *shell, t_execd *execd)
 		{
 			while (!0)
 			{
-				printf("%s", arg->content);
+				printf("%s", (char *)arg->content);
 				arg = arg->next;
 				if (!arg)
 					break ;
@@ -498,8 +504,8 @@ void	set_path(t_main *shell)
 		return ;
 	while (++_ < shell->cmd_ct)
 	{
-	// printf("> log111 %zu \n", _);
-			// printf("> log222 %s \n", shell->cmds[_].cmd);
+		// printf("> log111 %zu \n", _);
+		// printf("> log222 %s \n", shell->cmds[_].cmd);
 		if (!ft_strchr(shell->cmds[_].cmd, '/'))
 		{
 			search_builtins(shell, _);
@@ -749,6 +755,7 @@ void	wait_all(t_main *shell)
 		wait4(0, &shell->ex_stat, 0, NULL);
 		// printf("> one process ended\n");
 	}
+	g_qsignal = 0;
 	shell->ex_stat = WEXITSTATUS(shell->ex_stat);
 }
 
@@ -780,6 +787,7 @@ void	exe_cute_cat(t_main *shell)
 	}
 	else if (shell->cmds[0].cmd && !shell->cmds[0].builtin_offset)
 	{
+		g_qsignal = 1;
 		while (execd._ < shell->cmd_ct)
 		{
 			// printf("> one forked!\n");
@@ -1450,7 +1458,7 @@ int		parser(t_main *data)
 	// printf("line: %s\n", data->line);
 	data->syntax_err = syntax_check(data);
 	if (data->syntax_err)
-		return (print_syntax_err(data->syntax_err), -1);
+		return (print_syntax_err(data->syntax_err), reset(data), -1);
 	data->cmds = calloc((data->cmd_ct), sizeof(t_cmd));
 	// printf("> cmds size:%zu\n", data->cmd_ct);
 	while (1)
@@ -1611,6 +1619,7 @@ int	main(void)
 	// 	qsignal = 0;
 	// 	printf("\n");
 	// }
+	g_qsignal = 0;
 	while (1)
 	{
 		// printf("%s", );
