@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/20 09:42:29 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/20 10:55:27 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -377,6 +377,7 @@ int		sh_unset(t_main *shell, t_execd *execd)
 int		sh_env(t_main *shell, t_execd *execd)
 {
 	ft_lstiter(shell->vars, (void (*)(void *))f);
+	return (0);
 }
 
 int		sh_echo(t_main *shell, t_execd *execd)
@@ -774,7 +775,8 @@ void	exe_cute_cat(t_main *shell)
 	{
 		set_io(shell, &execd);
 		shell->ex_stat = shell->coms[shell->cmds[0].builtin_offset].func(shell, &execd);
-
+		// dup2(1, STDOUT_FILENO);
+		// close(shell->cmds[execd._].out);
 	}
 	else if (shell->cmds[0].cmd && !shell->cmds[0].builtin_offset)
 	{
@@ -1197,13 +1199,6 @@ t_turn2		join_all2(t_main *data, size_t offset)
 
 	linker.merge_flag = 0;
 	linker.nodes = NULL;
-	// ft_lstadd_back(&linker.nodes, ft_lstnew("33"));
-	// ft_lstadd_back(&linker.nodes, ft_lstnew("33aaaa"));
-	// ft_lstadd_back(&linker.nodes, ft_lstnew("000011"));
-	// ft_lstadd_back(&linker.nodes, ft_lstnew("1122"));
-	// ft_lstadd_back(&linker.nodes, ft_lstnew("22"));
-	// ft_lstadd_back(&linker.nodes, ft_lstnew("2233"));
-	// ft_lstadd_back(&linker.nodes, ft_lstnew("33xxxx"));
 	linker.index = offset;
 	while (is_text(data->line[linker.index]))
 	{
@@ -1460,10 +1455,10 @@ int		parser(t_main *data)
 	// printf("> cmds size:%zu\n", data->cmd_ct);
 	while (1)
 	{
-		while (' ' == data->line[data->_])
+		while (' ' == data->line[data->_] || '\t' == data->line[data->_])
 			data->_++;
 		data->to_be = check_operation(data, &oflags);
-		while (' ' == data->line[data->_])
+		while (' ' == data->line[data->_] || '\t' == data->line[data->_])
 			data->_++;
 		// printf("> op:%i\n", data->to_be);
 		// printf("> line: %s\n", data->line + data->_);
@@ -1534,18 +1529,12 @@ int	main(void)
 		perror("tcgetattr() error");
 	else
 	{
-		printf("the original characters is x'%lx'\n",
-			term1.c_lflag);
 		term1.c_cc[VQUIT] = _POSIX_VDISABLE;
 		term1.c_lflag |= ECHOE;
-
 		if (tcsetattr(STDIN_FILENO, TCSANOW, &term1) != 0)
 			perror("tcsetattr() error");
 		if (tcgetattr(STDIN_FILENO, &term1) != 0)
 			perror("tcgetattr() error");
-		else
-			printf("the changed characters is x'%lx'\n",
-				term1.c_lflag);
 	}
 
 	data.env = environ;
