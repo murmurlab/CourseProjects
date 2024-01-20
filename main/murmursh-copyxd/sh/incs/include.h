@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/20 08:43:40 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/20 22:20:05 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@
 # define YELLOW			"\x1B[33m"
 # define BLUE			"\x1B[34m"
 # define RESET			"\x1B[0m"
-# define POSTFIX		"MURMURSH [1.0.0-a.1]; "
+# define VER			"1.0.0-a.2"
+# define POSTFIX		"MURMURSH ["VER"]; "
 # define SHELL_NAME 	""
 # define PROMT SHELL_NAME POSTFIX
 
