@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/20 22:20:05 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/22 15:19:54 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 # define YELLOW			"\x1B[33m"
 # define BLUE			"\x1B[34m"
 # define RESET			"\x1B[0m"
-# define VER			"1.0.0-a.2"
+# define VER			"1.0.0-a.3"
 # define POSTFIX		"MURMURSH ["VER"]; "
 # define SHELL_NAME 	""
 # define PROMT SHELL_NAME POSTFIX
@@ -67,6 +67,8 @@
 # define KB				1024
 # define MB				KB * 1024
 # define GB				MB * 1024
+
+# define MAX_CWD		KB * 64
 
 # include "libft.h"
 
@@ -105,6 +107,14 @@ int		sh_exit();
  *	@memberof s_order::seq
  *	@var s_order::seq 
  */
+
+typedef struct	s_cd
+{
+	t_list		*param;
+	int			err;
+	int			backflag;
+	char		*workdirs[2]; 
+}		t_cd;
 
 typedef struct	s_exp
 {
@@ -162,8 +172,10 @@ typedef struct s_join
  */
 typedef struct	s_syntax
 {
-	char		duplex;
-	char		simplex;
+	unsigned char		duplex;
+	unsigned char		simplex;
+	unsigned char		zero_pipe;
+	unsigned char		undefined;
 }		t_syntax;
 
 struct	s_main;
@@ -209,9 +221,8 @@ typedef	struct	s_main
 	int				to_be;
 	// t_list			*nodes;
 	// t_list			*node;
-	char			*prev_cwd;
 	char			**env;
-	// char			*cwd;
+	char			cwd[MAX_CWD];
 	// char			flags[INT8_MAX];
 	void			(*coid)(int);
 	// void			(*check_operation)();

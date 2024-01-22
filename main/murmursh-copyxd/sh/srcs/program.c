@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/20 22:16:57 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/22 15:15:21 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,15 +235,8 @@ int		sh_exit(t_main *shell, t_execd *execd)
 
 int		sh_pwd(t_main *shell, t_execd *execd)
 {
-	size_t const		size = MB * 32;
-	char				*buff;
-
-	buff = malloc(size);
-	if (getcwd(buff, size))
-	{
-		printf("%s\n", buff);
-		free(buff);
-	}
+	if (getcwd(shell->cwd, MAX_CWD))
+		printf("%s\n", shell->cwd);
 	else
 		return (perror("shell says: pwd: "), 1);
 	return (0);
@@ -274,7 +267,8 @@ int		is_valid_value(char *id)
 	_ = 0;
 	while (((id[_] >= 'a') && (id[_] <= 'z')) || \
 			((id[_] >= 'A') && (id[_] <= 'Z')) || \
-			((id[_] >= '0') && (id[_] <= '9')) || (id[_] == '_'))
+			((id[_] >= '0') && (id[_] <= '9')) || \
+			(id[_] == '_') || (id[_]))
 		_++;
 	return (id[_]);
 }
@@ -416,26 +410,59 @@ int		sh_echo(t_main *shell, t_execd *execd)
 	return (0);
 }
 
+void	set_working_dirs(t_main *shell, char *pwd, char *oldpwd)
+{
+	set(shell, ft_strsjoin((t_merge *[]){&(t_merge){"OLDPWD", 6},
+			&(t_merge){"=", 1}, &(t_merge){oldpwd,
+			ft_strlen(oldpwd)}, NULL}));
+	set(shell, ft_strsjoin((t_merge *[]){&(t_merge){"PWD", 3},
+			&(t_merge){"=", 1}, &(t_merge){pwd,
+			ft_strlen(pwd)}, NULL}));
+}
+
+void	update_pwd(t_main *shell, t_cd *cd)
+{
+	getcwd(shell->cwd, MAX_CWD);
+	cd->workdirs[0] = ft_strdup(get_ref(shell, "PWD"));
+	cd->workdirs[1] = ft_strdup(get_ref(shell, "OLDPWD"));
+	if (cd->backflag)
+		set_working_dirs(shell, cd->workdirs[1], cd->workdirs[0]);
+	else
+		set_working_dirs(shell, shell->cwd, cd->workdirs[0]);
+	free(cd->workdirs[0]);
+	free(cd->workdirs[1]);
+}
+
+	// t_com const * const		self = \
+	// 		shell->coms + shell->cmds[execd->_].builtin_offset;
+
 int		sh_cd(t_main *shell, t_execd *execd)
 {
-	int					err;
-	t_com const * const	self = \
-			shell->coms + shell->cmds[execd->_].builtin_offset;
+	t_cd					cd;
 
-	// printf("> log4 %s\n", shell->cmds[execd->_].args->next->content);
-	if (shell->cmds[execd->_].args->next)
+	cd.param = shell->cmds[execd->_].args->next;
+	if (cd.param)
 	{
-		err = chdir(shell->cmds[execd->_].args->next->content);
-		if (err)
+		cd.backflag = !strcmp("-", cd.param->content);
+		if (cd.backflag)
+			cd.err = chdir(get_ref(shell, "OLDPWD"));
+		else
+			cd.err = chdir(cd.param->content);
+		if (cd.err)
 			perror("shell says: cd: ");
-		return (err);
+		else
+			update_pwd(shell, &cd);
+		return (cd.err);
 	}
 	else
 	{
-		err = chdir(get_ref(shell, "HOME"));
-		if (err)
+		cd.backflag = 0;
+		cd.err = chdir(get_ref(shell, "HOME"));
+		if (cd.err)
 			perror("shell says: cd");
-		return (err);
+		else
+			update_pwd(shell, &cd);
+		return (cd.err);
 	}
 }
 
@@ -500,15 +527,16 @@ void	set_path(t_main *shell)
 	struct stat sb;
 
 	_ = -1;
-	if (!shell->cmds[0].args)
-		return ;
 	while (++_ < shell->cmd_ct)
 	{
+		if (!shell->cmds[_].args)
+			continue ;
 		// printf("> log111 %zu \n", _);
 		// printf("> log222 %s \n", shell->cmds[_].cmd);
 		if (!ft_strchr(shell->cmds[_].cmd, '/'))
 		{
 			search_builtins(shell, _);
+			
 			if (shell->cmds[_].builtin_offset)
 				continue ;
 			var = shell->cmds[_].cmd;
@@ -772,20 +800,40 @@ void	exe_cute_cat(t_main *shell)
 {
 	t_execd		execd;
 	char		*tmp;
+	int			stock_fd[2];
 	
 	open_pipes(shell, &execd);
 	// set_path(shell);
 	execd.pids = malloc(sizeof(pid_t) * shell->cmd_ct);
 	execd._ = 0;
 	execd.pids[execd._] = 1;
+	// printf("cmdsize: %d\n", shell->cmd_ct);
 	if ((shell->cmd_ct == 1) && shell->cmds[0].builtin_offset)
 	{
-		set_io(shell, &execd);
+		// set_io(shell, &execd);
+		if (shell->cmds[execd._].out)
+		{
+			stock_fd[0] = dup(STDOUT_FILENO);
+			dup2(shell->cmds[execd._].out, STDOUT_FILENO);
+		}
+		if (shell->cmds[execd._].in)
+		{
+			stock_fd[1] = dup(STDIN_FILENO);
+			dup2(shell->cmds[execd._].in, STDIN_FILENO);
+		}
 		shell->ex_stat = shell->coms[shell->cmds[0].builtin_offset].func(shell, &execd);
-		// dup2(1, STDOUT_FILENO);
-		// close(shell->cmds[execd._].out);
+		if (shell->cmds[execd._].out)
+		{
+			close(shell->cmds[execd._].out);
+			dup2(stock_fd[0], STDOUT_FILENO);
+		}
+		if (shell->cmds[execd._].in)
+		{
+			close(shell->cmds[execd._].in);
+			dup2(stock_fd[1], STDIN_FILENO);
+		}
 	}
-	else if (shell->cmds[0].cmd && !shell->cmds[0].builtin_offset)
+	else /* if (shell->cmds[0].cmd && !shell->cmds[0].builtin_offset) */
 	{
 		g_qsignal = 1;
 		while (execd._ < shell->cmd_ct)
@@ -1365,9 +1413,15 @@ int		syntax_check(t_main *shell)
 	size_t		_;
 	t_syntax	syntax;
 
+	syntax.undefined = 0;
+	syntax.zero_pipe = 1;
 	syntax.duplex = 0;
 	syntax.simplex = 0;
 	_ = 0;
+	while (shell->line[_] == '\t' || shell->line[_] == ' ')
+		_++;
+	if (shell->line[_] == '\0')
+		return (0);
 	while (shell->line[_])
 	{
 		if (shell->line[_] == '\'')
@@ -1375,6 +1429,7 @@ int		syntax_check(t_main *shell)
 			if (syntax.duplex == 1)
 			{
 				syntax.duplex = 0;
+				syntax.zero_pipe = 0;
 				if (syntax.simplex)
 					syntax.simplex = 0;
 			}
@@ -1386,6 +1441,7 @@ int		syntax_check(t_main *shell)
 			if (syntax.duplex == 2)
 			{
 				syntax.duplex = 0;
+				syntax.zero_pipe = 0;
 				if (syntax.simplex)
 					syntax.simplex = 0;
 			}
@@ -1414,7 +1470,9 @@ int		syntax_check(t_main *shell)
 			if (!syntax.simplex)
 				syntax.simplex = 2;
 			else if (syntax.simplex == 3)
+			{
 				syntax.simplex = 2;
+			}
 			else
 				break ;
 			_ += 2;
@@ -1422,6 +1480,10 @@ int		syntax_check(t_main *shell)
 		else if (shell->line[_] == '|')
 		{
 			shell->cmd_ct++;
+			if (!syntax.zero_pipe)
+				syntax.zero_pipe = 1;
+			else
+				break ;
 			if (!syntax.simplex)
 				syntax.simplex = 3;
 			else
@@ -1429,18 +1491,31 @@ int		syntax_check(t_main *shell)
 			++(_);
 		}
 		else
-			syntax.simplex = (++_, 0);
+		{
+			if (shell->line[_] == '\t' || shell->line[_] == ' ')
+				++_;
+			else
+				syntax.zero_pipe = (syntax.simplex = (++_, 0));
+			
+		}
 	}
 	++shell->cmd_ct;
-	return ((syntax.duplex << 0 ) | (syntax.simplex << 16));
+	// printf("%i %i %i %i\n", syntax.duplex, syntax.simplex, syntax.zero_pipe, syntax.undefined);
+	return ((syntax.duplex << 0 ) | (syntax.simplex << 8) | \
+			(syntax.zero_pipe << 16) | (syntax.undefined << 24));
 }
 
 void	print_syntax_err(int errs)
 {
-	if (errs & 0xffff0000)
+	if (errs & 0xff000000)
+		printf("shell says: I don't know what you're trying to do\n");
+	if (errs & 0x00ff0000)
+		printf("shell says: syntax error near expected non-exist token before "
+				"`|'\n");
+	if (errs & 0x0000ff00)
 		printf("shell says: syntax error near unexpected token after "
 				"`|', `>', `<', `>>', `<<'\n");
-	if (errs & 0x0000ffff)
+	if (errs & 0x000000ff)
 		printf("shell says: unexpected EOF while looking for matching "
 				"`'', `\"'\n");
 }
@@ -1455,10 +1530,11 @@ int		parser(t_main *data)
 
 	oflags = O_CLOEXEC;
 	data->has_cmd = 0;
-	// printf("line: %s\n", data->line);
 	data->syntax_err = syntax_check(data);
 	if (data->syntax_err)
 		return (print_syntax_err(data->syntax_err), reset(data), -1);
+	if (!data->cmd_ct)
+		return (0);
 	data->cmds = calloc((data->cmd_ct), sizeof(t_cmd));
 	// printf("> cmds size:%zu\n", data->cmd_ct);
 	while (1)

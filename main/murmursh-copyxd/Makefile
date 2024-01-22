@@ -12,7 +12,7 @@ else ifeq '$(os)' 'Linux'
 # 	incs +=				-I $(libs)/minilibx-linux
 endif
 
-CC =						clang
+CC =						gcc
 
 # rl		=					-L /goinfre/$(shell whoami)/homebrew/Cellar/readline/8.2.7/lib -lreadline
 # rlI		=					-I /goinfre/$(shell whoami)/homebrew/Cellar/readline/8.2.7/include
