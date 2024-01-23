@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/22 15:19:54 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/23 20:42:15 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 # define YELLOW			"\x1B[33m"
 # define BLUE			"\x1B[34m"
 # define RESET			"\x1B[0m"
-# define VER			"1.0.0-a.3"
+# define VER			"1.0.0-a.4"
 # define POSTFIX		"MURMURSH ["VER"]; "
 # define SHELL_NAME 	""
 # define PROMT SHELL_NAME POSTFIX
@@ -87,8 +87,6 @@
 # include <errno.h>
 // # include <sys/types.h>
 // # include <dirent.h>
-
-# include "testing.h"
 
 typedef void			t_if;
 typedef void			covid;
@@ -264,7 +262,7 @@ int			is_text(int c);
 size_t		var_name_len(char *start);
 int			check(t_list *node, void *cmp);
 int			set(t_main *data, char *duplex);
-int			parser();
+int			run(t_main *shell);
 char*		get();
 t_list		*lst_filter();
 void		exe_cute_cat();
@@ -274,9 +272,13 @@ char		*ft_strcpy(char *dest, char *src);
 void		resolve(char *string);
 void		set_path(t_main *data);
 int			err(int e, char *str);
-t_turn2 	join_all2(t_main *data, size_t offset);
+t_turn2 	parser(t_main *data, size_t offset);
 int			syntax_check(t_main *shell);
 t_list		*lst_filter(t_list *nod, int f(t_list *node_iterate, void *data_compare), void *data);
 void		f(t_list *node);
+
+
+# include "testing.h"
+void	list_cmds(t_main *data);
 
 #endif

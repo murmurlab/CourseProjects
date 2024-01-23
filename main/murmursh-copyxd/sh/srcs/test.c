@@ -1,5 +1,20 @@
-#include "include.h"
-#include <testing.h>
+#include "testing.h"
+
+void	list_cmds(t_main *data)
+{
+	for (size_t i = 0; i < (data)->cmd_ct; i++)
+	{
+		t_list		*arg = (data)->cmds[i].args;
+		printf("> path: %s\n", (data)->cmds[i].cmd);
+		for (size_t i = 0; arg; i++)
+		{
+			printf(">  arg[%zu]: %s\n", i, (char *)arg->content);
+			arg = arg->next;
+		}
+		printf("> in: %i\n", data->cmds[i].in);
+		printf("> out: %i\n", data->cmds[i].out);
+	}
+}
 
 t_list	*ll_nod(t_list *node, int index);
 
@@ -130,7 +145,7 @@ int		join_all_test(t_test *test)
 	return (0);
 }
 
-void	join_all2_test_ko(t_test *test)
+void	parser_test_ko(t_test *test)
 {
 	char const	*result[2] = {GREEN"[OK]"RESET, RED"[KO]"RESET};
 	t_try const	*try = test->current_test->trys;
@@ -147,7 +162,7 @@ void	join_all2_test_ko(t_test *test)
 	printf("^^^^^^^^=========TEST %zu=%s================\n\n\n", test->test_number, result[1]);
 }
 
-void	join_all2_test_ok(t_test *test)
+void	parser_test_ok(t_test *test)
 {
 	char const	*result[2] = {GREEN"[OK]"RESET, RED"[KO]"RESET};
 	t_try const	*try = test->current_test->trys;
@@ -160,7 +175,7 @@ void	join_all2_test_ok(t_test *test)
 	printf("=================TEST %zu=%s================\n\n\n", test->test_number, result[0]);
 }
 
-int		join_all2_test(t_test *test)
+int		parser_test(t_test *test)
 {
 	t_try	*try;
 	t_list	*res;
@@ -174,8 +189,8 @@ int		join_all2_test(t_test *test)
 	// "33xxxx"
 	try = test->current_test->trys;
 	((t_main *)(test->my_data))->line = try->try;
-	// printf("%d\n", join_all2(test->my_data, 0).index);
-	try->result = join_all2(test->my_data, 0).nodes;
+	// printf("%d\n", parser(test->my_data, 0).index);
+	try->result = parser(test->my_data, 0).nodes;
 	res = try->result;
 	exp = try->expected;
 	for (size_t i = 0; exp[i] ; i++)
@@ -197,6 +212,7 @@ void	*get_my_data(void)
 	// data->increases['$'] = (char)1;
 	data->increases[0] = (char)0;
 	data->vars = NULL;
+	set(data, strdup("_=./program"));
 	set(data, strdup("a=0000"));
 	set(data, strdup("b=11 11"));
 	set(data, strdup("c=22 22 22"));
@@ -225,13 +241,12 @@ void	test_main()
 	// printf("%s: %s\n", __func__, turn.buffer);
 
 	// test for syntax_check(): duplex and simplex must be 0 when it should be.
-	// test for join_all2(): must give correct out.
+	// test for parser(): must give correct out.
 
     // create test struct
 	t_test	test;
 	test.my_data = get_my_data();
 	printf("# %s\n", getenv("PATH"));
-	exit(0);
 	// printf("> %s\n", ((t_main *)test.my_data)->line = "$ast '' >>'\"'");
 	// int res;
 	// printf("> %i\n", SIMPLEX(res = syntax_check(test.my_data)));
@@ -620,7 +635,7 @@ void	test_main()
 			// set(data, strdup("c"), strdup("22 22 22"));
 			// set(data, strdup("d"), strdup("33 33"));			
             {
-				.try = &(t_fun){join_all2_test, join_all2_test_ko, join_all2_test_ok},
+				.try = &(t_fun){parser_test, parser_test_ko, parser_test_ok},
 				.expected = "join all2 test",
 			},
 			{
