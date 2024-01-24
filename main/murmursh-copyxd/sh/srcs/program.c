@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/24 15:37:33 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/24 19:56:26 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,20 +146,19 @@ int		set(t_main *shell, char *duplex)
 	t_list	*find;
 	char	*discriminant;
 
+	if (!duplex)
+		return (1);
 	*(discriminant = ft_strchr(duplex, '=')) = '\0';
 	find = lst_filter(shell->vars, check, (char *)duplex);
 	*discriminant = '=';
 	if (!find)
-	{
 		ft_lstadd_back(&shell->vars, ft_lstnew((char *)duplex));
-		return (0);
-	}
 	else
 	{
 		free(find->content);
 		find->content = (char *)duplex;
 	}
-	return (1);
+	return (0);
 }
 
 int	check(t_list *node, void *cmp)
@@ -704,14 +703,27 @@ void	list2env(t_main *shell)
 	
 }
 
+void	free_tab(char **tab)
+{
+	size_t		_;
+
+	_ = 0;
+	while (tab[_])
+		free(tab[_++]);
+	free(tab);
+}
+
 int		launch_program(t_main *shell, t_execd * execd)
 {
 	int		err;
+	char	**lstarr = lsttoarr(shell->cmds[execd->_].args);
 
 	list2env(shell);
-	err = execve(shell->cmds[execd->_].cmd, lsttoarr(shell->cmds[execd->_].args), shell->env);
+	err = execve(shell->cmds[execd->_].cmd, lstarr, shell->env);
 	if (!shell->cmds[execd->_].cmd)
 		err = 127;
+	ft_lstclear(&shell->cmds[execd->_].args, del);
+	// free_tab(lstarr);
 	// if (shell->cmds[execd->_].args)
 	// 	printf("command not found: %s\n", "a");
 	return (err);
@@ -750,13 +762,14 @@ void	open_pipes(t_main *shell, t_execd *execd)
 	size_t		_;
 
 	_ = 0;
-	execd->fd = malloc(sizeof(int *) * shell->cmd_ct - 1);
+	execd->fd = NULL;
+	if (sizeof(int *) * (shell->cmd_ct - 1))
+		execd->fd = malloc(sizeof(int *) * (shell->cmd_ct - 1));
 	while (_ < shell->cmd_ct - 1)
 	{
 		execd->fd[_] = malloc(sizeof(int [2]));
 		pipe(execd->fd[_++]);
 	}
-	
 }
 
 void	close_all_pipes_for_main(t_main *shell, t_execd *execd)
@@ -785,8 +798,40 @@ void	wait_all(t_main *shell)
 	shell->ex_stat = WEXITSTATUS(shell->ex_stat);
 }
 
-void	reset(t_main *shell)
+void	clear_cmds(t_cmd *cmds, size_t cmd_ct)
 {
+	size_t		_;
+
+	_ = 0;
+	if (!cmds)
+		return ;
+	while (_ < cmd_ct)
+	{
+		free(cmds[_].cmd);
+		ft_lstclear(&cmds[_].args, del);
+		_++;
+	}
+}
+
+void	clear_pipes(int **pipes, size_t cmd_ct)
+{
+	size_t		_;
+
+	_ = 0;
+	while ((_ + 1) < cmd_ct)
+		free(pipes[_++]);
+	free(pipes);
+}
+
+void	reset(t_main *shell, t_execd *execd)
+{
+	if (execd)
+	{
+		clear_pipes(execd->fd, shell->cmd_ct);
+		free(execd->pids);
+	}
+	clear_cmds(shell->cmds, shell->cmd_ct);
+	free(shell->cmds);
 	shell->cmd_ct = 0;
 	shell->current = 0;
 	shell->has_cmd = 0;
@@ -861,7 +906,8 @@ void	exe_cute_cat(t_main *shell)
 									&(t_merge){"=", 1},
 									&(t_merge){tmp, ft_strlen(tmp)}, NULL
 								}));
-	reset(shell);
+	free(tmp);
+	reset(shell, &execd);
 }
 
 // int	exe(t_com *coms, char *cmd)
@@ -1299,7 +1345,6 @@ void		add_text(t_join *linker, t_main *shell, t_turn *res)
 		linker->merge_flag = 1;
 	}
 	linker->len = res->index - linker->index;
-
 }
 
 t_turn2		parser(t_main *shell, size_t offset)
@@ -1570,6 +1615,10 @@ void	print_syntax_err(int errs)
 				"`'', `\"'\n");
 }
 
+void	no_del(void *)
+{
+}
+
 void	set_all(t_main *shell)
 {
 	t_list		*list;
@@ -1577,7 +1626,7 @@ void	set_all(t_main *shell)
 	int			oflags;
 
 	oflags = O_CLOEXEC;
-	while (1)
+	while ('0')
 	{
 		while (' ' == shell->line[shell->_] || '\t' == shell->line[shell->_])
 			shell->_++;
@@ -1592,6 +1641,7 @@ void	set_all(t_main *shell)
 			(shell->set_val[shell->to_be])(shell, list->content, oflags);
 			list = list->next;
 		}
+		ft_lstclear(&res.nodes, no_del);
 		oflags = O_CLOEXEC;
 		shell->_ += res.index - shell->_;
 	}
@@ -1603,7 +1653,7 @@ int		run(t_main *data)
 
 	data->syntax_err = syntax_check(data);
 	if (data->syntax_err)
-		return (print_syntax_err(data->syntax_err), reset(data), -1);
+		return (print_syntax_err(data->syntax_err), reset(data, NULL), -1);
 	if (!data->cmd_ct)
 		return (0);
 	data->cmds = calloc((data->cmd_ct), sizeof(t_cmd));
@@ -1624,13 +1674,17 @@ void	f2(t_list *node)
 	free(node);
 }
 
-void	env2list(t_main *shell)
+int		env2list(t_main *shell)
 {
 	size_t		_;
 
 	_ = -1;
 	while (shell->env[++_])
-		set(shell, ft_strdup(shell->env[_]));
+	{
+		if (set(shell, ft_strdup(shell->env[_])))
+			return (1);
+	}
+	return (0);
 }
 
 void	tcsa()
@@ -1638,24 +1692,25 @@ void	tcsa()
 	struct termios	term1;
 
 	if (tcgetattr(STDIN_FILENO, &term1) != 0)
-		perror("tcgetattr() error");
+		exit((perror(SHELLSAY"tcgetattr() error"), -1));
 	else
 	{
 		term1.c_cc[VQUIT] = _POSIX_VDISABLE;
 		term1.c_lflag |= ECHOE;
 		if (tcsetattr(STDIN_FILENO, TCSANOW, &term1) != 0)
-			perror("tcsetattr() error");
+			exit((perror(SHELLSAY"tcsetattr() error"), -1));
 		if (tcgetattr(STDIN_FILENO, &term1) != 0)
-			perror("tcgetattr() error");
+			exit((perror(SHELLSAY"tcsetattr() error"), -1));
 	}
 
 }
 
-void	initialization(t_main *shell)
+int		initialization(t_main *shell)
 {
 	tcsa();
 	shell->vars = NULL;
-	env2list(shell);
+	if (env2list(shell))
+		return (1);
 	ft_bzero(shell->increases, INT8_MAX);
 	shell->increases['"'] = (char)2;
 	shell->increases['\''] = (char)2;
@@ -1670,10 +1725,18 @@ void	initialization(t_main *shell)
 	shell->set_val[3] = set_out;
 	shell->set_val[4] = set_heredoc;
 	shell->set_val[5] = none;
-	chdir(get_var_ref(shell, "PWD", 3));
-	signal(SIGINT, ctrl_c);
-	g_qsignal = 0;
-	set(shell, ft_strdup("?=0"));
+	if (chdir(get_var_ref(shell, "PWD", 3)))
+		perror(SHELLSAY"chdir failed");
+	if (signal(SIGINT, ctrl_c))
+		return (perror(SHELLSAY"set ^C signal handler failed"), 1);
+	if (set(shell, ft_strdup("?=0")))
+		perror(SHELLSAY"set $? to init value failed");
+	return (g_qsignal = 0);
+}
+
+void	ex(t_main *shell)
+{
+	
 }
 
 int	main(void)
@@ -1681,6 +1744,7 @@ int	main(void)
 	extern char 	**environ;
 	t_main			shell;
 
+	ft_bzero(&shell, sizeof(shell));
 	shell.env = environ;
 	shell.coms = (t_com []){
 		{"default", launch_program, NULL},
@@ -1692,17 +1756,17 @@ int	main(void)
 		{"env", sh_env, NULL},
 		{"exit", sh_exit, NULL},
 	};
-	initialization(&shell);
-	while (1)
+	if (initialization(&shell))
+		return (ft_lstclear(&shell.vars, del), -1);
+	while ("false")
 	{
-		// printf("%s", );
 		// rl_erase_empty_line = 1;
-
 		// rl_already_prompted = 1;
 		shell.line = readline(GREEN PROMT RESET);
-		add_history(shell.line);
 		if (shell.line)
 		{
+			if (*shell.line)
+				add_history(shell.line);
 			if (shell.line[0] != 0)
 			{
 				shell._ = 0;
@@ -1715,18 +1779,17 @@ int	main(void)
 			free(shell.line);
 			if (1)
 			{
+				break ;
 				printf("\033[A");
 				printf(GREEN "" RESET);
 				fflush(stdout);
-				exit(0);
 			}
-			g_qsignal = 0;
 			printf("\n");
 		}
 		// rl_on_new_line();
 		// free(shell.line);
 	}
-	ft_lstiter(shell.vars, (void (*)(void *))f2);
+	ft_lstclear(&shell.vars, del);
 }
 
 /**

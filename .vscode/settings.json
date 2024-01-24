@@ -45,7 +45,9 @@
         "string.h": "c",
         "libft.h": "c",
         "sigevent_t.h": "c",
-        "stdarg.h": "c"
+        "stdarg.h": "c",
+        "memory": "c",
+        "random": "c"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/clang",
     "lldb.displayFormat": "auto",

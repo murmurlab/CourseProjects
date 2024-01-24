@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/24 15:39:21 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/24 20:01:54 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,12 @@
 # define YELLOW			"\x1B[33m"
 # define BLUE			"\x1B[34m"
 # define RESET			"\x1B[0m"
-# define VER			"1.0.0-a.5"
+# define VER			"1.0.0-a.6"
 # define POSTFIX		"MURMURSH ["VER"]; "
 # define SHELL_NAME 	""
 # define PROMT SHELL_NAME POSTFIX
 
+# define SHELLSAY		"shell says: "
 # define IS_A_DIR_MSG	": Is a directory"
 
 # define IS_A_DIR		333

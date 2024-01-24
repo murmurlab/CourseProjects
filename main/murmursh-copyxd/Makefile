@@ -19,6 +19,7 @@ CC =						gcc
 rl		=					-L lib/lib/readline/lib -lreadline $(ltinfo)
 rlI		=					-I lib/lib/readline/include
 
+sanitize =					-fsanitize=address #-fsanitize=thread
 libs	=					libs
 libr	=					$(rl) -L./libultift -lft
 parrent_dir	=				sh
@@ -27,7 +28,6 @@ tests	=					$(parrent_dir)/testing
 incs	=					-I $(incl) -I ./libultift -I $(tests)/incs $(rlI)
 							
 
-sanitize =				#-fsanitize=address #-fsanitize=thread
 test:=					0
 vars :=					-D BUFFER_SIZE=65535 \
 						-D TEST=$(test)
