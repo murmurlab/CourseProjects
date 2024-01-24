@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/23 20:36:07 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/24 15:37:33 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,48 +273,46 @@ int		is_valid_value(char *id)
 	return (id[_]);
 }
 
+void	export_arg(t_main *shell, t_export *export)
+{
+	export->discriminant = ft_strchr(export->arg->content, '=');
+	if (export->discriminant)
+	{
+		if (export->discriminant == export->arg->content || is_valid_value(export->discriminant + 1))
+			export->gerr = (export->err = 1);
+		*export->discriminant = '\0';
+	}
+	export->validate = is_valid_identifier(export->arg->content);
+	if (export->discriminant)
+	{
+		*export->discriminant = '=';
+		export->to_set = export->arg->content;
+	}
+	else
+		export->to_set = ft_strjoin(export->arg->content, "=");
+	if (!export->err && !export->validate)
+		set(shell, export->to_set);
+	else
+		printf("export: `%s': not a valid identifier\n", (char *)export->arg->content);
+	export->arg = export->arg->next;
+	export->err = 0x0;
+}
+
 int		sh_export(t_main *shell, t_execd *execd)
 {
-	t_list		*arg;
-	char		*tmp;
-	int			err;
-	int			gerr;
-	char		*to_set;
-	char		validate;
+	t_export		export;
 	
-	err = 0;
-	gerr = 0;
-	arg = shell->cmds[execd->_].args->next;
-	if (arg)
+	export.err = 0;
+	export.gerr = 0;
+	export.arg = shell->cmds[execd->_].args->next;
+	if (export.arg)
 	{
-		while (arg)
-		{
-			tmp = ft_strchr(arg->content, '=');
-			if (tmp)
-			{
-				if (tmp == arg->content || is_valid_value(tmp + 1))
-					gerr = (err = 1);
-				*tmp = '\0';
-			}
-			validate = is_valid_identifier(arg->content);
-			if (tmp)
-			{
-				*tmp = '=';
-				to_set = arg->content;
-			}
-			else
-				to_set = ft_strjoin(arg->content, "=");
-			if (!err && !validate)
-				set(shell, to_set);
-			else
-				printf("export: `%s': not a valid identifier\n", (char *)arg->content);
-			arg = arg->next;
-			err = 0x0;
-		}
+		while (export.arg)
+			export_arg(shell, &export);
 	}
 	else
 		ft_lstiter(shell->vars, (void (*)(void *))f3);
-	return (gerr);
+	return (export.gerr);
 }
 
 t_list	*lst_filter_prev(t_list *nod, int f(t_list *node_iterate, void *data_compare), void *data)
@@ -337,41 +335,39 @@ void	del(void *_)
 	free(_);
 }
 
+void	unset_arg(t_main *shell, t_unset *unset)
+{
+	unset->find = lst_filter_prev(shell->vars, check, unset->arg->content);
+	if (is_valid_identifier(unset->arg->content))
+		unset->gerr = (printf("export: `%s': not a valid identifier\n", (char *)unset->arg->content), 1);
+	if (!unset->find)
+	{
+		unset->arg = unset->arg->next;
+		return ;
+	}
+	if (unset->find == shell->vars)
+	{
+		shell->vars = unset->find->next;
+		ft_lstdelone(unset->find, del);
+	}
+	else
+	{
+		unset->backup = unset->find->next;
+		unset->find->next = unset->find->next->next;
+		ft_lstdelone(unset->backup, del);
+	}
+	unset->arg = unset->arg->next;
+}
+
 int		sh_unset(t_main *shell, t_execd *execd)
 {
-	// char	*discriminant;
-	t_list	*find;
-	t_list	*backup;
-	t_list	*arg;
-	int		gerr;
-	// *(discriminant = ft_strchr(duplex, '=')) = '\0';
-	// *discriminant = '=';
-	arg = shell->cmds[execd->_].args->next;
-	gerr = 0;
-	while (arg)
-	{
-		find = lst_filter_prev(shell->vars, check, arg->content);
-		if (is_valid_identifier(arg->content))
-			gerr = (printf("export: `%s': not a valid identifier\n", (char *)arg->content), 1);
-		if (!find)
-		{
-			arg = arg->next;
-			continue ;
-		}
-		if (find == shell->vars)
-		{
-			shell->vars = find->next;
-			ft_lstdelone(find, del);
-		}
-		else
-		{
-			backup = find->next;
-			find->next = find->next->next;
-			ft_lstdelone(backup, del);
-		}
-		arg = arg->next;
-	}
-	return (gerr);
+	t_unset		unset;
+
+	unset.arg = shell->cmds[execd->_].args->next;
+	unset.gerr = 0;
+	while (unset.arg)
+		unset_arg(shell, &unset);
+	return (unset.gerr);
 }
 
 int		sh_env(t_main *shell, t_execd *execd)
@@ -535,18 +531,18 @@ void	if_path(t_main *shell, size_t _)
 	}
 }
 
-int		if_cmd(t_main *shell, size_t _)
+void	if_cmd(t_main *shell, size_t _)
 {
 	void		*var;
 
 	search_builtins(shell, _);
 	if (shell->cmds[_].builtin_offset)
-		return (1);
+		return ;
 	var = shell->cmds[_].cmd;
 	errno = 0;
 	shell->cmds[_].cmd = resolve_cmd(shell, shell->cmds[_].cmd);
 	free(var);
-	return (0);
+	return ;
 }
 
 void	set_path(t_main *shell)
@@ -559,10 +555,7 @@ void	set_path(t_main *shell)
 		if (!shell->cmds[_].args)
 			continue ;
 		if (!ft_strchr(shell->cmds[_].cmd, '/'))
-		{
-			if (if_cmd(shell, _))
-				continue ;
-		}
+			if_cmd(shell, _);
 		else
 			if_path(shell, _);
 	}
@@ -595,7 +588,6 @@ char	*check_cmd(char *cmd, char *path)
 									&(t_merge){"/", 1},
 									&(t_merge){cmd, ft_strlen(cmd)}, NULL
 								});
-			// dprintf(2, "> %s\n", var);
 			errno = 0;
 			stat(var, &sb);
 			if (!errno)
@@ -718,6 +710,8 @@ int		launch_program(t_main *shell, t_execd * execd)
 
 	list2env(shell);
 	err = execve(shell->cmds[execd->_].cmd, lsttoarr(shell->cmds[execd->_].args), shell->env);
+	if (!shell->cmds[execd->_].cmd)
+		err = 127;
 	// if (shell->cmds[execd->_].args)
 	// 	printf("command not found: %s\n", "a");
 	return (err);
@@ -759,7 +753,7 @@ void	open_pipes(t_main *shell, t_execd *execd)
 	execd->fd = malloc(sizeof(int *) * shell->cmd_ct - 1);
 	while (_ < shell->cmd_ct - 1)
 	{
-		execd->fd[_] = malloc(sizeof(int) * 2);
+		execd->fd[_] = malloc(sizeof(int [2]));
 		pipe(execd->fd[_++]);
 	}
 	
@@ -863,7 +857,7 @@ void	exe_cute_cat(t_main *shell)
 		multi_exe(shell, &execd);
 	tmp = ft_itoa(shell->ex_stat);
 	set(shell, ft_strsjoin((t_merge *[]){ \
-									&(t_merge){"?", ft_strlen("?")},
+									&(t_merge){"?", 1},
 									&(t_merge){"=", 1},
 									&(t_merge){tmp, ft_strlen(tmp)}, NULL
 								}));
@@ -938,7 +932,7 @@ size_t	*len_literal(t_main *data, size_t offset)
 {
 	t_exp	exp;
 
-	exp.duo = malloc(sizeof(size_t) * 2);
+	exp.duo = malloc(sizeof(size_t [2]));
 	exp.duo[1] = offset;
 	exp.duo[0] = 0;
 	while (data->line[exp.duo[1]] != '"' && data->line[exp.duo[1]])
@@ -994,7 +988,7 @@ size_t	len_word(t_main *data, size_t offset)
 
 size_t	*len_dollar(t_main *data, char *var)
 {
-	size_t * const	db = malloc(sizeof(size_t) * 2); 
+	size_t * const	db = malloc(sizeof(size_t [2])); 
 
 	db[1] = var_name_len(var);
 	db[0] = ft_strlen(get_var_ref(data, var, db[1]));
@@ -1008,8 +1002,8 @@ size_t	len_all(t_main *data, size_t offset)
 	exp.len = (total = 0);
 	exp.quote = 0;
 	exp.index = offset;
-	exp.ptr = malloc(sizeof(size_t) * 2);
-	ft_bzero(exp.ptr, sizeof(size_t) * 2);
+	exp.ptr = malloc(sizeof(size_t [2]));
+	ft_bzero(exp.ptr, sizeof(size_t [2]));
 	while (is_text(data->line[exp.index]) && !((data->line[exp.index] == '$') \
 										&& is_var(data->line[exp.index + 1])))
 	{
@@ -1024,7 +1018,7 @@ size_t	len_all(t_main *data, size_t offset)
 		exp.index += exp.len + (size_t)exp.quote + exp.ptr[1];
 		total += exp.len + exp.ptr[0];
 		exp.len = 0;
-		ft_bzero(exp.ptr, sizeof(size_t) * 2);
+		ft_bzero(exp.ptr, sizeof(size_t [2]));
 	}
 	return (free(exp.ptr), total);
 }
@@ -1071,7 +1065,7 @@ size_t	*expander_exp(t_main *data, char *dst, size_t offset)
 	t_exp	exp;
 
 	offset++;
-	exp.duo = malloc(sizeof(size_t) * 2);
+	exp.duo = malloc(sizeof(size_t [2]));
 	exp.duo[0] = 0;
 	exp.duo[1] = 0;
 	// printf("len: %i data_: %zu\n", len_literal(data, _)[0], _);
@@ -1170,6 +1164,8 @@ int			start_with(char *str, char c)
 
 int			end_with(char *str, char c)
 {
+	if (!str)
+		return (0);
 	while (*str)
 		str++;
 	return (
@@ -1275,17 +1271,16 @@ void		add_dollar(t_join *linker, t_main *shell)
 {
 	linker->var = get_var_ref(shell, shell->line + linker->index + 1, linker->len = var_name_len(shell->line + linker->index + 1));
 	linker->len++;
-	if (linker->var)
-	{
-		linker->split = ft_split(linker->var, ' ');
-		linker->arr_size = arr2size(linker->split);
-		if (linker->var && (!start_with(linker->var, ' ') || \
-			!start_with(linker->var, '\t')) && linker->merge_flag)
-			adhesion(linker);
-		else
-			seperation(linker);
-		free(linker->split);
-	}
+	if (!linker->var || linker->var[0] == 0 )
+		return ;
+	linker->split = ft_split(linker->var, ' ');
+	linker->arr_size = arr2size(linker->split);
+	if (linker->var && (!start_with(linker->var, ' ') || \
+		!start_with(linker->var, '\t')) && linker->merge_flag)
+		adhesion(linker);
+	else
+		seperation(linker);
+	free(linker->split);
 }
 
 void		add_text(t_join *linker, t_main *shell, t_turn *res)
@@ -1515,13 +1510,13 @@ int		choose(t_main *shell, t_syntax *syntax, size_t *_)
 	if ((shell->line[*_] == '>' && shell->line[(*_) + 1] != '>') || \
 			(shell->line[*_] == '<' && shell->line[(*_) + 1] != '<'))
 	{
-		if (syntax_sarrow(syntax, _));
+		if (syntax_sarrow(syntax, _))
 			return (2);
 	}
 	else if ((shell->line[*_] == '>' && shell->line[(*_) + 1] == '>') || \
 			(shell->line[*_] == '<' && shell->line[(*_) + 1] == '<'))
 	{
-		if (syntax_darrow(syntax, _));
+		if (syntax_darrow(syntax, _))
 			return (2);
 	}
 	else if (shell->line[*_] == '|')
@@ -1552,9 +1547,7 @@ int		syntax_check(t_main *shell)
 	while (shell->line[_])
 	{
 		result = choose(shell, &syntax, &_);
-		if (result == 1)
-			continue ;
-		else if (result == 2)
+		if (result == 2)
 			break ;
 	}
 	++shell->cmd_ct;
@@ -1680,7 +1673,7 @@ void	initialization(t_main *shell)
 	chdir(get_var_ref(shell, "PWD", 3));
 	signal(SIGINT, ctrl_c);
 	g_qsignal = 0;
-
+	set(shell, ft_strdup("?=0"));
 }
 
 int	main(void)

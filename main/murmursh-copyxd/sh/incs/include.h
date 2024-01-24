@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/23 20:42:15 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/24 15:39:21 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 # define YELLOW			"\x1B[33m"
 # define BLUE			"\x1B[34m"
 # define RESET			"\x1B[0m"
-# define VER			"1.0.0-a.4"
+# define VER			"1.0.0-a.5"
 # define POSTFIX		"MURMURSH ["VER"]; "
 # define SHELL_NAME 	""
 # define PROMT SHELL_NAME POSTFIX
@@ -106,6 +106,25 @@ int		sh_exit();
  *	@var s_order::seq 
  */
 
+typedef struct	s_export
+{
+	t_list		*arg;
+	char		*discriminant;
+	int			err;
+	int			gerr;
+	char		*to_set;
+	char		validate;
+}		t_export;
+
+typedef struct	s_unset
+{
+	t_list	*find;
+	t_list	*backup;
+	t_list	*arg;
+	int		gerr;
+}		t_unset;
+
+
 typedef struct	s_cd
 {
 	t_list		*param;
@@ -117,45 +136,62 @@ typedef struct	s_cd
 typedef struct	s_exp
 {
 	size_t	i;
-	char	*ret; //
+	char	*ret;
 	size_t	*duo;
 	size_t	size;
 	char	*var_value;
 	char	*var_name;
 }		t_exp;
 
+// [0]-> line, [1]-> expanded
+
 typedef	struct	s_all
 {
 	int		quote;
 	size_t	len;
 	size_t	index;
-	size_t	*ptr; // [0]-> line, [1]-> expanded
+	size_t	*ptr;
 	size_t	buff_index;
 }		t_all;
 
+// result
+// jump index
+
 typedef struct	s_turn
 {
-	char	*buffer; // result
-	int		index; // jump index
+	char	*buffer;
+	int		index;
 }		t_turn;
+
+// seperated strings
+// jump index
 
 typedef struct	s_turn2
 {
-	t_list	*nodes; // seperated strings
-	int		index; // jump index
+	t_list	*nodes; 
+	int		index; 
 }		t_turn2;
 
+// for merge
+// for ambiguous redirect
+// seperated strings
+// line index
+// pass len
+// val dollar
+// dollar splitted
+// join tmp
+// split len
 typedef struct s_join
 {
-	int						merge_flag; // for merge
-	int						is_multi_word; // for ambiguous redirect
-	t_list					*nodes; // seperated strings
-	int						index; // line index
-	size_t					len; // pass len
-	char					*var; // val dollar
-	char					**split; // dollar splitted
-	char					*tmp; // join tmp
-	size_t					arr_size; // split len
+	int						merge_flag;
+	int						is_multi_word;
+	t_list					*nodes;
+	int						index;
+	size_t					len;
+	char					*var;
+	char					**split;
+	char					*tmp;
+	size_t					arr_size;
 }		t_join;
 
 /**
