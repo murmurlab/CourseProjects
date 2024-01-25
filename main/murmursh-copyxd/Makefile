@@ -19,7 +19,7 @@ CC =						gcc
 rl		=					-L lib/lib/readline/lib -lreadline $(ltinfo)
 rlI		=					-I lib/lib/readline/include
 
-sanitize =					-fsanitize=address #-fsanitize=thread
+sanitize =					#-fsanitize=address #-fsanitize=thread
 libs	=					libs
 libr	=					$(rl) -L./libultift -lft
 parrent_dir	=				sh
@@ -42,7 +42,28 @@ B_SRC =					$(b_src_dir)/checker.c \
 						$(S_SRC)
 
 SRC =					$(src_dir)/program.c \
-						$(src_dir)/utils.c \
+						$(src_dir)/builtins0.c \
+						$(src_dir)/builtins1.c \
+						$(src_dir)/check0.c \
+						$(src_dir)/check1.c \
+						$(src_dir)/environment0.c \
+						$(src_dir)/environment1.c \
+						$(src_dir)/executer0.c \
+						$(src_dir)/executer1.c \
+						$(src_dir)/executer2.c \
+						$(src_dir)/expander0.c \
+						$(src_dir)/expander1.c \
+						$(src_dir)/expander2.c \
+						$(src_dir)/initialization0.c \
+						$(src_dir)/parser0.c \
+						$(src_dir)/parser1.c \
+						$(src_dir)/utils0.c \
+						$(src_dir)/utils1.c \
+						$(src_dir)/utils2.c \
+						$(src_dir)/preparatory0.c \
+						$(src_dir)/preparatory1.c \
+						$(src_dir)/syntax0.c \
+						$(src_dir)/syntax1.c \
 						$(src_dir)/test.c \
 						$(S_SRC)
 

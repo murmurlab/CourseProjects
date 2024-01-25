@@ -1,5 +1,27 @@
 #include "testing.h"
 
+t_list	*ll_nod(t_list *node, int index)
+{
+	if (index < 0)
+		return (0);
+	while (index-- > 0 && node->next)
+		node = node->next;
+	if (index > -1)
+		return (0);
+	return (node);
+}
+
+void	lliter(t_list *lst, void (*f)(void *, void *), void *p)
+{
+	if (!f)
+		return ;
+	while (lst)
+	{
+		(*f)(lst->content, p);
+		lst = lst->next;
+	}
+}
+
 void	list_cmds(t_main *data)
 {
 	for (size_t i = 0; i < (data)->cmd_ct; i++)
@@ -190,7 +212,7 @@ int		parser_test(t_test *test)
 	try = test->current_test->trys;
 	((t_main *)(test->my_data))->line = try->try;
 	// printf("%d\n", parser(test->my_data, 0).index);
-	try->result = parser(test->my_data, 0).nodes;
+	try->result = expander(test->my_data, 0).nodes;
 	res = try->result;
 	exp = try->expected;
 	for (size_t i = 0; exp[i] ; i++)

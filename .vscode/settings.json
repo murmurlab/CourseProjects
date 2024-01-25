@@ -47,7 +47,9 @@
         "sigevent_t.h": "c",
         "stdarg.h": "c",
         "memory": "c",
-        "random": "c"
+        "random": "c",
+        "*.tcc": "c",
+        "cmath": "c"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/clang",
     "lldb.displayFormat": "auto",
