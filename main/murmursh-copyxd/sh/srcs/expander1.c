@@ -4,7 +4,7 @@ void	dedect_text_type(t_main *shell, t_all *exp, t_turn *turn, char **ptr)
 {
 	if (shell->line[turn->index] == '\'')
 	{
-		exp->quote = shell->increases[shell->line[turn->index]];
+		exp->quote = shell->increases[((int)shell->line[turn->index])];
 		exp->len = len_string(shell, turn->index + 1) + 2;
 		ft_memcpy(*ptr, (shell->line + turn->index + 1), exp->len - 2);
 	}
@@ -35,7 +35,7 @@ size_t	len_all(t_main *data, size_t offset)
 	while (is_text(data->line[exp.index]) && !((data->line[exp.index] == '$') \
 										&& is_var(data->line[exp.index + 1])))
 	{
-		exp.quote = data->increases[data->line[exp.index]];
+		exp.quote = data->increases[((int)data->line[exp.index])];
 		if (data->line[exp.index] == '\'')
 			exp.len = len_string(data, exp.index + 1);
 		else if (data->line[exp.index] == '"' && (free(exp.ptr), 1))

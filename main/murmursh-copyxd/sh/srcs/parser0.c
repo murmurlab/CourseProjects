@@ -27,7 +27,7 @@ int	check_operation(t_main *data, int *oflags)
 	return (7);
 }
 
-void	prompt_heredoc(t_main *shell, char *label, int pipe[2])
+int		prompt_heredoc(char *label, int pipe[2])
 {
 	char		*buff;
 
@@ -43,9 +43,10 @@ void	prompt_heredoc(t_main *shell, char *label, int pipe[2])
 	free(buff);
 	write(pipe[1], "", 1);
 	close(pipe[1]);
+	return (0);
 }
 
-void	set_all(t_main *shell)
+int		set_all(t_main *shell)
 {
 	t_list		*list;
 	t_turn2		res;
@@ -64,11 +65,13 @@ void	set_all(t_main *shell)
 		list = (res = expander(shell, shell->_)).nodes;
 		while (list)
 		{
-			(shell->set_val[shell->to_be])(shell, list->content, oflags);
+			if ((shell->set_val[shell->to_be])(shell, list->content, oflags))
+				return (ft_lstclear(&res.nodes, no_del), 1);
 			list = list->next;
 		}
 		ft_lstclear(&res.nodes, no_del);
 		oflags = O_CLOEXEC;
 		shell->_ += res.index - shell->_;
 	}
+	return (0);
 }

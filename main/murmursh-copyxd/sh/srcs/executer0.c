@@ -34,8 +34,8 @@ void	open_pipes(t_main *shell, t_execd *execd)
 
 	_ = 0;
 	execd->fd = NULL;
-	if (sizeof(int *) * (shell->cmd_ct - 1))
-		execd->fd = malloc(sizeof(int *) * (shell->cmd_ct - 1));
+	if ((sizeof(int *) * (shell->cmd_ct - 1)) != 0)
+		execd->fd = malloc((sizeof(int *) * (shell->cmd_ct - 1)));
 	while (_ < shell->cmd_ct - 1)
 	{
 		execd->fd[_] = malloc(sizeof(int [2]));

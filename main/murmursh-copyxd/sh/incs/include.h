@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/26 16:00:22 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/26 16:48:25 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,7 +264,7 @@ typedef	struct	s_main
 	// void			(*check_operation)();
 	char			increases[INT8_MAX];
 	void			*fun_ptr_void[4];
-	void			(*set_val[6])(struct s_main *shell, char *string, int oflags);
+	int				(*set_val[6])(struct s_main *shell, char *string, int oflags);
 	int				ex_stat;
 	size_t			current;
 	int				_;
@@ -307,7 +307,7 @@ size_t		arr2size(char **arr);
 char	**lsttoarr(t_list *lst);
 int		initialization(t_main *shell);
 void	no_del(void *);
-void	prompt_heredoc(t_main *shell, char *label, int pipe[2]);
+int		prompt_heredoc(char *label, int pipe[2]);
 char	*check_cmd(char *cmd, char *path);
 void	syntax_other(t_main *shell, t_syntax *syntax, size_t *_);
 t_list	*lst_filter(t_list *nod, int f(t_list *node_iterate, void *data_compare), void *data);
@@ -326,7 +326,7 @@ void	syntax_dquote(t_syntax *syntax);
 void	syntax_squote(t_syntax *syntax);
 void	set_path(t_main *shell);
 void	search_builtins(t_main *shell, int cmd_off);
-void	none(t_main *shell, char *string, int oflag);
+int		none(t_main *shell, char *string, int oflag);
 void	f2(t_list *node);
 void	ex(t_main *shell);
 void	if_cmd(t_main *shell, size_t _);
@@ -336,13 +336,13 @@ void	del(void *_);
 void	clear_pipes(int **pipes, size_t cmd_ct);
 void	clear_cmds(t_cmd *cmds, size_t cmd_ct);
 void	if_path(t_main *shell, size_t _);
-void	set_all(t_main *shell);
+int		set_all(t_main *shell);
 char	*resolve_cmd(t_main *shell, char *string, size_t _);
-void	set_in(t_main *shell, char *string, int oflag);
-void	set_out(t_main *shell, char *string, int oflag);
-void	set_arg(t_main *shell, char *string, int oflag);
-void	set_cmd(t_main *shell, char *string, int oflag);
-void	set_heredoc(t_main *shell, char *string, int oflag);
+int		set_in(t_main *shell, char *string, int oflag);
+int		set_out(t_main *shell, char *string, int oflag);
+int		set_arg(t_main *shell, char *string, int oflag);
+int		set_cmd(t_main *shell, char *string, int oflag);
+int		set_heredoc(t_main *shell, char *string, int oflag);
 void	coix(int sig);
 void	tcsa();
 covid	ctrl_c(int sig);
@@ -401,7 +401,7 @@ char		*get_ref(t_main *data, char const *var);
 int			initialization(t_main *shell);
 int			launch_program(t_main *shell, t_execd * execd);
 void		print_syntax_err(int errs);
-void		set_all(t_main *shell);
+int			set_all(t_main *shell);
 t_turn		join_all(t_main *data, size_t offset);
 size_t		*expander_exp(t_main *data, char *dst, size_t offset);
 char		*get_var_ref(t_main *data, char *var_name, size_t len);

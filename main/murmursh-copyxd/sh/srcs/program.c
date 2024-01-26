@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/26 15:59:49 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/26 17:24:27 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,12 @@ void	reset(t_main *shell, t_execd *execd)
 	shell->cmds = NULL;
 }
 
-void	none(t_main *shell, char *string, int oflag)
+int		none(t_main *shell, char *string, int oflag)
 {
+	(void)shell;
+	(void)string;
+	(void)oflag;
+	return (0);
 }
 
 int		run(t_main *data)
@@ -78,8 +82,9 @@ int		run(t_main *data)
 		return (0);
 	data->cmds = calloc((data->cmd_ct), sizeof(t_cmd));
 	if (!data->cmds)
-		return (1);
-	set_all(data);
+		return (reset(data, 0), 1);
+	if (set_all(data))
+		return (reset(data, 0), 1);
 	set_path(data);
 	// list_cmds(data);
 	exe_cute_cat(data);
@@ -95,7 +100,7 @@ void	f2(t_list *node)
 
 void	ex(t_main *shell)
 {
-	
+	(void)shell;
 }
 
 int	main(void)

@@ -14,6 +14,7 @@ int		sh_exit(t_main *shell, t_execd *execd)
 
 int		sh_pwd(t_main *shell, t_execd *execd)
 {
+	(void)execd;
 	if (getcwd(shell->cwd, MAX_CWD))
 		printf("%s\n", shell->cwd);
 	else

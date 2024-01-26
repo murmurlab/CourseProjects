@@ -1,4 +1,4 @@
-wflags	=				# -Wall -Wextra -Werror
+wflags	=				-Wall -Wextra -Werror
 os =					${shell uname -s}
 
 ifeq '$(os)' 'Darwin'
@@ -19,7 +19,7 @@ CC =						gcc
 rl		=					-L lib/lib/readline/lib -lreadline $(ltinfo)
 rlI		=					-I lib/lib/readline/include
 
-sanitize =					#-fsanitize=address #-fsanitize=thread
+sanitize =					-fsanitize=address #-fsanitize=thread
 libs	=					libs
 libr	=					$(rl) -L./libultift -lft
 parrent_dir	=				sh
@@ -131,4 +131,4 @@ re:						fclean
 	$(MAKE) all
 	# $(MAKE) bonus
 
-.PHONY:					re fclean clean all murmurc
+.PHONY:					re fclean clean all

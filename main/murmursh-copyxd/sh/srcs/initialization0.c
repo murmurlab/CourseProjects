@@ -2,6 +2,7 @@
 
 void	coix(int sig)
 {
+	(void)sig;
 	// sleep(1);
 	// printf("%c%c", 8, 8);
 	rl_on_new_line();
@@ -13,6 +14,7 @@ void	coix(int sig)
 
 covid	ctrl_c(int sig)
 {
+	(void)sig;
 	if (!g_qsignal)
 	{
 		printf("\n");

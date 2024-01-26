@@ -40,7 +40,9 @@ int		sh_export(t_main *shell, t_execd *execd)
 			export_arg(shell, &export);
 	}
 	else
-		ft_lstiter(shell->vars, (void (*)(void *))f3);
+		ft_lstiter(shell->vars, (void (*)(void *))f
+void	f3(t_list *node)
+void	f3(t_list *node)3);
 	return (export.gerr);
 }
 
@@ -81,6 +83,7 @@ int		sh_unset(t_main *shell, t_execd *execd)
 
 int		sh_env(t_main *shell, t_execd *execd)
 {
+	(void)execd;
 	ft_lstiter(shell->vars, (void (*)(void *))f);
 	return (0);
 }

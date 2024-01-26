@@ -595,7 +595,7 @@ void	test_main()
                     (void *)(VAR_LEN + 1 + VAR_LEN)
                 }
             },
-            {(void *)0, (void *)0}
+            {.try = NULL, .expected = NULL}
 		},
 
 		(t_try [])

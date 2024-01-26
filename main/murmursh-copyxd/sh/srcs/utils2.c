@@ -10,12 +10,12 @@ void	f3(t_list *node)
 	printf("declare -x %s\n", (char *)node);
 }
 
-void	e(int err)
-{
-	write(2, "shell: ", 7);
-	write(2, strerror(EACCES), ft_strlen(strerror(EACCES)));
-	write(2, "\n", 1);
-}
+// void	e(int err)
+// {
+// 	write(2, "shell: ", 7);
+// 	write(2, strerror(EACCES), ft_strlen(strerror(EACCES)));
+// 	write(2, "\n", 1);
+// }
 
 void	e2(char *s)
 {
