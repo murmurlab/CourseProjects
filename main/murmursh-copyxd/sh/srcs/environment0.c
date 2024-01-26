@@ -12,15 +12,17 @@ void	export_arg(t_main *shell, t_export *export)
 		*export->discriminant = '\0';
 	}
 	export->validate = is_valid_identifier(export->arg->content);
-	if (export->discriminant)
-	{
-		*export->discriminant = '=';
-		export->to_set = export->arg->content;
-	}
-	else
-		export->to_set = ft_strjoin(export->arg->content, "=");
 	if (!export->err && !export->validate)
+	{
+		if (export->discriminant)
+		{
+			*export->discriminant = '=';
+			export->to_set = ft_strdup(export->arg->content);
+		}
+		else
+			export->to_set = ft_strjoin(export->arg->content, "=");
 		set(shell, export->to_set);
+	}
 	else
 		printf("export: `%s': not a valid identifier\n", (char *)export->arg->content);
 	export->arg = export->arg->next;

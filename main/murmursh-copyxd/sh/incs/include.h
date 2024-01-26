@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/26 16:48:25 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/26 21:24:11 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,16 @@
 # define YELLOW			"\x1B[33m"
 # define BLUE			"\x1B[34m"
 # define RESET			"\x1B[0m"
-# define VER			"1.0.0-b.1"
+# define VER			"1.0.0-b.2"
 # define POSTFIX		"MURMURSH ["VER"]; "
 # define SHELL_NAME 	""
 # define PROMT SHELL_NAME POSTFIX
 
 # define SHELLSAY		"shell says: "
-# define IS_A_DIR_MSG	": Is a directory\n"
-# define CMD_NOTFND_MSG	": command not found\n"
+# define OLDPWD_ERR_MSG	"OLDPWD not set"
+# define IS_A_DIR_MSG	"Is a directory"
+# define CMD_NOTFND_MSG	"command not found"
+# define OLDPWD_ERR		335
 # define CMD_NOTFND		334
 # define IS_A_DIR		333
 
@@ -292,6 +294,7 @@ typedef struct s_execd
 }				t_execd;
 
 /* FUNCTIONS */
+void	err_free(int e, char *str);
 void	dedect_text_type(t_main *shell, t_all *exp, t_turn *turn, char **ptr);
 size_t	*len_dollar(t_main *data, char *var);
 void		set_merge_flag(t_join *st, int val);
@@ -299,7 +302,7 @@ int		env2list(t_main *shell);
 void	f(t_list *node);
 void	f3(t_list *node);
 void	list2env(t_main *shell);
-void	e2(char *s);
+void	e2(char *prefix, char *info, char *errmsg);
 int	err(int e, char *str);
 void	e(int err);
 void	free_tab(char **tab);

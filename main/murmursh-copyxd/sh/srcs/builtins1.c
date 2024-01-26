@@ -12,14 +12,18 @@ void	set_working_dirs(t_main *shell, char *pwd, char *oldpwd)
 
 void	update_pwd(t_main *shell, t_cd *cd)
 {
+	char const	*tmp = get_ref(shell, "OLDPWD");
+
 	getcwd(shell->cwd, MAX_CWD);
-	cd->workdirs[0] = ft_strdup(get_ref(shell, "PWD"));
-	cd->workdirs[1] = ft_strdup(get_ref(shell, "OLDPWD"));
+	cd->workdirs[0] = get_ref(shell, "PWD");
+	if (tmp)
+		cd->workdirs[1] = ft_strdup(tmp);
+	else
+		cd->workdirs[1] = ft_strdup("");
 	if (cd->backflag)
 		set_working_dirs(shell, cd->workdirs[1], cd->workdirs[0]);
 	else
 		set_working_dirs(shell, shell->cwd, cd->workdirs[0]);
-	free(cd->workdirs[0]);
 	free(cd->workdirs[1]);
 }
 
@@ -35,8 +39,10 @@ int		sh_cd(t_main *shell, t_execd *execd)
 			cd.err = chdir(get_ref(shell, "OLDPWD"));
 		else
 			cd.err = chdir(cd.param->content);
-		if (cd.err)
-			perror("shell says: cd: ");
+		if (!get_ref(shell, "OLDPWD") && cd.err && cd.backflag)
+			err_free(OLDPWD_ERR, ft_strjoin("cd: ", cd.param->content));
+		else if (cd.err)
+			err_free(errno, ft_strjoin("cd: ", cd.param->content));
 		else
 			update_pwd(shell, &cd);
 		return (cd.err);

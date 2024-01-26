@@ -49,7 +49,8 @@
         "memory": "c",
         "random": "c",
         "*.tcc": "c",
-        "cmath": "c"
+        "cmath": "c",
+        "numbers": "c"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/clang",
     "lldb.displayFormat": "auto",
