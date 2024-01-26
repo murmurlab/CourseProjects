@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/25 22:03:05 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/26 16:00:22 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 # define YELLOW			"\x1B[33m"
 # define BLUE			"\x1B[34m"
 # define RESET			"\x1B[0m"
-# define VER			"1.0.0-b.0"
+# define VER			"1.0.0-b.1"
 # define POSTFIX		"MURMURSH ["VER"]; "
 # define SHELL_NAME 	""
 # define PROMT SHELL_NAME POSTFIX
@@ -288,6 +288,7 @@ typedef struct s_execd
 	size_t		_;
 	pid_t		*pids;
 	int			**fd;
+	int			*exs;
 }				t_execd;
 
 /* FUNCTIONS */
@@ -359,7 +360,7 @@ t_turn2		expander(t_main *shell, size_t offset);
 void		add_dollar(t_join *linker, t_main *shell);
 void	close_pipes(t_main *data, t_execd *execd);
 int		launch_program(t_main *shell, t_execd * execd);
-void	wait_all(t_main *shell);
+void	wait_all(t_main *shell, t_execd *execd);
 void	child(t_main *shell, t_execd *execd);
 void	set_io(t_main *shell, t_execd *execd);
 void	close_all_pipes_for_main(t_main *shell, t_execd *execd);
@@ -393,7 +394,6 @@ int	is_word(int c);
 int	is_var(int c);
 int			is_valid_value(char *id);
 int			is_valid_identifier(char *id);
-void		wait_all(t_main *shell);
 int			env2list(t_main *shell);
 void		close_all_pipes_for_main(t_main *shell, t_execd *execd);
 void		child(t_main *shell, t_execd *execd);

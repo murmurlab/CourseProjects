@@ -55,7 +55,7 @@ void	multi_exe(t_main *shell, t_execd *execd)
 	}
 	--execd->_;
 	close_all_pipes_for_main(shell, execd);
-	wait_all(shell);
+	wait_all(shell, execd);
 }
 
 void	exe_cute_cat(t_main *shell)
@@ -66,6 +66,7 @@ void	exe_cute_cat(t_main *shell)
 	
 	open_pipes(shell, &execd);
 	execd.pids = malloc(sizeof(pid_t) * shell->cmd_ct);
+	execd.exs = malloc(sizeof(int) * shell->cmd_ct);
 	execd._ = 0;
 	execd.pids[execd._] = 1;
 	if ((shell->cmd_ct == 1) && shell->cmds[0].builtin_offset)

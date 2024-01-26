@@ -49,37 +49,20 @@ void	child(t_main *shell, t_execd *execd)
 	 * 
 	 */
 	set_io(shell, execd);
-	if (execd->_)
-	{
-		// dprintf(2,"%s%d [%d, %d], %d is waiting\n", "mypid: ", getpid(), (execd->_), (shell->cmd_ct), execd->pids[execd->_ - 1]);
-		// exit(1);
-	}
-	else
-	{
-		// dprintf(2,"%s%d [%d, %d], none is waiting\n", "mypid: ", getpid(), (execd->_), (shell->cmd_ct));
-		// sleep(1);
-		// printf("0 end\n");
-	}
-	// free all;
-	// dprintf(2, "> launch_command %zu\n", execd->_);
-	// shell->coms[(shell->cmds[execd->_].builtin_offset)].func(shell, execd);
-	// printf("\n");
 	if (shell->cmds[execd->_].cmd)
 		exit(shell->coms[(shell->cmds[execd->_].builtin_offset)] \
 			.func(shell, execd));
 	exit(shell->cmds[execd->_].ex);
 }
 
-void	wait_all(t_main *shell)
+void	wait_all(t_main *shell, t_execd *execd)
 {
 	size_t		_;
 
-	_ = 0;
-	while (_++ < shell->cmd_ct)
-	{
-		wait4(0, &shell->ex_stat, 0, NULL);
-		// printf("> one process ended\n");
-	}
+	_ = shell->cmd_ct - 2;
+	while ((size_t)-1 > _)
+		wait4(execd->pids[_--], NULL, 0, NULL);
+	wait4(execd->pids[shell->cmd_ct - 1], &shell->ex_stat, 0, NULL);
 	g_qsignal = 0;
 	shell->ex_stat = WEXITSTATUS(shell->ex_stat);
 }
@@ -93,8 +76,6 @@ int		launch_program(t_main *shell, t_execd * execd)
 	// printf("var %s\n", shell->env[0]);
 	// printf("executing cmd: %s, \n", shell->cmds[execd->_].cmd);
 	err = execve(shell->cmds[execd->_].cmd, lstarr, shell->env);
-	if (!shell->cmds[execd->_].cmd)
-		err = 127;
 	ft_lstclear(&shell->cmds[execd->_].args, del);
 	perror(SHELLSAY"exec error");
 	// printf("cant executing\n");

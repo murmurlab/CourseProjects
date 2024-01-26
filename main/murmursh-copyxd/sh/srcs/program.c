@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/25 20:42:23 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/26 15:59:49 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	reset(t_main *shell, t_execd *execd)
 	{
 		clear_pipes(execd->fd, shell->cmd_ct);
 		free(execd->pids);
+		free(execd->exs);
 	}
 	clear_cmds(shell->cmds, shell->cmd_ct);
 	free(shell->cmds);
@@ -72,7 +73,7 @@ int		run(t_main *data)
 
 	data->syntax_err = syntax_check(data);
 	if (data->syntax_err)
-		return (print_syntax_err(data->syntax_err), reset(data, NULL), -1);
+		return (print_syntax_err(data->syntax_err), reset(data, NULL), 0);
 	if (!data->cmd_ct)
 		return (0);
 	data->cmds = calloc((data->cmd_ct), sizeof(t_cmd));
