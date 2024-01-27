@@ -69,7 +69,7 @@ void	exe_cute_cat(t_main *shell)
 	execd.exs = malloc(sizeof(int) * shell->cmd_ct);
 	execd._ = 0;
 	execd.pids[execd._] = 1;
-	if ((shell->cmd_ct == 1) && shell->cmds[0].builtin_offset)
+	if ((shell->cmd_ct == 1) && shell->cmds[0].builtin_offset && !shell->cmds[0].io_err)
 	{
 		change_io(shell, &execd, stock_fd);
 		shell->ex_stat = shell->coms[shell->cmds[0].builtin_offset].func(shell, &execd);

@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/27 17:30:36 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/27 18:37:18 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,7 @@ typedef struct	s_com
 
 typedef	struct	s_cmd
 {
+	int				io_err;
 	int				ex;
 	char			*cmd;
 	t_list			*args;

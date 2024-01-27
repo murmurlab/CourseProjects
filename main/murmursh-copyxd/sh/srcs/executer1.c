@@ -56,7 +56,7 @@ void	child(t_main *shell, t_execd *execd)
 	 * 
 	 */
 	set_io(shell, execd);
-	if (shell->cmds[execd->_].cmd)
+	if (shell->cmds[execd->_].cmd && !shell->cmds[execd->_].io_err)
 	{
 		signal(SIGPIPE, event_sigpipe);
 		exit(shell->coms[(shell->cmds[execd->_].builtin_offset)] \

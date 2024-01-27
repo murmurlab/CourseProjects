@@ -55,10 +55,18 @@ int		set_all(t_main *shell)
 	while ('0')
 	{
 		oflags = O_CLOEXEC;
-		while (' ' == shell->line[shell->_] || '\t' == shell->line[shell->_])
+		while (' ' == shell->line[shell->_] || \
+				'\t' == shell->line[shell->_] || \
+				'\v' == shell->line[shell->_] || \
+				'\f' == shell->line[shell->_] || \
+				'\r' == shell->line[shell->_])
 			shell->_++;
 		shell->to_be = check_operation(shell, &oflags);
-		while (' ' == shell->line[shell->_] || '\t' == shell->line[shell->_])
+		while (' ' == shell->line[shell->_] || \
+				'\t' == shell->line[shell->_] || \
+				'\v' == shell->line[shell->_] || \
+				'\f' == shell->line[shell->_] || \
+				'\r' == shell->line[shell->_])
 			shell->_++;
 		if (shell->to_be == 7)
 			break ;

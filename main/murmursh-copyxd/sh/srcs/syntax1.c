@@ -2,7 +2,9 @@
 
 void	syntax_other(t_main *shell, t_syntax *syntax, size_t *_)
 {
-	if (shell->line[*_] == '\t' || shell->line[*_] == ' ')
+	if (shell->line[*_] == '\t' || shell->line[*_] == ' ' || \
+		shell->line[*_] == '\v' || shell->line[*_] == '\f' || \
+		shell->line[*_] == '\r')
 		++*_;
 	else
 		syntax->zero_pipe = (syntax->simplex = (++*_, 0));
@@ -47,7 +49,9 @@ int		syntax_check(t_main *shell)
 	syntax.duplex = 0;
 	syntax.simplex = 0;
 	_ = 0;
-	while (shell->line[_] == '\t' || shell->line[_] == ' ')
+	while (shell->line[_] == '\t' || shell->line[_] == ' ' || \
+			shell->line[_] == '\v' || shell->line[_] == '\f' || \
+			shell->line[_] == '\r')
 		_++;
 	if (shell->line[_] == '\0')
 		return (0);

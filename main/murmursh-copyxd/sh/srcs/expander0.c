@@ -36,6 +36,21 @@ void		adhesion(t_join *linker)
 				linker->split[ \
 				linker->arr_size - 1], '\t'
 			)
+			||
+			end_with(
+				linker->split[ \
+				linker->arr_size - 1], '\v'
+			)
+			||
+			end_with(
+				linker->split[ \
+				linker->arr_size - 1], '\f'
+			)
+			||
+			end_with(
+				linker->split[ \
+				linker->arr_size - 1], '\r'
+			)
 		)
 	);
 }
@@ -63,6 +78,9 @@ void		add_dollar(t_join *linker, t_main *shell)
 		return ;
 	linker->arr_size = arr2size(linker->split);
 	if (linker->var && (!start_with(linker->var, ' ') || \
+		!start_with(linker->var, '\v') || \
+		!start_with(linker->var, '\f') || \
+		!start_with(linker->var, '\r') || \
 		!start_with(linker->var, '\t')) && linker->merge_flag)
 		adhesion(linker);
 	else
