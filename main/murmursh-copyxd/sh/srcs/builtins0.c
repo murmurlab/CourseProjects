@@ -2,11 +2,7 @@
 
 int		sh_exit(t_main *shell, t_execd *execd)
 {
-	// rl_on_new_line();
-	// rl_replace_line("goodbye👋\n", 12);
-	// \033[A\033[;9H 
-	printf("exit\n");
-	// rl_redisplay();
+	printf(EXIT_MSG);
 	if (shell->cmds[execd->_].args->next)
 		exit(ft_atoi(shell->cmds[execd->_].args->next->content));
 	exit(shell->ex_stat);
@@ -18,7 +14,7 @@ int		sh_pwd(t_main *shell, t_execd *execd)
 	if (getcwd(shell->cwd, MAX_CWD))
 		printf("%s\n", shell->cwd);
 	else
-		return (perror("shell says: pwd: "), 1);
+		return (err(errno, "pwd"), 1);
 	return (0);
 }
 

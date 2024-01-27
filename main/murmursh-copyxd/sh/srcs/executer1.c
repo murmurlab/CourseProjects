@@ -83,14 +83,9 @@ int		launch_program(t_main *shell, t_execd * execd)
 	char	**lstarr = lsttoarr(shell->cmds[execd->_].args);
 
 	list2env(shell);
-	// printf("var %s\n", shell->env[0]);
-	// printf("executing cmd: %s, \n", shell->cmds[execd->_].cmd);
 	err = execve(shell->cmds[execd->_].cmd, lstarr, shell->env);
 	ft_lstclear(&shell->cmds[execd->_].args, del);
-	perror(SHELLSAY"exec error");
-	// printf("cant executing\n");
-	// free_tab(lstarr);
-	// if (shell->cmds[execd->_].args)
-	// 	printf("command not found: %s\n", "a");
+	perror(SHELLSAY EXEC_ERR);
+	free_tab(lstarr);
 	return (err);
 }

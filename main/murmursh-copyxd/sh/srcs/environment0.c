@@ -12,19 +12,18 @@ void	export_arg(t_main *shell, t_export *export)
 		*export->discriminant = '\0';
 	}
 	export->validate = is_valid_identifier(export->arg->content);
-	if (!export->err && !export->validate)
+	if (export->discriminant)
 	{
-		if (export->discriminant)
-		{
-			*export->discriminant = '=';
-			export->to_set = ft_strdup(export->arg->content);
-		}
-		else
-			export->to_set = ft_strjoin(export->arg->content, "=");
-		set(shell, export->to_set);
+		*export->discriminant = '=';
+		export->to_set = ft_strdup(export->arg->content);
 	}
 	else
-		printf("export: `%s': not a valid identifier\n", (char *)export->arg->content);
+		export->to_set = ft_strjoin(export->arg->content, "=");
+	if (!export->err && !export->validate)
+		set(shell, export->to_set);
+	else
+		err_free((free(export->to_set), 336),
+				ft_strjoin("export: ", (char *)export->arg->content));
 	export->arg = export->arg->next;
 	export->err = 0x0;
 }
@@ -50,7 +49,7 @@ void	unset_arg(t_main *shell, t_unset *unset)
 {
 	unset->find = lst_filter_prev(shell->vars, check, unset->arg->content);
 	if (is_valid_identifier(unset->arg->content))
-		unset->gerr = (printf("export: `%s': not a valid identifier\n", (char *)unset->arg->content), 1);
+		unset->gerr = (err_free(336, ft_strjoin("unset: ", (char *)unset->arg->content)), 1);
 	if (!unset->find)
 	{
 		unset->arg = unset->arg->next;

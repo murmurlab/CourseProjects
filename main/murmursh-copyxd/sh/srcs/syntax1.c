@@ -68,14 +68,11 @@ int		syntax_check(t_main *shell)
 void	print_syntax_err(int errs)
 {
 	if (errs & 0xff000000)
-		printf("shell says: I don't know what you're trying to do\n");
+		write(2, UNKNOWN_ERR, sizeof(UNKNOWN_ERR));
 	if (errs & 0x00ff0000)
-		printf("shell says: syntax error near expected non-exist token before "
-				"`|'\n");
+		write(2, ZERO_PIPE, sizeof(ZERO_PIPE));
 	if (errs & 0x0000ff00)
-		printf("shell says: syntax error near unexpected token after "
-				"`|', `>', `<', `>>', `<<'\n");
+		write(2, EMPTY_AFTER, sizeof(EMPTY_AFTER));
 	if (errs & 0x000000ff)
-		printf("shell says: unexpected EOF while looking for matching "
-				"`'', `\"'\n");
+		write(2, MISS_QUOTE, sizeof(MISS_QUOTE));
 }

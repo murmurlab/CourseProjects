@@ -7,7 +7,7 @@ void	search_builtins(t_main *shell, int cmd_off)
 	o__o = 01;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	while (o__o < 0x8)
 	{
-		if (!strcmp(shell->cmds[cmd_off].cmd, shell->coms[o__o].name))
+		if (!ft_strcmp(shell->cmds[cmd_off].cmd, shell->coms[o__o].name))
 		{
 			shell->cmds[cmd_off].builtin_offset = o__o;;
 			return ;

@@ -27,15 +27,25 @@ int	check_operation(t_main *data, int *oflags)
 	return (7);
 }
 
+int	ft_strcmp(char *s1, char *s2)
+{
+	int i;
+
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] != '\0')
+		i++;
+	return (s1[i] - s2[i]);
+}
+
 int		prompt_heredoc(char *label, int pipe[2])
 {
 	char		*buff;
 
 	buff = NULL;
 	buff = readline("> ");
-	while (buff && strcmp(label, buff))
+	while (buff && ft_strcmp(label, buff))
 	{
-		write(pipe[1], buff, strlen(buff));	
+		write(pipe[1], buff, ft_strlen(buff));	
 		write(pipe[1], "\n", 1);	
 		free(buff);
 		buff = readline("> ");
@@ -44,6 +54,17 @@ int		prompt_heredoc(char *label, int pipe[2])
 	write(pipe[1], "", 1);
 	close(pipe[1]);
 	return (0);
+}
+
+int		i_space(char character)
+{
+	return (
+			' ' == character || \
+			'\t' == character || \
+			'\v' == character || \
+			'\f' == character || \
+			'\r' == character
+		);
 }
 
 int		set_all(t_main *shell)
@@ -55,18 +76,10 @@ int		set_all(t_main *shell)
 	while ('0')
 	{
 		oflags = O_CLOEXEC;
-		while (' ' == shell->line[shell->_] || \
-				'\t' == shell->line[shell->_] || \
-				'\v' == shell->line[shell->_] || \
-				'\f' == shell->line[shell->_] || \
-				'\r' == shell->line[shell->_])
+		while (i_space(shell->line[shell->_]))
 			shell->_++;
 		shell->to_be = check_operation(shell, &oflags);
-		while (' ' == shell->line[shell->_] || \
-				'\t' == shell->line[shell->_] || \
-				'\v' == shell->line[shell->_] || \
-				'\f' == shell->line[shell->_] || \
-				'\r' == shell->line[shell->_])
+		while (i_space(shell->line[shell->_]))
 			shell->_++;
 		if (shell->to_be == 7)
 			break ;

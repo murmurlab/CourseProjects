@@ -3,10 +3,7 @@
 void	coix(int sig)
 {
 	(void)sig;
-	// sleep(1);
-	// printf("%c%c", 8, 8);
 	rl_on_new_line();
-	// rl_replace_line("", 1);
 	printf("\033[K");
 	rl_redisplay();
 	g_qsignal = 1;
@@ -32,15 +29,15 @@ void	tcsa()
 	struct termios	term1;
 
 	if (tcgetattr(STDIN_FILENO, &term1) != 0)
-		exit((perror(SHELLSAY"tcgetattr() error"), -1));
+		exit((perror(SHELLSAY TCGA_ERR_MSG), -1));
 	else
 	{
 		term1.c_cc[VQUIT] = _POSIX_VDISABLE;
 		term1.c_lflag |= ECHOE;
 		if (tcsetattr(STDIN_FILENO, TCSANOW, &term1) != 0)
-			exit((perror(SHELLSAY"tcsetattr() error"), -1));
+			exit((perror(SHELLSAY TCSA_ERR_MSG), -1));
 		if (tcgetattr(STDIN_FILENO, &term1) != 0)
-			exit((perror(SHELLSAY"tcsetattr() error"), -1));
+			exit((perror(SHELLSAY TCGA_ERR_MSG), -1));
 	}
 
 }
@@ -66,10 +63,10 @@ int		initialization(t_main *shell)
 	shell->set_val[4] = set_heredoc;
 	shell->set_val[5] = none;
 	if (chdir(get_var_ref(shell, "PWD", 3)))
-		perror(SHELLSAY"chdir failed");
-	if (signal(SIGINT, ctrl_c))
-		return (perror(SHELLSAY"set ^C signal handler failed"), 1);
+		perror(SHELLSAY CHDIR_ERR);
+	if (SIG_ERR == signal(SIGINT, ctrl_c))
+		return (perror(SHELLSAY SIGNAL_SET_ERR), 1);
 	if (set(shell, ft_strdup("?=0")))
-		perror(SHELLSAY"set $? to init value failed");
+		perror(SHELLSAY INIT_VAR_ERR);
 	return (g_qsignal = 0);
 }

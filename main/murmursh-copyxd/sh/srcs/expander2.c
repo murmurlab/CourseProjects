@@ -28,7 +28,6 @@ size_t	len_string(t_main *data, size_t offset)
 	_ = offset;
 	while (data->line[_] != '\'' && data->line[_])
 		(void)(len++, _++);
-	// printf("len string: %zu\n", len);
 	return (len);
 }
 
@@ -44,7 +43,6 @@ size_t	len_word(t_main *data, size_t offset)
 		_++;
 		len++;
 	}
-	// printf("len normal: %zu\n", len);
 	return (len);
 }
 

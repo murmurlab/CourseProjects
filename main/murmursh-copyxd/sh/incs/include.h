@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/27 18:37:18 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/27 22:14:34 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,44 @@
 
 # endif
 
-#include "stdarg.h"
+# include "stdarg.h"
 
 # define RED			"\x1B[31m"
 # define GREEN			"\x1B[32m"
 # define YELLOW			"\x1B[33m"
 # define BLUE			"\x1B[34m"
 # define RESET			"\x1B[0m"
-# define VER			"1.0.0-b.3"
+# define VER			"1.0.0-b.4"
 # define POSTFIX		"MURMURSH ["VER"]; "
 # define SHELL_NAME 	""
 # define PROMT SHELL_NAME POSTFIX
 
 # define SHELLSAY		"shell says: "
+
+# define EXIT_MSG		"exit\n"
+
+# define UNKNOWN_ERR	SHELLSAY"I don't know what you're trying to do\n"
+# define ZERO_PIPE		SHELLSAY"syntax error near expected non-exist token b" \
+						"efore `|'\n"
+# define EMPTY_AFTER	SHELLSAY"syntax error near unexpected token after `|'" \
+						", `>', `<', `>>', `<<'\n"
+# define MISS_QUOTE		SHELLSAY"unexpected EOF while looking for matching `'" \
+						"', `\"'\n"
+
+# define TCSA_ERR_MSG	"tcsetattr() error"
+# define TCGA_ERR_MSG	"tcgetattr() error"
+
+# define CHDIR_ERR		"chdir failed"
+# define SIGNAL_SET_ERR	"set ^C signal handler failed"
+# define INIT_VAR_ERR	"set $? to init value failed"
+# define OLDPWD_ERR_MSG	"OLDPWD not set"
+# define EXEC_ERR		"exec error"
+
 # define OLDPWD_ERR_MSG	"OLDPWD not set"
 # define IS_A_DIR_MSG	"Is a directory"
 # define CMD_NOTFND_MSG	"command not found"
+# define INVALID_ID_MSG	"not a valid identifier"
+# define INVALID_ID		336
 # define OLDPWD_ERR		335
 # define CMD_NOTFND		334
 # define IS_A_DIR		333
@@ -295,6 +317,7 @@ typedef struct s_execd
 }				t_execd;
 
 /* FUNCTIONS */
+int	ft_strcmp(char *s1, char *s2);
 void	event_sigpipe(int signum);
 void	err_free(int e, char *str);
 void	dedect_text_type(t_main *shell, t_all *exp, t_turn *turn, char **ptr);

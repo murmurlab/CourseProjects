@@ -26,33 +26,11 @@ void		adhesion(t_join *linker)
 	free(linker->split[0]);
 	ft_lstlast(linker->nodes)->content = linker->tmp;
 	arr2tolst(linker->split + 1, &linker->nodes);
-	set_merge_flag(linker,
-		(
-			end_with(
-				linker->split[linker->arr_size - 1], ' '
-			)
-			||
-			end_with(
-				linker->split[ \
-				linker->arr_size - 1], '\t'
-			)
-			||
-			end_with(
-				linker->split[ \
-				linker->arr_size - 1], '\v'
-			)
-			||
-			end_with(
-				linker->split[ \
-				linker->arr_size - 1], '\f'
-			)
-			||
-			end_with(
-				linker->split[ \
-				linker->arr_size - 1], '\r'
-			)
-		)
-	);
+	set_merge_flag(linker, (end_with(linker->split[linker->arr_size - 1],
+		' ') || end_with(linker->split[linker->arr_size - 1], '\t') || \
+		end_with(linker->split[linker->arr_size - 1], '\v') || end_with( \
+		linker->split[linker->arr_size - 1], '\f') || end_with(linker->split[ \
+		linker->arr_size - 1], '\r')));
 }
 
 void		seperation(t_join *linker)
@@ -69,7 +47,8 @@ void		seperation(t_join *linker)
 
 void		add_dollar(t_join *linker, t_main *shell)
 {
-	linker->var = get_var_ref(shell, shell->line + linker->index + 1, linker->len = var_name_len(shell->line + linker->index + 1));
+	linker->var = get_var_ref(shell, shell->line + linker->index + 1,
+			linker->len = var_name_len(shell->line + linker->index + 1));
 	linker->len++;
 	if (!linker->var || linker->var[0] == 0 )
 		return ;
@@ -77,11 +56,10 @@ void		add_dollar(t_join *linker, t_main *shell)
 	if (!linker->split)
 		return ;
 	linker->arr_size = arr2size(linker->split);
-	if (linker->var && (!start_with(linker->var, ' ') || \
-		!start_with(linker->var, '\v') || \
-		!start_with(linker->var, '\f') || \
-		!start_with(linker->var, '\r') || \
-		!start_with(linker->var, '\t')) && linker->merge_flag)
+	if (!start_with(linker->var, ' ') && !start_with( \
+		linker->var, '\v') && !start_with(linker->var, '\f') && !start_with( \
+		linker->var, '\r') && !start_with(linker->var, '\t') && \
+		linker->merge_flag)
 		adhesion(linker);
 	else
 		seperation(linker);

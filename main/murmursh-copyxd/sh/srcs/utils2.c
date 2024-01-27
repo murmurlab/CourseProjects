@@ -40,6 +40,8 @@ int	err(int e, char *str)
 		e2(SHELLSAY, str, IS_A_DIR_MSG);
 	else if (e == CMD_NOTFND)
 		e2(SHELLSAY, str, CMD_NOTFND_MSG);
+	else if (e == INVALID_ID)
+		e2(SHELLSAY, str, INVALID_ID_MSG);
 	else if (e == OLDPWD_ERR)
 		e2(SHELLSAY, str, OLDPWD_ERR_MSG);
 	else if (e == ENOENT)

@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/27 17:58:30 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/27 22:11:40 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <stdarg.h>
 
 int		g_qsignal;
-
 
 void	del(void *_)
 {
@@ -81,7 +80,7 @@ int		run(t_main *data)
 		return (print_syntax_err(data->syntax_err), reset(data, NULL), 0);
 	if (!data->cmd_ct)
 		return (0);
-	data->cmds = calloc((data->cmd_ct), sizeof(t_cmd));
+	data->cmds = ft_calloc((data->cmd_ct), sizeof(t_cmd));
 	if (!data->cmds)
 		return (reset(data, 0), 1);
 	if (set_all(data))

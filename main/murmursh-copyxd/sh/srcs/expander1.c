@@ -112,7 +112,6 @@ size_t	*expander_exp(t_main *data, char *dst, size_t offset)
 	exp.duo = malloc(sizeof(size_t [2]));
 	exp.duo[0] = 0;
 	exp.duo[1] = 0;
-	// printf("len: %i data_: %zu\n", len_literal(data, _)[0], _);
 	exp.ret = dst;
 	while (data->line[offset + exp.duo[0]] != '"' && data->line[offset + exp.duo[0]])
 	{
@@ -126,6 +125,5 @@ size_t	*expander_exp(t_main *data, char *dst, size_t offset)
 			exp.ret[exp.duo[1]++] = data->line[offset + exp.duo[0]++];
 	}
 	exp.duo[0] += 2;
-	// printf("0: [%zu] 1: %zu\n", exp.duo[0], exp.duo[1]);
 	return (exp.duo);
 }

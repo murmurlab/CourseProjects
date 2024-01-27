@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins1.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/27 22:11:51 by ahbasara          #+#    #+#             */
+/*   Updated: 2024/01/27 22:13:07 by ahbasara         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "include.h"
 
 void	set_working_dirs(t_main *shell, char *pwd, char *oldpwd)
@@ -34,7 +46,7 @@ int		sh_cd(t_main *shell, t_execd *execd)
 	cd.param = shell->cmds[execd->_].args->next;
 	if (cd.param)
 	{
-		cd.backflag = !strcmp("-", cd.param->content);
+		cd.backflag = !ft_strcmp("-", cd.param->content);
 		if (cd.backflag)
 			cd.err = chdir(get_ref(shell, "OLDPWD"));
 		else
@@ -52,7 +64,7 @@ int		sh_cd(t_main *shell, t_execd *execd)
 		cd.backflag = 0;
 		cd.err = chdir(get_ref(shell, "HOME"));
 		if (cd.err)
-			perror("shell says: cd");
+			perror(SHELLSAY"cd");
 		else
 			update_pwd(shell, &cd);
 		return (cd.err);
