@@ -40,6 +40,13 @@ void	set_io(t_main *shell, t_execd *execd)
 	// dprintf(2, "> setted io\n");
 }
 
+void	event_sigpipe(int signum)
+{
+	printf("dul dul dulduldul dul dul\n");
+	(void)signum;
+	exit(0);
+}
+
 void	child(t_main *shell, t_execd *execd)
 {
 	// dup2(1, shell->cmds[execd->_].out);
@@ -50,8 +57,11 @@ void	child(t_main *shell, t_execd *execd)
 	 */
 	set_io(shell, execd);
 	if (shell->cmds[execd->_].cmd)
+	{
+		signal(SIGPIPE, event_sigpipe);
 		exit(shell->coms[(shell->cmds[execd->_].builtin_offset)] \
 			.func(shell, execd));
+	}
 	exit(shell->cmds[execd->_].ex);
 }
 

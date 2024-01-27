@@ -7,12 +7,11 @@ int		set_heredoc(t_main *shell, char *string, int oflag)
 	(void)oflag;
 	pipe(fd);
 	if (fd[0] < 0 || fd[1] < 0)
-		return (free(string), 1);
+		return (err(errno, string), free(string), -1);
 	prompt_heredoc(string, fd);
-	free(string);
 	shell->cmds[shell->current].in = fd[0];
 	shell->to_be = shell->has_cmd;
-	return (0);
+	return (free(string), 0);
 }
 
 int		set_in(t_main *shell, char *string, int oflag)
@@ -20,24 +19,22 @@ int		set_in(t_main *shell, char *string, int oflag)
 
 	const int fd = open(string, oflag, 0644);
 
-	free(string);
 	if (fd < 0)
-		return (1);
+		return (err(errno, string), free(string), -1);
 	shell->cmds[shell->current].in = fd;
 	shell->to_be = shell->has_cmd;
-	return (0);
+	return (free(string), 0);
 }
 
 int		set_out(t_main *shell, char *string, int oflag)
 {
 	const int fd = open(string, oflag, 0644);
 
-	free(string);
 	if (fd < 0)
-		return (1);
+		return (err(errno, string), free(string), -1);
 	shell->cmds[shell->current].out = fd;
 	shell->to_be = shell->has_cmd;
-	return (0);
+	return (free(string), 0);
 }
 
 int		set_cmd(t_main *shell, char *string, int oflag)

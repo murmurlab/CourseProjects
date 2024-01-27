@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/26 17:24:27 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/26 22:19:18 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int		run(t_main *data)
 {
 	MURMURTEST;
 
+		// signal(SIGPIPE, event_sigpipe);
 	data->syntax_err = syntax_check(data);
 	if (data->syntax_err)
 		return (print_syntax_err(data->syntax_err), reset(data, NULL), 0);

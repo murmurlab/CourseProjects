@@ -65,7 +65,7 @@ int		set_all(t_main *shell)
 		list = (res = expander(shell, shell->_)).nodes;
 		while (list)
 		{
-			if ((shell->set_val[shell->to_be])(shell, list->content, oflags))
+			if ((shell->set_val[shell->to_be])(shell, list->content, oflags) > 0)
 				return (ft_lstclear(&res.nodes, no_del), 1);
 			list = list->next;
 		}

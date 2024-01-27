@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/26 21:24:11 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/27 17:30:36 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 # define YELLOW			"\x1B[33m"
 # define BLUE			"\x1B[34m"
 # define RESET			"\x1B[0m"
-# define VER			"1.0.0-b.2"
+# define VER			"1.0.0-b.3"
 # define POSTFIX		"MURMURSH ["VER"]; "
 # define SHELL_NAME 	""
 # define PROMT SHELL_NAME POSTFIX
@@ -294,6 +294,7 @@ typedef struct s_execd
 }				t_execd;
 
 /* FUNCTIONS */
+void	event_sigpipe(int signum);
 void	err_free(int e, char *str);
 void	dedect_text_type(t_main *shell, t_all *exp, t_turn *turn, char **ptr);
 size_t	*len_dollar(t_main *data, char *var);
