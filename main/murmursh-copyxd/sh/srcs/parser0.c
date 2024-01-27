@@ -52,9 +52,9 @@ int		set_all(t_main *shell)
 	t_turn2		res;
 	int			oflags;
 
-	oflags = O_CLOEXEC;
 	while ('0')
 	{
+		oflags = O_CLOEXEC;
 		while (' ' == shell->line[shell->_] || '\t' == shell->line[shell->_])
 			shell->_++;
 		shell->to_be = check_operation(shell, &oflags);
@@ -70,7 +70,6 @@ int		set_all(t_main *shell)
 			list = list->next;
 		}
 		ft_lstclear(&res.nodes, no_del);
-		oflags = O_CLOEXEC;
 		shell->_ += res.index - shell->_;
 	}
 	return (0);
