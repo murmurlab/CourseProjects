@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   preparatory0.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/28 20:32:24 by ahbasara          #+#    #+#             */
+/*   Updated: 2024/01/28 20:33:21 by ahbasara         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "include.h"
 
 char	*resolve_cmd(t_main *shell, char *string, size_t _)
@@ -5,7 +17,7 @@ char	*resolve_cmd(t_main *shell, char *string, size_t _)
 	char		*loc;
 	char		*path;
 
-	path = (get_ref(shell ,"PATH"));
+	path = (get_ref(shell, "PATH"));
 	loc = check_cmd(string, path);
 	if (!loc)
 	{
@@ -26,7 +38,7 @@ char	*check_cmd(char *cmd, char *path)
 {
 	char		*var;
 	size_t		_;
-	struct stat sb;
+	struct stat	sb;
 
 	if (!path)
 		return (NULL);
@@ -37,11 +49,11 @@ char	*check_cmd(char *cmd, char *path)
 		{
 			if (!path[_] && !_)
 				break ;
-			var = ft_strsjoin((t_merge *[]){ \
-									&(t_merge){path, _},
-									&(t_merge){"/", 1},
-									&(t_merge){cmd, ft_strlen(cmd)}, NULL
-								});
+			var = ft_strsjoin((t_merge *[]){\
+					&(t_merge){path, _},
+					&(t_merge){"/", 1},
+					&(t_merge){cmd, ft_strlen(cmd)}, NULL
+				});
 			errno = 0;
 			stat(var, &sb);
 			if (!errno)
@@ -69,7 +81,7 @@ char	*check_cmd(char *cmd, char *path)
 
 void	if_path(t_main *shell, size_t _)
 {
-	struct stat sb;
+	struct stat	sb;
 
 	stat(shell->cmds[_].cmd, &sb);
 	if (errno)

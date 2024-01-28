@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   environment1.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/28 18:39:55 by ahbasara          #+#    #+#             */
+/*   Updated: 2024/01/28 18:48:18 by ahbasara         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "include.h"
 
 char	*get(t_main *data, char const *var)
@@ -10,14 +22,15 @@ char	*get(t_main *data, char const *var)
 	return (NULL);
 }
 
-int		set(t_main *shell, char *duplex)
+int	set(t_main *shell, char *duplex)
 {
 	t_list	*find;
 	char	*discriminant;
 
 	if (!duplex)
 		return (1);
-	*(discriminant = ft_strchr(duplex, '=')) = '\0';
+	discriminant = ft_strchr(duplex, '=');
+	*(discriminant) = '\0';
 	find = lst_filter(shell->vars, check, (char *)duplex);
 	*discriminant = '=';
 	if (!find)
@@ -55,10 +68,11 @@ char	*get_var_ref(t_main *data, char *var_name, size_t len)
 	return (NULL);
 }
 
-int		cpy_var(t_main *data, t_exp *exp, size_t offset)
+int	cpy_var(t_main *data, t_exp *exp, size_t offset)
 {
 	char		*var;
-	const char	*name = ft_substr(data->line + offset, 0, exp->size = var_name_len(data->line + offset));
+	const char	*name = ft_substr(data->line + offset, 0,
+			exp->size = var_name_len(data->line + offset));
 
 	if (name && name[0])
 	{
@@ -70,7 +84,7 @@ int		cpy_var(t_main *data, t_exp *exp, size_t offset)
 	}
 	else if (name)
 	{
-		exp->ret[exp->duo[1]++] = data->line[offset - 1]; // "$"
+		exp->ret[exp->duo[1]++] = data->line[offset - 1];
 		return (free((void *)name), 0);
 	}
 	return (0);

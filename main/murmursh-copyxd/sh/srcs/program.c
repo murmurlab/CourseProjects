@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/27 22:11:40 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/28 18:46:13 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		none(t_main *shell, char *string, int oflag)
 
 int		run(t_main *data)
 {
-	MURMURTEST;
+	// MURMURTEST;
 
 		// signal(SIGPIPE, event_sigpipe);
 	data->syntax_err = syntax_check(data);

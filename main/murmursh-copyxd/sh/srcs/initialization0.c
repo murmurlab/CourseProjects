@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   initialization0.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/28 20:14:54 by ahbasara          #+#    #+#             */
+/*   Updated: 2024/01/28 20:15:15 by ahbasara         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "include.h"
 
 void	coix(int sig)
@@ -15,13 +27,12 @@ void	ctrl_c(int sig)
 	if (!g_qsignal)
 	{
 		printf("\n");
-		rl_replace_line("", 0); // set the current input to given string
-		rl_on_new_line(); // set the current line to promt + input
-		rl_redisplay(); // set the start of cursor to end		
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
 	}
 	else
 		printf("\n");
-	// printf(GREEN PROMT RESET);
 }
 
 void	tcsa(void)
@@ -39,10 +50,9 @@ void	tcsa(void)
 		if (tcgetattr(STDIN_FILENO, &term1) != 0)
 			exit((perror(SHELLSAY TCGA_ERR_MSG), -1));
 	}
-
 }
 
-int		initialization(t_main *shell)
+int	initialization(t_main *shell)
 {
 	tcsa();
 	shell->vars = NULL;

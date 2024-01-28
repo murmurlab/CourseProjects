@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expander2.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/28 20:14:13 by ahbasara          #+#    #+#             */
+/*   Updated: 2024/01/28 20:14:51 by ahbasara         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "include.h"
 
 size_t	var_name_len(char *start)
@@ -12,11 +24,11 @@ size_t	var_name_len(char *start)
 
 size_t	*len_dollar(t_main *data, char *var)
 {
-	size_t * const	db = malloc(sizeof(size_t [2])); 
+	size_t *const	db = malloc(sizeof(size_t [2]));
 
 	db[1] = var_name_len(var);
 	db[0] = ft_strlen(get_var_ref(data, var, db[1]));
-	return (db); 
+	return (db);
 }
 
 size_t	len_string(t_main *data, size_t offset)
@@ -38,7 +50,9 @@ size_t	len_word(t_main *data, size_t offset)
 
 	len = 0;
 	_ = offset;
-	while (is_word(data->line[_]) && !((data->line[_] == '$') && is_var(data->line[_ + 1])))
+	while (is_word(data->line[_]) && \
+		!((data->line[_] == '$') && \
+		is_var(data->line[_ + 1])))
 	{
 		_++;
 		len++;
@@ -46,7 +60,7 @@ size_t	len_word(t_main *data, size_t offset)
 	return (len);
 }
 
-void		set_merge_flag(t_join *st, int val)
+void	set_merge_flag(t_join *st, int val)
 {
 	if (val)
 		st->merge_flag = 0;

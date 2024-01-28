@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executer1.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/28 18:46:08 by ahbasara          #+#    #+#             */
+/*   Updated: 2024/01/28 18:48:22 by ahbasara         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "include.h"
 
 void	close_all_pipes_for_main(t_main *shell, t_execd *execd)
@@ -28,7 +40,7 @@ void	set_io(t_main *shell, t_execd *execd)
 	if (!shell->cmds[execd->_].out)
 	{
 		if ((execd->_ != (shell->cmd_ct - 1)) && (shell->cmd_ct != 1))
-			dup2(execd->fd[execd->_][1], STDOUT_FILENO);	
+			dup2(execd->fd[execd->_][1], STDOUT_FILENO);
 	}
 	else
 	{
@@ -37,24 +49,15 @@ void	set_io(t_main *shell, t_execd *execd)
 		dup2(shell->cmds[execd->_].out, STDOUT_FILENO);
 	}
 	close_pipes(shell, execd);
-	// dprintf(2, "> setted io\n");
 }
 
-void	event_sigpipe(int signum)
-{
-	printf("dul dul dulduldul dul dul\n");
-	(void)signum;
-	exit(0);
-}
+		/**
+		 * must valid last given in/out-prompt (<, >, >>, <<);
+		 * 
+		 */
 
 void	child(t_main *shell, t_execd *execd)
 {
-	// dup2(1, shell->cmds[execd->_].out);
-	// dup2(0, shell->cmds[execd->_].in);
-	/**
-	 * must valid last given in/out-prompt (<, >, >>, <<);
-	 * 
-	 */
 	set_io(shell, execd);
 	if (shell->cmds[execd->_].cmd && !shell->cmds[execd->_].io_err)
 	{
@@ -77,15 +80,15 @@ void	wait_all(t_main *shell, t_execd *execd)
 	shell->ex_stat = WEXITSTATUS(shell->ex_stat);
 }
 
-int		launch_program(t_main *shell, t_execd * execd)
+int	launch_program(t_main *shell, t_execd *execd)
 {
-	int		err;
-	char	**lstarr = lsttoarr(shell->cmds[execd->_].args);
+	int			err;
+	char *const	*lstarr = lsttoarr(shell->cmds[execd->_].args);
 
 	list2env(shell);
 	err = execve(shell->cmds[execd->_].cmd, lstarr, shell->env);
 	ft_lstclear(&shell->cmds[execd->_].args, del);
 	perror(SHELLSAY EXEC_ERR);
-	free_tab(lstarr);
+	free_tab((char **)lstarr);
 	return (err);
 }

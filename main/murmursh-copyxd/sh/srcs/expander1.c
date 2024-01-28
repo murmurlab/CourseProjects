@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expander1.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/28 18:55:23 by ahbasara          #+#    #+#             */
+/*   Updated: 2024/01/28 20:14:10 by ahbasara         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "include.h"
 
 void	dedect_text_type(t_main *shell, t_all *exp, t_turn *turn, char **ptr)
@@ -8,14 +20,16 @@ void	dedect_text_type(t_main *shell, t_all *exp, t_turn *turn, char **ptr)
 		exp->len = len_string(shell, turn->index + 1) + 2;
 		ft_memcpy(*ptr, (shell->line + turn->index + 1), exp->len - 2);
 	}
-	else if (shell->line[turn->index] == '"') // else
+	else if (shell->line[turn->index] == '"')
 	{
 		exp->ptr = expander_exp(shell, *ptr, turn->index);
 		*ptr += exp->ptr[1];
 		turn->index += exp->ptr[0];
 		free(exp->ptr);
 	}
-	else if (is_word(shell->line[turn->index]) && !((shell->line[turn->index] == '$') && is_var(shell->line[turn->index + 1]))) // else
+	else if (is_word(shell->line[turn->index]) && \
+		!((shell->line[turn->index] == '$') && \
+		is_var(shell->line[turn->index + 1])))
 	{
 		exp->len = len_word(shell, turn->index);
 		ft_memcpy(*ptr, (shell->line + turn->index), exp->len);
@@ -27,7 +41,8 @@ size_t	len_all(t_main *data, size_t offset)
 	t_all	exp;
 	size_t	total;
 
-	exp.len = (total = 0);
+	total = 0;
+	exp.len = ((0));
 	exp.quote = 0;
 	exp.index = offset;
 	exp.ptr = malloc(sizeof(size_t [2]));
@@ -45,8 +60,7 @@ size_t	len_all(t_main *data, size_t offset)
 			exp.len = len_word(data, exp.index);
 		exp.index += exp.len + (size_t)exp.quote + exp.ptr[1];
 		total += exp.len + exp.ptr[0];
-		exp.len = 0;
-		ft_bzero(exp.ptr, sizeof(size_t [2]));
+		exp.len = (ft_bzero(exp.ptr, sizeof(size_t [2])), 0);
 	}
 	return (free(exp.ptr), total);
 }
@@ -57,14 +71,16 @@ t_turn	join_all(t_main *shell, size_t offset)
 	t_turn			turn;
 	char			*ptr;
 
-	turn.buffer = calloc((len_all(shell, offset) * sizeof(char)) + sizeof(char), 1);
+	turn.buffer = calloc((len_all(shell, offset) * sizeof(char)) + sizeof(char),
+			1);
 	if (!turn.buffer)
 		return (turn.index = offset, turn);
 	ptr = turn.buffer;
 	turn.index = offset;
 	exp.len = 0;
 	exp.quote = 0;
-	while (is_text(shell->line[turn.index]) && !((shell->line[turn.index] == '$') && \
+	while (is_text(shell->line[turn.index]) && \
+	!((shell->line[turn.index] == '$') && \
 			is_var(shell->line[turn.index + 1])))
 	{
 		dedect_text_type(shell, &exp, &turn, &ptr);
@@ -75,6 +91,7 @@ t_turn	join_all(t_main *shell, size_t offset)
 	}
 	return (turn);
 }
+
 size_t	*len_literal(t_main *data, size_t offset)
 {
 	t_exp	exp;
@@ -87,8 +104,8 @@ size_t	*len_literal(t_main *data, size_t offset)
 		if (data->line[exp.duo[1]] == '$')
 		{
 			exp.duo[1]++;
-			exp.var_value = get_var_ref(data, data->line + exp.duo[1], exp.size = \
-										var_name_len(data->line + exp.duo[1]));
+			exp.var_value = get_var_ref(data, data->line + exp.duo[1],
+					exp.size = var_name_len(data->line + exp.duo[1]));
 			if (exp.size)
 			{
 				if (exp.var_value)
@@ -113,7 +130,8 @@ size_t	*expander_exp(t_main *data, char *dst, size_t offset)
 	exp.duo[0] = 0;
 	exp.duo[1] = 0;
 	exp.ret = dst;
-	while (data->line[offset + exp.duo[0]] != '"' && data->line[offset + exp.duo[0]])
+	while (data->line[offset + exp.duo[0]] != '"' && \
+		data->line[offset + exp.duo[0]])
 	{
 		if (data->line[offset + exp.duo[0]] == '$')
 		{

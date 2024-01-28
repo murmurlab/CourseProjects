@@ -1,8 +1,16 @@
-#include "include.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser0.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/28 20:15:20 by ahbasara          #+#    #+#             */
+/*   Updated: 2024/01/28 20:34:24 by ahbasara         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	no_del(void *)
-{
-}
+#include "include.h"
 
 /**
  * data.setval[0] = set_cmd;
@@ -17,11 +25,11 @@ int	check_operation(t_main *data, int *oflags)
 	else if (data->line[data->_] == '>' && data->line[data->_ + 1] != '>')
 		return (data->_++, *oflags |= O_TRUNC | O_WRONLY | O_CREAT, 3);
 	else if (data->line[data->_] == '<' && data->line[data->_ + 1] == '<')
-		return (data->_ += 2,/*  pipe[data.heredoc], */ 4);
+		return (data->_ += 2, 4);
 	else if (data->line[data->_] == '>' && data->line[data->_ + 1] == '>')
 		return (data->_ += 2, *oflags |= O_APPEND | O_WRONLY | O_CREAT, 3);
 	else if ('|' == data->line[data->_])
-		return (data->has_cmd = 0,data->_++, data->current++, 0);
+		return (data->has_cmd = 0, data->_++, data->current++, 0);
 	else if ('\0' != data->line[data->_])
 		return (data->has_cmd);
 	return (7);
@@ -29,7 +37,7 @@ int	check_operation(t_main *data, int *oflags)
 
 int	ft_strcmp(char *s1, char *s2)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s1[i] == s2[i] && s1[i] != '\0')
@@ -37,7 +45,7 @@ int	ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-int		prompt_heredoc(char *label, int pipe[2])
+int	prompt_heredoc(char *label, int pipe[2])
 {
 	char		*buff;
 
@@ -45,8 +53,8 @@ int		prompt_heredoc(char *label, int pipe[2])
 	buff = readline("> ");
 	while (buff && ft_strcmp(label, buff))
 	{
-		write(pipe[1], buff, ft_strlen(buff));	
-		write(pipe[1], "\n", 1);	
+		write(pipe[1], buff, ft_strlen(buff));
+		write(pipe[1], "\n", 1);
 		free(buff);
 		buff = readline("> ");
 	}
@@ -56,18 +64,19 @@ int		prompt_heredoc(char *label, int pipe[2])
 	return (0);
 }
 
-int		i_space(char character)
+int	apply_list(t_list *list, t_turn2 *res, t_main *shell, int *oflags)
 {
-	return (
-			' ' == character || \
-			'\t' == character || \
-			'\v' == character || \
-			'\f' == character || \
-			'\r' == character
-		);
+	while (list)
+	{
+		if ((shell->set_val[shell->to_be])(shell, list->content, *oflags) > \
+			0)
+			return (ft_lstclear(&res->nodes, no_del), 1);
+		list = list->next;
+	}
+	return (0);
 }
 
-int		set_all(t_main *shell)
+int	set_all(t_main *shell)
 {
 	t_list		*list;
 	t_turn2		res;
@@ -83,13 +92,10 @@ int		set_all(t_main *shell)
 			shell->_++;
 		if (shell->to_be == 7)
 			break ;
-		list = (res = expander(shell, shell->_)).nodes;
-		while (list)
-		{
-			if ((shell->set_val[shell->to_be])(shell, list->content, oflags) > 0)
-				return (ft_lstclear(&res.nodes, no_del), 1);
-			list = list->next;
-		}
+		res = expander(shell, shell->_);
+		list = (res).nodes;
+		if (apply_list(list, &res, shell, &oflags))
+			return (1);
 		ft_lstclear(&res.nodes, no_del);
 		shell->_ += res.index - shell->_;
 	}

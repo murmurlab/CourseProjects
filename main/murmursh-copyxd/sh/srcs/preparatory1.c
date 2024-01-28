@@ -1,5 +1,10 @@
 #include "include.h"
 
+void	no_del(void *content)
+{
+	(void)content;
+}
+
 void	search_builtins(t_main *shell, int cmd_off)
 {
 	int																	o__o;
@@ -16,4 +21,11 @@ void	search_builtins(t_main *shell, int cmd_off)
 	}
 	shell->cmds[cmd_off].builtin_offset = 0b00000000000000000000000000000000;;
 	return ;
+}
+
+void	event_sigpipe(int signum)
+{
+	printf("dul dul dulduldul dul dul\n");
+	(void)signum;
+	exit(0);
 }

@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/28 18:21:03 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/28 20:31:11 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,6 +301,8 @@ typedef struct s_execd
 }				t_execd;
 
 /* FUNCTIONS */
+int		i_space(char character);
+void	event_sigpipe(int signum);
 int		ft_strcmp(char *s1, char *s2);
 void	event_sigpipe(int signum);
 void	err_free(int e, char *str);
