@@ -9,7 +9,7 @@ void	coix(int sig)
 	g_qsignal = 1;
 }
 
-covid	ctrl_c(int sig)
+void	ctrl_c(int sig)
 {
 	(void)sig;
 	if (!g_qsignal)
@@ -24,7 +24,7 @@ covid	ctrl_c(int sig)
 	// printf(GREEN PROMT RESET);
 }
 
-void	tcsa()
+void	tcsa(void)
 {
 	struct termios	term1;
 

@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:11:51 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/27 22:13:07 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/28 18:36:17 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 void	set_working_dirs(t_main *shell, char *pwd, char *oldpwd)
 {
-	set(shell, ft_strsjoin((t_merge *[]){&(t_merge){"OLDPWD", 6},
+	set(shell, ft_strsjoin((t_merge *[]){
+			&(t_merge){"OLDPWD", 6},
 			&(t_merge){"=", 1}, &(t_merge){oldpwd,
 			ft_strlen(oldpwd)}, NULL}));
-	set(shell, ft_strsjoin((t_merge *[]){&(t_merge){"PWD", 3},
+	set(shell, ft_strsjoin((t_merge *[]){
+			&(t_merge){"PWD", 3},
 			&(t_merge){"=", 1}, &(t_merge){pwd,
 			ft_strlen(pwd)}, NULL}));
 }
@@ -39,7 +41,18 @@ void	update_pwd(t_main *shell, t_cd *cd)
 	free(cd->workdirs[1]);
 }
 
-int		sh_cd(t_main *shell, t_execd *execd)
+int	cd_util(t_cd *cd, t_main *shell)
+{
+	cd->backflag = 0;
+	cd->err = chdir(get_ref(shell, "HOME"));
+	if (cd->err)
+		perror(SHELLSAY"cd");
+	else
+		update_pwd(shell, cd);
+	return (cd->err);
+}
+
+int	sh_cd(t_main *shell, t_execd *execd)
 {
 	t_cd					cd;
 
@@ -60,13 +73,6 @@ int		sh_cd(t_main *shell, t_execd *execd)
 		return (cd.err);
 	}
 	else
-	{
-		cd.backflag = 0;
-		cd.err = chdir(get_ref(shell, "HOME"));
-		if (cd.err)
-			perror(SHELLSAY"cd");
-		else
-			update_pwd(shell, &cd);
-		return (cd.err);
-	}
+		return (cd_util(&cd, shell));
+	return (1);
 }

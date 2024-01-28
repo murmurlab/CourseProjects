@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check0.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/28 18:37:06 by ahbasara          #+#    #+#             */
+/*   Updated: 2024/01/28 18:37:22 by ahbasara         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "include.h"
 
-int		is_valid_identifier(char *id)
+int	is_valid_identifier(char *id)
 {
 	size_t		_;
 
@@ -11,7 +23,7 @@ int		is_valid_identifier(char *id)
 	return (id[_]);
 }
 
-int		is_valid_value(char *id)
+int	is_valid_value(char *id)
 {
 	size_t		_;
 
@@ -28,7 +40,7 @@ int	is_var(int c)
 {
 	return (((c >= 'a' && c <= 'z')
 			|| (c >= 'A' && c <= 'Z')) || (c >= '0' && c <= '9')
-			|| (c == '?') || (c == '_')); // soru işareti sadece başta olacak
+		|| (c == '?') || (c == '_'));
 }
 
 /**
