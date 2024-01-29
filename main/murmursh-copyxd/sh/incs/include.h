@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/28 20:31:11 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/28 22:18:35 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -322,7 +322,6 @@ char	**lsttoarr(t_list *lst);
 int		initialization(t_main *shell);
 void	no_del(void *content);
 int		prompt_heredoc(char *label, int pipe[2]);
-char	*check_cmd(char *cmd, char *path);
 void	syntax_other(t_main *shell, t_syntax *syntax, size_t *_);
 t_list	*lst_filter(t_list *nod,
 			int f(t_list *node_iterate, void *data_compare), void *data);
@@ -429,7 +428,7 @@ int		check(t_list *node, void *cmp);
 int		set(t_main *data, char *duplex);
 int		run(t_main *shell);
 void	exe_cute_cat(t_main *shell);
-char	*check_cmd(char *cmd, char *path);
+char	*check_cmd(char *cmd, char *path, int *ex_err);
 char	*ft_strsjoin(t_merge *strs[]);
 char	*ft_strcpy(char *dest, char *src);
 void	resolve(char *string);

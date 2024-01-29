@@ -6,11 +6,37 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 20:32:24 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/28 20:33:21 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/28 22:20:31 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include.h"
+
+int	check_path(char **cmd, int *ex_err)
+{
+	struct stat	sb;
+
+	errno = 0;
+	stat(*cmd, &sb);
+	if (errno)
+	{
+		free(*cmd);
+		*cmd = NULL;
+		return (0);
+	}
+	else if (S_ISDIR(sb.st_mode))
+	{
+		free(*cmd);
+		*cmd = NULL;
+		return (0);
+	}
+	else if (access(*cmd, X_OK))
+	{
+		err(errno, *cmd);
+		*ex_err = 126;
+	}
+	return (1);
+}
 
 char	*resolve_cmd(t_main *shell, char *string, size_t _)
 {
@@ -18,7 +44,7 @@ char	*resolve_cmd(t_main *shell, char *string, size_t _)
 	char		*path;
 
 	path = (get_ref(shell, "PATH"));
-	loc = check_cmd(string, path);
+	loc = check_cmd(string, path, &shell->cmds[_].io_err);
 	if (!loc)
 	{
 		err(CMD_NOTFND, string);
@@ -27,18 +53,19 @@ char	*resolve_cmd(t_main *shell, char *string, size_t _)
 	return (loc);
 }
 
-/**
- * replace `if (path[_] == ':' || !path[_])` to `if (path[_] == ':')`
- * 
- * move the following lines to outside the while
- * if (!path[_])
- * 		break ;
- */
-char	*check_cmd(char *cmd, char *path)
+char	*creat_cmd(char *path, size_t path_len, char *cmd)
+{
+	return (ft_strsjoin((t_merge *[]){\
+		&(t_merge){path, path_len},
+		&(t_merge){"/", 1},
+		&(t_merge){cmd, ft_strlen(cmd)}, NULL
+	}));
+}
+
+char	*check_cmd(char *cmd, char *path, int *ex_err)
 {
 	char		*var;
 	size_t		_;
-	struct stat	sb;
 
 	if (!path)
 		return (NULL);
@@ -49,25 +76,9 @@ char	*check_cmd(char *cmd, char *path)
 		{
 			if (!path[_] && !_)
 				break ;
-			var = ft_strsjoin((t_merge *[]){\
-					&(t_merge){path, _},
-					&(t_merge){"/", 1},
-					&(t_merge){cmd, ft_strlen(cmd)}, NULL
-				});
-			errno = 0;
-			stat(var, &sb);
-			if (!errno)
-			{
-				if (S_ISREG(sb.st_mode))
-				{
-					if (!access(var, X_OK))
-						break ;
-					else
-						err(EPERM, cmd);
-				}
-			}
-			free(var);
-			var = NULL;
+			var = creat_cmd(path, _, cmd);
+			if (check_path(&var, ex_err))
+				break ;
 			if (!path[_])
 				break ;
 			path += _ + 1;
@@ -90,7 +101,6 @@ void	if_path(t_main *shell, size_t _)
 		free(shell->cmds[_].cmd);
 		shell->cmds[_].cmd = NULL;
 		shell->cmds[_].ex = 127;
-		return ;
 	}
 	else if (S_ISDIR(sb.st_mode))
 	{
