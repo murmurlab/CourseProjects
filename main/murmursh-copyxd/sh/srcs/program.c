@@ -6,43 +6,17 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/28 18:46:13 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/29 16:27:59 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include.h"
-#include <stdarg.h>
 
 int		g_qsignal;
 
 void	del(void *_)
 {
 	free(_);
-}
-
-void	clear_cmds(t_cmd *cmds, size_t cmd_ct)
-{
-	size_t		_;
-
-	_ = 0;
-	if (!cmds)
-		return ;
-	while (_ < cmd_ct)
-	{
-		free(cmds[_].cmd);
-		ft_lstclear(&cmds[_].args, del);
-		_++;
-	}
-}
-
-void	clear_pipes(int **pipes, size_t cmd_ct)
-{
-	size_t		_;
-
-	_ = 0;
-	while ((_ + 1) < cmd_ct)
-		free(pipes[_++]);
-	free(pipes);
 }
 
 void	reset(t_main *shell, t_execd *execd)
@@ -62,19 +36,11 @@ void	reset(t_main *shell, t_execd *execd)
 	shell->cmds = NULL;
 }
 
-int		none(t_main *shell, char *string, int oflag)
-{
-	(void)shell;
-	(void)string;
-	(void)oflag;
-	return (0);
-}
+
 
 int		run(t_main *data)
 {
 	// MURMURTEST;
-
-		// signal(SIGPIPE, event_sigpipe);
 	data->syntax_err = syntax_check(data);
 	if (data->syntax_err)
 		return (print_syntax_err(data->syntax_err), reset(data, NULL), 0);
@@ -86,77 +52,58 @@ int		run(t_main *data)
 	if (set_all(data))
 		return (reset(data, 0), 1);
 	set_path(data);
-	// list_cmds(data);
 	exe_cute_cat(data);
 	return (0);
 }
 
-void	f2(t_list *node)
+int	get_input(t_main *shell)
 {
-	free(node);
-}
-
-
-
-void	ex(t_main *shell)
-{
-	(void)shell;
+	shell->line = readline(GREEN PROMT RESET);
+	if (shell->line)
+	{
+		if (*shell->line)
+			add_history(shell->line);
+		if (shell->line[0] != 0)
+		{
+			shell->_ = 0;
+			if (run(shell))
+			{
+				free(shell->line);
+				return (1);
+			}
+		}
+		free(shell->line);
+	}
+	else
+	{
+		free(shell->line);
+		return (1);
+	}
+	return (0);
 }
 
 int	main(void)
 {
-	extern char 	**environ;
-	t_main			shell;
+	extern char	**environ;
+	t_main		shell;
 
 	ft_bzero(&shell, sizeof(shell));
 	shell.env = environ;
 	shell.coms = (t_com []){
-		{"default", launch_program, NULL},
-		{"echo", sh_echo, NULL},
-		{"cd", sh_cd, NULL},
-		{"pwd", sh_pwd, NULL},
-		{"export", sh_export, NULL},
-		{"unset", sh_unset, NULL},
-		{"env", sh_env, NULL},
-		{"exit", sh_exit, NULL},
+	{"default", launch_program, NULL},
+	{"echo", sh_echo, NULL},
+	{"cd", sh_cd, NULL},
+	{"pwd", sh_pwd, NULL},
+	{"export", sh_export, NULL},
+	{"unset", sh_unset, NULL},
+	{"env", sh_env, NULL},
+	{"exit", sh_exit, NULL},
 	};
 	if (initialization(&shell))
 		return (ft_lstclear(&shell.vars, del), -1);
 	while ("false")
-	{
-		// rl_erase_empty_line = 1;
-		// rl_already_prompted = 1;
-		shell.line = readline(GREEN PROMT RESET);
-		if (shell.line)
-		{
-			if (*shell.line)
-				add_history(shell.line);
-			if (shell.line[0] != 0)
-			{
-				shell._ = 0;
-				if (run(&shell))
-				{
-					free(shell.line);
-					break ;
-				}
-			}
-			free(shell.line);
-		}
-		else
-		{
-			free(shell.line);
-			if (1)
-			{
-				break ;
-				printf("\033[A");
-				printf(GREEN "" RESET);
-				fflush(stdout);
-			}
-			printf("\n");
-		}
-		// rl_on_new_line();
-		// free(shell.line);
-	}
+		if (get_input(&shell))
+			break ;
 	ft_lstclear(&shell.vars, del);
 }
 

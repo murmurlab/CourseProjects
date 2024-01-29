@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   syntax1.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/29 16:05:58 by ahbasara          #+#    #+#             */
+/*   Updated: 2024/01/29 16:06:27 by ahbasara         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "include.h"
 
 void	syntax_other(t_main *shell, t_syntax *syntax, size_t *_)
@@ -10,7 +22,7 @@ void	syntax_other(t_main *shell, t_syntax *syntax, size_t *_)
 		syntax->zero_pipe = (syntax->simplex = (++*_, 0));
 }
 
-int		choose(t_main *shell, t_syntax *syntax, size_t *_)
+int	choose(t_main *shell, t_syntax *syntax, size_t *_)
 {
 	(void)(((shell->line[*_] == '\'') && (syntax_squote(syntax), 1)) \
 	|| ((shell->line[*_] == '"') && (syntax_dquote(syntax), 1)));
@@ -38,7 +50,7 @@ int		choose(t_main *shell, t_syntax *syntax, size_t *_)
 	return (0);
 }
 
-int		syntax_check(t_main *shell)
+int	syntax_check(t_main *shell)
 {
 	size_t		_;
 	t_syntax	syntax;
@@ -62,9 +74,10 @@ int		syntax_check(t_main *shell)
 			break ;
 	}
 	++shell->cmd_ct;
-	return ((syntax.duplex << 0 ) | (syntax.simplex << 8) | \
+	return ((syntax.duplex << 0) | (syntax.simplex << 8) | \
 			(syntax.zero_pipe << 16) | (syntax.undefined << 24));
 }
+
 void	print_syntax_err(int errs)
 {
 	if (errs & 0xff000000)

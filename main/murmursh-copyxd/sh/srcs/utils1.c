@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils1.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/29 16:08:12 by ahbasara          #+#    #+#             */
+/*   Updated: 2024/01/29 16:08:21 by ahbasara         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "include.h"
 
-int		env2list(t_main *shell)
+int	env2list(t_main *shell)
 {
 	size_t		_;
 
@@ -56,12 +68,12 @@ void	free_tab(char **tab)
 	free(tab);
 }
 
-size_t		arr2size(char **arr)
+size_t	arr2size(char **arr)
 {
 	size_t		_;
 
 	_ = 0;
 	while (arr[_])
 		_++;
-	return (_);	
+	return (_);
 }

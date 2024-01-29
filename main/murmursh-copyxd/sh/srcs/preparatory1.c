@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 01:12:55 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/29 01:12:56 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/29 16:05:29 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@ void	no_del(void *content)
 void	search_builtins(t_main *shell, int cmd_off)
 {
 	int																	o__o;
-	
-	o__o = 01;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+	o__o = 01;
 	while (o__o < 0x8)
 	{
 		if (!ft_strcmp(shell->cmds[cmd_off].cmd, shell->coms[o__o].name))
 		{
-			shell->cmds[cmd_off].builtin_offset = o__o;;
+			shell->cmds[cmd_off].builtin_offset = o__o;
 			return ;
 		}
 		(++o__o);
 	}
-	shell->cmds[cmd_off].builtin_offset = 0b00000000000000000000000000000000;;
+	shell->cmds[cmd_off].builtin_offset = 0b00000000000000000000000000000000;
 	return ;
 }
 

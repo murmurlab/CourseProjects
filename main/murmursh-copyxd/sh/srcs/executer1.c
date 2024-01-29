@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 18:46:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/28 18:48:22 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/29 16:13:44 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int	launch_program(t_main *shell, t_execd *execd)
 	char *const	*lstarr = lsttoarr(shell->cmds[execd->_].args);
 
 	list2env(shell);
+	signal(SIGPIPE, event_sigpipe);
 	err = execve(shell->cmds[execd->_].cmd, lstarr, shell->env);
 	ft_lstclear(&shell->cmds[execd->_].args, del);
 	perror(SHELLSAY EXEC_ERR);

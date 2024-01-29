@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/28 22:18:35 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/29 17:03:25 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,6 +301,10 @@ typedef struct s_execd
 }				t_execd;
 
 /* FUNCTIONS */
+int		none(t_main *shell, char *string, int oflag);
+void	clear_pipes(int **pipes, size_t cmd_ct);
+void	clear_cmds(t_cmd *cmds, size_t cmd_ct);
+int		check_path(char **cmd, int *ex_err);
 int		i_space(char character);
 void	event_sigpipe(int signum);
 int		ft_strcmp(char *s1, char *s2);

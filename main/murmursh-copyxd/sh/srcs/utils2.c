@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils2.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/29 16:08:24 by ahbasara          #+#    #+#             */
+/*   Updated: 2024/01/29 16:08:57 by ahbasara         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "include.h"
 
 void	f(t_list *node)
@@ -16,13 +28,14 @@ void	e2(char *prefix, char *info, char *errmsg)
 	size_t const		info_l = ft_strlen(info);
 	size_t const		errmsg_l = ft_strlen(errmsg);
 	size_t const		total_l = prefix_l + info_l + errmsg_l + 3;
-	char const * const	total = ft_strsjoin((t_merge *[]){ \
+	char const *const	total = ft_strsjoin((t_merge *[]){\
 			&(t_merge){prefix, prefix_l},
 			&(t_merge){info, info_l},
 			&(t_merge){": ", 2},
-			&(t_merge){errmsg, errmsg_l}, 
-			&(t_merge){"\n", 1}, 
+			&(t_merge){errmsg, errmsg_l},
+			&(t_merge){"\n", 1},
 			NULL});
+
 	write(2, total, total_l);
 	free((void *)total);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   syntax0.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/29 16:05:45 by ahbasara          #+#    #+#             */
+/*   Updated: 2024/01/29 16:05:54 by ahbasara         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "include.h"
 
 void	syntax_squote(t_syntax *syntax)
@@ -26,7 +38,7 @@ void	syntax_dquote(t_syntax *syntax)
 		syntax->duplex = 2;
 }
 
-int		syntax_pipe(t_main *shell, t_syntax *syntax, size_t *_)
+int	syntax_pipe(t_main *shell, t_syntax *syntax, size_t *_)
 {
 	shell->cmd_ct++;
 	if (!syntax->zero_pipe)
@@ -41,7 +53,7 @@ int		syntax_pipe(t_main *shell, t_syntax *syntax, size_t *_)
 	return (0);
 }
 
-int		syntax_sarrow(t_syntax *syntax, size_t *_)
+int	syntax_sarrow(t_syntax *syntax, size_t *_)
 {
 	if (!syntax->simplex)
 		syntax->simplex = 1;
@@ -53,7 +65,7 @@ int		syntax_sarrow(t_syntax *syntax, size_t *_)
 	return (0);
 }
 
-int		syntax_darrow(t_syntax *syntax, size_t *_)
+int	syntax_darrow(t_syntax *syntax, size_t *_)
 {
 	if (!syntax->simplex)
 		syntax->simplex = 2;

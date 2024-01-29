@@ -60,8 +60,10 @@ SRC =					$(src_dir)/program.c \
 						$(src_dir)/utils0.c \
 						$(src_dir)/utils1.c \
 						$(src_dir)/utils2.c \
+						$(src_dir)/utils3.c \
 						$(src_dir)/preparatory0.c \
 						$(src_dir)/preparatory1.c \
+						$(src_dir)/preparatory2.c \
 						$(src_dir)/syntax0.c \
 						$(src_dir)/syntax1.c \
 						$(src_dir)/test.c \
@@ -71,10 +73,10 @@ OBJ =					$(SRC:.c=.o)
 B_OBJ =					$(B_SRC:.c=.o)
 NAME =					minishell
 BNAME =					checker
-MAKEFLAGS +=			-j$(NPROCS)
+# MAKEFLAGS +=			-j$(NPROCS)
 murmurc				=	./libultift/libft.a
 lrl				=	./lib/lib/readline/lib/libreadline.a
-depend				=	r_murmurc r_rl
+depend				=	r_murmurc
 # $(src_dir)%.o: $(src_dir)%.c
 # 	gcc -c $< -o $@ > /dev/null
 
@@ -95,14 +97,16 @@ mandatory: all
 bonus:		$(depend) $(B_OBJ)
 	$(CC) $(CFLAGS) $(B_OBJ) -o $(BNAME) $(libr)
 
+a: $(OBJ)
+
 $(NAME):	$(murmurc) $(lrl) $(OBJ)
 	$(CC) $(CFLAGS) $(sanitize) $(OBJ) $(libr) -o $(NAME)
 
 r_murmurc:
 	make -C ./libultift -j$(NPROCS)
 
-r_rl:
-	# make -C ./lib -j$(NPROCS)
+$(lrl):
+	$(MAKE) -C lib -j$(NPROCS) DIR=$(PWD)/lib
 
 # mlx:
 # ifeq "$(os)" "Darwin"
@@ -124,7 +128,7 @@ else ifeq ($(os),Linux)
 # 	make -C $(libs)/minilibx-linux clean
 endif
 	# make -C ./libultift clean &
-	# make -C ./lib fclean &
+	make -C ./lib fclean &
 	rm -f $(NAME) $(BNAME) & wait
 
 re:						fclean

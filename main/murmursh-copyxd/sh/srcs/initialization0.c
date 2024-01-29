@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 20:14:54 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/28 20:15:15 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/29 17:25:37 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	tcsa(void)
 	else
 	{
 		term1.c_cc[VQUIT] = _POSIX_VDISABLE;
-		term1.c_lflag |= ECHOE;
+		term1.c_lflag |= ECHOE | ICANON;
 		if (tcsetattr(STDIN_FILENO, TCSANOW, &term1) != 0)
 			exit((perror(SHELLSAY TCSA_ERR_MSG), -1));
 		if (tcgetattr(STDIN_FILENO, &term1) != 0)
