@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 18:21:43 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/28 18:48:20 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/30 03:32:24 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	open_pipes(t_main *shell, t_execd *execd)
 
 	_ = 0;
 	execd->fd = NULL;
-	if ((sizeof(int *) * (shell->cmd_ct - 1)) != 0)
+	if (shell->cmd_ct - 1)
 		execd->fd = malloc((sizeof(int *) * (shell->cmd_ct - 1)));
 	while (_ < shell->cmd_ct - 1)
 	{
@@ -78,16 +78,19 @@ void	exe_cute_cat(t_main *shell)
 
 	open_pipes(shell, &execd);
 	execd.pids = malloc(sizeof(pid_t) * shell->cmd_ct);
-	execd.exs = malloc(sizeof(int) * shell->cmd_ct);
 	execd._ = 0;
 	execd.pids[execd._] = 1;
-	if ((shell->cmd_ct == 1) && shell->cmds[0].builtin_offset && \
-		!shell->cmds[0].io_err)
+	if ((shell->cmd_ct == 1) && shell->cmds[0].builtin_offset)
 	{
-		change_io(shell, &execd, stock_fd);
-		shell->ex_stat = \
-		shell->coms[shell->cmds[0].builtin_offset].func(shell, &execd);
-		restore_io(shell, &execd, stock_fd);
+		if (!shell->cmds[0].io_err)
+		{
+			change_io(shell, &execd, stock_fd);
+			shell->ex_stat = \
+			shell->coms[shell->cmds[0].builtin_offset].func(shell, &execd);
+			restore_io(shell, &execd, stock_fd);
+		}
+		else
+			shell->ex_stat = shell->cmds[0].io_err;
 	}
 	else
 		multi_exe(shell, &execd);

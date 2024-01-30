@@ -25,6 +25,7 @@ all : $(LIB)
 fclean : 
 	@echo $(YELLOW) "Removing readline..." $(END)
 	@$(RM) ./readline $(LIB)
+	@$(RM) ./lib
 	@echo $(RED) "readline deleted successfully!\n" $(END)
 
 re : fclean all

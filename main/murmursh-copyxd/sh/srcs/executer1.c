@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 18:46:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/29 16:13:44 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/30 03:23:36 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ void	child(t_main *shell, t_execd *execd)
 		exit(shell->coms[(shell->cmds[execd->_].builtin_offset)] \
 			.func(shell, execd));
 	}
-	exit(shell->cmds[execd->_].ex);
+	if (shell->cmds[execd->_].io_err)
+		exit(shell->cmds[execd->_].io_err);
+	else
+		exit(shell->cmds[execd->_].ex);
 }
 
 void	wait_all(t_main *shell, t_execd *execd)

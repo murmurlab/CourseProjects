@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 20:14:54 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/29 17:25:37 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/30 03:24:39 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int	initialization(t_main *shell)
 	ft_bzero(shell->increases, INT8_MAX);
 	shell->increases['"'] = (char)2;
 	shell->increases['\''] = (char)2;
-	shell->increases[0] = (char)0;
 	shell->cmds = NULL;
 	shell->cmd_ct = 0;
 	shell->has_cmd = 0;

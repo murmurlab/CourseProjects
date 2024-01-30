@@ -36,7 +36,7 @@ $(ft_printf):
 	@$(MAKE) -C ft_printf
 
 bonus: $(BONUS_OBJECTS) $(GNL_OBJECTS) $(LIBS)
-	ar -rcs $(NAME) $(BONUS_OBJECTS) $(GNL_OBJECTS) $(FT_PRINTF_OBJECTS)
+	ar -urcs $(NAME) $(BONUS_OBJECTS) $(GNL_OBJECTS) $(LIBS)
 
 clean:
 	$(RM) $(OBJECTS) $(BONUS_OBJECTS) $(GNL_OBJECTS)

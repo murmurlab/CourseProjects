@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 16:05:58 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/29 16:06:27 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/29 20:50:36 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 void	syntax_other(t_main *shell, t_syntax *syntax, size_t *_)
 {
-	if (shell->line[*_] == '\t' || shell->line[*_] == ' ' || \
-		shell->line[*_] == '\v' || shell->line[*_] == '\f' || \
-		shell->line[*_] == '\r')
+	if (i_space(shell->line[*_]))
 		++*_;
 	else
 		syntax->zero_pipe = (syntax->simplex = (++*_, 0));
@@ -61,9 +59,7 @@ int	syntax_check(t_main *shell)
 	syntax.duplex = 0;
 	syntax.simplex = 0;
 	_ = 0;
-	while (shell->line[_] == '\t' || shell->line[_] == ' ' || \
-			shell->line[_] == '\v' || shell->line[_] == '\f' || \
-			shell->line[_] == '\r')
+	while (i_space(shell->line[_]))
 		_++;
 	if (shell->line[_] == '\0')
 		return (0);

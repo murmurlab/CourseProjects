@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 16:02:40 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/29 16:05:38 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/30 03:26:20 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	if_path(t_main *shell, size_t _)
 {
 	struct stat	sb;
 
+	errno = 0;
 	stat(shell->cmds[_].cmd, &sb);
 	if (errno)
 	{

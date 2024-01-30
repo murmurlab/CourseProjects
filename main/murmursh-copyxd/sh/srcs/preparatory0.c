@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 20:32:24 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/29 16:04:02 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/30 03:25:52 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	set_path(t_main *shell)
 	_ = -1;
 	while (++_ < shell->cmd_ct)
 	{
-		if (!shell->cmds[_].args)
+		if (!shell->cmds[_].args || shell->cmds[_].io_err)
 			continue ;
 		if (!ft_strchr(shell->cmds[_].cmd, '/'))
 			if_cmd(shell, _);

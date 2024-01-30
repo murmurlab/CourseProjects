@@ -4,12 +4,8 @@ os =					${shell uname -s}
 ifeq '$(os)' 'Darwin'
 	ltinfo =
 	wflags += -std=c99
-# 	mlxLinkFlags =		-framework OpenGL -framework AppKit -L$(libs)/minilibx_opengl_20191021 -lmlx
-# 	incs +=				-I $(libs)/minilibx_opengl_20191021
 else ifeq '$(os)' 'Linux'
 	ltinfo =			-ltinfo
-# 	mlxLinkFlags =		-L minilibx-linux -L$(libs)/minilibx-linux -lmlx -lXext -lX11
-# 	incs +=				-I $(libs)/minilibx-linux
 endif
 
 CC =						gcc
@@ -66,13 +62,12 @@ SRC =					$(src_dir)/program.c \
 						$(src_dir)/preparatory2.c \
 						$(src_dir)/syntax0.c \
 						$(src_dir)/syntax1.c \
-						$(src_dir)/test.c \
 						$(S_SRC)
 
 OBJ =					$(SRC:.c=.o)
 B_OBJ =					$(B_SRC:.c=.o)
 NAME =					minishell
-BNAME =					checker
+BNAME =					
 # MAKEFLAGS +=			-j$(NPROCS)
 murmurc				=	./libultift/libft.a
 lrl				=	./lib/lib/readline/lib/libreadline.a
@@ -103,17 +98,10 @@ $(NAME):	$(murmurc) $(lrl) $(OBJ)
 	$(CC) $(CFLAGS) $(sanitize) $(OBJ) $(libr) -o $(NAME)
 
 r_murmurc:
-	make -C ./libultift -j$(NPROCS)
+	make -C ./libultift all -j$(NPROCS)
 
 $(lrl):
 	$(MAKE) -C lib -j$(NPROCS) DIR=$(PWD)/lib
-
-# mlx:
-# ifeq "$(os)" "Darwin"
-# 	make -C $(libs)/minilibx_opengl_20191021 -j$(NPROCS) &> /dev/null
-# else ifeq ($(os),Linux)
-# 	make -C $(libs)/minilibx-linux -j$(NPROCS) &> /dev/null
-# endif
 
 run: all
 	./$(NAME)
@@ -127,9 +115,7 @@ ifeq "$(os)" "Darwin"
 else ifeq ($(os),Linux)
 # 	make -C $(libs)/minilibx-linux clean
 endif
-	# make -C ./libultift clean &
-	make -C ./lib fclean &
-	rm -f $(NAME) $(BNAME) & wait
+	make -C ./libultift fclean & make -C ./lib fclean & rm -f $(NAME) $(BNAME) & wait
 
 re:						fclean
 	$(MAKE) all

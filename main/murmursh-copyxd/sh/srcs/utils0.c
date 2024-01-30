@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 15:56:59 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/29 17:45:31 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/29 20:40:43 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,6 @@ char	*ft_strsjoin(t_merge *strs[])
 	}
 	return (ret);
 }
-
-
-
-// ahmetz
-// ahmet0arst
 
 int	strccmp(const char *s1, const char *s2, char ch)
 {
