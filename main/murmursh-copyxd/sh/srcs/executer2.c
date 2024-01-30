@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 18:48:29 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/28 18:48:31 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/30 09:02:57 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,19 @@ void	close_pipes(t_main *data, t_execd *execd)
 		close(execd->fd[_][1]);
 		_++;
 	}
+}
+
+void	single_exe(t_main *shell, t_execd *execd)
+{
+	int			stock_fd[2];
+
+	if (!shell->cmds[0].io_err)
+	{
+		change_io(shell, execd, stock_fd);
+		shell->ex_stat = \
+		shell->coms[shell->cmds[0].builtin_offset].func(shell, execd);
+		restore_io(shell, execd, stock_fd);
+	}
+	else
+		shell->ex_stat = shell->cmds[0].io_err;
 }

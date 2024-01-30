@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 18:21:43 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/30 03:32:24 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/30 09:04:36 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,24 +74,13 @@ void	exe_cute_cat(t_main *shell)
 {
 	t_execd		execd;
 	char		*tmp;
-	int			stock_fd[2];
 
 	open_pipes(shell, &execd);
 	execd.pids = malloc(sizeof(pid_t) * shell->cmd_ct);
 	execd._ = 0;
 	execd.pids[execd._] = 1;
 	if ((shell->cmd_ct == 1) && shell->cmds[0].builtin_offset)
-	{
-		if (!shell->cmds[0].io_err)
-		{
-			change_io(shell, &execd, stock_fd);
-			shell->ex_stat = \
-			shell->coms[shell->cmds[0].builtin_offset].func(shell, &execd);
-			restore_io(shell, &execd, stock_fd);
-		}
-		else
-			shell->ex_stat = shell->cmds[0].io_err;
-	}
+		single_exe(shell, &execd);
 	else
 		multi_exe(shell, &execd);
 	tmp = ft_itoa(shell->ex_stat);

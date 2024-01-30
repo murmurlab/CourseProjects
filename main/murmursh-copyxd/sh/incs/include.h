@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/29 17:03:25 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/30 09:04:15 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,6 @@
 /*
 **  #  include "./linux.h"
 ** WSL keycodes
-** #  define W 119
-** #  define A 97
-** #  define S 115
-** #  define D 100
 */
 #  define O_CLOEXEC __O_CLOEXEC
 
@@ -62,11 +58,11 @@
 
 # define UNKNOWN_ERR	"shell says: I don't know what you're trying to do\n"
 # define ZERO_PIPE		"shell says: syntax error near expected non-exist \
-						token before `|'\n"
+token before `|'\n"
 # define EMPTY_AFTER	"shell says: syntax error near unexpected token after \
-						`|', `>', `<', `>>', `<<'\n"
+`|', `>', `<', `>>', `<<'\n"
 # define MISS_QUOTE		"shell says: unexpected EOF while looking for matching \
-						`'', `\"'\n"
+`'', `\"'\n"
 
 # define TCSA_ERR_MSG	"tcsetattr() error"
 # define TCGA_ERR_MSG	"tcgetattr() error"
@@ -116,13 +112,6 @@
 
 extern int		g_qsignal;
 
-/**
- *  @struct t_order s_order
- *  @brief Filter structure 
- *	@memberof s_order::seq
- *	@var s_order::seq 
- */
-
 typedef struct s_export
 {
 	t_list		*arg;
@@ -159,8 +148,6 @@ typedef struct s_exp
 	char	*var_name;
 }		t_exp;
 
-// [0]-> line, [1]-> expanded
-
 typedef struct s_all
 {
 	int		quote;
@@ -170,17 +157,11 @@ typedef struct s_all
 	size_t	buff_index;
 }		t_all;
 
-// result
-// jump index
-
 typedef struct s_turn
 {
 	char	*buffer;
 	int		index;
 }		t_turn;
-
-// seperated strings
-// jump index
 
 typedef struct s_turn2
 {
@@ -188,15 +169,6 @@ typedef struct s_turn2
 	int		index;
 }		t_turn2;
 
-// for merge
-// for ambiguous redirect
-// seperated strings
-// line index
-// pass len
-// val dollar
-// dollar splitted
-// join tmp
-// split len
 typedef struct s_join
 {
 	int						merge_flag;
@@ -210,16 +182,6 @@ typedef struct s_join
 	size_t					arr_size;
 }		t_join;
 
-/**
- * 0000 0001 '
- * 0000 0010 "
- * 0000 0100 |
- * 0000 1000 >
- * 0001 0000 <
- * 0010 0000 <<0
- * 0100 0000 >>
- * 1000 0000 
- */
 typedef struct s_syntax
 {
 	unsigned char		duplex;
@@ -248,21 +210,6 @@ typedef struct s_cmd
 	int				in;
 	int				out;
 }		t_cmd;
-
-/**
- * data.setval[0] = set_cmd;
- * data.setval[1] = set_arg;
- * data.setval[2] = set_in;
- * data.setval[3] = set_out;
-*/
-/**
- * 0	heredoc
- * 1	truncate
- * 2	infile
- * 3	append
- * 4	command exist
- * 5	any
- */
 
 typedef struct s_main
 {
@@ -301,6 +248,7 @@ typedef struct s_execd
 }				t_execd;
 
 /* FUNCTIONS */
+void	single_exe(t_main *shell, t_execd *execd);
 int		none(t_main *shell, char *string, int oflag);
 void	clear_pipes(int **pipes, size_t cmd_ct);
 void	clear_cmds(t_cmd *cmds, size_t cmd_ct);
