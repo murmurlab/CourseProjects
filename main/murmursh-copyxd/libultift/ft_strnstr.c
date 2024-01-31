@@ -1,39 +1,26 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marvin   <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 12:11:10 by marvin            #+#    #+#             */
-/*   Updated: 2023/10/30 14:30:06 by marvin           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+/**
+ * This work © 2023 by murmurlab is licensed under CC BY-SA 4.0. To view a copy 
+ * of this license, visit http://creativecommons.org/licenses/by-sa/4.0/
+ */
 
-#include "libft.h"
+#include <sys/_types/_null.h>
+#include <sys/_types/_size_t.h>
 
-char	*ft_strnstr(const char *big, const char *little, size_t len)
+size_t	ft_strlen(const char *s);
+int		ft_memcmp(const void *s1, const void *s2, size_t n);
+
+char	*ft_strnstr(const char *str, const char *to_find, size_t len)
 {
-	size_t	i;
-	size_t	c;
+	size_t		position;
 
-	i = 0;
-	if (!big && !len)
-		return (0);
-	if (little[0] == '\0' || little == big)
-		return ((char *)big);
-	while ((big[i] != '\0'))
+	if (*to_find == '\0')
+		return ((char *)str);
+	position = ft_strlen((char *)to_find);
+	while (*str != '\0' && len-- >= position)
 	{
-		c = 0;
-		while ((big[i + c] == little[c]) && (i + c) < len)
-		{
-			if (big[i + c] == '\0' && little[c] == '\0')
-				return ((char *)&big[i]);
-			c++;
-		}
-		if (little[c] == '\0')
-			return ((char *)(&big[i]));
-		i++;
+		if (*str == *to_find && ft_memcmp(str, to_find, position) == 0)
+			return ((char *)str);
+		str++;
 	}
-	return (0);
+	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 21:30:20 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/30 03:27:25 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/30 10:05:21 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ int	run(t_main *data)
 {
 	data->syntax_err = syntax_check(data);
 	if (data->syntax_err)
+	{
+		set(data, ft_strdup("?=2"));
 		return (print_syntax_err(data->syntax_err), reset(data, NULL), 0);
+	}
 	if (!data->cmd_ct)
 		return (0);
 	data->cmds = ft_calloc((data->cmd_ct), sizeof(t_cmd));

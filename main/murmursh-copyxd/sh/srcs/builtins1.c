@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:11:51 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/28 18:48:10 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/30 09:42:21 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int	sh_cd(t_main *shell, t_execd *execd)
 			err_free(errno, ft_strjoin("cd: ", cd.param->content));
 		else
 			update_pwd(shell, &cd);
+		if (cd.err)
+			return (1);
 		return (cd.err);
 	}
 	else

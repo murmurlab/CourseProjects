@@ -1,30 +1,22 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marvin   <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 12:11:10 by marvin            #+#    #+#             */
-/*   Updated: 2023/10/30 14:30:06 by marvin           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+/**
+ * This work © 2023 by murmurlab is licensed under CC BY-SA 4.0. To view a copy 
+ * of this license, visit http://creativecommons.org/licenses/by-sa/4.0/
+ */
 
 #include "libft.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_lstdelone(t_list *lst, void (*del)(void *));
+
+void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
 	t_list	*tmp;
-	t_list	*element;
 
-	if (!lst || !del)
+	if (!del || !lst || !*lst)
 		return ;
-	element = *lst;
-	while (element != NULL)
+	while (lst && *lst)
 	{
-		tmp = element->next;
-		ft_lstdelone(element, del);
-		element = tmp;
+		tmp = (*lst)->next;
+		ft_lstdelone(*lst, del);
+		*lst = tmp;
 	}
-	*lst = NULL;
 }

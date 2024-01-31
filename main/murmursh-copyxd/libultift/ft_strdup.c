@@ -1,32 +1,28 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marvin   <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 12:11:10 by marvin            #+#    #+#             */
-/*   Updated: 2023/10/30 14:30:06 by marvin           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+/**
+ * This work © 2023 by murmurlab is licensed under CC BY-SA 4.0. To view a copy 
+ * of this license, visit http://creativecommons.org/licenses/by-sa/4.0/
+ */
 
-#include "libft.h"
+#include <sys/_types/_null.h>
+#include <sys/_types/_size_t.h>
+#include <malloc/_malloc.h>
 
-char	*ft_strdup(const char *s)
+size_t	ft_strlen(const char *s);
+
+char	*ft_strdup(const char *s1)
 {
-	char	*s1;
-	char	*s2;
-	char	*pos;
+	char	*str;
+	size_t	i;
 
-	s1 = (char *)s;
-	s2 = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (!s2)
+	str = (char *)malloc(sizeof(*s1) * (ft_strlen(s1) + 1));
+	if (!str)
 		return (NULL);
-	pos = s2;
-	while (*s1)
+	i = 0;
+	while (s1[i])
 	{
-		*s2++ = *s1++;
+		str[i] = s1[i];
+		i++;
 	}
-	*s2 = 0;
-	return (pos);
+	str[i] = 0;
+	return (str);
 }

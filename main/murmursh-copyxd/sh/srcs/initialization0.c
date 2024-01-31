@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 20:14:54 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/30 03:24:39 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/31 07:11:11 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,19 @@ void	ctrl_c(int sig)
 
 void	tcsa(void)
 {
-	struct termios	term1;
+	// struct termios	term1;
 
-	if (tcgetattr(STDIN_FILENO, &term1) != 0)
-		exit((perror(SHELLSAY TCGA_ERR_MSG), -1));
-	else
-	{
-		term1.c_cc[VQUIT] = _POSIX_VDISABLE;
-		term1.c_lflag |= ECHOE | ICANON;
-		if (tcsetattr(STDIN_FILENO, TCSANOW, &term1) != 0)
-			exit((perror(SHELLSAY TCSA_ERR_MSG), -1));
-		if (tcgetattr(STDIN_FILENO, &term1) != 0)
-			exit((perror(SHELLSAY TCGA_ERR_MSG), -1));
-	}
+	// if (tcgetattr(STDIN_FILENO, &term1) != 0)
+	// 	exit((perror(SHELLSAY TCGA_ERR_MSG), -1));
+	// else
+	// {
+	// 	term1.c_cc[VQUIT] = _POSIX_VDISABLE;
+	// 	term1.c_lflag |= ECHOE | ICANON;
+	// 	if (tcsetattr(STDIN_FILENO, TCSANOW, &term1) != 0)
+	// 		exit((perror(SHELLSAY TCSA_ERR_MSG), -1));
+	// 	if (tcgetattr(STDIN_FILENO, &term1) != 0)
+	// 		exit((perror(SHELLSAY TCGA_ERR_MSG), -1));
+	// }
 }
 
 int	initialization(t_main *shell)

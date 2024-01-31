@@ -1,25 +1,16 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marvin   <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 12:11:10 by marvin            #+#    #+#             */
-/*   Updated: 2023/10/30 14:30:06 by marvin           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "libft.h"
+/**
+ * This work © 2023 by murmurlab is licensed under CC BY-SA 4.0. To view a copy 
+ * of this license, visit http://creativecommons.org/licenses/by-sa/4.0/
+ */
 
 void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
 	unsigned int	i;
 
-	if (!s || !f)
-		return ((void) NULL);
 	i = 0;
-	while (s[i] != '\0')
+	if (!(*s) || !f)
+		return ;
+	while (s[i])
 	{
 		f(i, &s[i]);
 		i++;

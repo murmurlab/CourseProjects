@@ -1,34 +1,23 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marvin   <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 12:11:10 by marvin            #+#    #+#             */
-/*   Updated: 2023/10/30 14:30:06 by marvin           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+/**
+ * This work © 2023 by murmurlab is licensed under CC BY-SA 4.0. To view a copy 
+ * of this license, visit http://creativecommons.org/licenses/by-sa/4.0/
+ */
 
-int	ft_atoi(const char *nptr)
+int	ft_atoi(const char *str)
 {
+	int	is_neg;
 	int	res;
-	int	sign;
 
+	is_neg = 1;
+	while (((*str >= 9 && *str <= 13) || *str == 32))
+		str++;
+	if (*str == '-')
+		is_neg = -1;
+	if ((is_neg == -1 || *str == '+') && str++)
+	{
+	}
 	res = 0;
-	sign = 1;
-	while ((*nptr == 32) || (*nptr >= 9 && *nptr <= 13))
-		nptr++;
-	if (*nptr == '-' || *nptr == '+')
-	{
-		if (*nptr == '-')
-			sign = -1;
-		nptr++;
-	}
-	while (*nptr >= '0' && *nptr <= '9')
-	{
-		res *= 10;
-		res += *nptr++ - '0';
-	}
-	return ((int)(res * sign));
+	while (*str >= '0' && *str <= '9')
+		res = (res * 10) + (*str++ - '0');
+	return (res * is_neg);
 }

@@ -15,7 +15,7 @@ CC =						gcc
 rl		=					-L lib/lib/readline/lib -lreadline $(ltinfo)
 rlI		=					-I lib/lib/readline/include
 
-sanitize =					-fsanitize=address #-fsanitize=thread
+sanitize =					#-fsanitize=address #-fsanitize=thread
 libs	=					libs
 libr	=					$(rl) -L./libultift -lft
 parrent_dir	=				sh
@@ -34,8 +34,8 @@ b_src_dir = $(parrent_dir)/srcs
 
 S_SRC =					$(tests)/testing.c
 
-B_SRC =					$(b_src_dir)/checker.c \
-						$(S_SRC)
+B_SRC =					$(S_SRC)
+
 
 SRC =					$(src_dir)/program.c \
 						$(src_dir)/builtins0.c \
@@ -62,13 +62,14 @@ SRC =					$(src_dir)/program.c \
 						$(src_dir)/preparatory2.c \
 						$(src_dir)/syntax0.c \
 						$(src_dir)/syntax1.c \
+						$(src_dir)/test.c \
 						$(S_SRC)
 
 OBJ =					$(SRC:.c=.o)
 B_OBJ =					$(B_SRC:.c=.o)
 NAME =					minishell
 BNAME =					
-# MAKEFLAGS +=			-j$(NPROCS)
+MAKEFLAGS +=			-j$(NPROCS)
 murmurc				=	./libultift/libft.a
 lrl				=	./lib/lib/readline/lib/libreadline.a
 depend				=	r_murmurc
@@ -92,8 +93,6 @@ mandatory: all
 bonus:		$(depend) $(B_OBJ)
 	$(CC) $(CFLAGS) $(B_OBJ) -o $(BNAME) $(libr)
 
-a: $(OBJ)
-
 $(NAME):	$(murmurc) $(lrl) $(OBJ)
 	$(CC) $(CFLAGS) $(sanitize) $(OBJ) $(libr) -o $(NAME)
 
@@ -108,6 +107,7 @@ run: all
 
 clean:
 	rm -f $(OBJ) $(B_OBJ)
+	make -C ./libultift clean
 
 fclean:		clean
 ifeq "$(os)" "Darwin"

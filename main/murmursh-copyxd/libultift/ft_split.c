@@ -1,102 +1,72 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marvin   <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 12:11:10 by marvin            #+#    #+#             */
-/*   Updated: 2023/10/30 14:30:06 by marvin           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+/**
+ * This work © 2023 by murmurlab is licensed under CC BY-SA 4.0. To view a copy 
+ * of this license, visit http://creativecommons.org/licenses/by-sa/4.0/
+ */
 
-#include "libft.h"
+#include <sys/_types/_null.h>
+#include <sys/_types/_size_t.h>
+#include <malloc/_malloc.h>
 
-static int	count_words(char const *str, char c)
+size_t		ft_strlen(const char *s);
+
+static int	count_words(const char *str, char c)
 {
-	int	count;
 	int	i;
+	int	trigger;
 
 	i = 0;
-	count = 0;
-	while (str[i] != '\0')
+	trigger = 0;
+	while (*str)
 	{
-		while (str[i] != '\0' && str[i] == c)
-			i++;
-		if (str[i] != '\0')
-			count++;
-		while (str[i] != '\0' && str[i] != c)
-			i++;
-	}
-	return (count);
-}
-
-static char	**ft_free(char **tab, int count)
-{
-	while (count >= 0)
-	{
-		free(tab[count]);
-		count--;
-	}
-	free(tab);
-	return (0);
-}
-
-static char	*ft_cpy_wrd(char const *s, char *tab, int i, int lg)
-{
-	int	j;
-
-	j = 0;
-	while (lg > 0)
-	{
-		tab[j] = s[i - lg];
-		lg--;
-		j++;
-	}
-	tab[j] = '\0';
-	return (tab);
-}
-
-static char	**count_lenght(char const *s, char c, char **tab, int count)
-{
-	int	lg;
-	int	i;
-	int	w;
-
-	i = 0;
-	lg = 0;
-	w = 0;
-	while (w < count)
-	{
-		lg = 0;
-		while (s[i] != '\0' && s[i] == c)
-			i++;
-		while (s[i] != '\0' && s[i] != c)
+		if (*str != c && trigger == 0)
 		{
-			lg++;
+			trigger = 1;
 			i++;
 		}
-		tab[w] = malloc(lg + 1);
-		if (!tab[w])
-			return (ft_free(tab, w));
-		ft_cpy_wrd(s, tab[w], i, lg);
-		w++;
+		else if (*str == c)
+			trigger = 0;
+		str++;
 	}
-	tab[w] = NULL;
-	return (tab);
+	return (i);
+}
+
+static char	*word_dup(const char *str, int start, int finish)
+{
+	char	*word;
+	int		i;
+
+	i = 0;
+	word = malloc((finish - start + 1) * sizeof(char));
+	while (start < finish)
+		word[i++] = str[start++];
+	word[i] = '\0';
+	return (word);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	int		count;
-	char	**tab;
+	size_t	i;
+	size_t	j;
+	int		index;
+	char	**split;
 
-	if (!s)
-		return (0);
-	count = count_words(s, c);
-	tab = (char **)malloc(sizeof(char *) * (count + 1));
-	if (!tab)
+	split = malloc((count_words(s, c) + 1) * sizeof(char *));
+	if (!s || !split)
 		return (NULL);
-	tab = count_lenght(s, c, tab, count);
-	return (tab);
+	i = 0;
+	j = 0;
+	index = -1;
+	while (i <= ft_strlen(s))
+	{
+		if (s[i] != c && index < 0)
+			index = i;
+		else if ((s[i] == c || i == ft_strlen(s)) && index >= 0)
+		{
+			split[j++] = word_dup(s, index, i);
+			index = -1;
+		}
+		i++;
+	}
+	split[j] = 0;
+	return (split);
 }

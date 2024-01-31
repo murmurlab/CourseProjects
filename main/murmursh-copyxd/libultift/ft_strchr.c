@@ -1,31 +1,18 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marvin   <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 12:11:10 by marvin            #+#    #+#             */
-/*   Updated: 2023/10/30 14:30:06 by marvin           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+/**
+ * This work © 2023 by murmurlab is licensed under CC BY-SA 4.0. To view a copy 
+ * of this license, visit http://creativecommons.org/licenses/by-sa/4.0/
+ */
 
-#include "libft.h"
+#include <sys/_types/_null.h>
 
 char	*ft_strchr(const char *s, int c)
 {
-	unsigned char	*a;
-
-	if (c > 127)
-		c %= 256;
-	a = (unsigned char *) s;
-	while (*a)
+	while (*s)
 	{
-		if (*a == (unsigned char)c)
-			return ((char *)(a));
-		a++;
+		if (*s++ == (char)c)
+			return ((char *)s - 1);
 	}
-	if (*a == c)
-		return ((char *)(a));
+	if ((char)c == '\0')
+		return ((char *)s);
 	return (NULL);
 }

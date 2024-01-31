@@ -1,3 +1,8 @@
+# 
+# This work © 2023 by murmurlab is licensed under CC BY-SA 4.0. To view a copy 
+# of this license, visit http://creativecommons.org/licenses/by-sa/4.0/
+# 
+
 NAME = libftprintf.a
 FLAG = -Wall -Wextra -Werror
 SRC = ft_printf_util.c ft_printf.c

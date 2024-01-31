@@ -1,62 +1,46 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marvin   <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 12:11:10 by marvin            #+#    #+#             */
-/*   Updated: 2023/10/30 14:30:06 by marvin           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+/**
+ * This work © 2023 by murmurlab is licensed under CC BY-SA 4.0. To view a copy 
+ * of this license, visit http://creativecommons.org/licenses/by-sa/4.0/
+ */
 
-#include "libft.h"
+#include <stdlib.h>
 
-static int	sizenum(long n)
+char	*ft_strdup(const char *s1);
+
+static void	ft_recursive(int nb, char *str)
 {
-	int	count;
-
-	count = 0;
-	if (n < 0)
+	if (nb >= 10)
 	{
-		n = -n;
-		count++;
+		ft_recursive(nb / 10, str - 1);
+		*str = ((nb % 10) + 48);
 	}
-	else if (n == 0)
-		return (1);
-	while (n > 0)
-	{
-		count++;
-		n = n / 10;
-	}
-	return (count);
+	if (nb < 10)
+		*str = (nb + 48);
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(int nb)
 {
 	char	*str;
-	long	nb;
-	int		sign;
-	int		len;
+	char	digit;
+	char	*ostr;
+	int		n;
+	int		stat;
 
-	nb = n;
-	sign = 0;
-	len = sizenum(nb);
-	if (nb < 0)
-	{
-		sign = 1;
-		nb = -nb;
-	}
-	str = (char *)malloc(sizeof(char) * (len + 1));
+	if (nb == -2147483648)
+		return (ft_strdup("-2147483648"));
+	stat = (nb < 0);
+	n = nb;
+	digit = 2;
+	if (stat)
+		n *= -1 + (digit++ && 0);
+	while (10 <= n)
+		n /= 10 + (digit++ && 0);
+	str = malloc(sizeof(char) * digit);
 	if (!str)
 		return (NULL);
-	str[len] = '\0';
-	while (len--)
-	{
-		str[len] = (nb % 10) + '0';
-		nb /= 10;
-	}
-	if (sign == 1)
-		str[0] = '-';
-	return (str);
+	ostr = str;
+	(void)(stat && (*str++ = '-', 1) && (nb *= -1));
+	*(str + ((sizeof(char) * digit) - 1 - stat)) = 0;
+	ft_recursive(nb, (str + ((sizeof(char) * digit) - 2 - stat)));
+	return (ostr);
 }

@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 18:38:55 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/28 18:48:16 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/30 09:50:39 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	export_arg(t_main *shell, t_export *export)
 	if (!export->err && !export->validate)
 		set(shell, export->to_set);
 	else
-		err_free((free(export->to_set), 336),
+		err_free((free(export->to_set), (export->gerr = 1, 336)),
 			ft_strjoin("export: ", (char *)export->arg->content));
 	export->arg = export->arg->next;
 	export->err = 0x0;

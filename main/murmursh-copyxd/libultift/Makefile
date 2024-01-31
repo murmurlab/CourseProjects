@@ -1,7 +1,7 @@
-NAME = 				libft.a
-CC =				cc
-CFLAGS =			-Wall -Wextra -Werror
-RM =				rm -f
+# 
+# This work © 2023 by murmurlab is licensed under CC BY-SA 4.0. To view a copy 
+# of this license, visit http://creativecommons.org/licenses/by-sa/4.0/
+# 
 
 FILES =				ft_memset.c ft_bzero.c ft_memcpy.c ft_striteri.c ft_memmove.c \
 					ft_memchr.c ft_memcmp.c ft_strlen.c ft_strlcpy.c ft_strlcat.c \
@@ -18,35 +18,51 @@ BONUS_OBJECTS =		$(BONUS:.c=.o)
 GNL =				get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
 					get_next_line/get_next_line_bonus.c get_next_line/get_next_line_utils_bonus.c
 GNL_OBJECTS =		$(GNL:.c=.o)
-FT_PRINTF =			ft_printf/ft_printf_util.c ft_printf/ft_printf.c
-FT_PRINTF_OBJECTS =	$(FT_PRINTF:.c=.o)
 
 ft_printf =			ft_printf/libftprintf.a
 LIBS =				$(ft_printf)
 MAKEFLAGS +=		-j$(NPROCS)
 
-$(NAME): $(OBJECTS)
-	@echo "\033[92m compiling $@... \033[0m\n"
-	@echo "\033[92m $@ [OK!]\033[0m"
-	ar -rcs $(NAME) $(OBJECTS)
+NAME        = libft.a
+NAME_BONUS    = .libft_bonus.a
+CFLAGS        = -Wall -Werror -Wextra
+CC        = cc
+AR        = ar -crs
+RM        = rm -f
 
-all: $(NAME) bonus
+all: bonus
+
+m: $(NAME)
+
+b: bonus
 
 $(ft_printf):
 	@$(MAKE) -C ft_printf
 
-bonus: $(BONUS_OBJECTS) $(GNL_OBJECTS) $(LIBS)
-	ar -urcs $(NAME) $(BONUS_OBJECTS) $(GNL_OBJECTS) $(LIBS)
+${NAME}: ${OBJECTS}
+	@echo "\033[92m compiling $@... \033[0m\n"
+	@echo "\033[92m $@ [OK!]\033[0m"
+	${AR} ${NAME} ${OBJECTS}
+
+bonus: ${NAME_BONUS}
+
+${NAME_BONUS}: ${NAME} $(BONUS_OBJECTS) $(GNL_OBJECTS) $(LIBS)
+	${AR} ${NAME} $(BONUS_OBJECTS) $(GNL_OBJECTS) $(LIBS)
+	${AR} ${NAME_BONUS} ${NAME}
+
+%.o: %.c
+	${CC} ${CFLAGS} -c $< -o $@
 
 clean:
 	$(RM) $(OBJECTS) $(BONUS_OBJECTS) $(GNL_OBJECTS)
 	@$(MAKE) -C ft_printf clean
 
 fclean: clean
-	$(RM) $(NAME)
+	${RM} ${NAME}
+	${RM} ${NAME_BONUS}
 	@$(MAKE) -C ft_printf fclean
 
 re: fclean
 	@$(MAKE) all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all bonus clean fclean re

@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 18:24:43 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/28 18:48:06 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/01/30 09:39:11 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,25 @@
 
 int	sh_exit(t_main *shell, t_execd *execd)
 {
+	int			ato;
+
 	printf(EXIT_MSG);
 	if (shell->cmds[execd->_].args->next)
-		exit(ft_atoi(shell->cmds[execd->_].args->next->content));
+	{
+		if (shell->cmds[execd->_].args->next->next)
+		{
+			e2(SHELLSAY, "exit", "too many arguments");
+			exit(1);
+		}
+		ato = ft_atoi(shell->cmds[execd->_].args->next->content);
+		if ((ato == 0) && \
+			(((char *)shell->cmds[execd->_].args->next->content)[0] != '0'))
+		{
+			e2(SHELLSAY, "exit", "numeric argument required");
+			exit(255);
+		}
+		exit(ato);
+	}
 	exit(shell->ex_stat);
 }
 

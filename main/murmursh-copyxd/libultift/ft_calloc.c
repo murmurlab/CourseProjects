@@ -1,24 +1,21 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marvin   <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 12:11:10 by marvin            #+#    #+#             */
-/*   Updated: 2023/10/30 14:30:06 by marvin           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+/**
+ * This work © 2023 by murmurlab is licensed under CC BY-SA 4.0. To view a copy 
+ * of this license, visit http://creativecommons.org/licenses/by-sa/4.0/
+ */
 
-#include "libft.h"
+#include <sys/_types/_null.h>
+#include <sys/_types/_size_t.h>
+#include <malloc/_malloc.h>
 
-void	*ft_calloc(size_t nmemb, size_t size)
+void	ft_bzero(void *s, size_t n);
+
+void	*ft_calloc(size_t count, size_t size)
 {
-	void	*array;
+	void	*ptr;
 
-	array = (void *)malloc(nmemb * size);
-	if (array == NULL)
+	ptr = (void *)malloc(count * size);
+	if (!ptr)
 		return (NULL);
-	ft_bzero(array, (nmemb * size));
-	return (array);
+	ft_bzero(ptr, count * size);
+	return (ptr);
 }
