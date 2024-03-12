@@ -1,4 +1,4 @@
-#define EMPTY_INPUT "* LOUD AND UNBEARABLE FEEDBACK NOISE *\n"
+#define EMPTY_INPUT "* LOUD AND UNBEARABLE FEEDBACK NOISE *"
 
 #include <iostream>
 using std::cout;
@@ -9,7 +9,7 @@ size_t	_ = 1;
 
 if (argc < 2){
 	cout
-		<< EMPTY_INPUT;	
+		<< EMPTY_INPUT << endl;
 	return 1;}
 while (argv[_]){
 	std::string tmp(argv[_++]);
