@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/03/15 11:49:18 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/03/15 12:20:12 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,14 @@
 # define ASK_INDEX			YELLOW "Enter index" RESET
 # define SUCC_EXIT			"bYe bYe"
 
+# define NORMAL_COLOR		GREEN
 # define NORMAL_BLANK		' '
 # define NORMAL_TEDGE		'#'
 # define NORMAL_BEDGE		'#'
 # define NORMAL_LEDGE		"["
 # define NORMAL_REDGE		"]"
+# define NORMAL_WLEDGE		"["
+# define NORMAL_WREDGE		"]"
 # define NORMAL_LTCORNER	"/"
 # define NORMAL_RTCORNER	"\\"
 # define NORMAL_RBCORNER	"/"
@@ -100,25 +103,31 @@
 						// [----------|----------|------------|----------]
 # define NORMAL_HEAD_SIZE	1 + NORMAL_KEY_SIZE + 1 + NORMAL_KEY_SIZE + 1 + NORMAL_KEY_SIZE + 1 + NORMAL_VALUE_SIZE + 0
 # define NORMAL_FOOT_SIZE	NORMAL_HEAD_SIZE
+# define NORMAL_WALL_SIZE	NORMAL_HEAD_SIZE
+# define NORMAL_WALL		'-'	
 
 
 
 
 # define DETAIL_ALIGN		left
-# define DETAIL_HEAD_ALIGN	right
-# define DETAIL_FOOT_ALIGN	right
+# define DETAIL_HEAD_ALIGN	left
+# define DETAIL_FOOT_ALIGN	left
 # define DETAIL_KEY_SIZE	16
 # define DETAIL_VALUE_SIZE	32
 						// [HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH]
 						// [----------------------|-----------------------]
 # define DETAIL_HEAD_SIZE	1 + DETAIL_KEY_SIZE + 1 + DETAIL_VALUE_SIZE + 0
 # define DETAIL_FOOT_SIZE	DETAIL_HEAD_SIZE
-
+# define DETAIL_WALL_SIZE	DETAIL_HEAD_SIZE
+# define DETAIL_WALL		'^'	
+# define DETAIL_COLOR		RESET
 # define DETAIL_BLANK		'-'
 # define DETAIL_TEDGE		'&'
 # define DETAIL_BEDGE		'$'
 # define DETAIL_LEDGE		"<"
 # define DETAIL_REDGE		">"
+# define DETAIL_WLEDGE		""
+# define DETAIL_WREDGE		""
 # define DETAIL_LTCORNER	"A"
 # define DETAIL_RTCORNER	"B"
 # define DETAIL_RBCORNER	"C"
@@ -131,8 +140,6 @@
 # define CEIL2				RED
 # define FLOOR2				RED
 
-
-# define WALL				GREEN "[-------------------------------------------]" RESET
 
 # define MAX_CONTACTS		8
 # define MAX_PROPERTY		5
@@ -182,5 +189,7 @@ int printFloor();
 int printCeiling();
 int printFloor2();
 int printCeiling2();
+int wall_wextra();
+int wall_wextra2();
 
 #endif

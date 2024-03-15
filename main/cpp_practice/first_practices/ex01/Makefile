@@ -14,7 +14,7 @@ NPROCS  = $(shell sysctl -n hw.ncpu)
 else ifeq '$(os)' 'Linux'
 NPROCS  = $(shell nproc)
 endif
-MAKEFLAGS += -j$(NPROCS)
+# MAKEFLAGS += -j$(NPROCS)
 w = 1
 ifeq '$(w)' '1'
 CFLAGS += -Wextra -Werror -Wall
@@ -39,7 +39,7 @@ all: $(DEPENDENCIES)
 	@$(MAKE) $(NAME)
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
-run: all
+run:
 	./$(NAME)
 clean:
 	$(RM) $(OBJS) $(B_OBJ)

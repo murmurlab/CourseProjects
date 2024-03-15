@@ -14,3 +14,39 @@
 // anything that will always be used inside a class is private, and that anything that can be
 // used outside a class is public.
 
+#include "./Contact.hpp"
+
+string Contact::get_first_name(){
+    return first_name;}
+
+string Contact::get_last_name(){
+    return last_name;}
+
+string Contact::get_nick_name(){
+    return nick_name;}
+
+string Contact::get_phone_num(){
+    return phone_num;}
+
+string Contact::get_secret(){
+    return secret;}
+
+int Contact::set_first_name(string in){
+    first_name = in;
+    return 0;}
+
+int Contact::set_last_name(string in){
+    last_name = in;
+    return 0;}
+
+int Contact::set_nick_name(string in){
+    nick_name = in;
+    return 0;}
+
+int Contact::set_phone_num(string in){
+    phone_num = in;
+    return 0;}
+
+int Contact::set_secret(string in){
+    secret = in;
+    return 0;}

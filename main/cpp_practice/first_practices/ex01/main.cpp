@@ -45,7 +45,25 @@ cout	<< (FLOOR2 "")
 return 0;}
 
 int wall_wextra(){
-cout<<endl<<WALL<<endl
+cout	<< (DETAIL_COLOR "")
+		<< endl
+		<< DETAIL_WLEDGE
+		<< setw(DETAIL_WALL_SIZE)
+		<< std::setfill(DETAIL_WALL)
+		<< DETAIL_WREDGE
+		<< RESET
+		<< endl;
+return 0;}
+
+int wall_wextra2(){
+cout	<< (NORMAL_COLOR "")
+		<< endl
+		<< NORMAL_WLEDGE
+		<< setw(NORMAL_WALL_SIZE)
+		<< std::setfill(NORMAL_WALL)
+		<< NORMAL_WREDGE
+		<< RESET
+		<< endl;
 return 0;}
 
 // https://stackoverflow.com/a/19590797
