@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/03/11 11:06:04 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/03/15 10:04:45 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@
 # endif
 
 # include "./Contact.hpp"   
-
 class PhoneBook{
-static int older;
-Contact contacts<:8:>;
-
+int printVertical(Contact &contact, size_t idx);
+int printHorizontal(Contact &contact, int swicth);
+int older;
+Contact contacts[MAX_CONTACTS];
 public:
+PhoneBook();
 int add();
 int search();
-int exit();
-};
+int exit();};
 
 #endif

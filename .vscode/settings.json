@@ -84,7 +84,8 @@
         "system_error": "cpp",
         "tuple": "cpp",
         "type_traits": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "iomanip": "cpp"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/clang",
     "lldb.displayFormat": "auto",
