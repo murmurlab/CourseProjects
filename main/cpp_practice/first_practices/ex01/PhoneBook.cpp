@@ -85,7 +85,9 @@ break;}return 0;}
 
 int PhoneBook::search( void ){
 string	search_inp;
+char    *left;
 int     idx;
+
 printCeiling();
 for (size_t i = 0; i < MAX_CONTACTS - 1; i++){
     printVertical(contacts[i], i);
@@ -97,11 +99,13 @@ cout << ASK_INDEX << endl;
 cin >> search_inp;
 if (cin.eof()){
     return 1;}
-idx = atoi(search_inp.c_str());
+idx = strtol(search_inp.c_str(), &left, 10);
+if (*left != '\0')
+    idx = -1;
 if (idx == 0 && search_inp[0] != '0')
-    return cout << INVALID_SEARCH << endl, 1;
+    return cout << INVALID_SEARCH << ": " << idx << endl, 1;
 if (idx < 0 || idx > MAX_CONTACTS - 1)
-    return cout << INVALID_SEARCH << endl, 1;
+    return cout << INVALID_SEARCH << ": " << idx << endl, 1;
 printCeiling2();
 for (size_t i = 1; i <= MAX_PROPERTY - 1; i++){
     printHorizontal(contacts[idx], i);
