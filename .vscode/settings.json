@@ -85,7 +85,10 @@
         "tuple": "cpp",
         "type_traits": "cpp",
         "utility": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "deque": "cpp",
+        "fstream": "cpp",
+        "stack": "cpp"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/clang",
     "lldb.displayFormat": "auto",
