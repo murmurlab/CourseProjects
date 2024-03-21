@@ -2,9 +2,9 @@
 
 ClapTrap::ClapTrap(string name_c){
 name = name_c;
-health = 10;
-energy = 10;
-damage = 0;
+health = 100;
+energy = 50;
+damage = 20;
 cout    << "ClapTrap " << name << " is spawned." << endl;
 }
 

@@ -1,5 +1,5 @@
-#ifndef CLAPTRAP_H
-# define CLAPTRAP_H
+#ifndef SCAVTRAP_H
+# define SCAVTRAP_H
 # if defined(__linux__)
 /* Linux. --------------------------------------------------- */
 
@@ -15,13 +15,14 @@
 # define RESET				"\x1B[0m"
 
 #include <iostream>
+#include "ClapTrap.hpp"
 
 using std::cout;
 using std::cerr;
 using std::endl;
 using std::string;
 
-class ClapTrap
+class ScavTrap : ClapTrap
 {
 private:
     string  name;
@@ -29,13 +30,14 @@ private:
     int     energy;
     int     damage;
 public:
-    ClapTrap(string name_c);
-    ClapTrap(ClapTrap &copy);
-    ClapTrap &operator=(ClapTrap &assignment);
-    ~ClapTrap();
+    ScavTrap(string name_c);
+    ScavTrap(ScavTrap &copy);
+    ScavTrap &operator=(ScavTrap &assignment);
+    ~ScavTrap();
     void attack(const string& target);
     void takeDamage(unsigned int amount);
     void beRepaired(unsigned int amount);
+    void guardGate( void );
 };
 
 

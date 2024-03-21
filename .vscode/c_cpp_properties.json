@@ -17,7 +17,7 @@
             "cStandard": "c99",
             "cppStandard": "c++17",
             "intelliSenseMode": "macos-clang-x64",
-            "compilerPath": "/usr/bin/cc"
+            "compilerPath": "\\\\wsl.localhost\\Ubuntu\\usr\\bin\\cc"
         },
         {
             "name": "linux",
@@ -35,7 +35,7 @@
             "cStandard": "c99",
             "cppStandard": "c++17",
             "intelliSenseMode": "linux-clang-x64",
-            "compilerPath": "/usr/bin/clang"
+            "compilerPath": "/usr/bin/clang++-14"
         },
         {
             "name": "win",
