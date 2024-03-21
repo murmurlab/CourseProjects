@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/03/20 20:00:56 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/03/20 20:04:27 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define RESET				"\x1B[0m"
 
 #include <iostream>
+#include <cmath>
 
 using std::cout;
 using std::cerr;
@@ -41,6 +42,8 @@ private:
     static const int    fractional = 8;
 public:
     Fixed();
+    Fixed(const int integer);
+    Fixed(const float floatting);
     Fixed(Fixed &copy);
     ~Fixed();
     Fixed &operator=(Fixed &assignment);

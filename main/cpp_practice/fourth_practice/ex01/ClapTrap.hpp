@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Fixed.hpp                                          :+:      :+:    :+:   */
+/*   ClapTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/03/20 20:00:56 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/03/21 06:11:52 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#ifndef FIXED_H
-# define FIXED_H
+#ifndef CLAPTRAP_H
+# define CLAPTRAP_H
 # if defined(__linux__)
 /* Linux. --------------------------------------------------- */
 
@@ -34,18 +34,23 @@ using std::cerr;
 using std::endl;
 using std::string;
 
-class Fixed
+class ClapTrap
 {
 private:
-    int                 fixed_point;
-    static const int    fractional = 8;
+    string  name;
+    int     health;
+    int     energy;
+    int     damage;
 public:
-    Fixed();
-    Fixed(Fixed &copy);
-    ~Fixed();
-    Fixed &operator=(Fixed &assignment);
-    int getRawBits( void ) const;
-    void setRawBits( int const raw );
+    ClapTrap(string name_c);
+    ClapTrap(ClapTrap &copy);
+    ClapTrap &operator=(ClapTrap &assignment);
+    ~ClapTrap();
+    void attack(const string& target);
+    void takeDamage(unsigned int amount);
+    void beRepaired(unsigned int amount);
 };
+
+
 
 #endif

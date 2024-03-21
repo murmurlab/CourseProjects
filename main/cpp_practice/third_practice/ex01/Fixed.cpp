@@ -5,6 +5,11 @@ fixed_point = 0;
 cout<< "Default constructor" <<endl;
 }
 
+Fixed::Fixed( const int integer ){
+fixed_point = integer;
+cout<< "int constructor" <<endl;
+}
+
 Fixed::Fixed(Fixed &copy){
 cout<< "Copy constructor" <<endl;
 this->fixed_point = copy.fixed_point;
