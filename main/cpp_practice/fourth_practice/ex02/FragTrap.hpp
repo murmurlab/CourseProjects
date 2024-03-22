@@ -1,5 +1,5 @@
-#ifndef SCAVTRAP_H
-# define SCAVTRAP_H
+#ifndef FRAGTRAP_H
+# define FRAGTRAP_H
 # if defined(__linux__)
 /* Linux. --------------------------------------------------- */
 
@@ -22,16 +22,15 @@ using std::cerr;
 using std::endl;
 using std::string;
 
-class ScavTrap : public ClapTrap
+class FragTrap : public ClapTrap
 {
 private:
-    ScavTrap();
+    FragTrap();
 public:
-    ScavTrap(string name_c);
-    ~ScavTrap();
+    FragTrap(string name_c);
+    ~FragTrap();
 
-    void attack(const string& target);
-    void guardGate( void );
+    void highFivesGuys( void );
 };
 
 

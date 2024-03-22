@@ -6,7 +6,7 @@
 /*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/03/21 06:11:52 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/03/22 03:55:47 by ahbasara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ private:
     int     health;
     int     energy;
     int     damage;
+    ClapTrap();
 public:
     ClapTrap(string name_c);
     ClapTrap(ClapTrap &copy);

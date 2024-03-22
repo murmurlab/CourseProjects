@@ -1,5 +1,5 @@
-#ifndef SCAVTRAP_H
-# define SCAVTRAP_H
+#ifndef ANIMAL_H
+# define ANIMAL_H
 # if defined(__linux__)
 /* Linux. --------------------------------------------------- */
 
@@ -15,25 +15,20 @@
 # define RESET				"\x1B[0m"
 
 #include <iostream>
-#include "ClapTrap.hpp"
 
 using std::cout;
 using std::cerr;
 using std::endl;
 using std::string;
 
-class ScavTrap : public ClapTrap
+class Animal
 {
 private:
-    ScavTrap();
+    
 public:
-    ScavTrap(string name_c);
-    ~ScavTrap();
-
-    void attack(const string& target);
-    void guardGate( void );
+    Animal();
+    ~Animal();
 };
-
 
 
 #endif

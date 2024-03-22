@@ -1,9 +1,9 @@
-#include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 
 int main(int argc, char const *argv[]){
-ScavTrap    one("one");
-ScavTrap    two("two");
-ScavTrap    three("three");
+FragTrap    one("one");
+FragTrap    two("two");
+FragTrap    three("three");
 
 one.attack("two");
 cout << endl;
@@ -18,7 +18,7 @@ two.takeDamage(60);
 cout << endl;
 cout << endl;
 
-for (size_t i = 0; i < 49; i++){
+for (size_t i = 0; i < 99; i++){
 one.beRepaired(0);
 }
 one.attack("noneeeeee");
