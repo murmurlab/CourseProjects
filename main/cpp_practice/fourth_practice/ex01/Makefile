@@ -35,6 +35,8 @@ endif
 
 
 
+%.o: %.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
 all: $(DEPENDENCIES)
 	echo $(OBJS)
 	@$(MAKE) $(NAME)
