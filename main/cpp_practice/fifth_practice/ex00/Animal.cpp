@@ -7,12 +7,12 @@ Animal::Animal()
 Animal::~Animal()
 {
 }
-ClapTrap::ClapTrap(ClapTrap &copy){    
+Animal::Animal(Animal &copy){    
 *this = copy;
 cout    << "ClapTrap copy constructor called" << endl;
 }
 
-ClapTrap &ClapTrap::operator=(ClapTrap &assignment){
+Animal &Animal::operator=(Animal &assignment){
 this->name = assignment.name;
 this->health = assignment.health;
 this->energy = assignment.energy;

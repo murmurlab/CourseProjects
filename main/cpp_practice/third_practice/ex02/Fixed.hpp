@@ -1,16 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Fixed.hpp                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/13 18:14:08 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/03/23 15:01:51 by ahbasara         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-
 #ifndef FIXED_H
 # define FIXED_H
 # if defined(__linux__)
@@ -46,14 +33,38 @@ private:
 public:
     Fixed();
     Fixed(Fixed &copy);
+    Fixed(const Fixed &copy);
     ~Fixed();
-
-    Fixed &operator= (Fixed &assignment);
 
     int toInt( void ) const;
     float toFloat( void ) const;
     Fixed(const int integer);
     Fixed(const float floatting);
+
+    static Fixed &max(Fixed &a, Fixed &b);
+    static const Fixed &max(const Fixed &a, const Fixed &b);
+    static Fixed &min(Fixed &a, Fixed &b);
+    static const Fixed &min(const Fixed &a, const Fixed &b);
+
+    Fixed &operator= (Fixed &assignment);
+
+    Fixed	operator-(const Fixed &other);
+    Fixed	operator+(const Fixed &other);
+    Fixed	operator*(const Fixed &other);
+    Fixed	operator/(const Fixed &other);
+
+    Fixed   operator++(int);
+    Fixed	&operator++();
+    Fixed	operator--(int);
+    Fixed	&operator--();
+
+    bool    operator==(const Fixed &other);
+    bool    operator!=(const Fixed &other);
+    bool	operator>(const Fixed &other);
+    bool	operator<(const Fixed &other);
+    bool	operator>=(const Fixed &other);
+    bool	operator<=(const Fixed &other);
+
     int getRawBits( void ) const;
     void setRawBits( int const raw );
 };
