@@ -33,10 +33,9 @@ ifeq '$(test)' '1'
 ./$(attest) .
 endif
 
-
-
+%.o: %.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
 all: $(DEPENDENCIES)
-	echo $(OBJS)
 	@$(MAKE) $(NAME)
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
