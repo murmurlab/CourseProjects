@@ -16,7 +16,7 @@ std::cout << b.getRawBits() << std::endl;
 std::cout << c.getRawBits() << std::endl;
 cout << c.toFloat() << endl;
 cout << c.toInt() << endl;
-cout << "||" << (a++) << "||" << (a) << "||" << endl;
+cout << "||" << (a - b) << "||" << (a) << "||" << endl;
 
 
 Fixed a1;

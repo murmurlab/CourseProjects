@@ -32,12 +32,12 @@ return (fixed_point / TOTAL_SHIFT);
 
 Fixed::Fixed(Fixed &copy){
 // cout<< "Copy constructor" <<endl;
-this->fixed_point = copy.fixed_point;
+this->fixed_point = copy.getRawBits();
 }
 
 Fixed::Fixed(const Fixed &copy){
 // cout<< "Copy constructor" <<endl;
-this->fixed_point = copy.fixed_point;
+this->fixed_point = copy.getRawBits();
 }
 
 Fixed::~Fixed(){
@@ -75,12 +75,14 @@ bool Fixed::operator!=( const Fixed &other ) {
 
 
 Fixed Fixed::operator-( const Fixed &other ) {
-    Fixed res (this->getRawBits() - other.getRawBits());
+    Fixed res;
+    res.setRawBits(this->getRawBits() - other.getRawBits());
     return res;
 }
 
 Fixed Fixed::operator+( const Fixed &other ) {
-    Fixed res (this->getRawBits() + other.getRawBits());
+    Fixed res;
+    res.setRawBits(this->getRawBits() + other.getRawBits());
     return res;
 }
 // boleceksem neden carptim?
