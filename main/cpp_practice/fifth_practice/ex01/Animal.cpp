@@ -22,7 +22,7 @@ Animal::Animal( const Animal& src )
 
 Animal& Animal::operator=( const Animal& rhs )
 {
-    std::cout << "Animal assignment operator called" << std::endl;
+    std::cout << "<Animal.cpp:35: Animal assignment operator called" << std::endl;
     if ( this != &rhs ) {
         this->_type = rhs._type;
     }

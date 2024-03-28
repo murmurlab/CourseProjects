@@ -1,40 +1,37 @@
-#include "ClapTrap.hpp"
+#include "Dog.hpp"
+#include "Cat.hpp"
 
-int main(int argc, char const *argv[]){
-ClapTrap    one("one");
-ClapTrap    two("two");
-ClapTrap    three("three");
+#include "WrongCat.hpp"
 
-one.attack("two");
-cout << endl;
-cout << endl;
-two.takeDamage(6);
-two.beRepaired(6);
-two.beRepaired(6);
-two.takeDamage(6);
-two.takeDamage(6);
-two.takeDamage(6);
-two.takeDamage(6);
-cout << endl;
-cout << endl;
-one.beRepaired(0);
-one.beRepaired(0);
-one.beRepaired(0);
-one.beRepaired(0);
-one.beRepaired(0);
-one.beRepaired(0);
-one.beRepaired(0);
-one.beRepaired(0);
-one.beRepaired(0);
-one.beRepaired(0);
-one.attack("noneeeeee");
-cout << endl;
-cout << endl;
-one.takeDamage(155);
-cout << endl;
-cout << endl;
-three = one; // both name one
-three.attack("when dead"); //name one
-one.attack("when dead"); //name one
-return 0;
+int main( void )
+{
+    std::cout << "--------------- Animal ---------------" << std::endl;
+
+    const Animal* meta = new Animal();
+    const Animal* j = new Dog();
+    const Animal* i = new Cat();
+
+    std::cout << "J Type: " << j->getType() << " " << std::endl;
+    std::cout << "I Type: " << i->getType() << " " << std::endl;
+    i->makeSound();
+    meta->makeSound();
+
+    delete  meta;
+    delete  j;
+    delete  i;
+
+    std::cout << std::endl << "------------- Wrong Animal -------------" << std::endl;
+
+    const WrongAnimal *wrong = new WrongAnimal();
+    const WrongAnimal *wrongCat = new WrongCat();
+
+    std::cout << "Wrong Type: " << wrong->getType() << " " << std::endl;
+    std::cout << "WrongCat Type: " << wrongCat->getType() << " " << std::endl;
+    wrong->makeSound();
+    wrongCat->makeSound();
+
+    delete  wrong;
+    delete  wrongCat;
+
+    return 0;
 }
