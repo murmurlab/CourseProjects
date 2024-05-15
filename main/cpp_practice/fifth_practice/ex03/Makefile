@@ -14,7 +14,7 @@ NPROCS  = $(shell sysctl -n hw.ncpu)
 else ifeq '$(os)' 'Linux'
 NPROCS  = $(shell nproc)
 endif
-MAKEFLAGS += -j$(NPROCS)
+# MAKEFLAGS += -j$(NPROCS)
 w = 1
 ifeq '$(w)' '1'
 CFLAGS += -Wextra -Werror -Wall

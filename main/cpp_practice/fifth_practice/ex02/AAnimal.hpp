@@ -18,7 +18,7 @@ public:
     AAnimal( const AAnimal& src );
     AAnimal& operator=( const AAnimal& rhs );
 
-    virtual void    makeSound( void ) const = 0;;
+    virtual void    makeSound( void ) const = 0;
     std::string     getType( void ) const; 
 };
 
