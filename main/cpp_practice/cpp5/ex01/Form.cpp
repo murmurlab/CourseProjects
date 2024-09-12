@@ -10,9 +10,15 @@ Form::Form(string name, int sign_grade, int exec_grade):
     }
 }
 
-//copy assgn
+Form::Form(Form& copy):
+    _name(copy.getName()), _sign_grade(copy.getSignGrade()),
+    _exec_grade(copy.getExecGrade()), _signature(copy.getSignature()) {}
 
 //operator=
+Form& Form::operator=(Form& assgn){
+    _signature = assgn.getSignature();
+    return *this;
+}
 
 Form::~Form()
 {

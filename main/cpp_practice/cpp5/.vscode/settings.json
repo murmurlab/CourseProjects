@@ -62,6 +62,11 @@
         "cstring": "cpp",
         "ctime": "cpp",
         "cwchar": "cpp",
-        "cwctype": "cpp"
+        "cwctype": "cpp",
+        "deque": "cpp",
+        "fstream": "cpp",
+        "iomanip": "cpp",
+        "stack": "cpp",
+        "filesystem": "cpp"
     }
 }
