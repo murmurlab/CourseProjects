@@ -17,8 +17,6 @@ Intern::Intern() {}
 Intern::~Intern() {}
 
 AForm* Intern::makeForm(string form_name, string target_of_form) {
-    (void)form_name;
-    (void)target_of_form;
     for (size_t i = 0; i < FORM_COUNT; i++) {
         if (form_names[i] == form_name) {
             return (form_constructors[i](target_of_form));

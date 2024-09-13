@@ -45,7 +45,9 @@ int main( void ) try {
 
         Intern someRandomIntern;
         AForm* rrf;
-        rrf = someRandomIntern.makeForm("PresidentialPardonForm", "Bender");
+        rrf = someRandomIntern.makeForm("RobotomyRequestForm", "Bender");
+        if (!rrf)
+            return cout<< "cant alloc" <<endl, 1;
         bro.signForm(*rrf);
         cout<< *rrf <<endl;
         bro.executeForm(*rrf);
