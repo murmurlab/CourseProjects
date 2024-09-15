@@ -51,6 +51,7 @@ int main( void ) try {
         bro.signForm(*rrf);
         cout<< *rrf <<endl;
         bro.executeForm(*rrf);
+        delete rrf;
     }
 } catch (exception& e) {
     cout<< e.what() << " catched from main! " <<endl;

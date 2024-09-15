@@ -20,6 +20,7 @@
 # include <fstream>
 # include <iostream>
 # include <exception>
+# include <typeinfo>
 
 using std::srand;
 using std::ios;

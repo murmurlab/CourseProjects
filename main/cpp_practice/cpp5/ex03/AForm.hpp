@@ -26,7 +26,7 @@ class AForm
 		AForm(string name, int sign_grade, int exec_grade);
 		AForm(AForm &cp);
 		AForm& operator=(AForm &assgn);
-		~AForm();
+		virtual ~AForm();
         virtual void execute(Bureaucrat const & executor) const = 0;
 		void beSigned(Bureaucrat &bro);
 		int getSignGrade();

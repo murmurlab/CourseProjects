@@ -15,7 +15,7 @@ AForm((string(__FILE__)).erase(string(__FILE__).size() - 4), 72, 45) {
 
 void RobotomyRequestForm::execute(Bureaucrat const & executor) const {
     validate_exec(executor);
-    std::srand(std::time(nullptr));
+    std::srand(std::time(NULL));
     cout<< "...Making some drilling noises now..." <<endl;
     if (rand() % 2)
         cout << "Informing that " << target_ << " has been robotomized successfully" << endl;

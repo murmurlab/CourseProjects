@@ -22,7 +22,7 @@ AForm* Intern::makeForm(string form_name, string target_of_form) {
             return (form_constructors[i](target_of_form));
         }
     }
-    return nullptr;
+    return NULL;
 }
 
 const string Intern::form_names[FORM_COUNT] = {
