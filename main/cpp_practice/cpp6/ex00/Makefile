@@ -1,7 +1,7 @@
 CC				= clang++
-CXXFLAGS        = -std=c++98 
+CXXFLAGS        = -std=c++98 -pedantic
 
-LXXFLAGS		=  
+LXXFLAGS		= 
 RUNFLAGS		=
 
 NAME			= program
