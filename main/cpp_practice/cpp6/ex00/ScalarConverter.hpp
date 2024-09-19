@@ -2,20 +2,19 @@
 #define SCALAR_CONVERTER_H
 
 #include "common.hpp"
+#include "ConvertException.hpp"
 
 class ScalarConverter {
 	private:
 		virtual ~ScalarConverter() = 0;
 		ScalarConverter();
-		string _char;
-		string _int;
-		string _float;
-		string _double;
-		void convert_char(string& literal);
-		void convert_int(string& literal);
-		void convert_float(string& literal);
-		void convert_double(string& literal);
 
+		static double	_data;
+		static string convert_char(string& literal);
+		static string convert_int(string& literal);
+		static string convert_float(string& literal);
+		static string convert_double(string& literal);
+		typedef ::ConvertException ConvertException;
 	public:
 		static void convert(string literal);
 };
