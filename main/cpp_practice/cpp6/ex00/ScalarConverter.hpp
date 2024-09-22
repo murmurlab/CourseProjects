@@ -13,10 +13,10 @@ class ScalarConverter {
 		ScalarConverter();
 
 		static double	_data;
-		static char convert_char(string& literal);
-		static int convert_int(string& literal);
-		static float convert_float(string& literal);
-		static double convert_double(string& literal);
+		static char convert_char();
+		static int convert_int();
+		static float convert_float();
+		static double convert_double();
 		typedef ::ConvertException ConvertException;
 	public:
 		static void convert(string literal);
