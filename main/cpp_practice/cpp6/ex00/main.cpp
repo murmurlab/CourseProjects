@@ -2,76 +2,58 @@
 #include <cstdlib>
 #include "ScalarConverter.hpp"
 #include "common.hpp"
-// #include <sanitizer/lsan_interface.h>
 
+// void	test(string& str) {
+// 	double testdb;
+// 	istringstream b(str);
+// 	b.setf(std::ios_base::scientific, std::ios_base::floatfield);
+// 	b >> testdb;
+// 	if (!b.good())
+// 		std::cerr << "err" << endl;
+// 	string my = b.str();
 
+// 	double one = std::strtod(my.c_str(), NULL);
+// 	double two = std::strtod(str.c_str(), NULL);
+	
+// 	cout << "inp						=> " << my << endl
+// 		<< ">>double					=> " << testdb << endl << endl
 
-int main(int ac, char* av[]) {
-// 	string a("inf");
-// 	istringstream b("0arstarst");
-// 	// int a = dynamic_cast<int>(a);
-// 	// float ss = std::nanf;
-// 	double c;
-// 	b >> c;
-// 	cout << c << " " << "arstart" << endl;
-// 	cout << (c==__DBL_MAX__) << endl;
-// 	char *x;
-// 	char str[] = "";
-// 	cout << std::strtod("1.7976931348623157e+308", &x) << endl;
+// 		<< "inp strtod()					=> " << two << endl
+// 		<< ">>double strtod()				=> " << one << endl << endl
 
-// 	// __DBL_MAX__
-// 	// 1.7976931348623157e+308
-// 	// cout << (void*)(x - str) <<""<< endl;
-// 	cout << 1.7976931348623157e+308 / 10 << " tod cevirdi"  << endl;
-// 	// (double)__INT_MAX__
-// 	// printf("%ld\n", 1.7976931348623157e+308);
-// 	// cout.setf(std::ios::fixed, std::ios::floatfield);
-// 	// cout.setf(std::ios::showpoint);
-// 	// std::cout.precision(std::numeric_limits<long double>::max_exponent10);
-// 	// cout.unsetf ( std::ios::floatfield );
-// 	// setiosflags(std::ios::fixed);
-// 	// printf("%lf aa \n",__DBL_MAX__);
-// // __FLT_MAX__
+// 		<< ">>double-strtod == >>double			=> " << (one == testdb) << endl
+// 		<< "inp-strtod == >>double-strtod			=> " << (one == two) << endl
+// 		<< "inp-strtod == >>double				=> " << (two == testdb) << endl << endl
 
-// 	// std::numeric_limits<double>::max_digits10 + 1
-
-// 	cout << "=======" << endl;
-// 	cout << trunc(std::strtod("9223372036854775802e1", NULL)) << endl;
-// 	cout << std::setprecision(std::numeric_limits<double>::max_digits10 ) << std::defaultfloat <<  (__DBL_MAX__)  << " ------- " << std::strtod("9223372036854775802e1", NULL) << endl; // 1.7976931348623157e+308
-// 	cout << trunc(log10(__DBL_MAX__)) << endl;
-// 	cout << "=======" << endl;
-	// ostringstream in();
-	// in << 1.7976931348623157e+308;
-	// cout << in.str() << " to string" << endl;
-	(void)ac;
-	(void)av;
-
-	// string arr[] = {
-	//     "words and 2",
-	//     "45",
-	//     "+45",
-	//     " -45",
-	//     "3.14159",
-	//     "31337 with words",
-	//     "12345678901",
-	// };
-	// int len = (sizeof(arr) / sizeof(string));
-	try {
-		// ScalarConverter::convert("-0.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002147483647e130");
-		cout << static_cast<long>(trunc(2147483500.99f)) << endl;
-		// cout << static_cast<int>(trunc(2147483645.0f)) << endl;
 		
-		ScalarConverter::convert("1");
+// 		<< "static_cast inp-literal				=> " << static_cast<long>((trunc((VAL)))) << endl
+// 		<< "static_cast :inp strtod()			=> " << static_cast<long>(trunc(two)) << endl
+// 		<< "static_cast >>double				=> " << static_cast<long>(trunc(testdb)) << endl
+// 		<< "static_cast :>>double strtod()			=> " << static_cast<long>(trunc(one)) << endl << endl
+		
+// 		<< "inp-literal == >>double				=> " << (VAL == testdb) << endl
+// 		<< "inp-literal == inp-strtod			=> " << (VAL == std::strtod(str.c_str(), NULL)) << endl << endl;
+// }
 
-	} catch (exception& e) {
-		cout<< e.what() <<endl;
+int main(int ac, char* av[]) try {
+	// cout.setf(std::ios::fixed, std::ios::floatfield);
+	// cout.setf(std::ios::showpoint);
+	// setiosflags(std::ios::fixed);
+	// std::numeric_limits<double>::max_digits10 + 1
+	// double aax=0x.f;
+	if (ac != 2) {
+		cout << "usage: " << av[0] << " <cpp literal>" << endl;
+		cout << "running with default arg" << endl << endl;
+
+		string str(stringify(VAL));
+		// test(str);
+		ScalarConverter::convert(str.c_str());
+		std::exit(1);
 	}
-	// for (size_t i = 0; i < len; i++) {
-	// 	// int num(stoi(arr[i]));
-	// 	// cout<< num <<endl;
-	// }
+	ScalarConverter::convert(av[1]);
+} catch (exception& e) {
+	cout<< e.what() <<endl;
 }
-
 __attribute__((destructor)) void end() {
 	// __lsan_do_recoverable_leak_check();
 	// __lsan_do_leak_check();

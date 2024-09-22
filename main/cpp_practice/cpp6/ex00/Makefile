@@ -52,7 +52,7 @@ all: $(DEPENDENCIES)
 $(NAME): $(OBJS)
 	$(CC) $(LXXFLAGS) $(OBJS) -o $(NAME)
 run: re
-	$(RUNFLAGS) ./$(NAME) 
+	$(RUNFLAGS) ./$(NAME) $(args)
 clean:
 	@$(RM) $(OBJS) $(B_OBJ)
 fclean: clean

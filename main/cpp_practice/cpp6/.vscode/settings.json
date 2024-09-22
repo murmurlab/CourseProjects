@@ -51,6 +51,14 @@
 		"streambuf": "cpp",
 		"text_encoding": "cpp",
 		"typeinfo": "cpp",
-		"variant": "cpp"
+		"variant": "cpp",
+		"sstream": "cpp",
+		"iomanip": "cpp",
+		"cinttypes": "cpp",
+		"climits": "cpp",
+		"thread": "cpp",
+		"ratio": "cpp",
+		"semaphore": "cpp",
+		"stop_token": "cpp"
 	}
 }

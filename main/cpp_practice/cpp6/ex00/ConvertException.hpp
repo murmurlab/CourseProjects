@@ -12,9 +12,9 @@ class ConvertException: public exception {
 		 *  				the function is explicit to block implicitly cast
 		 */
 		explicit ConvertException(const char* message) 
-			: msg_(string(typeid(*this).name()) + ": " + string(message)) {}
+			: msg_(string(message)) {}
 		explicit ConvertException(const std::string& message)
-			: msg_(string(typeid(*this).name()) + ": " + string(message)) {}
+			: msg_(string(message)) {}
 
 		virtual ~ConvertException() throw() {}
 		virtual const char* what() const throw() {

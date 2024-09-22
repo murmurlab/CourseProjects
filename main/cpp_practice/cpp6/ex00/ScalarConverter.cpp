@@ -2,58 +2,89 @@
 
 double ScalarConverter::_data;
 
-string ScalarConverter::convert_char(string& literal) {
-	return ("");
+char ScalarConverter::convert_char(string& literal) {
+	int	res(convert_int(literal));
+	char c = static_cast<char>(res);
+
+	if (res > std::numeric_limits<char>::max() || res < std::numeric_limits<char>::min())
+		throw (ConvertException("exceed limitz"));
+	if (!std::isprint(c))
+		throw (ConvertException("Undisplayable char"));
+	return c;
 }
 
-string ScalarConverter::convert_int(string& literal) {
-	// 1.7976931348623157e+308
-	// cout << endl << trunc(_data) << endl;
-	if ((trunc(_data)) > ((double)std::numeric_limits<int>::max()) || 
-		(trunc(_data)) < ((double)std::numeric_limits<int>::min())) {
-		return ("imp");
-	} else {
-		ostringstream in;
-		in << std::setprecision(std::numeric_limits<double>::digits10) << trunc(_data);
-		return in.str();		
+int ScalarConverter::convert_int(string& literal) {
+	long casted(_data);
+
+	if (_data != _data)
+		throw (ConvertException("impossible integer"));
+	if (_data == std::numeric_limits<double>::infinity())
+		std::numeric_limits<int>::infinity();
+	if (_data == -std::numeric_limits<double>::infinity())
+		std::numeric_limits<int>::infinity();
+	if (casted > std::numeric_limits<int>::max() ||
+		casted < std::numeric_limits<int>::min()) {
+			throw (ConvertException("exceded limit"));
 	}
-	// cout << trunc(log10(_data)) << endl;
-	return ("");
+	return int(casted);
 }
 
-string ScalarConverter::convert_float(string& literal) {
-	
-	return ("");
-	
-}
-
-string ScalarConverter::convert_double(string& literal) {
-	ostringstream in;
-	in << std::setprecision(std::numeric_limits<double>::digits10) << _data;
+float ScalarConverter::convert_float(string& literal) {
 	return (
-		in.str()
+		float(_data)
 	);
 }
 
+double ScalarConverter::convert_double(string& literal) {
+	return _data;
+}
+
 void ScalarConverter::convert(string literal) {
-	// cout << (literal.back()) << endl
-	// 	<< *literal.begin() << endl
-	// 	<< literal.length() << endl;
+	istringstream b(literal);
+	b >> _data;
+	string my = b.str();
+
+	double one = std::strtod(my.c_str(), NULL);
+	double two = std::strtod("-2147483583.99f", NULL);
+
 	if (literal.length() == 3 &&
 		*literal.begin() == '\'' &&
 		(literal.at(literal.length() - 1)) == '\'') {
-		// cout << literal.at(1) << " <-" << endl;
 		_data = (literal.at(1));
-		return ;
+	} else {
+		char *err;
+		_data = std::strtod(literal.c_str(), &err);
+		if (*err && !((*err == 'f' || *err == 'F') && ((literal.find("f") == (literal.length() - 1)) || (literal.find("F") == (literal.length() - 1))) || (literal == "nanf" || literal == "-nanf" || literal == "-inff" || literal == "+inff" || literal == "inff")))
+			throw (ConvertException(string(__PRETTY_FUNCTION__) + " => cannot parse literal: " + *err));
 	}
-	char *err;
-	_data = std::strtod(literal.c_str(), &err);
-	if (*err)
-		throw (ConvertException(string(__PRETTY_FUNCTION__) + " => cannot parse number"));
-	cout << "char: " << convert_char(literal) << endl
-		<< "int: " << convert_int(literal) << endl
-		<< "float: " << convert_float(literal) << endl
-		<< "double: " << convert_double(literal) << endl;
+	ostringstream outs;
+	outs << "char: ";
+	try {
+		char res(convert_char(literal));
+		outs << "'" <<  res;
+		outs << "'" <<  endl;
+	}
+	catch(ConvertException& e) {
+		outs << e.what() << endl;
+	}
+	outs << "int: ";
+	try {
+		int res(convert_int(literal));
+		outs << res;
+		outs << endl;
+	}
+	catch(ConvertException& e) {
+		outs << e.what() << endl;
+	}
+	outs << "float: "
+			<< std::showpoint
+			<< std::setprecision(std::numeric_limits<float>::digits10 + 1)
+			<< convert_float(literal) << "f" << endl
+		<< "double: "
+			<< std::showpoint
+			<< std::setprecision(std::numeric_limits<double>::digits10 + 1)
+			<< convert_double(literal) << endl;
+	cout << outs.str();
 }
 
 ScalarConverter::~ScalarConverter() {
