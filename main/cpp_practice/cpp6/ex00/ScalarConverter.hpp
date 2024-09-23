@@ -10,6 +10,8 @@
 class ScalarConverter {
 	private:
 		virtual ~ScalarConverter() = 0;
+		virtual ScalarConverter& operator=(ScalarConverter& assgn) = 0;
+		ScalarConverter(ScalarConverter& cpy);
 		ScalarConverter();
 
 		static double	_data;

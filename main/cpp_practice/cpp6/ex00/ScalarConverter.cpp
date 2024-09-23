@@ -2,6 +2,9 @@
 
 double ScalarConverter::_data;
 
+ScalarConverter::ScalarConverter(ScalarConverter& cpy) {(void)cpy;}
+ScalarConverter::ScalarConverter() {}
+
 char ScalarConverter::convert_char() {
 	int	res(convert_int());
 	char c = static_cast<char>(res);
@@ -36,7 +39,7 @@ float ScalarConverter::convert_float() {
 }
 
 double ScalarConverter::convert_double() {
-	return _data;
+	return (double)_data;
 }
 
 void ScalarConverter::convert(string literal) {
@@ -82,7 +85,4 @@ void ScalarConverter::convert(string literal) {
 			<< std::setprecision(std::numeric_limits<double>::digits10 + 1)
 			<< convert_double() << endl;
 	cout << outs.str();
-}
-
-ScalarConverter::~ScalarConverter() {
 }

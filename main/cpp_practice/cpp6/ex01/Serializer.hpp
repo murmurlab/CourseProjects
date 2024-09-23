@@ -12,6 +12,8 @@
 
 class Serializer {
 	private:
+		Serializer(Serializer& cpy);
+		virtual Serializer& operator=(Serializer& assgn) = 0;
 		virtual ~Serializer() = 0;
 		Serializer();
 	public:
