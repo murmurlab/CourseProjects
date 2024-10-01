@@ -1,6 +1,7 @@
 {
 	"files.associations": {
 		"*.c": "c",
+		"*.tpp": "cpp",
 		"array": "cpp",
 		"atomic": "cpp",
 		"bit": "cpp",
@@ -50,6 +51,7 @@
 		"streambuf": "cpp",
 		"text_encoding": "cpp",
 		"typeinfo": "cpp",
-		"variant": "cpp"
+		"variant": "cpp",
+		"cstring": "cpp"
 	}
 }
