@@ -6,25 +6,21 @@
 
 class Span {
 	private:
-		std::vector<int>	_v;
+		std::vector<int>			_v;
 		std::vector<int>::iterator	_iter;
 	public:
 		Span();
 		~Span();
-		Span(Span& copy);
-		Span& operator=(Span& rvalue);
-		
+		Span(Span const& copy);
+		Span& operator=(Span const& rvalue);
+
 		Span(unsigned int size);
 
 		int shortestSpan();
 		int longestSpan();
-		unsigned int addNumber(int num);
+		void addNumber(int num);
+		void list();
+		void fill(int (*fun)( void ));
 };
 
 #endif // SPAN_HPP
-
-
-// -3 -4 -> -7
-
-// -3 4 -> 1
-
