@@ -1,8 +1,9 @@
 #if !defined(SPAN_HPP)
 # define SPAN_HPP
 
+# include "CustomizableException.hpp"
+# include <algorithm>
 # include <vector>
-# include "common.hpp"
 
 class Span {
 	private:
@@ -15,12 +16,11 @@ class Span {
 		Span& operator=(Span const& rvalue);
 
 		Span(unsigned int size);
-
 		int shortestSpan();
 		int longestSpan();
 		void addNumber(int num);
-		void list();
 		void fill(int (*fun)( void ));
+		// void list();
 };
 
 #endif // SPAN_HPP

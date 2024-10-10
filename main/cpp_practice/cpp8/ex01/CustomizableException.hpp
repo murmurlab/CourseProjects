@@ -1,22 +1,22 @@
-#if !defined(NOT_FOUND_ELEMENT_HPP)
-# define NOT_FOUND_ELEMENT_HPP
+#if !defined(CUSTOMIZABLE_EXCEPTION_HPP)
+# define CUSTOMIZABLE_EXCEPTION_HPP
 
 # include "common.hpp"
 
-class NotFoundElement: public exception {
+class CustomizableException: public exception {
 	public:
-		NotFoundElement() : msg_(typeid(*this).name()) {}
+		CustomizableException() : msg_(typeid(*this).name()) {}
 
 		/** Constructor (C strings).
 		 *  @param message	The error message.
 		 *  				the function is explicit to block implicitly cast
 		 */
-		explicit NotFoundElement(const char* message) 
+		explicit CustomizableException(const char* message) 
 			: msg_(string(typeid(*this).name()) + ": " + string(message)) {}
-		explicit NotFoundElement(const std::string& message)
+		explicit CustomizableException(const std::string& message)
 			: msg_(string(typeid(*this).name()) + ": " + string(message)) {}
 
-		virtual ~NotFoundElement() throw() {}
+		virtual ~CustomizableException() throw() {}
 		virtual const char* what() const throw() {
 			return msg_.c_str();
 		}
@@ -25,4 +25,4 @@ class NotFoundElement: public exception {
 
 };
 
-#endif // NOT_FOUND_ELEMENT_HPP
+#endif // CUSTOMIZABLE_EXCEPTION_HPP

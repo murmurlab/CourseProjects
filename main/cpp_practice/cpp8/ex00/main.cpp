@@ -28,8 +28,14 @@ int main() try
 	// std::vector<int>::iterator x = std::find(v.begin(), v.end(), "axa");
 	// cout << *(v.end()) << endl;
 
-	std::vector<int>::iterator x = easyfind(v, 999);
-	cout << *x << endl;
+	{
+		std::vector<int>::iterator x = easyfind(v, 999);
+		cout << *x << endl;
+	}
+	{
+		std::vector<int>::iterator x = easyfind(v, 42);
+		cout << *x << endl;
+	}
 	// cout <<  << endl;
 	// if ((*x).data())
 	// 	cout << *x << endl;
