@@ -4,14 +4,23 @@
 # include "common.hpp"
 # include <map>
 
+#define DEFAULT_CSV_FILE			"./data.csv"
+
 using std::map;
 
-typedef int t_exchange;
 
-class BitcoinExchange {
-	t_exchange	bitcoin_value;
 
-	map<string,t_exchange>* value_by_date;
-};
+
+// class BitcoinExchange {
+// 	public:
+// 		BitcoinExchange(string csv_file = string(DEFAULT_CSV_FILE), );
+
+// 		typedef float t_price;
+// 		bitcoin_value(t_price );
+// 	private:
+// 		t_price	bitcoin_value;
+
+// 		map<string,t_price>* value_by_date;
+// };
 
 #endif // BITCOIN_EXCHANGE_HPP

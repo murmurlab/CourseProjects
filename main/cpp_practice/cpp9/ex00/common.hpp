@@ -28,11 +28,12 @@
 // # include <cstdlib>
 // # include <cstddef>
 
-
+using std::runtime_error;
 using std::bad_alloc;
 using std::size_t;
 using std::exception;
 using std::cout;
+using std::cerr;
 using std::string;
 using std::endl;
 
