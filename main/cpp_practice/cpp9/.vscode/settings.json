@@ -54,6 +54,8 @@
 		"typeinfo": "cpp",
 		"variant": "cpp",
 		"cerrno": "cpp",
-		"map": "cpp"
+		"map": "cpp",
+		"iomanip": "cpp",
+		"sstream": "cpp"
 	}
 }
