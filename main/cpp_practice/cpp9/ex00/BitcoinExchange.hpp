@@ -2,11 +2,9 @@
 # define BITCOIN_EXCHANGE_HPP
 
 # include "common.hpp"
-# include <map>
 
-#define DEFAULT_CSV_FILE			"./data.csv"
 
-using std::map;
+// using std::map;
 
 
 
