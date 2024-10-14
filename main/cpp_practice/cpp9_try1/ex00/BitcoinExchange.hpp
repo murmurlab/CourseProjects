@@ -4,6 +4,7 @@
 # include "common.hpp"
 
 # include <ctime>
+# include <cstdlib>
 # include <fstream>
 # include <vector>
 # include <sstream>

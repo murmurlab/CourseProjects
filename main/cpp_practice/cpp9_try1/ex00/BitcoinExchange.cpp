@@ -10,7 +10,9 @@ std::vector<string> BitcoinExchange::split(string& line, char sep) {
 	std::istringstream iss(line.c_str());
 	string node;
 	string trimmed;
+		// DEBUG("cc")
 	for (bool stat; ((stat = std::getline(iss, node, sep)) || !(trimmed = trim(iss.str())).empty());) {
+		// DEBUG("tt")
 		// cout << "stat:" << stat << " eof:"<< iss.eof() << " s: \"" << line << "\" - " << node << endl<< endl;
 			// ret.push_back(string(""));
 		if (iss.eof() && !stat) {
@@ -43,8 +45,13 @@ std::vector<string> BitcoinExchange::csv_to_vec(string const& csv_file, char del
 	std::istringstream all_lines(all);
 
 	string	head;
-
 	std::getline(all_lines, head);
+	DEBUG(3);
+	for (; trim(head).empty(); std::getline(all_lines, head)) {
+		cout << head;
+	}
+	DEBUG(1);
+	
 	std::vector<string> list = split(head, del);
 	if (list.size() != 2) {
 		throw (runtime_error(S_E_CORRUPTED_DB": 2 head err"));
@@ -61,6 +68,7 @@ std::vector<string> BitcoinExchange::csv_to_vec(string const& csv_file, char del
 
 	std::vector<string> ret;
 	
+	// for (std::getline(all_lines, head); trim(head).empty(); std::getline(all_lines, head));
 	for (string line; std::getline(all_lines, line);) {
 		list.clear();
 		list = split(line, del);
@@ -78,9 +86,9 @@ std::vector<string> BitcoinExchange::csv_to_vec(string const& csv_file, char del
 	return ret;
 }
 
-std::time_t	newDate(int year, int month, int day) {
+// std::time_t	newDate(int year, int month, int day) {
 	
-}
+// }
 
 static bool get_date(const std::string& dateStr, std::time_t* date) {
 	std::tm tm = {};
@@ -174,9 +182,9 @@ void BitcoinExchange::calculate(string inp_file) {
 	// list(db_in);
 }
 
-static void p(string& s) {
-	cout << s << endl;
-}
+// static void p(string& s) {
+// 	cout << s << endl;
+// }
 
 void BitcoinExchange::list(std::vector<string>& vec) {
 	for (std::vector<string>::iterator it = vec.begin(); it != vec.end(); it+=2) {
