@@ -4,7 +4,7 @@ CXXFLAGS        = -std=c++98 -pedantic
 LXXFLAGS		= 
 RUNFLAGS		=
 
-NAME			= program
+NAME			= btc
 LIB				= 
 SRC_DIR			= .
 INC_DIR			= 

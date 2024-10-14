@@ -131,13 +131,28 @@ std::vector<string> BitcoinExchange::csv_to_vec(string const& csv_file, char del
 
 
 
+static bool relative_versus(time_t relative_1, time_t relative_2, time_t base) {
+	
+}
+
+bool BitcoinExchange::vali_date_val(string& date_string, string& amount) {
+	// if ()
+	return false;
+}
+
 void BitcoinExchange::calculate(string inp_file) {
 	// list(db);
 	std::vector<string> db_in = csv_to_vec(inp_file, '|');
 	for (std::vector<string>::iterator it = db_in.begin(); it != db_in.end(); it+=2) {
+		if (vali_date_val(*it, *(it + 1)))
+			continue ;
+		std::vector<string>::iterator closest = db.begin();
 		for (std::vector<string>::iterator it2 = db.begin(); it2 != db.end(); it2+=2) {
-			if (*it == *it2)
+			if (*it == *it2) {
 				cout << *it2 << " " << *(it2 + 1) << endl;
+				break ;
+			}
+			if (which_is_closest(closest, it2, it))
 		}
 		// cout << *it << " " << *(it + 1) << endl;
 	}

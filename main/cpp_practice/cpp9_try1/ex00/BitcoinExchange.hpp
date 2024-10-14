@@ -62,13 +62,14 @@ class BitcoinExchange {
 	public:
 		BitcoinExchange(string const& csv_file = string(DEFAULT_CSV_FILE));
 
-		typedef float t_price;
-		void calculate(string inp_file);
-		std::vector<string>	csv_to_vec(string const& csv_file, char del);
-		void list(std::vector<string>& vec);
+		typedef float			t_price;
+		void					calculate(string inp_file);
+		std::vector<string>		csv_to_vec(string const& csv_file, char del);
+		void					list(std::vector<string>& vec);
 		std::vector<string>		db;
 	private:
-		std::vector<string> split(string& line, char sep);
+		std::vector<string> 	split(string& line, char sep);
+		bool					vali_date_val(string& date_string, string& amount);
 };
 
 #endif // BITCOIN_EXCHANGE_HPP
