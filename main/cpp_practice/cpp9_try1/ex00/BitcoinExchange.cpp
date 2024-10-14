@@ -8,86 +8,32 @@ std::vector<string> BitcoinExchange::split(string& line, char sep) {
 	std::vector<string> ret;
 	
 	std::istringstream iss(line.c_str());
-	size_t l = line.length();
-	char* node = new char[l];
+	string node;
 	string trimmed;
-	for (bool stat; ((stat = iss.getline(node, l, sep)) || !(trimmed = trim(iss.str())).empty());) {
+	for (bool stat; ((stat = std::getline(iss, node, sep)) || !(trimmed = trim(iss.str())).empty());) {
 		// cout << "stat:" << stat << " eof:"<< iss.eof() << " s: \"" << line << "\" - " << node << endl<< endl;
-		if (iss.eof() && !stat) break;
+			// ret.push_back(string(""));
+		if (iss.eof() && !stat) {
+			if (ret.size() == 1)
+				ret.push_back(string(""));
+			break;
+		}
 		if (!stat) {
 			ret.push_back(trimmed);
 			ret.push_back(string(""));
 			break ;
 		} else {
-			// cout << "split: " << node << endl;
-			string s(node);
-			ret.push_back(trim(s));
+			ret.push_back(trim(node));
 		}
 	}
-	delete[] node;
 	return (ret);
 }
 
 BitcoinExchange::BitcoinExchange(string const& csv_file) {
 	db = csv_to_vec(csv_file, ',');
-	// if ("date,exchange_rate" != line)
-	// 	throw (runtime_error(S_E_CORRUPTED_DB));
-	
-	// std::istringstream iss(line.c_str());
-	// size_t l = line.length(); 
-	// char* node = new char[l];
-	// for (; iss.getline(node, l, seperator);) {
-	// 	string untrimmed(node);
-	// 	string trimmed;
-	// 	std::istringstream str(untrimmed);
-	// 	str >> trimmed;
-	// 	// cout << trimmed << endl;
-	// 	t.column_types->push_back(
-	// 		(trimmed == string("date")) ?			date :
-	// 		(trimmed == string("value")) ?			value :
-	// 		(trimmed == string("exchange_rate")) ?	exchange_rate :
-	// 											unknown_type
-	// 	);
-	// 	cout << "\t" << trimmed << endl;
-	// 	cout << "\t\t typedef " << trimmed << " " << t.column_types->back() << endl;
-	// }
-	// t.width = t.column_types->size();
-	// t.c = new std::vector<void*>(t.width * t.height);
-	// // table[(399 * coloumns) + 1] = NULL;
-
-	// for (size_t row(0); std::getline(readable, line); row++) {
-	// 	cout << line << endl;
-	// 	std::istringstream iss_tmp(line.c_str());
-	// 	int col = t.column_types->front();
-	// 	size_t le = line.length();
-	// 	char* node = new char[le];
-		
-	// 	bool cont = true;
-	// 	for (; cont; col++) {
-	// 		cont = iss_tmp.getline(node, le, seperator);
-
-	// 		if (!cont)
-	// 			t.c->at((row * t.width) + col) = NULL;
-	// 		else {
-	// 			// (coloumn_types[col] == date) ?			("NULL") :
-	// 			// (coloumn_types[col] == exchange_rate) ?	(NULL) :
-	// 			// 											(NULL)
-	// 			string untrimmed(node);
-	// 			string trimmed;
-	// 			std::istringstream str(untrimmed);
-	// 			str >> trimmed;
-	// 			cout << "\t" << "<" << t.column_types->at(col) << ">" << trimmed << endl;
-	// 			t.c->at((row * t.width) + col) = serialize(t.column_types->at(col) ,(char *)trimmed.c_str());
-	// 		}
-	// 		// if 
-	// 		// table[(row * coloumns) + col] = NULL;
-	// 	}
-	// }
-	// return t;
 }
 
 std::vector<string> BitcoinExchange::csv_to_vec(string const& csv_file, char del) {
-	std::vector<string> ret;
 	
 	std::ifstream db_file(csv_file.c_str());
 	if (!db_file) throw(runtime_error(S_E_CANNOT_OPEN_FILE));
@@ -113,12 +59,15 @@ std::vector<string> BitcoinExchange::csv_to_vec(string const& csv_file, char del
 
 	// cout << list[0] << " / " << list[1] << endl;
 
+	std::vector<string> ret;
+	
 	for (string line; std::getline(all_lines, line);) {
+		list.clear();
 		list = split(line, del);
 		if (list.size() < 2) {
 			ret.push_back(list[0]);
 			ret.push_back(string(""));
-			// throw (runtime_error(S_E_CORRUPTED_DB));
+			throw (runtime_error(S_E_CORRUPTED_DB));
 		} else {
 			ret.insert(ret.end(), list.begin(), list.end());
 		}
@@ -129,14 +78,76 @@ std::vector<string> BitcoinExchange::csv_to_vec(string const& csv_file, char del
 	return ret;
 }
 
-
-
-static bool relative_versus(time_t relative_1, time_t relative_2, time_t base) {
+std::time_t	newDate(int year, int month, int day) {
 	
 }
 
+static bool get_date(const std::string& dateStr, std::time_t* date) {
+	std::tm tm = {};
+	if (dateStr.size() != 10 || dateStr[4] != '-' || dateStr[7] != '-' ||
+		!isdigit(dateStr[0]) ||
+		!isdigit(dateStr[1]) ||
+		!isdigit(dateStr[2]) ||
+		!isdigit(dateStr[3]) ||
+		!isdigit(dateStr[5]) ||
+		!isdigit(dateStr[6]) ||
+		!isdigit(dateStr[8]) ||
+		!isdigit(dateStr[9]))
+		return true;
+    
+    int year = std::atoi(dateStr.substr(0, 4).c_str());
+    int month = std::atoi(dateStr.substr(5, 2).c_str());
+    int day = std::atoi(dateStr.substr(8, 2).c_str());
+    
+    if (year < 2009 || month < 1 || month > 12 || day < 1 || day > 31)
+        return true;
+    if (month == 4 || month == 6 || month == 9 || month == 11) {
+        if (day > 30)
+            return true;
+    }
+	else if (month == 2) {
+        if ((year % 4 == 0) && !((year % 400 != 0) && (year % 100 == 0))) {
+            if (day > 29)
+                return true;
+        } else if (day > 28) {
+			return true;
+        }
+    }
+	if (date == NULL)
+		return false ;
+	tm.tm_year = year;
+	tm.tm_mon = month;
+	tm.tm_mday = day;
+	*date = std::mktime(&tm);
+    return false;
+}
+
+static bool criterionDuoComparison(string& factor_1, string& factor_2, string& criterion) {
+	std::time_t f1, f2, c1;
+	
+	get_date(factor_1, &f1);
+	get_date(factor_2, &f2);
+	if (get_date(criterion, &c1))
+		return false ;
+	if ((std::abs(std::difftime(f1, c1)) > std::abs(std::difftime(f2, c1))) && (f2 < c1))
+		return true;
+	return false;
+}
+
 bool BitcoinExchange::vali_date_val(string& date_string, string& amount) {
-	// if ()
+	if (get_date(date_string, NULL)) {
+		cout << "Error: bad input => \"" << date_string << " | " << amount << "\"" << endl;
+		return true;
+	}
+	float a = atof(amount.c_str());
+	if (amount.find("-") != std::string::npos) {
+		cout << "Error: not a positive number." << endl;
+		return true;
+	}
+	if (amount.size() > 4 || a > 1000) {
+		cout << "Error: too large a number." << endl;
+		return true;
+	}
 	return false;
 }
 
@@ -144,16 +155,19 @@ void BitcoinExchange::calculate(string inp_file) {
 	// list(db);
 	std::vector<string> db_in = csv_to_vec(inp_file, '|');
 	for (std::vector<string>::iterator it = db_in.begin(); it != db_in.end(); it+=2) {
-		if (vali_date_val(*it, *(it + 1)))
+		if (vali_date_val(*it, *(it + 1))) {
 			continue ;
+		}
 		std::vector<string>::iterator closest = db.begin();
 		for (std::vector<string>::iterator it2 = db.begin(); it2 != db.end(); it2+=2) {
 			if (*it == *it2) {
-				cout << *it2 << " " << *(it2 + 1) << endl;
+				closest = it2;
 				break ;
 			}
-			if (which_is_closest(closest, it2, it))
+			else if (criterionDuoComparison(*closest, *it2, *it))
+				closest = it2;
 		}
+		cout << *(it) << " => " << *(closest) << " | " << "(" << *(it + 1) << " * " << *(closest + 1) << ") = " << (t_value)(std::atof((it + 1)->c_str()) * std::atof((closest + 1)->c_str())) << endl;
 		// cout << *it << " " << *(it + 1) << endl;
 	}
 

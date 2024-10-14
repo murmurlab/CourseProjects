@@ -39,6 +39,8 @@ using std::endl;
 
 
 
+# define DEBUG(n) cout << n << ": " << __LINE__ << endl;
+
 template<typename T, size_t N>
 size_t ft_size2(T (&)[N]) { return N; }
 
