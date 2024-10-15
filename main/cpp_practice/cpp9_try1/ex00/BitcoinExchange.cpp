@@ -26,8 +26,6 @@ std::vector<string> BitcoinExchange::split(string& line, char sep, bool debug) {
 	string node;
 	string trimmed;
 	for (bool stat; ((stat = std::getline(iss, node, sep)) || !(trimmed = trim(iss.str())).empty());) {
-		// cout << "stat:" << stat << " eof:"<< iss.eof() << " s: \"" << line << "\" - " << node << endl<< endl;
-			// ret.push_back(string(""));
 		if (iss.eof() && !stat) {
 			if (ret.size() == 1)
 				ret.push_back(string(""));
@@ -68,22 +66,16 @@ std::vector<string> BitcoinExchange::csv_to_vec(string const& csv_file, char del
 		throw (runtime_error(S_E_CORRUPTED_DB": 2 head err"));
 	}
 	if (del == '|') {
-		// cout << list[1] << "********** " << endl;
 		if (list[0] != "date" || list[1] != "value")
 			throw (runtime_error(S_E_CORRUPTED_DB": '|' head err"));			
 	} else if (del == ',') {
-		// cout << list[1] << "********** " << endl;
 		if (list[0] != "date" || list[1] != "exchange_rate")
 			throw (runtime_error(S_E_CORRUPTED_DB": ',' head err"));
 	}
 
-	// cout << list[0] << " / " << list[1] << endl;
-
 	std::vector<string> ret;
 	
-	// for (std::getline(all_lines, head); trim(head).empty(); std::getline(all_lines, head));
 	for (string line; std::getline(all_lines, line);) {
-		// for (; trim(head).empty() ; std::getline(all_lines, head));
 		list.clear();
 		list = split(line, del, false);
 		if (list.size() < 2) {
@@ -93,9 +85,6 @@ std::vector<string> BitcoinExchange::csv_to_vec(string const& csv_file, char del
 		} else {
 			ret.insert(ret.end(), list.begin(), list.end());
 		}
-		// cout << list[0] << " / " << list[1] << endl;
-		// cout << line << endl;
-		// for (; line.getline();)
 		if (del == ',' && vali_date_val(*(ret.end() - 2), *(ret.end() - 1), 1))
 		{
 			cout << *(ret.end() - 2) << " " << *(ret.end() - 1) << endl;
@@ -183,7 +172,6 @@ bool BitcoinExchange::vali_date_val(string& date_string, string& amount, bool mo
 }
 
 void BitcoinExchange::calculate(string inp_file) {
-	// list(db);
 	std::vector<string> db_in = csv_to_vec(inp_file, '|');
 	for (std::vector<string>::iterator it = db_in.begin(); it != db_in.end(); it+=2) {
 		if (vali_date_val(*it, *(it + 1))) {
@@ -199,19 +187,11 @@ void BitcoinExchange::calculate(string inp_file) {
 				closest = it2;
 		}
 		cout << *(it) << " => " << *(closest) << " | " << "(" << *(it + 1) << " * " << *(closest + 1) << ") = " << (t_price)(std::atof((it + 1)->c_str()) * std::atof((closest + 1)->c_str())) << endl;
-		// cout << *it << " " << *(it + 1) << endl;
 	}
-
-	// list(db_in);
 }
-
-// static void p(string& s) {
-// 	cout << s << endl;
-// }
 
 void BitcoinExchange::list(std::vector<string>& vec) {
 	for (std::vector<string>::iterator it = vec.begin(); it != vec.end(); it+=2) {
 		cout << *it << " " << *(it + 1) << endl;
 	}
-	// std::for_each(db.begin(), db.end(), p);
 }
