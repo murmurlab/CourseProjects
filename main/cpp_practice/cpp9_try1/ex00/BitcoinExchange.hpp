@@ -21,23 +21,22 @@
 #define S_E_CANNOT_OPEN_FILE		"cannot open file"
 
 
-typedef string				t_date;
-typedef float				t_exchange_rate;
-typedef float				t_value;
-
 
 class BitcoinExchange {
 	public:
 		BitcoinExchange(string const& csv_file = string(DEFAULT_CSV_FILE));
-
+		~BitcoinExchange();
+		BitcoinExchange(BitcoinExchange& other);
+		BitcoinExchange&	operator=(BitcoinExchange& rvalue);
+		
 		typedef float			t_price;
 		void					calculate(string inp_file);
 		std::vector<string>		csv_to_vec(string const& csv_file, char del);
 		void					list(std::vector<string>& vec);
 		std::vector<string>		db;
 	private:
-		std::vector<string> 	split(string& line, char sep);
-		bool					vali_date_val(string& date_string, string& amount);
+		std::vector<string> 	split(string& line, char sep, bool deb);
+		bool					vali_date_val(string& date_string, string& amount,bool mod=0);
 };
 
 #endif // BITCOIN_EXCHANGE_HPP

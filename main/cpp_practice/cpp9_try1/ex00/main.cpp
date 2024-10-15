@@ -10,4 +10,7 @@ int main(int argc, char const *argv[]) try {
 	return 0;
 } catch (runtime_error& e) {
 	cerr << e.what() << endl;
+} catch (...) {
+	
 }
+// !exchange_rate
