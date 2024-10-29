@@ -79,6 +79,8 @@ void	wait_all(t_main *shell, t_execd *execd)
 	while ((size_t)-1 > _)
 		wait4(execd->pids[_--], NULL, 0, NULL);
 	wait4(execd->pids[shell->cmd_ct - 1], &shell->ex_stat, 0, NULL);
+	if (WIFSIGNALED(shell->ex_stat))
+		printf("\n");
 	g_qsignal = 0;
 	shell->ex_stat = WEXITSTATUS(shell->ex_stat);
 }

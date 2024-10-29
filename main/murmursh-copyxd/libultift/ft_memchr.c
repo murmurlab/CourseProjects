@@ -3,8 +3,8 @@
  * of this license, visit http://creativecommons.org/licenses/by-sa/4.0/
  */
 
-#include <sys/_types/_null.h>
-#include <sys/_types/_size_t.h>
+#include <stddef.h>
+#include <stddef.h>
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {

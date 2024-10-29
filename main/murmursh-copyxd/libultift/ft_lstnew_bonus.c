@@ -3,8 +3,8 @@
  * of this license, visit http://creativecommons.org/licenses/by-sa/4.0/
  */
 
-#include <sys/_types/_null.h>
-#include <malloc/_malloc.h>
+#include <stddef.h>
+#include <stdlib.h>
 #include "libft.h"
 
 t_list	*ft_lstnew(void *content)

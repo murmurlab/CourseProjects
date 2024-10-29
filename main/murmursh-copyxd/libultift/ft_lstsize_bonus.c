@@ -3,7 +3,7 @@
  * of this license, visit http://creativecommons.org/licenses/by-sa/4.0/
  */
 
-#include <sys/_types/_size_t.h>
+#include <stddef.h>
 #include "libft.h"
 
 int	ft_lstsize(t_list *lst)
