@@ -3,7 +3,7 @@
  * of this license, visit http://creativecommons.org/licenses/by-sa/4.0/
  */
 
-#include <sys/_types/_null.h>
+#include <stddef.h>
 
 char	*ft_strchr(const char *s, int c)
 {

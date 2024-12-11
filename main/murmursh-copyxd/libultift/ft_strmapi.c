@@ -3,8 +3,8 @@
  * of this license, visit http://creativecommons.org/licenses/by-sa/4.0/
  */
 
-#include <sys/_types/_null.h>
-#include <malloc/_malloc.h>
+#include <stddef.h>
+#include <stdlib.h>
 
 size_t	ft_strlen(const char *s);
 

@@ -3,7 +3,7 @@
  * of this license, visit http://creativecommons.org/licenses/by-sa/4.0/
  */
 
-#include <malloc/_malloc.h>
+#include <stdlib.h>
 #include "libft.h"
 
 void	ft_lstdelone(t_list *lst, void (*del)(void *))

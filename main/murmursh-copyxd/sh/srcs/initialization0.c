@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   initialization0.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahbasara <ahbasara@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: emyildir <emyildir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 20:14:54 by ahbasara          #+#    #+#             */
-/*   Updated: 2024/01/31 07:11:11 by ahbasara         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:23:11 by emyildir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include.h"
-
-void	coix(int sig)
-{
-	(void)sig;
-	rl_on_new_line();
-	printf("\033[K");
-	rl_redisplay();
-	g_qsignal = 1;
-}
 
 void	ctrl_c(int sig)
 {
@@ -31,25 +22,21 @@ void	ctrl_c(int sig)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	else
-		printf("\n");
 }
 
 void	tcsa(void)
 {
-	// struct termios	term1;
+	struct termios	term1;
 
-	// if (tcgetattr(STDIN_FILENO, &term1) != 0)
-	// 	exit((perror(SHELLSAY TCGA_ERR_MSG), -1));
-	// else
-	// {
-	// 	term1.c_cc[VQUIT] = _POSIX_VDISABLE;
-	// 	term1.c_lflag |= ECHOE | ICANON;
-	// 	if (tcsetattr(STDIN_FILENO, TCSANOW, &term1) != 0)
-	// 		exit((perror(SHELLSAY TCSA_ERR_MSG), -1));
-	// 	if (tcgetattr(STDIN_FILENO, &term1) != 0)
-	// 		exit((perror(SHELLSAY TCGA_ERR_MSG), -1));
-	// }
+	if (tcgetattr(STDIN_FILENO, &term1) != 0)
+		exit((perror(SHELLSAY TCGA_ERR_MSG), -1));
+	term1.c_cc[VQUIT] = _POSIX_VDISABLE;
+	term1.c_lflag |= ECHOE | ICANON;
+	term1.c_lflag |= ECHOCTL;
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &term1) != 0)
+		exit((perror(SHELLSAY TCSA_ERR_MSG), -1));
+	if (tcgetattr(STDIN_FILENO, &term1) != 0)
+		exit((perror(SHELLSAY TCGA_ERR_MSG), -1));
 }
 
 int	initialization(t_main *shell)

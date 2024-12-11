@@ -18,9 +18,9 @@ BONUS_OBJECTS =		$(BONUS:.c=.o)
 GNL =				get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
 					get_next_line/get_next_line_bonus.c get_next_line/get_next_line_utils_bonus.c
 GNL_OBJECTS =		$(GNL:.c=.o)
+FT_PRINTF	=		ft_printf/ft_printf_util.c ft_printf/ft_printf.c
+FT_PRINTF_OBJECTS =	$(FT_PRINTF:.c=.o)
 
-ft_printf =			ft_printf/libftprintf.a
-LIBS =				$(ft_printf)
 MAKEFLAGS +=		-j$(NPROCS)
 
 NAME        = libft.a
@@ -36,9 +36,6 @@ m: $(NAME)
 
 b: bonus
 
-$(ft_printf):
-	@$(MAKE) -C ft_printf
-
 ${NAME}: ${OBJECTS}
 	@echo "\033[92m compiling $@... \033[0m\n"
 	@echo "\033[92m $@ [OK!]\033[0m"
@@ -46,21 +43,19 @@ ${NAME}: ${OBJECTS}
 
 bonus: ${NAME_BONUS}
 
-${NAME_BONUS}: ${NAME} $(BONUS_OBJECTS) $(GNL_OBJECTS) $(LIBS)
-	${AR} ${NAME} $(BONUS_OBJECTS) $(GNL_OBJECTS) $(LIBS)
+${NAME_BONUS}: ${NAME} $(BONUS_OBJECTS) $(GNL_OBJECTS) $(FT_PRINTF_OBJECTS)
+	${AR} ${NAME} $(BONUS_OBJECTS) $(GNL_OBJECTS) $(FT_PRINTF_OBJECTS)
 	${AR} ${NAME_BONUS} ${NAME}
 
 %.o: %.c
 	${CC} ${CFLAGS} -c $< -o $@
 
 clean:
-	$(RM) $(OBJECTS) $(BONUS_OBJECTS) $(GNL_OBJECTS)
-	@$(MAKE) -C ft_printf clean
+	$(RM) $(OBJECTS) $(BONUS_OBJECTS) $(GNL_OBJECTS) $(FT_PRINTF_OBJECTS)
 
 fclean: clean
 	${RM} ${NAME}
 	${RM} ${NAME_BONUS}
-	@$(MAKE) -C ft_printf fclean
 
 re: fclean
 	@$(MAKE) all

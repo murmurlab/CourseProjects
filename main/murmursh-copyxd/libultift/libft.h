@@ -6,7 +6,7 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <sys/_types/_size_t.h>
+# include <stddef.h>
 
 typedef struct s_list
 {
