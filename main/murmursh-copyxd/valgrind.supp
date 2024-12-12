@@ -1,0 +1,7 @@
+{
+	Suppress of readline leaks
+	Memcheck:Leak
+	...
+	obj:/Users/ahbasara/sources/repos/projects/main/murmursh-copyxd/lib/lib/readline/lib/*
+	...
+}

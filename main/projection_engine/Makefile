@@ -1,0 +1,5 @@
+srcs = *.c
+
+CC = 
+
+all:

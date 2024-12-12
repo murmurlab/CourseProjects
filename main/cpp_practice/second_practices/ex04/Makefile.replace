@@ -1,0 +1,51 @@
+CC            = clang++
+CFLAGS        = -std=c++98
+NAME          = program
+LIB           = 
+SRC_AYAK       = .
+INC_AYAK       = 
+OBJ_AYAK       = .
+SRCS          = $(wildcard $(SRC_AYAK)/*.cpp)
+OBJS          = $(SRCS:$(SRC_AYAK)/%.cpp=$(OBJ_AYAK)/%.o)
+DEPENDENCIES  =
+os =  ${shell uname -s}
+ifeq '$(os)' 'Darwin'
+NPROCS  = $(shell sysctl -n hw.ncpu)
+else ifeq '$(os)' 'Linux'
+NPROCS  = $(shell nproc)
+endif
+MAKEFLAGS += -j$(NPROCS)
+w = 1
+ifeq '$(w)' '1'
+CFLAGS += -Wextra -Werror -Wall
+endif
+debug = 1
+ifeq '$(debug)' '1'
+CFLAGS += -g
+endif
+asan = 1
+ifeq '$(asan)' '1'
+CFLAGS += -fsanitize=address
+# CFLAGS += -fsanitize=thread
+endif
+test = 0
+ifeq '$(test)' '1'
+./$(attest) .
+endif
+
+
+
+all: $(DEPENDENCIES)
+	echo $(OBJS)
+	@$(MAKE) $(NAME)
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+run: re
+	./$(NAME) Makefile arst arst
+clean:
+	$(RM) $(OBJS) $(B_OBJ)
+fclean: clean
+	$(RM) $(NAME) & wait
+re: fclean
+	$(MAKE) all
+.PHONY: all clean fclean re run
