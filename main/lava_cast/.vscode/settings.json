@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "*.c": "c",
-        "include.h": "c",
-        "random": "c"
-    }
-}

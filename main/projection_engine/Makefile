@@ -1,5 +1,0 @@
-srcs = *.c
-
-CC = 
-
-all:
