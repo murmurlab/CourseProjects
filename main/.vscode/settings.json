@@ -1,0 +1,7 @@
+{
+	"files.associations": {
+		"*.c": "c",
+		"*.tpp": "cpp",
+		"philo_bonus.h": "c"
+	}
+}

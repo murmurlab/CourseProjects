@@ -89,7 +89,8 @@
         "deque": "cpp",
         "fstream": "cpp",
         "stack": "cpp",
-        "filesystem": "cpp"
+        "filesystem": "cpp",
+        "__memory": "cpp"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/clang++",
     "lldb.displayFormat": "auto",

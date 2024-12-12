@@ -1,4 +1,5 @@
 {
+    
     "files.associations": {
         "*.c": "c",
         "iosfwd": "cpp",
@@ -67,6 +68,8 @@
         "fstream": "cpp",
         "iomanip": "cpp",
         "stack": "cpp",
-        "filesystem": "cpp"
-    }
+        "filesystem": "cpp",
+        "thread": "cpp"
+    },
+    "C_Cpp.default.compilerPath": "/usr/bin/clang++"
 }

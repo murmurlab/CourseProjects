@@ -17,6 +17,8 @@
 #include <iostream>
 #include "ICharacter.hpp"
 
+#define MAX_COUNT_OF_MATERIA 4
+
 using std::cout;
 using std::cerr;
 using std::endl;
@@ -24,13 +26,20 @@ using std::string;
 
 class Character : public ICharacter
 {
+private:
+    AMateria *slot[MAX_COUNT_OF_MATERIA];
+    string name;
+    Character();
 public:
-    ~Character();
+    Character(Character &copy);
+    ~Character( void );
+    Character &operator=(Character &to_assign);
+
+    Character(string name);
     std::string const &getName() const;
     void equip(AMateria *m);
     void unequip(int idx);
     void use(int idx, ICharacter &target);
-
 };
 
 

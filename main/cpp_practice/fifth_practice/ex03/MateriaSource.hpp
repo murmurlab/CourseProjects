@@ -1,5 +1,5 @@
-#ifndef AMATERIA_H
-# define AMATERIA_H
+#ifndef MATERIASOURCE_H
+# define MATERIASOURCE_H
 # if defined(__linux__)
 /* Linux. --------------------------------------------------- */
 
@@ -15,30 +15,30 @@
 # define RESET				"\x1B[0m"
 
 #include <iostream>
+#include "IMateriaSource.hpp"
+
+#define MAX_COUNT_OF_MATERIA 4
 
 using std::cout;
 using std::cerr;
 using std::endl;
 using std::string;
 
-class ICharacter;
+class AMateria;
 
-class AMateria
+class MateriaSource: public IMateriaSource
 {
-protected:
-    string type;
 private:
-    AMateria( void );
-    AMateria(AMateria &copy);
-    AMateria &operator=(AMateria &to_assign);
-
+    int idx;
+    AMateria *slot[MAX_COUNT_OF_MATERIA];
 public:
-    virtual ~AMateria( void );
+    MateriaSource();
+    ~MateriaSource();
+    MateriaSource(IMateriaSource &copy);
+    IMateriaSource &operator=(IMateriaSource &to_assign);
 
-    AMateria(string const &type);
-    string const &getType() const;
-    virtual AMateria *clone() const = 0;
-    virtual void use(ICharacter &target);
+    void learnMateria(AMateria *);
+    AMateria* createMateria(string const & type);
 };
 
 #endif

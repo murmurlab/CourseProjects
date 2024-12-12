@@ -1,5 +1,5 @@
-#ifndef AMATERIA_H
-# define AMATERIA_H
+#ifndef IMATERIASOURCE_H
+# define IMATERIASOURCE_H
 # if defined(__linux__)
 /* Linux. --------------------------------------------------- */
 
@@ -21,24 +21,14 @@ using std::cerr;
 using std::endl;
 using std::string;
 
-class ICharacter;
+class AMateria;
 
-class AMateria
+class IMateriaSource
 {
-protected:
-    string type;
-private:
-    AMateria( void );
-    AMateria(AMateria &copy);
-    AMateria &operator=(AMateria &to_assign);
-
 public:
-    virtual ~AMateria( void );
-
-    AMateria(string const &type);
-    string const &getType() const;
-    virtual AMateria *clone() const = 0;
-    virtual void use(ICharacter &target);
+    virtual ~IMateriaSource() {};
+    virtual void learnMateria(AMateria*) = 0;
+    virtual AMateria* createMateria(string const & type) = 0;
 };
 
 #endif

@@ -25,7 +25,7 @@ CFLAGS += -g
 endif
 asan = 1
 ifeq '$(asan)' '1'
-CFLAGS += -fsanitize=address
+# CFLAGS += -fsanitize=address
 # CFLAGS += -fsanitize=thread
 endif
 test = 0
